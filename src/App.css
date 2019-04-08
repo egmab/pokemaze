@@ -27,7 +27,9 @@ table {
     height: 60px;
     width: 60px;
 }
-
+@keyframes beat{
+	to { transform: scale(1.4); }
+}
 /*.character {
   position: absolute;
   z-index: 1;
