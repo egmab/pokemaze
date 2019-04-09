@@ -35,7 +35,7 @@ class Game extends Component {
     const { items } = this.props;
     this.player.posX = x
     this.player.posY = y
-    if (items[this.player.posY][this.player.posX] !== "000") {
+    if (items[this.player.posY][this.player.posX] === "001") {
       this.setState({
         isWinner: true
       })
