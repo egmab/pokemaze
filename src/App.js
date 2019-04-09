@@ -11,7 +11,7 @@ class App extends Component {
     const labyrinth = Labyrinths.labyrinth1
     const items = Items.labyrinth1_items
     return (
-      <Game labyrinth={labyrinth} items={items} />
+      <Game labyrinth={labyrinth} items={items} count='120'/>
     )
   }
 }
