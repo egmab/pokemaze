@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import GeneratePokemon from './GeneratePokemon';
-import DisplayPokemon from './DisplayPokemon';
 
 class Player extends Component {
   constructor(props) {
@@ -12,7 +10,6 @@ class Player extends Component {
       posY: 0,
       img: 'charBottom',
       pixelsPerTile: 48,
-      pokemon: { name: 'pikachu' },
     };
   }
 
@@ -24,16 +21,6 @@ class Player extends Component {
     document.removeEventListener('keydown', this.action, false);
   }
 
-  getPokemon() {
-    const randomPokemon = Math.ceil(Math.random() * Math.floor(151));
-    fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
-      .then(response => response.json())
-      .then((data) => {
-        this.setState({
-          pokemon: data,
-        });
-      });
-  }
 
   //    Checks if tile is an obstacle in the labyrinth after a move (tiles named "500"+)
   checkTile(x, y) {
@@ -103,7 +90,7 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, pokemon,
+      img, posX, posY, pixelsPerTile,
     } = this.state;
     //  Player CSS
     const playerStyle = {
@@ -123,13 +110,10 @@ class Player extends Component {
     return (
       <div className="player">
         <div style={playerStyle} />
-        <GeneratePokemon selectPokemon={() => this.getPokemon()} />
-        <DisplayPokemon pokemon={pokemon} />
       </div>
 
     );
   }
 }
-
 
 export default Player;

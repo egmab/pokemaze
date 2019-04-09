@@ -4,7 +4,7 @@ class Chrono extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      count: undefined,
       running: false,
     };
   }
@@ -16,6 +16,10 @@ class Chrono extends Component {
         count: newCount >= 0 ? newCount : 0,
         running: true,
       });
+      if (newCount === 0) {
+        clearInterval(this.timer);
+      }
+      this.props.getTime(newCount)
     }, 1000);
   }
 
