@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-// TO DO : put items, starting points etc. in labyrinths.json => rename it to game.json or something
 import * as Labyrinths from './labyrinths.json';
 import * as Items from './items.json';
+// TO DO : using data.json instead of labyrinths and items
+// import * as Data from './data.json';
 import Game from './Game';
 
 const App = () => {

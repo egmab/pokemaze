@@ -14,24 +14,28 @@ class Game extends Component {
   }
 
   componentWillMount() {
-    this.player.posX = this.props.playerX;
-    this.player.posY = this.props.playerY;
+    const { playerX } = this.props;
+    const { playerY } = this.props;
+    this.player.posX = playerX;
+    this.player.posY = playerY;
   }
 
   getPlayerPos(x, y) {
+    const { items } = this.props;
     this.player.posX = x;
     this.player.posY = y;
-    if (this.props.items[this.player.posY][this.player.posX] !== '000') {
+    if (items[this.player.posY][this.player.posX] !== '000') {
       alert('pokeball');
     }
   }
 
   render() {
+    const { labyrinth, items, count } = this.props;
     return (
       <div className="Game">
-        <Board labyrinth={this.props.labyrinth} items={this.props.items} />
-        <Player labyrinth={this.props.labyrinth} getPlayerPos={this.getPlayerPos} />
-        <Chrono count={this.props.count} />
+        <Board labyrinth={labyrinth} items={items} />
+        <Player labyrinth={labyrinth} getPlayerPos={this.getPlayerPos} />
+        <Chrono count={count} />
       </div>
     );
   }

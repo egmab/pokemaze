@@ -2,12 +2,13 @@ import React from 'react';
 import Tile from './Tile';
 
 function Board(props) {
+  const { labyrinth } = props;
   return (
     <div className="Board">
       <table>
         <tbody>
           {
-            props.labyrinth.map((row, rowIndex) => (
+            labyrinth.map((row, rowIndex) => (
               <tr key={row.rowIndex}>
                 {row.map((tileId, colIndex) => (
                   <th key={tileId.colIndex}>
@@ -30,4 +31,3 @@ function Board(props) {
 }
 
 export default Board;
-

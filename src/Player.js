@@ -17,15 +17,15 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.action, false)
+    document.addEventListener('keydown', this.action, false);
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.action, false)
+    document.removeEventListener('keydown', this.action, false);
   }
 
   getPokemon() {
-    const randomPokemon = Math.ceil(Math.random() * Math.floor(151))
+    const randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     fetch(`https://pokeapi.co/api/v2/pokemon/${randomPokemon}`)
       .then(response => response.json())
       .then((data) => {
@@ -37,13 +37,17 @@ class Player extends Component {
 
   //    Checks if tile is an obstacle in the labyrinth after a move (tiles named "500"+)
   checkTile(x, y) {
-    if (parseInt(this.props.labyrinth[this.state.posY + y][this.state.posX + x]) >= 500) {
+    const { labyrinth } = this.props;
+    const { posX, posY } = this.state;
+    if (parseInt(labyrinth[posY + y][posX + x], 10) >= 500) {
       return false;
     }
     return true;
   }
 
   action(event) {
+    let { posX, posY } = this.state;
+    const { labyrinth } = this.props;
     // MOVES
     if (this.canMove
       && (event.keyCode === 39
@@ -55,33 +59,33 @@ class Player extends Component {
       // Move right
       if (event.keyCode === 39) {
         this.setState({ img: 'charRight' });
-        if (this.state.posX + 1 < this.props.labyrinth[this.state.posY].length
+        if (posX + 1 < labyrinth[posY].length
           && this.checkTile(1, 0)) {
-          const posX = this.state.posX + 1;
+          posX += 1;
           this.setState({ posX });
         }
       }
       // Move left
       if (event.keyCode === 37) {
         this.setState({ img: 'charLeft' });
-        if (this.state.posX > 0 && this.checkTile(-1, 0)) {
-          const posX = this.state.posX - 1;
+        if (posX > 0 && this.checkTile(-1, 0)) {
+          posX -= 1;
           this.setState({ posX });
         }
       }
       // Move down
       if (event.keyCode === 40) {
         this.setState({ img: 'charBottom' });
-        if (this.state.posY + 1 < this.props.labyrinth.length && this.checkTile(0, 1)) {
-          const posY = this.state.posY + 1;
+        if (posY + 1 < labyrinth.length && this.checkTile(0, 1)) {
+          posY += 1;
           this.setState({ posY });
         }
       }
       // Move up
       if (event.keyCode === 38) {
         this.setState({ img: 'charTop' });
-        if (this.state.posY > 0 && this.checkTile(0, -1)) {
-          const posY = this.state.posY - 1;
+        if (posY > 0 && this.checkTile(0, -1)) {
+          posY -= 1;
           this.setState({ posY });
         }
       }
@@ -89,34 +93,38 @@ class Player extends Component {
       // Move delay value
       setTimeout(() => {
         this.canMove = true;
-      }, 200)
-      this.props.getPlayerPos(this.state.posX, this.state.posY);
+      }, 200);
+      const { getPlayerPos } = this.props;
+      getPlayerPos(posX, posY);
     }
     // To do :
     // Activate abilities
   }
 
   render() {
+    const {
+      img, posX, posY, pixelsPerTile, pokemon,
+    } = this.state;
     //  Player CSS
     const playerStyle = {
       position: 'absolute',
       zIndex: 1,
-      backgroundImage: `url(./assets/characters/${this.state.img}.png`,
+      backgroundImage: `url(./assets/characters/${img}.png`,
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
       height: '48px',
       width: '48px',
       transitionDuration: '400ms',
       // To do: cleaner calculation
-      top: `${this.state.posY * this.state.pixelsPerTile}px`,
-      left: `${11 + this.state.posX * this.state.pixelsPerTile}px`
+      top: `${posY * pixelsPerTile}px`,
+      left: `${11 + posX * pixelsPerTile}px`,
     };
 
     return (
       <div className="player">
         <div style={playerStyle} />
         <GeneratePokemon selectPokemon={() => this.getPokemon()} />
-        <DisplayPokemon pokemon={this.state.pokemon} />
+        <DisplayPokemon pokemon={pokemon} />
       </div>
 
     );

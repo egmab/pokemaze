@@ -4,11 +4,14 @@ function Tile(props) {
   // Looking for items
   // if no item on tile:
   let tile;
-  if (props.items[props.rowIndex][props.colIndex] === '000') {
+  const {
+    items, rowIndex, colIndex, tileId,
+  } = props;
+  if (items[rowIndex][colIndex] === '000') {
     tile = (
       <div
         className="Tile"
-        style={{ background: `url(${`./assets/tiles/${props.tileId}.png`})` }}
+        style={{ background: `url(${`./assets/tiles/${tileId}.png`})` }}
       />
     );
     // if item found on tile, display the item and tile:
@@ -17,7 +20,7 @@ function Tile(props) {
       <div
         className="Tile"
         style={{
-          background: `url(${`./assets/items/${props.items[props.rowIndex][props.colIndex]}.png`}), url(${`./assets/tiles/${props.tileId}.png`})`,
+          background: `url(${`./assets/items/${items[rowIndex][colIndex]}.png`}), url(${`./assets/tiles/${tileId}.png`})`,
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           backgroundSize: '70%,contain',
