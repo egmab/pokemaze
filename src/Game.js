@@ -4,8 +4,27 @@ import Player from './Player'
 import Chrono from './Chrono'
 
 class Game extends Component {
+  constructor(props) {
+    super(props)
+    this.getPlayerPos = this.getPlayerPos.bind(this)
+    this.player = {
+      posX: '',
+      posY: '',
+    }
+  }
+  componentWillMount() {
+    this.player.posX = this.props.playerX
+    this.player.posY = this.props.playerY
+  }
+
+  getPlayerPos(x, y) {
+    this.player.posX = x
+    this.player.posY = y
+    if (this.props.items[this.player.posY][this.player.posX] !== "000") {
+      alert('pokeball')
+    }
+  }
   render() {
-    // TO DO : put items, starting points etc. in labyrinths.json => rename it to game.json or something
     return (
       <div className="Game">
         {/*    TO DO
@@ -13,7 +32,7 @@ class Game extends Component {
         <Capacities />
         */}
         <Board labyrinth={this.props.labyrinth} items={this.props.items} />
-        <Player labyrinth={this.props.labyrinth} />
+        <Player labyrinth={this.props.labyrinth} getPlayerPos={this.getPlayerPos} />
         <Chrono count={this.props.count}/>
       </div>
     );

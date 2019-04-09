@@ -58,10 +58,12 @@ class Player extends Component {
           this.setState({ posY })
         }
       }
+      
       // Move delay value
       setTimeout(() => {
         this.canMove = true
       }, 200)
+      this.props.getPlayerPos(this.state.posX, this.state.posY)
     }
     // To do :
     // Activate abilities
