@@ -89,7 +89,7 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, pokemon,
+      img, posX, posY, pixelsPerTile,
     } = this.state;
     //  Player CSS
     const playerStyle = {

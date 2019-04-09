@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import Board from './Board'
 import Player from './Player'
 import DisplayPokemon from './DisplayPokemon'
@@ -61,11 +60,11 @@ class Game extends Component {
     const { labyrinth, items, count } = this.props;
     return (
       <div className="Game">
-        <Board labyrinth={this.props.labyrinth} items={this.props.items} />
-        <Player labyrinth={this.props.labyrinth} getPlayerPos={this.getPlayerPos} />
+        <Board labyrinth={labyrinth} items={items} />
+        <Player labyrinth={labyrinth} getPlayerPos={this.getPlayerPos} />
         { this.state.isWinner ? <DisplayPokemon title="Congrats !" message="You win" pokemon={this.state.pokemon} />: null }
         { this.state.isLoser ? <DisplayPokemon title= "Too late !" message="You lose" pokemon={this.state.pokemon} />: null }
-        <Chrono count={this.props.count} getTime={this.getTime}/>
+        <Chrono count={count} getTime={this.getTime}/>
       </div>
     );
   }
