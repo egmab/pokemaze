@@ -1,26 +1,32 @@
 import React, { Component } from 'react';
 import './App.css';
+import * as Labyrinths from './labyrinths.json'
+import * as Items from './items.json'
+
+
 
 class App extends Component {
   render() {
+    // TO DO : choose the level
+    const labyrinth = Labyrinths.labyrinth1
+    const items = Items.labyrinth1_items
     return (
-      <Game />
+      <Game labyrinth={labyrinth} items={items}/>
     )
   }
 }
 
 class Game extends Component {
   render() {
-    const labyrinths = require('./labyrinths.json');
-    const labyrinth = labyrinths.labyrinth1
+    // TO DO : put items, starting points etc. in labyrinths.json => rename it to game.json or something
     return (
       <div className="Game">
-{/*    TO DO
+        {/*    TO DO
         <Chrono />
         <Capacities />
-*/}
-        <Board labyrinth={labyrinth} />
-        <Player labyrinth={labyrinth} />
+        */}
+        <Board labyrinth={this.props.labyrinth} items={this.props.items} />
+        <Player labyrinth={this.props.labyrinth}/>
       </div>
     );
   }
@@ -37,7 +43,7 @@ class Board extends Component {
                 <tr key={rowIndex}>
                   {row.map((tileId, colIndex) =>
                     <th key={colIndex}>
-                      <Tile tileId={tileId} />
+                      <Tile tileId={tileId} items={this.props.items} rowIndex={rowIndex} colIndex={colIndex} labyrinth={this.props.labyrinth} />
                     </th>
                   )}
                 </tr>
@@ -52,14 +58,36 @@ class Board extends Component {
 
 class Tile extends Component {
   render() {
-    return (
+    // Looking for items
+    // if no item on tile:
+    let tile
+    if (this.props.items[this.props.rowIndex][this.props.colIndex] === "000"){
+      tile =
+        <div
+          className="Tile"
+          style={{ background: `url(${"./assets/tiles/" + this.props.tileId + ".png"})` }}
+        />
+    // if item found on tile, display the item and tile:
+    } else {
+      tile =
       <div
         className="Tile"
-        style={{ backgroundImage: `url(${"./assets/tiles/" + this.props.tileId + ".png"})` }}
+        style={{ 
+          background: `url(${"./assets/items/"+ this.props.items[this.props.rowIndex][this.props.colIndex]+".png"}), url(${"./assets/tiles/" + this.props.tileId + ".png"})`,
+          backgroundPosition:"center",
+          backgroundRepeat: 'no-repeat',
+          backgroundSize:'70%,contain'
+        }}
       />
+    }
+    return (
+      <div>
+        {tile}
+      </div>
     );
   }
 }
+
 
 class Player extends Component {
   constructor(props) {
@@ -70,7 +98,8 @@ class Player extends Component {
       posX: 1,
       posY: 0,
       img: 'charBottom',
-      pixelsPerTile: 48
+      pixelsPerTile: 48,
+      pokemon: {"name": "pikachu"}
     }
   }
   //    Checks if tile is an obstacle in the labyrinth after a move (tiles named "500"+)
@@ -79,51 +108,62 @@ class Player extends Component {
       return false
     return true
   }
+  
   action(event) {
     // MOVES
     if (this.canMove && (event.keyCode === 39 || event.keyCode === 37 || event.keyCode === 40 || event.keyCode === 38)) {
-        this.canMove = false
-        // Move right
-        if (event.keyCode === 39) {
-          this.setState({ img: "charRight" })
-          if (this.state.posX + 1 < this.props.labyrinth[this.state.posY].length && this.checkTile(1, 0)) {
-            const posX = this.state.posX + 1
-            this.setState({ posX })
-          }
+      this.canMove = false
+      // Move right
+      if (event.keyCode === 39) {
+        this.setState({ img: "charRight" })
+        if (this.state.posX + 1 < this.props.labyrinth[this.state.posY].length && this.checkTile(1, 0)) {
+          const posX = this.state.posX + 1
+          this.setState({ posX })
         }
-        // Move left
-        if (event.keyCode === 37) {
-          this.setState({ img: "charLeft" })
-          if (this.state.posX > 0 && this.checkTile(-1, 0)) {
-            const posX = this.state.posX - 1
-            this.setState({ posX })
-          }
+      }
+      // Move left
+      if (event.keyCode === 37) {
+        this.setState({ img: "charLeft" })
+        if (this.state.posX > 0 && this.checkTile(-1, 0)) {
+          const posX = this.state.posX - 1
+          this.setState({ posX })
         }
-        // Move down
-        if (event.keyCode === 40) {
-          this.setState({ img: "charBottom" })
-          if (this.state.posY + 1 < this.props.labyrinth.length && this.checkTile(0, 1)) {
-            const posY = this.state.posY + 1
-            this.setState({ posY })
-          }
+      }
+      // Move down
+      if (event.keyCode === 40) {
+        this.setState({ img: "charBottom" })
+        if (this.state.posY + 1 < this.props.labyrinth.length && this.checkTile(0, 1)) {
+          const posY = this.state.posY + 1
+          this.setState({ posY })
         }
-        // Move up
-        if (event.keyCode === 38) {
-          this.setState({ img: "charTop" })
-          if (this.state.posY > 0 && this.checkTile(0, -1)) {
-            const posY = this.state.posY - 1
-            this.setState({ posY })
-          }
+      }
+      // Move up
+      if (event.keyCode === 38) {
+        this.setState({ img: "charTop" })
+        if (this.state.posY > 0 && this.checkTile(0, -1)) {
+          const posY = this.state.posY - 1
+          this.setState({ posY })
         }
+      }
       // Move delay value
-        setTimeout(() => { this.canMove = true
+      setTimeout(() => {
+      this.canMove = true
       }, 200)
     }
     // To do :
     // Activate abilities
 
   }
-
+  getPokemon() {
+    const randomPokemon = Math.ceil(Math.random() * Math.floor(151))
+    fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemon)
+      .then(response  =>  response.json())
+      .then(data  => {
+        this.setState({
+          pokemon:  data,
+        });
+    });
+  }
 
   componentDidMount() {
     document.addEventListener("keydown", this.action, false)
@@ -142,17 +182,58 @@ class Player extends Component {
       backgroundRepeat: "no-repeat",
       height: "48px",
       width: "48px",
-      transitionDuration: "500ms",
+      transitionDuration: "400ms",
       // To do: cleaner calculation
       top: this.state.posY * this.state.pixelsPerTile + 'px',
       left: 11 + this.state.posX * this.state.pixelsPerTile + 'px'
     }
 
     return (
-      <div style={playerStyle} />
+      <div className="player">
+        <div style={playerStyle} />
+        <GeneratePokemon  selectPokemon={() =>  this.getPokemon()}  />
+        <DisplayPokemon  pokemon={this.state.pokemon}  />
+      </div>
+
     );
   }
 }
+
+
+const  DisplayPokemon = ({ pokemon }) => {
+    const pokemonName = pokemon.name
+    //const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
+     switch (pokemonName) {
+      case "nidoran-f":
+        pokemonName = "nidoranf";
+        break;
+      case "nidoran-m":
+        pokemonName = "nidoranm";
+        break;
+      case "deoxys-normal":
+        pokemonName = "deoxys";
+        break;
+    }
+    return (
+        <div  className="DisplayPokemon">
+          <img  src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt="picture"  />
+          <h3>You win {pokemonName} !</h3>
+        </div>
+    );
+};
+
+const  GeneratePokemon = ({ selectPokemon}) => {
+    return (
+        <div  className="GeneratePokemon">
+        <button  onClick={selectPokemon}>Get pokemon</button>
+        </div>
+    );
+};
+
+
+
+
+
 /*          TO DO
 class Chrono extends Component {
   render() {

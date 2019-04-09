@@ -14,27 +14,26 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
- "eslintConfig": {
-  "extends": "airbnb",
-  "parser": "babel-eslint",
-  "env": {
-    "es6": true,
-    "browser": true
+  "eslintConfig": {
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "parserOptions": {
+      "sourceType": "module"
+    },
+    "rules": {
+      "react/jsx-filename-extension": [
+        "js",
+        "jsx"
+      ],
+      "jsx-a11y/href-no-hash": "off",
+      "jsx-a11y/mouse-events-have-key-events": "off",
+      "react/prop-types": "off"
+    }
   },
-  "parserOptions": {
-    "sourceType": "module"
-  },
-  "rules": {
-    "react/jsx-filename-extension": [
-      "js",
-      "jsx"
-    ],
-    "jsx-a11y/href-no-hash": "off",
-    "jsx-a11y/mouse-events-have-key-events": "off",
-    "react/prop-types": "off"
-  }
-},
-
   "browserslist": [
     ">0.2%",
     "not dead",
