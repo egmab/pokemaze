@@ -10,8 +10,9 @@ class Player extends Component {
       posY: 0,
       img: 'charBottom',
       pixelsPerTile: 48,
+    };
   }
-}
+
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
   }
