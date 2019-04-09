@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DisplayPokemon = ({ pokemon }) => {
+const DisplayPokemon = ({ pokemon, message }) => {
   let pokemonName = pokemon.name
   //const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
   switch (pokemonName) {
@@ -19,7 +19,7 @@ const DisplayPokemon = ({ pokemon }) => {
   return (
     <div className="DisplayPokemon">
       <img src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-      <h3>You win {pokemonName} !</h3>
+      <h3>{message} {pokemonName} !</h3>
     </div>
   );
 };

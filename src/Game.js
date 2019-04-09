@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Board from './Board'
 import Player from './Player'
+import GeneratePokemon from './GeneratePokemon'
+import DisplayPokemon from './DisplayPokemon'
 
 class Game extends Component {
   constructor(props) {
@@ -9,6 +11,11 @@ class Game extends Component {
     this.player = {
       posX: '',
       posY: '',
+    }
+    this.state= {
+      pokemon: { "name": "pikachu" },
+      isWinner: false,
+      isLoser: false
     }
   }
   componentWillMount() {
@@ -20,8 +27,21 @@ class Game extends Component {
     this.player.posX = x
     this.player.posY = y
     if (this.props.items[this.player.posY][this.player.posX] !== "000") {
-      alert('pokeball')
+      this.setState({
+        isWinner: true
+      })
+      this.getPokemon()
     }
+  }
+  getPokemon() {
+    const randomPokemon = Math.ceil(Math.random() * Math.floor(151))
+    fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemon)
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          pokemon: data,
+        });
+      });
   }
   render() {
     return (
@@ -32,6 +52,7 @@ class Game extends Component {
         */}
         <Board labyrinth={this.props.labyrinth} items={this.props.items} />
         <Player labyrinth={this.props.labyrinth} getPlayerPos={this.getPlayerPos} />
+         { this.state.isWinner ? <DisplayPokemon message="You win" pokemon={this.state.pokemon} />: null }
       </div>
     );
   }
