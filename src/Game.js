@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Board from './Board'
 import Player from './Player'
+<<<<<<< HEAD
 import GeneratePokemon from './GeneratePokemon'
 import DisplayPokemon from './DisplayPokemon'
+import Chrono from './Chrono'
 
 class Game extends Component {
   constructor(props) {
@@ -53,6 +55,7 @@ class Game extends Component {
         <Board labyrinth={this.props.labyrinth} items={this.props.items} />
         <Player labyrinth={this.props.labyrinth} getPlayerPos={this.getPlayerPos} />
          { this.state.isWinner ? <DisplayPokemon message="You win" pokemon={this.state.pokemon} />: null }
+        <Chrono count={this.props.count}/>
       </div>
     );
   }

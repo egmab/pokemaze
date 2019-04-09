@@ -12,7 +12,7 @@ class App extends Component {
     const labyrinth = Labyrinths.labyrinth1
     const items = Items.labyrinth1_items
     return (
-      <Game labyrinth={labyrinth} items={items} playerX='0' playerY='0'/>
+      <Game labyrinth={labyrinth} items={items} count='120' playerX='0' playerY='0'/>
     )
   }
 }
