@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+    // TO DO : put items, starting points etc. in labyrinths.json => rename it to game.json or something
 import * as Labyrinths from './labyrinths.json'
 import * as Items from './items.json'
 import Game from './Game'
@@ -11,7 +12,7 @@ class App extends Component {
     const labyrinth = Labyrinths.labyrinth1
     const items = Items.labyrinth1_items
     return (
-      <Game labyrinth={labyrinth} items={items} />
+      <Game labyrinth={labyrinth} items={items} playerX='0' playerY='0'/>
     )
   }
 }
