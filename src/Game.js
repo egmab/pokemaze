@@ -23,16 +23,19 @@ class Game extends Component {
   }
 
   componentWillMount() {
-    this.player.posX = this.props.playerX
-    this.player.posY = this.props.playerY
+    const { playerX } = this.props;
+    const { playerY } = this.props;
+    this.player.posX = playerX;
+    this.player.posY = playerY;
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151))
     this.getPokemon()
   }
 
   getPlayerPos(x, y) {
+    const { items } = this.props;
     this.player.posX = x
     this.player.posY = y
-    if (this.props.items[this.player.posY][this.player.posX] !== "000") {
+    if (items[this.player.posY][this.player.posX] !== "000") {
       this.setState({
         isWinner: true
       })
