@@ -4,6 +4,7 @@ import * as Labyrinths from './labyrinths.json'
 import * as Items from './items.json'
 
 
+
 class App extends Component {
   render() {
     // TO DO : choose the level
@@ -87,6 +88,7 @@ class Tile extends Component {
   }
 }
 
+
 class Player extends Component {
   constructor(props) {
     super(props)
@@ -96,7 +98,8 @@ class Player extends Component {
       posX: 1,
       posY: 0,
       img: 'charBottom',
-      pixelsPerTile: 48
+      pixelsPerTile: 48,
+      pokemon: {"name": "pikachu"}
     }
   }
   //    Checks if tile is an obstacle in the labyrinth after a move (tiles named "500"+)
@@ -105,6 +108,7 @@ class Player extends Component {
       return false
     return true
   }
+  
   action(event) {
     // MOVES
     if (this.canMove && (event.keyCode === 39 || event.keyCode === 37 || event.keyCode === 40 || event.keyCode === 38)) {
@@ -150,7 +154,16 @@ class Player extends Component {
     // Activate abilities
 
   }
-
+  getPokemon() {
+    const randomPokemon = Math.floor(Math.random() * Math.floor(150))
+    fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemon)
+      .then(response  =>  response.json())
+      .then(data  => {
+        this.setState({
+          pokemon:  data,
+        });
+    });
+  }
 
   componentDidMount() {
     document.addEventListener("keydown", this.action, false)
@@ -176,10 +189,52 @@ class Player extends Component {
     }
 
     return (
-      <div style={playerStyle} />
+      <div className="player">
+        <div style={playerStyle} />
+        <GeneratePokemon  selectPokemon={() =>  this.getPokemon()}  />
+        <DisplayPokemon  pokemon={this.state.pokemon}  />
+      </div>
+
     );
   }
 }
+
+
+const  DisplayPokemon = ({ pokemon }) => {
+    let pokemonName = pokemon.name
+    let pokemonSprites = { ...pokemon}.sprites
+        console.log(pokemonSprites)
+     switch (pokemonName) {
+      case "nidoran-f":
+        pokemonName = "nidoranf";
+        break;
+      case "nidoran-m":
+        pokemonName = "nidoranm";
+        break;
+      case "deoxys-normal":
+        pokemonName = "deoxys";
+        break;
+    }
+    return (
+        <div  className="DisplayPokemon">
+          <img  src={`http://pokestadium.com/sprites/xy/${pokemon.name}.gif`} alt="picture"  />
+          <h3>You win {pokemonName} !</h3>
+        </div>
+    );
+};
+
+const  GeneratePokemon = ({ selectPokemon}) => {
+    return (
+        <div  className="GeneratePokemon">
+        <button  onClick={selectPokemon}>Get pokemon</button>
+        </div>
+    );
+};
+
+
+
+
+
 /*          TO DO
 class Chrono extends Component {
   render() {
