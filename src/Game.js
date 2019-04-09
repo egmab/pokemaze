@@ -39,7 +39,6 @@ class Game extends Component {
   }
 
   getTime(count){
-    console.log(count)
     if (count === 0){
       this.setState({
         isLoser: true
