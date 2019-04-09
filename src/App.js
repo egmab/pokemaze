@@ -155,7 +155,7 @@ class Player extends Component {
 
   }
   getPokemon() {
-    const randomPokemon = Math.floor(Math.random() * Math.floor(150))
+    const randomPokemon = Math.ceil(Math.random() * Math.floor(151))
     fetch("https://pokeapi.co/api/v2/pokemon/" + randomPokemon)
       .then(response  =>  response.json())
       .then(data  => {
@@ -201,9 +201,8 @@ class Player extends Component {
 
 
 const  DisplayPokemon = ({ pokemon }) => {
-    let pokemonName = pokemon.name
-    let pokemonSprites = { ...pokemon}.sprites
-        console.log(pokemonSprites)
+    const pokemonName = pokemon.name
+    //const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
      switch (pokemonName) {
       case "nidoran-f":
         pokemonName = "nidoranf";
@@ -217,7 +216,7 @@ const  DisplayPokemon = ({ pokemon }) => {
     }
     return (
         <div  className="DisplayPokemon">
-          <img  src={`http://pokestadium.com/sprites/xy/${pokemon.name}.gif`} alt="picture"  />
+          <img  src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt="picture"  />
           <h3>You win {pokemonName} !</h3>
         </div>
     );
