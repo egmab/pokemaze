@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import Board from './Board'
 import Player from './Player'
 import DisplayPokemon from './DisplayPokemon'
@@ -21,6 +22,7 @@ class Game extends Component {
       
     }
   }
+
   componentWillMount() {
     this.player.posX = this.props.playerX
     this.player.posY = this.props.playerY
@@ -56,12 +58,9 @@ class Game extends Component {
       });
   }
   render() {
+    const { labyrinth, items, count } = this.props;
     return (
       <div className="Game">
-        {/*    TO DO
-        <Chrono />
-        <Capacities />
-        */}
         <Board labyrinth={this.props.labyrinth} items={this.props.items} />
         <Player labyrinth={this.props.labyrinth} getPlayerPos={this.getPlayerPos} />
         { this.state.isWinner ? <DisplayPokemon title="Congrats !" message="You win" pokemon={this.state.pokemon} />: null }
@@ -72,4 +71,4 @@ class Game extends Component {
   }
 }
 
-export default Game
+export default Game;

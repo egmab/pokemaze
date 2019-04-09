@@ -1,17 +1,19 @@
 import React from 'react';
 
+
 const DisplayPokemon = ({ pokemon, message, title }) => {
   let pokemonName = pokemon.name
   //const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
+
   switch (pokemonName) {
-    case "nidoran-f":
-      pokemonName = "nidoranf";
+    case 'nidoran-f':
+      pokemonName = 'nidoranf';
       break;
-    case "nidoran-m":
-      pokemonName = "nidoranm";
+    case 'nidoran-m':
+      pokemonName = 'nidoranm';
       break;
-    case "deoxys-normal":
-      pokemonName = "deoxys";
+    case 'deoxys-normal':
+      pokemonName = 'deoxys';
       break;
     default:
       break;
@@ -25,4 +27,4 @@ const DisplayPokemon = ({ pokemon, message, title }) => {
   );
 };
 
-export default DisplayPokemon
+export default DisplayPokemon;
