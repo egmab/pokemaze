@@ -42,7 +42,7 @@ class Chrono extends Component {
     }
     return (
       <div className='Timer'>
-        <h1>{this.format(count)}</h1>
+        <h1 className='Count'>{this.format(count)}</h1>
       </div>
 
     );

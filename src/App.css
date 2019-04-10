@@ -43,10 +43,19 @@ table {
     width: 60px;
 }
 
-.Timer {
-  background-image: url('./assets/pokemons/ronflex.png');
+.Timer{
+  display: flex;
+  justify-content: center;
+}
+
+.Count{
+  padding-bottom: 5%;
+  padding-top: 8%;
+  background-image: url('./assets/pokemons/ronflex1.png');
   background-repeat: no-repeat;
-  padding-bottom: 20px;
+  background-position: center;
+  width: 20%;
+  height: 10%;
 }
 
 
