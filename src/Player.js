@@ -47,6 +47,7 @@ class Player extends Component {
   action(event) {
     let { posX, posY } = this.state;
     const { tiles } = this.props;
+    const { canMove } = this.props;
     // MOVES
     /* if(event.keyCode === 39 && this.state.count === 0){
       this.setState({count: this.state.count =  this.state.count + 1});
@@ -54,7 +55,7 @@ class Player extends Component {
     } */
 
 
-    if (this.canMove && this.props.canMove
+    if (this.canMove && canMove
       && (event.keyCode === 39
         || event.keyCode === 37
         || event.keyCode === 40
