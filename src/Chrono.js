@@ -41,8 +41,8 @@ class Chrono extends Component {
       clearInterval(this.timer);
     }
     return (
-      <div>
-        <h1>{this.format(count)}</h1>
+      <div className='Timer'>
+        <h1 className='Count'>{this.format(count)}</h1>
       </div>
 
     );

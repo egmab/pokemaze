@@ -42,6 +42,22 @@ table {
     height: 60px;
     width: 60px;
 }
+
+.Timer{
+  display: flex;
+  justify-content: center;
+}
+
+.Count{
+  line-height: 20vh;
+  background-image: url('./assets/pokemons/ronflex1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 20%;
+  height: 15vh;
+}
+
+
 @keyframes beat{
 	to { transform: scale(1.4); }
 }
