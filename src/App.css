@@ -28,9 +28,10 @@ table {
     width: 60px;
 }
 
-.Timer{
+.Timer {
   background-image: url('./assets/pokemons/ronflex.png');
   background-repeat: no-repeat;
+  padding-bottom: 20px;
 }
 
 
