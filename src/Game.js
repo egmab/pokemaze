@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Board from './Board';
 import Player from './Player';
-import DisplayPokemon from './DisplayPokemon';
+import EndingGame from './EndingGame';
 import Chrono from './Chrono';
 
 class Game extends Component {
@@ -65,9 +65,11 @@ class Game extends Component {
           startingPositions={this.level.startingPositions}
           getPlayerPos={this.getPlayerPos}
         />
-        {isWinner ? <DisplayPokemon title="Congrats !" message="You win" pokemon={pokemon} /> : null}
-        {isLoser ? <DisplayPokemon title="Too late !" message="You lose" pokemon={pokemon} /> : null}
-        <Chrono count={this.level.timer} getTime={this.getTime} />
+        {isWinner || isLoser
+          ? <EndingGame isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          : null
+        }
+        <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
       </div>
     );
   }
