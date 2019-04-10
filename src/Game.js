@@ -22,9 +22,8 @@ class Game extends Component {
   }
 
   componentWillMount() {
-    const { playerX, playerY } = this.props;
-    this.player.posX = playerX;
-    this.player.posY = playerY;
+    const { tiles, items, startingPositions, timer } = this.props.labyrinth;
+    alert(this.props.labyrinth.timer)
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.getPokemon();
   }
