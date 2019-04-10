@@ -12,7 +12,7 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
   }
   if (isLoser) {
     title = 'Too late !';
-    message = 'You win';
+    message = 'You lose';
   }
 
   switch (pokemonName) {
