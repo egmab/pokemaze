@@ -1,8 +1,20 @@
 import React from 'react';
 
-const DisplayPokemon = ({ pokemon }) => {
+
+const EndingGame = ({ pokemon, isWinner, isLoser }) => {
   let pokemonName = pokemon.name;
   // const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
+  let title = '';
+  let message = '';
+  if (isWinner) {
+    title = 'Congrats !';
+    message = 'You win';
+  }
+  if (isLoser) {
+    title = 'Too late !';
+    message = 'You lose';
+  }
+
   switch (pokemonName) {
     case 'nidoran-f':
       pokemonName = 'nidoranf';
@@ -17,15 +29,18 @@ const DisplayPokemon = ({ pokemon }) => {
       break;
   }
   return (
-    <div className="DisplayPokemon">
+    <div className="EndingGame">
+      <h3>{title}</h3>
       <img src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-      <h3>
-        You win
+      <p>
+        {message}
+        {' '}
         {pokemonName}
+        {' '}
         !
-      </h3>
+      </p>
     </div>
   );
 };
 
-export default DisplayPokemon;
+export default EndingGame;

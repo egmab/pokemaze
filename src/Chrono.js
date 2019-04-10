@@ -4,11 +4,10 @@ class Chrono extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      count: 0,
+      count: undefined,
       running: false,
     };
   }
-
   componentWillMount() {
     this.timer = setInterval(() => {
       const newCount = this.state.count - 1;
@@ -16,11 +15,16 @@ class Chrono extends Component {
         count: newCount >= 0 ? newCount : 0,
         running: true,
       });
+      if (newCount === 0) {
+        clearInterval(this.timer);
+      }
+      this.props.getTime(newCount)
     }, 1000);
   }
 
   componentDidMount() {
     this.setState({ count: this.props.count });
+    this.setState({ isWinner: this.props.isWinner });
   }
 
   format(time) {
@@ -33,6 +37,9 @@ class Chrono extends Component {
 
   render() {
     const { count } = this.state;
+    if (this.props.isWinner) {
+      clearInterval(this.timer);
+    }
     return (
       <div>
         <h1>{this.format(count)}</h1>
