@@ -2,6 +2,21 @@
   text-align: center;
 }
 
+.Board
+{
+  border-style: solid;
+  border-radius: 3vh;
+  border-color: grey;
+  overflow: hidden;
+  width: 145.1vh;
+}
+
+.gameContainer
+{
+  position: relative;
+  margin-left: 24vh;
+}
+
 th {
   padding: 0;
 }
