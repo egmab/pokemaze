@@ -13,13 +13,13 @@ class Player extends Component {
       img: 'charBottom',
       pixelsPerTile: 48,
       pokemon: { name: 'pikachu' },
+      //count: 0
     };
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
   }
-
   componentWillUnmount() {
     document.removeEventListener('keydown', this.action, false);
   }
@@ -45,10 +45,27 @@ class Player extends Component {
     return true;
   }
 
+  /*walk()
+  {
+    setInterval(() => {
+      if(this.state.img === 'charRight' )
+      this.setState({ img: 'charRightFeet' });
+      else
+      this.setState({ img: 'charRight' });
+    }, 1000);
+  }
+  */
+
   action(event) {
     let { posX, posY } = this.state;
     const { labyrinth } = this.props;
     // MOVES
+    /*if(event.keyCode === 39 && this.state.count === 0){
+      this.setState({count: this.state.count =  this.state.count + 1});
+      this.walk();
+    }*/
+
+
     if (this.canMove
       && (event.keyCode === 39
         || event.keyCode === 37
@@ -89,15 +106,14 @@ class Player extends Component {
           this.setState({ posY });
         }
       }
-
-      // Move delay value
-      setTimeout(() => {
-        this.canMove = true;
-      }, 200);
+    // To do :
+     // Move delay value
+     setTimeout(() => {
+      this.canMove = true;
+      }, 300);
       const { getPlayerPos } = this.props;
       getPlayerPos(posX, posY);
     }
-    // To do :
     // Activate abilities
   }
 
@@ -114,7 +130,9 @@ class Player extends Component {
       backgroundRepeat: 'no-repeat',
       height: '48px',
       width: '48px',
-      transitionDuration: '400ms',
+      marginTop: '-1.5vh',
+      marginLeft: '-0.2vh',
+      transitionDuration: '600ms',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}px`,
       left: `${11 + posX * pixelsPerTile}px`,

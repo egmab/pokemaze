@@ -24,7 +24,7 @@ class Game extends Component {
     const { items } = this.props;
     this.player.posX = x;
     this.player.posY = y;
-    if (items[this.player.posY][this.player.posX] !== '000') {
+    if (items[this.player.posY][this.player.posX] === '001') {
       alert('pokeball');
     }
   }
@@ -33,9 +33,11 @@ class Game extends Component {
     const { labyrinth, items, count } = this.props;
     return (
       <div className="Game">
-        <Board labyrinth={labyrinth} items={items} />
-        <Player labyrinth={labyrinth} getPlayerPos={this.getPlayerPos} />
-        <Chrono count={count} />
+          <Chrono count={count} />
+        <div className="gameContainer">
+          <Board labyrinth={labyrinth} items={items} />
+          <Player className="player" labyrinth={labyrinth} getPlayerPos={this.getPlayerPos} />
+        </div>
       </div>
     );
   }
