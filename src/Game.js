@@ -9,11 +9,13 @@ class Game extends Component {
     super(props);
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
-    this.randomPokemon = undefined;
+    const { level } = props;
+    this.level = level;
     this.player = {
-      posX: '',
-      posY: '',
+      posX: null,
+      posY: null,
     };
+    this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
       pokemon: undefined,
       isWinner: false,
@@ -22,17 +24,13 @@ class Game extends Component {
   }
 
   componentWillMount() {
-    const { tiles, items, startingPositions, timer } = this.props.labyrinth;
-    alert(this.props.labyrinth.timer)
-    this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.getPokemon();
   }
 
   getPlayerPos(x, y) {
-    const { items } = this.props;
     this.player.posX = x;
     this.player.posY = y;
-    if (items[this.player.posY][this.player.posX] === '001') {
+    if (this.level.items[this.player.posY][this.player.posX] === '001') {
       this.setState({
         isWinner: true,
       });
@@ -58,15 +56,18 @@ class Game extends Component {
   }
 
   render() {
-    const { labyrinth, items, count } = this.props;
     const { isWinner, isLoser, pokemon } = this.state;
     return (
       <div className="Game">
-        <Board labyrinth={labyrinth} items={items} />
-        <Player labyrinth={labyrinth} getPlayerPos={this.getPlayerPos} />
+        <Board tiles={this.level.tiles} items={this.level.items} />
+        <Player
+          tiles={this.level.tiles}
+          startingPositions={this.level.startingPositions}
+          getPlayerPos={this.getPlayerPos}
+        />
         {isWinner ? <DisplayPokemon title="Congrats !" message="You win" pokemon={pokemon} /> : null}
         {isLoser ? <DisplayPokemon title="Too late !" message="You lose" pokemon={pokemon} /> : null}
-        <Chrono count={count} getTime={this.getTime} />
+        <Chrono count={this.level.timer} getTime={this.getTime} />
       </div>
     );
   }

@@ -6,8 +6,8 @@ class Player extends Component {
     this.action = this.action.bind(this);
     this.canMove = true;
     this.state = {
-      posX: 1,
-      posY: 0,
+      posX: props.startingPositions.player1.x,
+      posY: props.startingPositions.player1.y,
       img: 'charBottom',
       pixelsPerTile: 48,
     };
@@ -22,11 +22,11 @@ class Player extends Component {
   }
 
 
-  //    Checks if tile is an obstacle in the labyrinth after a move (tiles named "500"+)
+  //    Checks if tile is an obstacle in the level after a move (tiles named "500"+)
   checkTile(x, y) {
-    const { labyrinth } = this.props;
+    const { tiles } = this.props;
     const { posX, posY } = this.state;
-    if (parseInt(labyrinth[posY + y][posX + x], 10) >= 500) {
+    if (parseInt(tiles[posY + y][posX + x], 10) >= 500) {
       return false;
     }
     return true;
@@ -34,7 +34,7 @@ class Player extends Component {
 
   action(event) {
     let { posX, posY } = this.state;
-    const { labyrinth } = this.props;
+    const { tiles } = this.props;
     // MOVES
     if (this.canMove
       && (event.keyCode === 39
@@ -46,7 +46,7 @@ class Player extends Component {
       // Move right
       if (event.keyCode === 39) {
         this.setState({ img: 'charRight' });
-        if (posX + 1 < labyrinth[posY].length
+        if (posX + 1 < tiles[posY].length
           && this.checkTile(1, 0)) {
           posX += 1;
           this.setState({ posX });
@@ -63,7 +63,7 @@ class Player extends Component {
       // Move down
       if (event.keyCode === 40) {
         this.setState({ img: 'charBottom' });
-        if (posY + 1 < labyrinth.length && this.checkTile(0, 1)) {
+        if (posY + 1 < tiles.length && this.checkTile(0, 1)) {
           posY += 1;
           this.setState({ posY });
         }

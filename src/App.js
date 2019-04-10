@@ -14,7 +14,7 @@ const App = () => {
   return (
     <div>
       <Game
-        labyrinth={selectedLevel}
+        level={selectedLevel}
       />
     </div>
   );
