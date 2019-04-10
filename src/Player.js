@@ -10,13 +10,14 @@ class Player extends Component {
       posY: props.startingPositions.player1.y,
       img: 'charBottom',
       pixelsPerTile: 48,
-      //count: 0
+      // count: 0
     };
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
   }
+
   componentWillUnmount() {
     document.removeEventListener('keydown', this.action, false);
   }
@@ -32,7 +33,7 @@ class Player extends Component {
     return true;
   }
 
-  /*walk()
+  /* walk()
   {
     setInterval(() => {
       if(this.state.img === 'charRight' )
@@ -46,14 +47,15 @@ class Player extends Component {
   action(event) {
     let { posX, posY } = this.state;
     const { tiles } = this.props;
+    const { canMove } = this.props;
     // MOVES
-    /*if(event.keyCode === 39 && this.state.count === 0){
+    /* if(event.keyCode === 39 && this.state.count === 0){
       this.setState({count: this.state.count =  this.state.count + 1});
       this.walk();
-    }*/
+    } */
 
 
-    if (this.canMove
+    if (this.canMove && canMove
       && (event.keyCode === 39
         || event.keyCode === 37
         || event.keyCode === 40
@@ -93,10 +95,10 @@ class Player extends Component {
           this.setState({ posY });
         }
       }
-    // To do :
-     // Move delay value
-     setTimeout(() => {
-      this.canMove = true;
+      // To do :
+      // Move delay value
+      setTimeout(() => {
+        this.canMove = true;
       }, 300);
       const { getPlayerPos } = this.props;
       getPlayerPos(posX, posY);
