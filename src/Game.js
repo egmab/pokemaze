@@ -20,6 +20,7 @@ class Game extends Component {
       pokemon: undefined,
       isWinner: false,
       isLoser: false,
+      canMove: true,
     };
   }
 
@@ -34,6 +35,7 @@ class Game extends Component {
     if (this.level.items[this.player.posY][this.player.posX] === '001') {
       this.setState({
         isWinner: true,
+        canMove: false,
       });
     }
   }
@@ -42,6 +44,7 @@ class Game extends Component {
     if (count === 0) {
       this.setState({
         isLoser: true,
+        canMove: false,
       });
     }
   }
@@ -57,13 +60,18 @@ class Game extends Component {
   }
 
   render() {
-    const { isWinner, isLoser, pokemon } = this.state;
+    const { isWinner, isLoser, pokemon, canMove } = this.state;
     return (
       <div className="Game">
-      <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
+        <Chrono
+          count={this.level.timer}
+          getTime={this.getTime}
+          isWinner={isWinner}
+        />
         <div className="gameContainer">
           <Board tiles={this.level.tiles} items={this.level.items} />
           <Player
+            canMove={canMove}
             tiles={this.level.tiles}
             startingPositions={this.level.startingPositions}
             getPlayerPos={this.getPlayerPos} className="player"
