@@ -69,7 +69,7 @@ class Game extends Component {
         {isWinner || isLoser
           ? <EndingGame isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null}
-        <Chrono count={count} getTime={this.getTime} />
+        <Chrono count={count} getTime={this.getTime} isWinner={isWinner} />
       </div>
     );
   }
