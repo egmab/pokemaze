@@ -3,19 +3,18 @@ import './App.css';
 // import * as Labyrinths from './labyrinths.json';
 // import * as Items from './items.json';
 // TO DO : using data.json instead of labyrinths and items
-import * as Data from './data.json';
+import * as GameData from './gameData.json';
 import Game from './Game';
 
 const App = () => {
-  const selectedLevel = Data.levels['001'];
+  // TO DO : choose the level
+  const selectedLevel = GameData.levels['001'];
   //  const labyrinth = Labyrinths.labyrinth1;
   //  const items = Items.labyrinth1_items;
   return (
-    // TO DO : choose the level
     <div>
       <Game
         labyrinth={selectedLevel}
-        count="120"
       />
     </div>
   );

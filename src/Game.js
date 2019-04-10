@@ -22,8 +22,7 @@ class Game extends Component {
   }
 
   componentWillMount() {
-    const { playerX } = this.props;
-    const { playerY } = this.props;
+    const { playerX, playerY } = this.props;
     this.player.posX = playerX;
     this.player.posY = playerY;
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));

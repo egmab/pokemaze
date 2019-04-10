@@ -30,7 +30,8 @@
                 "player1Y": "0",
                 "player2X": null,
                 "player2Y": null
-            }
+            },
+            "timer":60
         },
         "002": {
             "tiles": [
@@ -62,7 +63,8 @@
                 "player1Y": "0",
                 "player2X": null,
                 "player2Y": null
-            }
+            },
+            "timer":200
         }
     }
 }
