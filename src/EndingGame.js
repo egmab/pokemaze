@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './Modal.css';
 
 const EndingGame = ({ pokemon, isWinner, isLoser }) => {
   let pokemonName = pokemon.name;
@@ -11,7 +11,7 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
     message = 'You win';
   }
   if (isLoser) {
-    title = 'Congrats !';
+    title = 'Too late !';
     message = 'You win';
   }
 
@@ -29,16 +29,18 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
       break;
   }
   return (
-    <div className="EndingGame">
-      <h3>{title}</h3>
-      <img src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-      <p>
-        {message}
-        {' '}
-        {pokemonName}
-        {' '}
-        !
-      </p>
+    <div className="modal-wrapper">
+      <div className="modal-body">
+        <h3>{title}</h3>
+        <img src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
+        <p>
+          {message}
+          {' '}
+          {pokemonName}
+          {' '}
+          !
+        </p>
+      </div>
     </div>
   );
 };
