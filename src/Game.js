@@ -4,6 +4,7 @@ import Player from './Player';
 import EndingGame from './EndingGame';
 import Chrono from './Chrono';
 
+
 class Game extends Component {
   constructor(props) {
     super(props);
@@ -63,11 +64,11 @@ class Game extends Component {
     const { isWinner, isLoser, pokemon, canMove } = this.state;
     return (
       <div className="Game">
-        <Chrono
-          count={this.level.timer}
-          getTime={this.getTime}
-          isWinner={isWinner}
-        />
+        <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
+        {isWinner || isLoser
+          ? <EndingGame className='endgame' isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          : null
+          }
         <div className="gameContainer">
           <Board tiles={this.level.tiles} items={this.level.items} />
           <Player
@@ -75,15 +76,12 @@ class Game extends Component {
             tiles={this.level.tiles}
             startingPositions={this.level.startingPositions}
             getPlayerPos={this.getPlayerPos} className="player"
-          />
+            />
         </div>
-        {isWinner || isLoser
-          ? <EndingGame isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
-          : null
-        }
       </div>
     );
   }
 }
 
 export default Game;
+
