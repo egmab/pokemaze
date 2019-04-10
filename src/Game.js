@@ -60,6 +60,7 @@ class Game extends Component {
     const { isWinner, isLoser, pokemon } = this.state;
     return (
       <div className="Game">
+      <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
         <div className="gameContainer">
           <Board tiles={this.level.tiles} items={this.level.items} />
           <Player
@@ -72,7 +73,6 @@ class Game extends Component {
           ? <EndingGame isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
         }
-        <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
       </div>
     );
   }
