@@ -8,7 +8,6 @@ class Chrono extends Component {
       running: false,
     };
   }
-
   componentWillMount() {
     this.timer = setInterval(() => {
       const newCount = this.state.count - 1;
@@ -25,6 +24,7 @@ class Chrono extends Component {
 
   componentDidMount() {
     this.setState({ count: this.props.count });
+    this.setState({ isWinner: this.props.isWinner });
   }
 
   format(time) {
@@ -37,6 +37,9 @@ class Chrono extends Component {
 
   render() {
     const { count } = this.state;
+    if (this.props.isWinner) {
+      clearInterval(this.timer);
+    }
     return (
       <div>
         <h1>{this.format(count)}</h1>
