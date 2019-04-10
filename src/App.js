@@ -13,6 +13,7 @@ const App = () => {
   //  const items = Items.labyrinth1_items;
   return (
     <div>
+   
       <Game
         level={selectedLevel}
       />
