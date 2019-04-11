@@ -3,25 +3,40 @@ import React, { Component } from 'react';
 class Player extends Component {
   constructor(props) {
     super(props);
-    this.action = this.action.bind(this);
     this.canMove = true;
+    this.action = this.action.bind(this);
+    const posX = props.startingPositions.player1.x;
+    const posY = props.startingPositions.player1.y;
+    this.posX = posX;
+    this.posY = posY;
+    this.img = 'charBottom';
     this.state = {
       posX: props.startingPositions.player1.x,
       posY: props.startingPositions.player1.y,
       img: 'charBottom',
       pixelsPerTile: 48,
-      // count: 0
     };
   }
 
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
+    setInterval(() => {
+      this.canMove = true;
+      this.refreshRender();
+    }, 30);
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.action, false);
   }
 
+  refreshRender() {
+    this.setState({
+      posX: this.posX,
+      posY: this.posY,
+      img: this.img,
+    });
+  }
 
   //    Checks if tile is an obstacle in the level after a move (tiles named "500"+)
   checkTile(x, y) {
@@ -45,15 +60,13 @@ class Player extends Component {
   */
 
   action(event) {
-    let { posX, posY } = this.state;
-    const { tiles } = this.props;
     const { ongoingGame } = this.props;
+    const { tiles } = this.props;
     // MOVES
     /* if(event.keyCode === 39 && this.state.count === 0){
       this.setState({count: this.state.count =  this.state.count + 1});
       this.walk();
     } */
-
 
     if (this.canMove && ongoingGame
       && (event.keyCode === 39
@@ -64,46 +77,38 @@ class Player extends Component {
       this.canMove = false;
       // Move right
       if (event.keyCode === 39) {
-        this.setState({ img: 'charRight' });
-        if (posX + 1 < tiles[posY].length
+        this.img = 'charRight';
+        if (this.posX + 1 < tiles[this.posY].length
           && this.checkTile(1, 0)) {
-          posX += 1;
-          this.setState({ posX });
+          this.posX += 1;
         }
       }
       // Move left
       if (event.keyCode === 37) {
-        this.setState({ img: 'charLeft' });
-        if (posX > 0 && this.checkTile(-1, 0)) {
-          posX -= 1;
-          this.setState({ posX });
+        this.img = 'charLeft';
+        if (this.posX > 0 && this.checkTile(-1, 0)) {
+          this.posX -= 1;
         }
       }
       // Move down
       if (event.keyCode === 40) {
-        this.setState({ img: 'charBottom' });
-        if (posY + 1 < tiles.length && this.checkTile(0, 1)) {
-          posY += 1;
-          this.setState({ posY });
+        this.img = 'charBottom';
+        if (this.posY + 1 < tiles.length && this.checkTile(0, 1)) {
+          this.posY += 1;
         }
       }
       // Move up
       if (event.keyCode === 38) {
-        this.setState({ img: 'charTop' });
-        if (posY > 0 && this.checkTile(0, -1)) {
-          posY -= 1;
-          this.setState({ posY });
+        this.img = 'charTop';
+        if (this.posY > 0 && this.checkTile(0, -1)) {
+          this.posY -= 1;
         }
       }
-      // To do :
-      // Move delay value
-      setTimeout(() => {
-        this.canMove = true;
-      }, 300);
+
       const { getPlayerPos } = this.props;
-      getPlayerPos(posX, posY);
+      getPlayerPos(this.posX, this.posY);
     }
-    // Activate abilities
+    // To do: other actions
   }
 
   render() {
@@ -121,7 +126,7 @@ class Player extends Component {
       width: '48px',
       marginTop: '-1.5vh',
       marginLeft: '-0.2vh',
-      transitionDuration: '600ms',
+      transitionDuration: '500ms',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}px`,
       left: `${11 + posX * pixelsPerTile}px`,
