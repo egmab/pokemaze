@@ -8,10 +8,7 @@
     z-index: 4;
     margin: auto;
     border-radius: 30px;
-    border: solid;
-    border-color: grey;
-    border-width: 2px; 
-    top: 50%;
+    top: 10%;
     left: 50%;
     transform: translate(-50%, 50%);
     opacity: 0.9;
