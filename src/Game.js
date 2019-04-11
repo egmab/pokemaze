@@ -61,12 +61,14 @@ class Game extends Component {
   }
 
   render() {
-    const { isWinner, isLoser, pokemon, ongoingGame } = this.state;
+    const {
+      isWinner, isLoser, pokemon, ongoingGame,
+    } = this.state;
     return (
       <div className="Game">
         <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser
-          ? <EndingGame className='endgame' isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
           }
         <div className="gameContainer">
@@ -75,8 +77,9 @@ class Game extends Component {
             ongoingGame={ongoingGame}
             tiles={this.level.tiles}
             startingPositions={this.level.startingPositions}
-            getPlayerPos={this.getPlayerPos} className="player"
-            />
+            getPlayerPos={this.getPlayerPos}
+            className="player"
+          />
         </div>
       </div>
     );
@@ -84,4 +87,3 @@ class Game extends Component {
 }
 
 export default Game;
-
