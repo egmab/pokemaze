@@ -32,13 +32,25 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
     <div className="modal-wrapper">
       <div className="modal-body">
         <h3>{title}</h3>
-        <img src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-        <p>
+        <img className="imgPoke" src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
+        <h2>
           {message}
           {' '}
           {pokemonName}
           {' '}
           !
+        </h2>
+        <p>
+          <button class="largeBtn"
+            type="button" size="lg">
+            Playagain
+          </button>
+        </p>
+        <p>
+          <button class="smallBtn"
+            type="button" size="sm">
+            Back to menu
+          </button>
         </p>
       </div>
     </div>
