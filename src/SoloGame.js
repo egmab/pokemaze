@@ -1,6 +1,4 @@
 import React from 'react';
-
-import './App.css';
 // import * as Labyrinths from './labyrinths.json';
 // import * as Items from './items.json';
 // TO DO : using data.json instead of labyrinths and items
