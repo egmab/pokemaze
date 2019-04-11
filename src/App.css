@@ -64,6 +64,12 @@
 @keyframes beat{
 	to { transform: scale(1.4); }
 }
+
+.imgPoke {
+  z-index: 3;
+}
+
+
 /*.character {
   position: absolute;
   z-index: 1;
