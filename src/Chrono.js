@@ -23,8 +23,9 @@ class Chrono extends Component {
   }
 
   componentDidMount() {
-    this.setState({ count: this.props.count });
-    this.setState({ isWinner: this.props.isWinner });
+    const { count, isWinner } = this.props;
+    this.setState({ count: count });
+    this.setState({ isWinner: isWinner });
   }
 
   format(time) {

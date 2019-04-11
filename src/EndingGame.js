@@ -1,8 +1,10 @@
 import React from 'react';
 import './Modal.css';
 
+
 const EndingGame = ({ pokemon, isWinner, isLoser }) => {
   let pokemonName = pokemon.name;
+  const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   // const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
   let title = '';
   let message = '';
@@ -14,7 +16,6 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
     title = 'Too late !';
     message = 'You lose';
   }
-
   switch (pokemonName) {
     case 'nidoran-f':
       pokemonName = 'nidoranf';
@@ -36,7 +37,7 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
         <p>
           {message}
           {' '}
-          {pokemonName}
+          {pokemonNameMaj}
           {' '}
           !
         </p>
