@@ -44,7 +44,7 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
         <p>
           <button class="largeBtn"
             type="button" size="lg">
-            <a href="/solo-game">Play again</a>
+            <a href="/">Play again</a>
           </button>
         </p>
       </div>

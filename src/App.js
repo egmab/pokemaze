@@ -8,7 +8,7 @@ const App = () => {
     <BrowserRouter>
       <div>
         <Switch>
-          <Route path="/solo-game" component={SoloGame} />
+          <Route exact path="/" component={SoloGame} />
         </Switch>
       </div>
     </BrowserRouter>
