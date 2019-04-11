@@ -51,12 +51,15 @@ table {
 }
 
 .Count{
-  line-height: 20vh;
+  line-height: 23vh;
   background-image: url('./assets/pokemons/ronflex1.png');
   background-repeat: no-repeat;
   background-position: center;
+  background-size: contain;
   width: 20%;
-  height: 15vh;
+  height: 18vh;
+  margin-top: 1%;
+
 }
 
 
