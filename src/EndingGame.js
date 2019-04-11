@@ -44,13 +44,7 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
         <p>
           <button class="largeBtn"
             type="button" size="lg">
-            Playagain
-          </button>
-        </p>
-        <p>
-          <button class="smallBtn"
-            type="button" size="sm">
-            Back to menu
+            <a href="/solo-game">Play again</a>
           </button>
         </p>
       </div>
