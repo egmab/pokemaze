@@ -1,6 +1,10 @@
 .Game {
   text-align: center;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .Board
@@ -10,31 +14,24 @@
   border-color: grey;
   overflow: hidden;
   width: auto;
-  position: absolute;
 }
 
 .gameContainer
 {
   position: relative;
-  margin-left: 24vh;
 }
-
-th {
+.row{
+  display: flex;
+}
+.col {
   padding: 0;
 }
 
-th div {
+.Tile {
   background-size: contain;
   height: 48px;
   width: 48px;
-}
-
-.Tile {
   position: relative;
-}
-
-table {
-  border-collapse: collapse;
 }
 
 .capacityStyle {
@@ -48,6 +45,7 @@ table {
 .Timer{
   display: flex;
   justify-content: center;
+  width: 12%;
 }
 
 .Count{
@@ -56,7 +54,7 @@ table {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  width: 20%;
+  width: 100%;
   height: 18vh;
   margin-top: 1%;
 

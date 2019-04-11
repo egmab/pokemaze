@@ -3,13 +3,11 @@ import Tile from './Tile';
 
 const Board = ({ tiles, items }) => (
   <div className="Board">
-    <table>
-      <tbody>
         {
           tiles.map((row, rowIndex) => (
-            <tr key={`row-${rowIndex}`}>
+            <div key={`row-${rowIndex}`} className="row">
               {row.map((tileId, colIndex) => (
-                <th key={`col-${colIndex}`}>
+                <div key={`col-${colIndex}`} className="col">
                   <Tile
                     tileId={tileId}
                     items={items}
@@ -17,13 +15,11 @@ const Board = ({ tiles, items }) => (
                     colIndex={colIndex}
                     tiles={tiles}
                   />
-                </th>
+                </div>
               ))}
-            </tr>
+            </div>
           ))
         }
-      </tbody>
-    </table>
   </div>
 );
 
