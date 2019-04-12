@@ -1,0 +1,17 @@
+body{
+    background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
+    background-size: 100%, cover;
+    height: 70%;
+  }
+  .buttonHome{
+    display: flex;
+    justify-content: center;
+  }
+  .home{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15%;
+    margin-left: 6%;
+  }
