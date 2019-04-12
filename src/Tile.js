@@ -24,7 +24,7 @@ function Tile(props) {
           backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
           backgroundSize: '60%,contain',
-          zIndex:1
+          zIndex: 1,
         }}
       />
     );
