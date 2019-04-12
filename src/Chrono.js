@@ -8,6 +8,7 @@ class Chrono extends Component {
       running: false,
     };
   }
+
   componentWillMount() {
     this.timer = setInterval(() => {
       const newCount = this.state.count - 1;
@@ -18,7 +19,7 @@ class Chrono extends Component {
       if (newCount === 0) {
         clearInterval(this.timer);
       }
-      this.props.getTime(newCount)
+      this.props.getTime(newCount);
     }, 1000);
   }
 
@@ -42,8 +43,8 @@ class Chrono extends Component {
       clearInterval(this.timer);
     }
     return (
-      <div className='Timer'>
-        <h1 className='Count'>{this.format(count)}</h1>
+      <div className="Timer">
+        <h1 className="Count">{this.format(count)}</h1>
       </div>
 
     );

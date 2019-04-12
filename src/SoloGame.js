@@ -8,15 +8,10 @@ import Game from './Game';
 const SoloGame = () => {
   // TO DO : choose the level
   const selectedLevel = GameData.levels['001'];
-  //  const labyrinth = Labyrinths.labyrinth1;
-  //  const items = Items.labyrinth1_items;
   return (
     <div>
-      <Game
-        level={selectedLevel}
-      />
+      <Game level={selectedLevel} />
     </div>
-
   );
 };
 
