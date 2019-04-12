@@ -4,6 +4,7 @@ import Player from './Player';
 import EndingGame from './EndingGame';
 import Chrono from './Chrono';
 
+
 class Game extends Component {
   constructor(props) {
     super(props);
@@ -20,6 +21,7 @@ class Game extends Component {
       pokemon: undefined,
       isWinner: false,
       isLoser: false,
+      ongoingGame: true,
     };
   }
 
@@ -34,6 +36,7 @@ class Game extends Component {
     if (this.level.items[this.player.posY][this.player.posX] === '001') {
       this.setState({
         isWinner: true,
+        ongoingGame: false,
       });
     }
   }
@@ -42,6 +45,7 @@ class Game extends Component {
     if (count === 0) {
       this.setState({
         isLoser: true,
+        ongoingGame: false,
       });
     }
   }
@@ -57,22 +61,26 @@ class Game extends Component {
   }
 
   render() {
-    const { isWinner, isLoser, pokemon } = this.state;
+    const {
+      isWinner, isLoser, pokemon, ongoingGame,
+    } = this.state;
     return (
       <div className="Game">
-      <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
+        <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
+        {isWinner || isLoser
+          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          : null
+          }
         <div className="gameContainer">
           <Board tiles={this.level.tiles} items={this.level.items} />
           <Player
+            ongoingGame={ongoingGame}
             tiles={this.level.tiles}
             startingPositions={this.level.startingPositions}
-            getPlayerPos={this.getPlayerPos} className="player"
+            getPlayerPos={this.getPlayerPos}
+            className="player"
           />
         </div>
-        {isWinner || isLoser
-          ? <EndingGame isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
-          : null
-        }
       </div>
     );
   }

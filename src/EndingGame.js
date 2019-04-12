@@ -1,8 +1,10 @@
 import React from 'react';
+import './Modal.css';
 
 
 const EndingGame = ({ pokemon, isWinner, isLoser }) => {
   let pokemonName = pokemon.name;
+  const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   // const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
   let title = '';
   let message = '';
@@ -14,7 +16,6 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
     title = 'Too late !';
     message = 'You lose';
   }
-
   switch (pokemonName) {
     case 'nidoran-f':
       pokemonName = 'nidoranf';
@@ -29,16 +30,27 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
       break;
   }
   return (
-    <div className="EndingGame">
-      <h3>{title}</h3>
-      <img src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-      <p>
-        {message}
-        {' '}
-        {pokemonName}
-        {' '}
-        !
-      </p>
+    <div className="modal-wrapper">
+      <div className="modal-body">
+        <h3>{title}</h3>
+        <img className="imgPoke" src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
+        <h2>
+          {message}
+          {' '}
+          {pokemonNameMaj}
+          {' '}
+          !
+        </h2>
+        <p>
+          <button
+            className="largeBtn"
+            type="button"
+            size="lg"
+          >
+            <a href="/">Play again</a>
+          </button>
+        </p>
+      </div>
     </div>
   );
 };

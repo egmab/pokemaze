@@ -1,23 +1,16 @@
 import React from 'react';
+import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import './App.css';
-// import * as Labyrinths from './labyrinths.json';
-// import * as Items from './items.json';
-// TO DO : using data.json instead of labyrinths and items
-import * as GameData from './gameData.json';
-import Game from './Game';
+import SoloGame from './SoloGame';
 
-const App = () => {
-  // TO DO : choose the level
-  const selectedLevel = GameData.levels['001'];
-  //  const labyrinth = Labyrinths.labyrinth1;
-  //  const items = Items.labyrinth1_items;
-  return (
+const App = () => (
+  <BrowserRouter>
     <div>
-      <Game
-        level={selectedLevel}
-      />
+      <Switch>
+        <Route exact path="/" component={SoloGame} />
+      </Switch>
     </div>
-  );
-};
+  </BrowserRouter>
+);
 
 export default App;

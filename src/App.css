@@ -1,6 +1,11 @@
 
 .Game {
   text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .Board
@@ -9,55 +14,53 @@
   border-radius: 3vh;
   border-color: grey;
   overflow: hidden;
-  width: 145.1vh;
+  width: auto;
 }
 
 .gameContainer
 {
   position: relative;
-  margin-left: 24vh;
 }
 
-th {
+.row{
+  display: flex;
+}
+
+.col {
   padding: 0;
 }
 
-th div {
+.Tile {
   background-size: contain;
   height: 48px;
   width: 48px;
-}
-
-.Tile {
   position: relative;
-  z-index:2 ;
+  z-index:2;
 }
 
-table {
-  border-collapse: collapse;
+.Timer{
+  display: flex;
+  justify-content: center;
+  width: 12%;
 }
 
-.capacityStyle {
-    z-index: 1;
-    position: relative;
-    background-size: contain;
-    height: 60px;
-    width: 60px;
+.Count{
+  line-height: 23vh;
+  background-image: url('./assets/pokemons/ronflex1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  height: 18vh;
+  margin-top: 1%;
 }
+
+.imgPoke {
+  z-index: 3;
+}
+
+
+/* Future items animation: heartbeat */
 @keyframes beat{
 	to { transform: scale(1.4); }
 }
-/*.character {
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left:11px;
-}
-
-.Player{
-z-index: 1;
-background-size: contain;
-height: 48px;
-width: 48px;
-}
-*/

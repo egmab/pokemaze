@@ -1,6 +1,8 @@
 /* eslint-disable */
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, BrowserRouter, Switch, NavLink } from 'react-router-dom';
+
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
