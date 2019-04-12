@@ -1,5 +1,6 @@
 import React from 'react';
 import './Modal.css';
+import { Link } from 'react-router-dom';
 
 
 const EndingGame = ({ pokemon, isWinner, isLoser }) => {
@@ -47,7 +48,7 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
             type="button"
             size="lg"
           >
-            <a href="/">Play again</a>
+            <Link exact to="/"> Play again </Link>
           </button>
         </p>
       </div>
