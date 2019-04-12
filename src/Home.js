@@ -5,24 +5,27 @@ const Home = () => {
 
   return (
     <div className="home">
-      <Link to="/solo-game-1">
-        <button
-          className="largeBtn2"
-          type="button"
-          size="lg"
-        >
-          Play solo level
-        </button>
-      </Link>
-      <Link to="/solo-game-2">
-        <button
-          className="largeBtn2"
-          type="button"
-          size="lg"
-        >
-          Demo chrono
-        </button>
-      </Link>
+      <img src="./assets/logopokemaze.png" alt="logo" />
+      <div className="buttonHome">
+        <Link to="/solo-game-1">
+          <button
+            className="largeBtn2"
+            type="button"
+            size="lg"
+          >
+            Play solo level
+          </button>
+        </Link>
+        <Link to="/solo-game-2">
+          <button
+            className="largeBtn2"
+            type="button"
+            size="lg"
+          >
+            Demo chrono
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
