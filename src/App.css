@@ -7,6 +7,12 @@ body{
   background-size: cover;
   height: 100%;
 }
+.home{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20%;
+}
 .Game {
   text-align: center;
   position: relative;
