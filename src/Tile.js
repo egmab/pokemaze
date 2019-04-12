@@ -21,9 +21,9 @@ function Tile(props) {
         className="Tile"
         style={{
           background: `url(${`./assets/items/${items[rowIndex][colIndex]}.png`}),url(${`./assets/tiles/${tileId}.png`})`,
-          backgroundPosition: 'center',
+          backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: '100%,contain',
+          backgroundSize: '60%,contain',
           zIndex:1
         }}
       />
