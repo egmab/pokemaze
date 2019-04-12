@@ -21,7 +21,7 @@ class Player extends Component {
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
 
-    //document.addEventListener('keyUp', this.anim, false);
+    // document.addEventListener('keyUp', this.anim, false);
 
     setInterval(() => {
       this.canMove = true;
@@ -59,8 +59,7 @@ class Player extends Component {
       else
       this.setState({ img: 'charRight' });
     }, 1000);
-  }*/
-  
+  } */
 
   action(event) {
     const { ongoingGame } = this.props;
