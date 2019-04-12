@@ -13,7 +13,7 @@ const Home = () => {
             type="button"
             size="lg"
           >
-            Play solo level
+            Play solo
           </button>
         </Link>
         <Link to="/solo-game-2">
