@@ -1,0 +1,84 @@
+html{
+  height: 100%;
+}
+body{
+  background-image: url('./assets/pokemons/fond.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+}
+.buttonHome{
+  display: flex;
+  justify-content: center;
+}
+.home{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10%;
+}
+.Game {
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Board
+{
+  border-style: solid;
+  border-radius: 3vh;
+  border-color: grey;
+  overflow: hidden;
+  width: auto;
+}
+
+.gameContainer
+{
+  position: relative;
+}
+
+.row{
+  display: flex;
+}
+
+.col {
+  padding: 0;
+}
+
+.Tile {
+  background-size: contain;
+  height: 48px;
+  width: 48px;
+  position: relative;
+  z-index:2;
+}
+
+.Timer{
+  display: flex;
+  justify-content: center;
+  width: 12%;
+}
+
+.Count{
+  line-height: 23vh;
+  background-image: url('./assets/pokemons/ronflex1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  width: 100%;
+  height: 18vh;
+  margin-top: 1%;
+}
+
+.imgPoke {
+  z-index: 3;
+}
+
+
+/* Future items animation: heartbeat */
+@keyframes beat{
+	to { transform: scale(1.4); }
+}
