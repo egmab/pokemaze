@@ -20,6 +20,9 @@ class Player extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
+
+    //document.addEventListener('keyUp', this.anim, false);
+
     setInterval(() => {
       this.canMove = true;
       this.refreshRender();
@@ -56,13 +59,14 @@ class Player extends Component {
       else
       this.setState({ img: 'charRight' });
     }, 1000);
-  }
-  */
+  }*/
+  
 
   action(event) {
     const { ongoingGame } = this.props;
     const { tiles } = this.props;
     // MOVES
+
     /* if(event.keyCode === 39 && this.state.count === 0){
       this.setState({count: this.state.count =  this.state.count + 1});
       this.walk();
@@ -118,14 +122,14 @@ class Player extends Component {
     //  Player CSS
     const playerStyle = {
       position: 'absolute',
-      zIndex: 1,
+      zIndex: 3,
       backgroundImage: `url(./assets/characters/${img}.png`,
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
-      height: '48px',
-      width: '48px',
-      marginTop: '-1.5vh',
-      marginLeft: '-0.2vh',
+      height: '38px',
+      width: '38px',
+      marginTop: '-0.5vh',
+      marginLeft: '0.2vh',
       transitionDuration: '500ms',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}px`,

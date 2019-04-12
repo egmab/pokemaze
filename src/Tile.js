@@ -20,10 +20,11 @@ function Tile(props) {
       <div
         className="Tile"
         style={{
-          background: `url(${`./assets/items/${items[rowIndex][colIndex]}.png`}), url(${`./assets/tiles/${tileId}.png`})`,
-          backgroundPosition: 'center',
+          background: `url(${`./assets/items/${items[rowIndex][colIndex]}.png`}),url(${`./assets/tiles/${tileId}.png`})`,
+          backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
-          backgroundSize: '70%,contain',
+          backgroundSize: '60%,contain',
+          zIndex:1
         }}
       />
     );
