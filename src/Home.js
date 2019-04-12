@@ -5,21 +5,24 @@ const Home = () => {
 
   return (
     <div className="home">
-      <button
-        className="largeBtn2"
-        type="button"
-        size="lg"
-      >
-        <Link to="/solo-game-1">Play solo level</Link>
-
-      </button>
-      <button
-        className="largeBtn2"
-        type="button"
-        size="lg"
-      >
-        <Link to="/solo-game-2">Demo chrono</Link>
-      </button>
+      <Link to="/solo-game-1">
+        <button
+          className="largeBtn2"
+          type="button"
+          size="lg"
+        >
+          Play solo level
+        </button>
+      </Link>
+      <Link to="/solo-game-2">
+        <button
+          className="largeBtn2"
+          type="button"
+          size="lg"
+        >
+          Demo chrono
+        </button>
+      </Link>
     </div>
   );
 };
