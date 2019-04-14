@@ -1,4 +1,5 @@
 import React from 'react';
+import './Tile.css';
 
 function Tile(props) {
   // Looking for items
@@ -24,7 +25,7 @@ function Tile(props) {
           backgroundPosition: 'top',
           backgroundRepeat: 'no-repeat',
           backgroundSize: '60%,contain',
-          zIndex:1
+          zIndex: 1,
         }}
       />
     );

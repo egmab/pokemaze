@@ -43,13 +43,15 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
           !
         </h2>
         <p>
-          <button
-            className="largeBtn"
-            type="button"
-            size="lg"
-          >
-            <Link exact to="/"> Play again </Link>
-          </button>
+          <Link exact to="/">
+            <button
+              className="largeBtn"
+              type="button"
+              size="lg"
+            >
+              Play again
+            </button>
+          </Link>
         </p>
       </div>
     </div>

@@ -1,50 +1,51 @@
 import React, { Component } from 'react';
+import './Chrono.css';
 
 class Chrono extends Component {
   constructor(props) {
     super(props);
     this.state = {
       count: undefined,
-      running: false,
     };
   }
 
   componentWillMount() {
     this.timer = setInterval(() => {
-      const newCount = this.state.count - 1;
+      const { count } = this.state;
+      const newCount = count - 1;
       this.setState({
         count: newCount >= 0 ? newCount : 0,
-        running: true,
       });
       if (newCount === 0) {
         clearInterval(this.timer);
       }
-      this.props.getTime(newCount);
+      const { getTime } = this.props;
+      getTime(newCount);
     }, 1000);
   }
 
   componentDidMount() {
-    const { count, isWinner } = this.props;
-    this.setState({ count: count });
-    this.setState({ isWinner: isWinner });
+    const { count } = this.props;
+    this.setState({ count });
   }
 
-  format(time) {
+  format = (time) => {
     let seconds = time % 60;
     let minutes = Math.floor(time / 60);
-    minutes = minutes.toString().length === 1 ? "0" + minutes : minutes;
-    seconds = seconds.toString().length === 1 ? "0" + seconds : seconds;
-    return minutes + ':' + seconds;
+    minutes = minutes.toString().length === 1 ? `0${minutes}` : minutes;
+    seconds = seconds.toString().length === 1 ? `0${seconds}` : seconds;
+    return `${minutes}:${seconds}`;
   }
 
   render() {
     const { count } = this.state;
-    if (this.props.isWinner) {
+    const { isWinner } = this.props;
+    if (isWinner) {
       clearInterval(this.timer);
     }
     return (
       <div className="Timer">
-        <h1 className="Count">{this.format(count)}</h1>
+        <div className="Count">{this.format(count)}</div>
       </div>
 
     );
