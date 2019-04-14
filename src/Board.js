@@ -1,5 +1,6 @@
 import React from 'react';
 import Tile from './Tile';
+import './Board.css';
 
 const Board = ({ tiles, items }) => (
   <div className="Board">

@@ -3,6 +3,7 @@ import Board from './Board';
 import Player from './Player';
 import EndingGame from './EndingGame';
 import Chrono from './Chrono';
+import './Game.css';
 
 
 class Game extends Component {

@@ -1,4 +1,5 @@
 import React from 'react';
+import './Tile.css';
 
 function Tile(props) {
   // Looking for items

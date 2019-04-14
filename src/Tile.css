@@ -1,0 +1,7 @@
+.Tile {
+  background-size: contain;
+  height: 48px;
+  width: 48px;
+  position: relative;
+  z-index:2;
+}
