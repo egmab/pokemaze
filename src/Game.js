@@ -16,6 +16,7 @@ class Game extends Component {
     this.player = {
       posX: null,
       posY: null,
+      collectedKeys: 0,
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
