@@ -6,14 +6,16 @@
 }
 
 .Count{
-  line-height: 23vh;
+  line-height: 22vh;
   background-image: url('./assets/pokemons/ronflex1.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  font-size: 1.7em;
+  font-size: 2vh;
   font-weight: bold;
-  width: 100%;
+  width: 15vh;
   height: 18vh;
-  margin-top: 1%;
+  margin-top: 1vh;
+  
 }
+
