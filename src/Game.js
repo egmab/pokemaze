@@ -31,15 +31,34 @@ class Game extends Component {
     this.getPokemon();
   }
 
+  getPokemon() {
+    fetch(`https://pokeapi.co/api/v2/pokemon/${this.randomPokemon}`)
+      .then(response => response.json())
+      .then((data) => {
+        this.setState({
+          pokemon: data,
+        });
+      });
+  }
+
   getPlayerPos(x, y) {
     this.player.posX = x;
     this.player.posY = y;
-
     if (this.level.items[this.player.posY][this.player.posX] === '001') {
       this.setState({
         isWinner: true,
         ongoingGame: false,
       });
+    }
+    // Increment collectedKeys
+    if (this.level.items[this.player.posY][this.player.posX] === '002') {
+      this.player.collectedKeys += 1;
+      console.log(this.player.collectedKeys)
+    }
+    // Open final door when all keys collected
+    if (this.player.collectedKeys === this.level.keysToCollect
+      && this.finalDoorOpened === undefined) {
+      this.openFinalDoor();
     }
   }
 
@@ -52,14 +71,16 @@ class Game extends Component {
     }
   }
 
-  getPokemon() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${this.randomPokemon}`)
-      .then(response => response.json())
-      .then((data) => {
-        this.setState({
-          pokemon: data,
-        });
-      });
+  openFinalDoor() {
+    console.log("ouvert")
+    for (let i = 0; i < this.level.tiles.length; i += 1) {
+      for (let j = 0; j < this.level.tiles[i]; j += 1) {
+        if (this.level.tiles[i][j] === '900') {
+          this.level.tiles[i][j] = '400';
+        }
+      }
+    }
+    this.finalDoorOpened = true;
   }
 
   render() {
@@ -72,7 +93,7 @@ class Game extends Component {
         {isWinner || isLoser
           ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
-          }
+        }
         <div className="gameContainer">
           <Board tiles={this.level.tiles} items={this.level.items} />
           <Player
