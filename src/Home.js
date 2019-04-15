@@ -12,6 +12,7 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Play solo
         </button>
