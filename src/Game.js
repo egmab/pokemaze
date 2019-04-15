@@ -12,7 +12,7 @@ class Game extends Component {
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
     const { level } = props;
-    this.level = level;
+    this.level = level; // this.level.keysToCollect
     this.player = {
       posX: null,
       posY: null,
@@ -20,6 +20,7 @@ class Game extends Component {
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
+      items: this.level.items,
       pokemon: undefined,
       isWinner: false,
       isLoser: false,
@@ -35,10 +36,20 @@ class Game extends Component {
     this.player.posX = x;
     this.player.posY = y;
 
+    // verifiy of player has caught the pokeball
     if (this.level.items[this.player.posY][this.player.posX] === '001') {
       this.setState({
         isWinner: true,
         ongoingGame: false,
+      });
+    }
+    // verifiy if player has caught KeysToCollect
+    const { items } = this.state;
+    if (items[this.player.posY][this.player.posX] === '002') {
+      this.player.collectedKeys += 1;
+      items[this.player.posY][this.player.posX] = '000';
+      this.setState({
+        items,
       });
     }
   }
