@@ -11,6 +11,7 @@ class Game extends Component {
     super(props);
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
+    this.playerAction = this.playerAction.bind(this);
     const { level } = props;
     this.player = {
       posX: null,
@@ -73,6 +74,39 @@ class Game extends Component {
     }
   }
 
+  playerAction(y, x) {
+    const { level } = this.state;
+    // Switches lever ON/OFF: even=> item+1, odd=> item-1
+    // Example: Lever(id: 700) becomes 701. Lever (id: 701) becomes 700
+    // AND
+    // Mutates the corresponding gate
+    // Example: Lever 700 becomes 701, changing item 800 to 801, and vice versa
+    if (parseInt(level.items[y][x], 10) % 2 === 0) {
+      const switchedLever = parseInt(level.items[y][x], 10) + 1;
+      level.items[y][x] = `${switchedLever}`;
+      for (let i = 0; i < level.items.length; i += 1) {
+        for (let j = 0; j < level.items[i].length; j += 1) {
+          if (level.items[i][j] === parseInt(level.items[y][x], 10) + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+            level.items[i][j] = `${switchedDoor}`;
+          }
+        }
+      }
+    } else {
+      const switchedLever = parseInt(level.items[y][x], 10) - 1;
+      level.items[y][x] = `${switchedLever}`;
+      for (let i = 0; i < level.items.length; i += 1) {
+        for (let j = 0; j < level.items[i].length; j += 1) {
+          if (level.items[i][j] === parseInt(level.items[y][x], 10) + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+            level.items[i][j] = `${switchedDoor}`;
+          }
+        }
+      }
+    }
+    this.setState({ level });
+  }
+
   openFinalDoor() {
     const { level } = this.state;
     for (let i = 0; i < level.items.length; i += 1) {
@@ -105,6 +139,7 @@ class Game extends Component {
             items={level.items}
             startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
+            playerAction={this.playerAction}
             className="player"
           />
         </div>

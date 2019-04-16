@@ -10,6 +10,8 @@ class Player extends Component {
     this.posX = posX;
     this.posY = posY;
     this.img = 'charBottom';
+    this.targetedTileX = this.posX;
+    this.targetedTileY = this.posY + 1;
     this.state = {
       posX: props.startingPositions.player1.x,
       posY: props.startingPositions.player1.y,
@@ -53,26 +55,10 @@ class Player extends Component {
     return true;
   }
 
-  /* walk()
-  {
-    setInterval(() => {
-      if(this.state.img === 'charRight' )
-      this.setState({ img: 'charRightFeet' });
-      else
-      this.setState({ img: 'charRight' });
-    }, 1000);
-  } */
-
   action(event) {
     const { ongoingGame } = this.props;
-    const { tiles } = this.props;
+    const { tiles, items } = this.props;
     // MOVES
-
-    /* if(event.keyCode === 39 && this.state.count === 0){
-      this.setState({count: this.state.count =  this.state.count + 1});
-      this.walk();
-    } */
-
     if (this.canMove && ongoingGame
       && (event.keyCode === 39
         || event.keyCode === 37
@@ -109,11 +95,51 @@ class Player extends Component {
           this.posY -= 1;
         }
       }
-
+      // Callback : game gets new position of the player
       const { getPlayerPos } = this.props;
       getPlayerPos(this.posX, this.posY);
     }
-    // To do: other actions
+    // ACTION KEY (spacebar)
+    if (event.keyCode === 32) {
+      // Sets coordinates of the targeted tile
+      switch (this.img) {
+        case 'charTop': {
+          this.targetedTileX = this.posX;
+          this.targetedTileY = this.posY - 1;
+          break;
+        }
+        case 'charLeft': {
+          this.targetedTileX = this.posX - 1;
+          this.targetedTileY = this.posY;
+          break;
+        }
+        case 'charRight': {
+          this.targetedTileX = this.posX + 1;
+          this.targetedTileY = this.posY;
+          break;
+        }
+        default: {
+          this.targetedTileX = this.posX;
+          this.targetedTileY = this.posY + 1;
+          break;
+        }
+      }
+      // Checks if targeted tile is out of the map
+      if (this.targetedTileX >= 0
+        && this.targetedTileY >= 0
+        && this.targetedTileY < tiles.length
+        && this.targetedTileX < tiles[this.targetedTileY].length
+      ) {
+        // Activate lever if there is any on tile
+        if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
+          && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
+          const { playerAction } = this.props;
+          playerAction(this.targetedTileY, this.targetedTileX);
+        }
+        this.targetedTileX = null;
+        this.targetedTileY = null;
+      }
+    }
   }
 
   render() {
