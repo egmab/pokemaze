@@ -44,12 +44,17 @@ class Player extends Component {
   }
 
   //    Checks if tile is an obstacle in the level after a move
-  // (tiles named "500"+ and items named "900"+)
+  // => tiles named "500"+ and items named "900"+
+  // AND doors not activated by levers (even numbers between 800 and 899)
   checkTile(x, y) {
     const { tiles, items } = this.props;
     const { posX, posY } = this.state;
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
-      || parseInt(items[posY + y][posX + x], 10) >= 900) {
+      || parseInt(items[posY + y][posX + x], 10) >= 900
+      || (parseInt(items[posY + y][posX + x], 10) >= 800
+        && parseInt(items[posY + y][posX + x], 10) <= 899
+        && parseInt(items[posY + y][posX + x], 10) % 2 === 0)
+    ) {
       return false;
     }
     return true;
