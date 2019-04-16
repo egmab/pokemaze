@@ -3,6 +3,7 @@ import Board from './Board';
 import Player from './Player';
 import EndingGame from './EndingGame';
 import Chrono from './Chrono';
+import KeysBar from './KeysBar';
 import './Game.css';
 
 
@@ -11,7 +12,21 @@ class Game extends Component {
     super(props);
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
+    this.keysToCollect = 0;
     const { level } = props;
+    for (let i = 0; i < level.items.length; i += 1) {
+      for (let j = 0; j < level.items[i].length; j += 1) {
+        if (parseInt(level.items[i][j], 10) >= 900
+          && parseInt(level.items[i][j], 10) <= 999) {
+          this.finalDoorID = level.items[i][j];
+        }
+        if (parseInt(level.items[i][j], 10) >= 2
+        && parseInt(level.items[i][j], 10) <= 19) {
+          this.keysToCollect += 1;
+          this.typeOfKey = level.items[i][j];
+        }
+      }
+    }
     this.player = {
       posX: null,
       posY: null,
@@ -53,7 +68,7 @@ class Game extends Component {
       });
     }
     // verify if player has caught KeysToCollect
-    if (level.items[this.player.posY][this.player.posX] === '002') {
+    if (level.items[this.player.posY][this.player.posX] === level.typeOfKey) {
       this.player.collectedKeys += 1;
       level.items[this.player.posY][this.player.posX] = '000';
       this.setState({ level });
@@ -107,6 +122,7 @@ class Game extends Component {
             getPlayerPos={this.getPlayerPos}
             className="player"
           />
+          <KeysBar collectedKeys={this.player.collectedKeys} finalDoorID={this.finalDoorID} typeOfKey={this.typeOfKey} numberOfKeys={this.keysToCollect} />
         </div>
       </div>
     );
