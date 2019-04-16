@@ -25,6 +25,15 @@ const Home = () => (
           Demo chrono
         </button>
       </Link>
+      <Link to="/pokedex">
+        <button
+          className="homeButton"
+          type="button"
+          size="lg"
+        >
+          Pokedex
+        </button>
+      </Link>
     </div>
   </div>
 );
