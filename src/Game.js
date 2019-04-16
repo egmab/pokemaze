@@ -79,14 +79,14 @@ class Game extends Component {
     // Switches lever ON/OFF: even=> item+1, odd=> item-1
     // Example: Lever(id: 700) becomes 701. Lever (id: 701) becomes 700
     // AND
-    // Mutates the corresponding gate
-    // Example: Lever 700 becomes 701, changing item 800 to 801, and vice versa
+    // Mutates the corresponding gate(s)
+    // Example: Lever 700 becomes 701, changing item(s) 800 to 801, and vice versa
     if (parseInt(level.items[y][x], 10) % 2 === 0) {
       const switchedLever = parseInt(level.items[y][x], 10) + 1;
       level.items[y][x] = `${switchedLever}`;
       for (let i = 0; i < level.items.length; i += 1) {
         for (let j = 0; j < level.items[i].length; j += 1) {
-          if (level.items[i][j] === parseInt(level.items[y][x], 10) + 100) {
+          if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
             const switchedDoor = parseInt(level.items[i][j], 10) + 1;
             level.items[i][j] = `${switchedDoor}`;
           }
@@ -97,7 +97,7 @@ class Game extends Component {
       level.items[y][x] = `${switchedLever}`;
       for (let i = 0; i < level.items.length; i += 1) {
         for (let j = 0; j < level.items[i].length; j += 1) {
-          if (level.items[i][j] === parseInt(level.items[y][x], 10) + 100) {
+          if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
             const switchedDoor = parseInt(level.items[i][j], 10) - 1;
             level.items[i][j] = `${switchedDoor}`;
           }
