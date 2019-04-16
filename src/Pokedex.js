@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import React, { Component } from 'react';
-import Pokemon from  './Pokemon';
+import Pokemon from './Pokemon';
 import './Pokedex.css';
 // import { Link } from 'react-router-dom';
 
@@ -14,35 +14,42 @@ class Pokedex extends Component {
       pokemon: [],
     };
   }
+
   componentWillMount() {
     this.getPokemon();
-    
   }
 
 
   getPokemon() {
-    fetch("https://pokeapi.co/api/v2/pokemon/?limit=151", {
-      method: "GET"
-    }).then(response => {
+    fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
+      method: 'GET',
+    }).then((response) => {
       if (response.ok) {
-        response.json().then(json => {
+        response.json().then((json) => {
           this.setState({
-            pokemon: json.results
+            pokemon: json.results,
           });
         });
       }
     });
   }
-  
+
 
   render() {
+    const { pokemon } = this.state;
     return (
       <div className="pokemon-container">
-          {this.state.pokemon.map((monster, index) =>
-            <Pokemon key={monster.name} id={index + 1} pokemonName={monster.name} />
-          )}
-        </div>
-    )
+        {
+          pokemon.map((monster, index) => (
+            <Pokemon
+              key={monster.name}
+              id={index + 1}
+              pokemonName={monster.name}
+            />
+          ))
+        }
+      </div>
+    );
   }
 }
 
