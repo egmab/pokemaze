@@ -1,5 +1,6 @@
 /* eslint-disable no-useless-constructor */
 import React, { Component } from 'react';
+import './Pokedex.css';
 // import { Link } from 'react-router-dom';
 
 // const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
@@ -27,7 +28,9 @@ class Pokedex extends Component {
   }
     render() {
     return (
-        <div></div>
+      <div className='pokedexBack'>
+        bonjour les amis 
+      </div>
     )
   }
 }
