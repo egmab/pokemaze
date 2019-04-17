@@ -22,8 +22,18 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Demo chrono
+        </button>
+      </Link>
+      <Link to="/pokedex">
+        <button
+          className="homeButton"
+          type="button"
+          size="lg"
+        >
+          Pokedex
         </button>
       </Link>
       <Link to="/multiplayer">

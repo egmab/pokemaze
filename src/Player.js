@@ -75,11 +75,14 @@ class Player extends Component {
     return true;
   }
 
+  // Change the position of player when trap is active
   traps(x, y) {
     const { tiles, startingPositions } = this.props;
-    if (parseInt(tiles[y][x], 10) >= 400 && parseInt(tiles[y][x], 10) <= 499) {
-      this.posX = startingPositions.player1.x;
-      this.posY = startingPositions.player1.y;
+    if ((parseInt(tiles[y][x], 10) >= 400
+      && parseInt(tiles[y][x], 10) <= 499)
+      || parseInt(tiles[y][x], 10) === 9) {
+      this.posX = startingPositions.x;
+      this.posY = startingPositions.y;
     }
   }
 
@@ -87,6 +90,7 @@ class Player extends Component {
     const {
       ongoingGame, tiles, items, getPlayerPos, playerNumber,
     } = this.props;
+    const { posX, posY } = this.state;
     // MOVES
     if (this.canMove && ongoingGame
       && (event.keyCode === this.upButton
@@ -124,8 +128,8 @@ class Player extends Component {
           this.posY -= 1;
         }
       }
+      this.traps(posX, posY);
       // Callback : game gets new position of the player
-      this.traps(this.posX, this.posY);
       getPlayerPos(this.posX, this.posY, playerNumber);
     }
     // ACTION KEY (spacebar)
