@@ -1,0 +1,60 @@
+.KeysBarMultiplayer{
+    display: flex;
+    justify-content: space-between;
+}
+.keysBar1 {
+    display: flex;
+    align-items: center;
+    margin-top: 0.7%;
+    flex-direction: row-reverse; 
+
+}
+.keyElement1{
+    display: flex; 
+    flex-direction: row-reverse;
+}
+.keysBar2 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 0.7%;
+    
+}
+
+.keyElement2{
+    display: flex;
+}
+
+.keysBar1 img, .keysBar2 img {
+    width: 100%;
+}
+
+.keyNotCaught {
+    opacity: 0.32;
+}
+.keyCaught {
+    opacity: 1;
+}
+
+.keyCircle {
+    border: solid 1.5px #3b4c6b;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+}
+.bigKeyCircle {
+    border: solid 1.5px #3b4c6b;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+}
+.separator{
+    background-image: url('./assets/pokemons/separator.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    padding: 10px;
+}
+.keysContainer{
+    display: flex;
+}

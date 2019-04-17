@@ -1,0 +1,16 @@
+.Board
+{
+  border-style: solid;
+  border-radius: 3vh;
+  border-color: grey;
+  overflow: hidden;
+  width: auto;
+}
+
+.row{
+  display: flex;
+}
+
+.col {
+  padding: 0;
+}

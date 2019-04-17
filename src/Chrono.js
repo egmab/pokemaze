@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Chrono.css';
 
 class Chrono extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ class Chrono extends Component {
     }
     return (
       <div className="Timer">
-        <h1 className="Count">{this.format(count)}</h1>
+        <div className="Count">{this.format(count)}</div>
       </div>
 
     );

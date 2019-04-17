@@ -1,0 +1,29 @@
+.Tile {
+  background-size: contain;
+  height: 48px;
+  width: 48px;
+  position: relative;
+  z-index: 2;
+}
+
+.Item {
+  width: 60%;
+  height: 60%;
+}
+
+.Objectives {
+  width: 50%;
+  height: 50%;
+  margin-top: 25%;
+  animation: beat 1s infinite alternate;
+}
+
+.FinalDoor {
+  width:90%;
+  margin-top: -5.5vh;
+  z-index: 5;
+}
+
+@keyframes beat{
+	to {transform: scale(1.2); }
+}
