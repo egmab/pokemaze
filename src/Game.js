@@ -22,7 +22,7 @@ class Game extends Component {
           this.finalDoorID = level.items[i][j];
         }
         if (parseInt(level.items[i][j], 10) >= 2
-        && parseInt(level.items[i][j], 10) <= 19) {
+          && parseInt(level.items[i][j], 10) <= 19) {
           this.keysToCollect += 1;
           this.typeOfKey = level.items[i][j];
         }
@@ -61,12 +61,19 @@ class Game extends Component {
     this.player.posX = x;
     this.player.posY = y;
     const { level } = this.state;
+
     // verify if player has caught the pokeball
     if (level.items[this.player.posY][this.player.posX] === '001') {
       this.setState({
         isWinner: true,
         ongoingGame: false,
       });
+    }
+
+    // change the trap
+    if (level.tiles[this.player.posY][this.player.posX] === '009') {
+      level.tiles[this.player.posY][this.player.posX] = '405';
+      this.setState({ level });
     }
     // verify if player has caught KeysToCollect
     if (level.items[this.player.posY][this.player.posX] === level.typeOfKey) {
