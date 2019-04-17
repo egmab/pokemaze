@@ -60,6 +60,14 @@ class Player extends Component {
     return true;
   }
 
+  traps(x, y) {
+    const { tiles, startingPositions } = this.props;
+    if (parseInt(tiles[y][x], 10) >= 400 && parseInt(tiles[y][x], 10) <= 499) {
+      this.posX = startingPositions.player1.x;
+      this.posY = startingPositions.player1.y;
+    }
+  }
+
   action(event) {
     const { ongoingGame } = this.props;
     const { tiles, items } = this.props;
@@ -101,6 +109,7 @@ class Player extends Component {
         }
       }
       // Callback : game gets new position of the player
+      this.traps(this.posX, this.posY);
       const { getPlayerPos } = this.props;
       getPlayerPos(this.posX, this.posY);
     }
