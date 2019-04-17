@@ -3,7 +3,7 @@ import KeyElement from './KeyElement';
 import './KeysBar.css';
 
 const KeysBar = ({
-  collectedKeys, numberOfKeys, typeOfKey, finalDoorID, playerNumber
+  collectedKeys, numberOfKeys, typeOfKey, finalDoorID, playerNumber,
 }) => {
   const tab = new Array(numberOfKeys).fill(0);
   const style = {
@@ -23,12 +23,22 @@ const KeysBar = ({
     styleDoor.opacity = 1;
     style.display = 'none';
   }
+  let keyBarclassName;
+  let keyElementClassName;
+
+  if (playerNumber === 'player1') {
+    keyBarclassName = 'keysBar1';
+    keyElementClassName = 'keyElement1';
+  } else {
+    keyBarclassName = 'keysBar2';
+    keyElementClassName = 'keyElement2';
+  }
 
   return (
-    <div className="keysBar">
+    <div className={keyBarclassName}>
       {tab.map((number, index) => {
         return (
-          <div className="keysContainer">
+          <div className={keyElementClassName}>
             <KeyElement isCaught={collectedKeys === index + 1} typeOfKey={typeOfKey} />
           </div>
         );
