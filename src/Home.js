@@ -44,28 +44,31 @@ class Home extends Component {
       <div className="home">
         <img src="./assets/logopokemaze.png" alt="logo" />
         <div className="form">
+          <h5>Player Name</h5>
           <form onSubmit={this.onSubmit}>
             <input
               onChange={this.onChange}
               type="text"
               id="title"
               name="title"
+              placeholder="enter player name"
+              required
               value={user}
             />
             <input type="submit" value="Connect" style={{ display: 'none' }} />
+
+            <div className="buttonContainerHome">
+              <Link to="/solo-game-1">
+                <button
+                  className="homeButton"
+                  type="button"
+                  size="lg"
+                >
+                  Solo mode
+                </button>
+              </Link>
+            </div>
           </form>
-        </div>
-        <div className="buttonContainerHome">
-          <Link to="/solo-game-1">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Solo mode
-            </button>
-          </Link>
         </div>
       </div>
     );

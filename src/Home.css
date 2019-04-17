@@ -10,6 +10,28 @@
     min-width: 100vh;
   }
 
+  .home img{
+    padding-top: 18vh;
+  }
+
+  .form{
+    margin:auto;
+    margin-top:5px;
+    display:flex;
+    flex-direction:column;
+    padding:20px;
+    width:30%;
+    background-color:rgba(0,0,0,0.3);
+    color:white;
+    font-family:Arial;
+  }
+
+  input{
+    padding:10px;
+    border:none;
+    width:90%;
+    border-radius:20px;
+  }
   
   .buttonContainerHome{
     display: flex;
