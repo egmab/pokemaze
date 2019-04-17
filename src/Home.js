@@ -45,7 +45,10 @@ class Home extends Component {
       <div className="home">
         <img src="./assets/logopokemaze.png" alt="logo" />
         <div className="form">
-          <h4>Player : {user}</h4>
+          <h3>
+            Player :
+            {user}
+          </h3>
           <form onSubmit={this.onSubmit}>
             <input
               onChange={this.onChange}
