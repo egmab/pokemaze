@@ -28,7 +28,7 @@ class Game extends Component {
         }
       }
     }
-    this.player = {
+    this.player1 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
@@ -57,24 +57,24 @@ class Game extends Component {
       });
   }
 
-  getPlayerPos(x, y) {
-    this.player.posX = x;
-    this.player.posY = y;
+  getPlayerPos(x, y, player) {
+    this[player].posX = x;
+    this[player].posY = y;
     const { level } = this.state;
     // verify if player has caught the pokeball
-    if (level.items[this.player.posY][this.player.posX] === '001') {
+    if (level.items[this[player].posY][this[player].posX] === '001') {
       this.setState({
         isWinner: true,
         ongoingGame: false,
       });
     }
     // verify if player has caught KeysToCollect
-    if (level.items[this.player.posY][this.player.posX] === level.typeOfKey) {
-      this.player.collectedKeys += 1;
-      level.items[this.player.posY][this.player.posX] = '000';
+    if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
+      this[player].collectedKeys += 1;
+      level.items[this[player].posY][this[player].posX] = '000';
       this.setState({ level });
       // Open final door when all keys collected
-      if (this.player.collectedKeys === level.keysToCollect) {
+      if (this[player].collectedKeys === level.keysToCollect) {
         this.openFinalDoor();
       }
     }
@@ -88,6 +88,17 @@ class Game extends Component {
       });
     }
   }
+
+  resetState() {
+    const { level } = this.props;
+    this.setState({ level });
+  }
+  /*
+  resetState = () => {
+    const levelTest = this.props.level;
+    this.setState({ level : levelTest });
+  }
+  */
 
   playerAction(y, x) {
     const { level } = this.state;
@@ -135,6 +146,7 @@ class Game extends Component {
     this.finalDoorOpened = true;
   }
 
+
   render() {
     const {
       isWinner, isLoser, pokemon, ongoingGame, level,
@@ -143,7 +155,7 @@ class Game extends Component {
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser
-          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} reset={this.resetState} />
           : null
         }
         <div className="gameContainer">
@@ -156,13 +168,13 @@ class Game extends Component {
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
             className="player"
+            playerNumber="player1"
           />
           <KeysBar
-            collectedKeys={this.player.collectedKeys}
+            collectedKeys={this.player1.collectedKeys}
             finalDoorID={this.finalDoorID}
             typeOfKey={this.typeOfKey}
             numberOfKeys={this.keysToCollect}
-            playerNumber="player2"
           />
         </div>
       </div>

@@ -3,7 +3,7 @@ import KeyElement from './KeyElement';
 import './KeysBar.css';
 
 const KeysBar = ({
-  collectedKeys, numberOfKeys, typeOfKey, finalDoorID, playerNumber
+  collectedKeys, numberOfKeys, typeOfKey, finalDoorID,
 }) => {
   const tab = new Array(numberOfKeys).fill(0);
   const style = {
@@ -26,13 +26,11 @@ const KeysBar = ({
 
   return (
     <div className="keysBar">
-      {tab.map((number, index) => {
-        return (
-          <div className="keysContainer">
-            <KeyElement isCaught={collectedKeys === index + 1} typeOfKey={typeOfKey} />
-          </div>
-        );
-      })}
+      {tab.map((number, index) => (
+        <div className="keysContainer">
+          <KeyElement isCaught={collectedKeys === index + 1} typeOfKey={typeOfKey} />
+        </div>
+      ))}
       <div className="bigKeyCircle" style={{ ...styleDoor }}>
         <img src="./assets/capacities/cadenas.png" style={{ ...style }} alt="Final door" />
       </div>
