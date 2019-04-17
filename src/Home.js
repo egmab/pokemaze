@@ -7,11 +7,12 @@ const Home = () => (
   <div className="home">
     <img src="./assets/logopokemaze.png" alt="logo" />
     <div className="buttonContainerHome">
-      <Link to="/solo-game-1">
+      <Link to="/solo-game">
         <button
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Play solo
         </button>
