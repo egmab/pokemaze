@@ -36,13 +36,11 @@ const KeysBar = ({
 
   return (
     <div className={keyBarclassName}>
-      {tab.map((number, index) => {
-        return (
-          <div className={keyElementClassName}>
-            <KeyElement isCaught={collectedKeys === index + 1} typeOfKey={typeOfKey} />
-          </div>
-        );
-      })}
+      {tab.map((number, index) => (
+        <div className={keyElementClassName}>
+          <KeyElement isCaught={collectedKeys === index + 1} typeOfKey={typeOfKey} />
+        </div>
+      ))}
       <div className="bigKeyCircle" style={{ ...styleDoor }}>
         <img src="./assets/capacities/cadenas.png" style={{ ...style }} alt="Final door" />
       </div>
