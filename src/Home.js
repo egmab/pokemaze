@@ -42,10 +42,26 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Multiplayer
         </button>
       </Link>
+      <Link to="/pokeditor">
+        <button
+          className="homeButton"
+          type="button"
+          size="lg"
+          style={{
+            position: 'absolute',
+            bottom: '10%',
+            left: '43%',
+          }}
+        >
+          Pokeditor
+        </button>
+      </Link>
+
     </div>
   </div>
 );
