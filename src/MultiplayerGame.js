@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import Board from './Board';
 import Player from './Player';
 import EndingGame from './EndingGame';
-import Chrono from './Chrono';
 import KeysBar from './KeysBar';
 import './Game.css';
 
@@ -11,7 +10,6 @@ class Game extends Component {
   constructor(props) {
     super(props);
     this.getPlayerPos = this.getPlayerPos.bind(this);
-    this.getTime = this.getTime.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
     const { level } = props;
@@ -22,13 +20,18 @@ class Game extends Component {
           this.finalDoorID = level.items[i][j];
         }
         if (parseInt(level.items[i][j], 10) >= 2
-        && parseInt(level.items[i][j], 10) <= 19) {
+          && parseInt(level.items[i][j], 10) <= 19) {
           this.keysToCollect += 1;
           this.typeOfKey = level.items[i][j];
         }
       }
     }
-    this.player = {
+    this.player1 = {
+      posX: null,
+      posY: null,
+      collectedKeys: 0,
+    };
+    this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
@@ -57,35 +60,26 @@ class Game extends Component {
       });
   }
 
-  getPlayerPos(x, y) {
-    this.player.posX = x;
-    this.player.posY = y;
+  getPlayerPos(x, y, player) {
+    this[player].posX = x;
+    this[player].posY = y;
     const { level } = this.state;
     // verify if player has caught the pokeball
-    if (level.items[this.player.posY][this.player.posX] === '001') {
+    if (level.items[this[player].posY][this[player].posX] === '001') {
       this.setState({
         isWinner: true,
         ongoingGame: false,
       });
     }
     // verify if player has caught KeysToCollect
-    if (level.items[this.player.posY][this.player.posX] === level.typeOfKey) {
-      this.player.collectedKeys += 1;
-      level.items[this.player.posY][this.player.posX] = '000';
+    if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
+      this[player].collectedKeys += 1;
+      level.items[this[player].posY][this[player].posX] = '000';
       this.setState({ level });
       // Open final door when all keys collected
-      if (this.player.collectedKeys === level.keysToCollect) {
+      if (this[player].collectedKeys === level.keysToCollect) {
         this.openFinalDoor();
       }
-    }
-  }
-
-  getTime(count) {
-    if (count === 0) {
-      this.setState({
-        isLoser: true,
-        ongoingGame: false,
-      });
     }
   }
 
@@ -141,7 +135,6 @@ class Game extends Component {
     } = this.state;
     return (
       <div className="Game">
-        <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser
           ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
@@ -155,15 +148,33 @@ class Game extends Component {
             startingPositions={level.startingPositions.player1}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
+            playerNumber="player1"
             className="player"
           />
-          <KeysBar
-            collectedKeys={this.player.collectedKeys}
-            finalDoorID={this.finalDoorID}
-            typeOfKey={this.typeOfKey}
-            numberOfKeys={this.keysToCollect}
+          <Player
+            ongoingGame={ongoingGame}
+            tiles={level.tiles}
+            items={level.items}
+            startingPositions={level.startingPositions.player2}
+            getPlayerPos={this.getPlayerPos}
+            playerAction={this.playerAction}
             playerNumber="player2"
+            className="player"
           />
+          <div className="KeysBarMultiplayer">
+            <KeysBar
+              collectedKeys={this.player1.collectedKeys}
+              finalDoorID={this.finalDoorID}
+              typeOfKey={this.typeOfKey}
+              numberOfKeys={this.keysToCollect}
+            />
+            <KeysBar
+              collectedKeys={this.player2.collectedKeys}
+              finalDoorID={this.finalDoorID}
+              typeOfKey={this.typeOfKey}
+              numberOfKeys={this.keysToCollect}
+            />
+          </div>
         </div>
       </div>
     );

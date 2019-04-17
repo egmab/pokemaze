@@ -26,6 +26,16 @@ const Home = () => (
           Demo chrono
         </button>
       </Link>
+      <Link to="/multiplayer">
+        <button
+          className="homeButton"
+          type="button"
+          size="lg"
+          style={{ marginLeft: 100 }}
+        >
+          Multiplayer
+        </button>
+      </Link>
     </div>
   </div>
 );

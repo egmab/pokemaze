@@ -5,16 +5,28 @@ class Player extends Component {
     super(props);
     this.canMove = true;
     this.action = this.action.bind(this);
-    const posX = props.startingPositions.player1.x;
-    const posY = props.startingPositions.player1.y;
+    const posX = props.startingPositions.x;
+    const posY = props.startingPositions.y;
     this.posX = posX;
     this.posY = posY;
     this.img = 'charBottom';
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
+    // Define buttons for each player
+    if (props.playerNumber === 'player1') {
+      this.upButton = 38;
+      this.downButton = 40;
+      this.leftButton = 37;
+      this.rightButton = 39;
+    } else if (props.playerNumber === 'player2') {
+      this.upButton = 90;
+      this.downButton = 83;
+      this.leftButton = 81;
+      this.rightButton = 68;
+    }
     this.state = {
-      posX: props.startingPositions.player1.x,
-      posY: props.startingPositions.player1.y,
+      posX: props.startingPositions.x,
+      posY: props.startingPositions.y,
       img: 'charBottom',
       pixelsPerTile: 48,
     };
@@ -51,7 +63,7 @@ class Player extends Component {
     const { posX, posY } = this.state;
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
       || parseInt(items[posY + y][posX + x], 10) >= 900
-      || (parseInt(items[posY + y][posX + x], 10) >= 800
+      || (parseInt(items[posY + y][posX + x], 10) >= 700
         && parseInt(items[posY + y][posX + x], 10) <= 899
         && parseInt(items[posY + y][posX + x], 10) % 2 === 0)
     ) {
@@ -61,18 +73,19 @@ class Player extends Component {
   }
 
   action(event) {
-    const { ongoingGame } = this.props;
-    const { tiles, items } = this.props;
+    const {
+      ongoingGame, tiles, items, getPlayerPos, playerNumber,
+    } = this.props;
     // MOVES
     if (this.canMove && ongoingGame
-      && (event.keyCode === 39
-        || event.keyCode === 37
-        || event.keyCode === 40
-        || event.keyCode === 38
+      && (event.keyCode === this.upButton
+        || event.keyCode === this.downButton
+        || event.keyCode === this.leftButton
+        || event.keyCode === this.rightButton
       )) {
       this.canMove = false;
       // Move right
-      if (event.keyCode === 39) {
+      if (event.keyCode === this.rightButton) {
         this.img = 'charRight';
         if (this.posX + 1 < tiles[this.posY].length
           && this.checkTile(1, 0)) {
@@ -80,29 +93,28 @@ class Player extends Component {
         }
       }
       // Move left
-      if (event.keyCode === 37) {
+      if (event.keyCode === this.leftButton) {
         this.img = 'charLeft';
         if (this.posX > 0 && this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
       }
       // Move down
-      if (event.keyCode === 40) {
+      if (event.keyCode === this.downButton) {
         this.img = 'charBottom';
         if (this.posY + 1 < tiles.length && this.checkTile(0, 1)) {
           this.posY += 1;
         }
       }
       // Move up
-      if (event.keyCode === 38) {
+      if (event.keyCode === this.upButton) {
         this.img = 'charTop';
         if (this.posY > 0 && this.checkTile(0, -1)) {
           this.posY -= 1;
         }
       }
       // Callback : game gets new position of the player
-      const { getPlayerPos } = this.props;
-      getPlayerPos(this.posX, this.posY);
+      getPlayerPos(this.posX, this.posY, playerNumber);
     }
     // ACTION KEY (spacebar)
     if (event.keyCode === 32) {

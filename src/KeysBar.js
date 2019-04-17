@@ -2,10 +2,9 @@ import React from 'react';
 import KeyElement from './KeyElement';
 import './KeysBar.css';
 
-
-
-
-const KeysBar = ({ collectedKeys, numberOfKeys, typeOfKey, finalDoorID }) => {
+const KeysBar = ({
+  collectedKeys, numberOfKeys, typeOfKey, finalDoorID, playerNumber
+}) => {
   const tab = new Array(numberOfKeys).fill(0);
   const style = {
     opacity: 1,
@@ -23,9 +22,7 @@ const KeysBar = ({ collectedKeys, numberOfKeys, typeOfKey, finalDoorID }) => {
   if (collectedKeys === numberOfKeys) {
     styleDoor.opacity = 1;
     style.display = 'none';
-
-  };
-  
+  }
 
   return (
     <div className="keysBar">
