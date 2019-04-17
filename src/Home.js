@@ -57,19 +57,12 @@ class Home extends Component {
               name="title"
               value={user}
             />
-            <input type="submit" value="Connect" style={{ display: 'none' }} />
-
-            <div className="buttonContainerHome">
-              <Link to="/solo-game-1">
-                <button
-                  className="homeButton"
-                  type="button"
-                  size="lg"
-                >
-                  Solo mode
-                </button>
-              </Link>
-            </div>
+            <input
+              className="homeButton"
+              size="lg"
+              type="submit"
+              value="Solo mode"
+            />
           </form>
         </div>
       </div>
