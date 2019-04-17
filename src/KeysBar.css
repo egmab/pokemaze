@@ -6,21 +6,23 @@
     display: flex;
     align-items: center;
     margin-top: 0.7%;
-}
+    flex-direction: row-reverse; 
 
+}
 .keyElement1{
     display: flex; 
+    flex-direction: row-reverse;
 }
 .keysBar2 {
     display: flex;
+    justify-content: flex-end;
     align-items: center;
     margin-top: 0.7%;
-    flex-direction: row-reverse;
+    
 }
 
 .keyElement2{
     display: flex;
-    flex-direction: row-reverse; 
 }
 
 .keysBar1 img, .keysBar2 img {
