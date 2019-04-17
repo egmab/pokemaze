@@ -6,15 +6,16 @@ import Chrono from './Chrono';
 import KeysBar from './KeysBar';
 import './Game.css';
 
-
 class Game extends Component {
   constructor(props) {
     super(props);
+    const { level } = props;
+    this.level = level;
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
-    const { level } = props;
+
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
         if (parseInt(level.items[i][j], 10) >= 900
@@ -35,7 +36,7 @@ class Game extends Component {
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
-      level,
+      level: JSON.parse(JSON.stringify(level)),
       pokemon: undefined,
       isWinner: false,
       isLoser: false,
@@ -94,17 +95,17 @@ class Game extends Component {
       });
     }
   }
-
+  /*
   resetState() {
     const { level } = this.props;
     this.setState({ level });
   }
-  /*
-  resetState = () => {
-    const levelTest = this.props.level;
-    this.setState({ level : levelTest });
-  }
   */
+
+  resetState = () => {
+    const { level } = this.props;
+    this.setState({ level: JSON.parse(JSON.stringify(level)) });
+  }
 
   playerAction(y, x) {
     const { level } = this.state;
