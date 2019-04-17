@@ -22,6 +22,7 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Demo chrono
         </button>
