@@ -172,12 +172,14 @@ class Game extends Component {
               finalDoorID={this.finalDoorID}
               typeOfKey={this.typeOfKey}
               numberOfKeys={this.keysToCollect}
+              playerNumber="player1"
             />
             <KeysBar
               collectedKeys={this.player2.collectedKeys}
               finalDoorID={this.finalDoorID}
               typeOfKey={this.typeOfKey}
               numberOfKeys={this.keysToCollect}
+              playerNumber="player2"
             />
           </div>
         </div>
