@@ -34,9 +34,9 @@ class Player extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
-
     // document.addEventListener('keyUp', this.anim, false);
 
+    // Refresh render
     this.interval = setInterval(() => {
       this.canMove = true;
       this.refreshRender();
@@ -58,6 +58,7 @@ class Player extends Component {
 
   //    Checks if tile is an obstacle in the level after a move
   // => tiles named "500"+ and items named "900"+
+  // AND levers (items 700 to 799)
   // AND doors not activated by levers (even numbers between 800 and 899)
   checkTile(x, y) {
     const { tiles, items } = this.props;
@@ -167,6 +168,7 @@ class Player extends Component {
         if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
           && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
           const { playerAction } = this.props;
+          // Callback to Game
           playerAction(this.targetedTileY, this.targetedTileX);
         }
         this.targetedTileX = null;

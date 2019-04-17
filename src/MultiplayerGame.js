@@ -71,6 +71,11 @@ class Game extends Component {
         ongoingGame: false,
       });
     }
+    // change the trap
+    if (level.tiles[this[player].posY][this[player].posX] === '009') {
+      level.tiles[this[player].posY][this[player].posX] = '405';
+      this.setState({ level });
+    }
     // verify if player has caught KeysToCollect
     if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
       this[player].collectedKeys += 1;
