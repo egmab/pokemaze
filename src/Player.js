@@ -25,7 +25,7 @@ class Player extends Component {
 
     // document.addEventListener('keyUp', this.anim, false);
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.canMove = true;
       this.refreshRender();
     }, 30);
@@ -33,6 +33,7 @@ class Player extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.action, false);
+    clearInterval(this.interval);
   }
 
   refreshRender() {
@@ -58,6 +59,14 @@ class Player extends Component {
       return false;
     }
     return true;
+  }
+
+  traps(x, y) {
+    const { tiles, startingPositions } = this.props;
+    if (parseInt(tiles[y][x], 10) >= 400 && parseInt(tiles[y][x], 10) <= 499) {
+      this.posX = startingPositions.player1.x;
+      this.posY = startingPositions.player1.y;
+    }
   }
 
   action(event) {
@@ -101,6 +110,7 @@ class Player extends Component {
         }
       }
       // Callback : game gets new position of the player
+      this.traps(this.posX, this.posY);
       const { getPlayerPos } = this.props;
       getPlayerPos(this.posX, this.posY);
     }
