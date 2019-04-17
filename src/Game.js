@@ -153,7 +153,6 @@ class Game extends Component {
     this.finalDoorOpened = true;
   }
 
-
   render() {
     const {
       isWinner, isLoser, pokemon, ongoingGame, level,

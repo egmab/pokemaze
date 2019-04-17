@@ -32,6 +32,7 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Pokedex
         </button>
@@ -41,7 +42,6 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
-          style={{ marginLeft: 100 }}
         >
           Multiplayer
         </button>
