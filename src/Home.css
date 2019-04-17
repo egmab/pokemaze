@@ -26,6 +26,10 @@
     font-family:Arial;
   }
 
+  .form h4{
+    text-align: center;
+  }
+
   input{
     padding:10px;
     border:none;
@@ -36,6 +40,7 @@
   .buttonContainerHome{
     display: flex;
     justify-content: center;
+    padding-top: 3vh;
   }
   
  

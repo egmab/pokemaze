@@ -24,6 +24,7 @@ class Home extends Component {
     });
   }
 
+
   onSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
@@ -44,15 +45,13 @@ class Home extends Component {
       <div className="home">
         <img src="./assets/logopokemaze.png" alt="logo" />
         <div className="form">
-          <h5>Player Name</h5>
+          <h4>Player : {user}</h4>
           <form onSubmit={this.onSubmit}>
             <input
               onChange={this.onChange}
               type="text"
               id="title"
               name="title"
-              placeholder="enter player name"
-              required
               value={user}
             />
             <input type="submit" value="Connect" style={{ display: 'none' }} />
