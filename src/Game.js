@@ -6,15 +6,16 @@ import Chrono from './Chrono';
 import KeysBar from './KeysBar';
 import './Game.css';
 
-
 class Game extends Component {
   constructor(props) {
     super(props);
+    const { level } = props;
+    this.level = level;
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
-    const { level } = props;
+
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
         if (parseInt(level.items[i][j], 10) >= 900
@@ -22,20 +23,20 @@ class Game extends Component {
           this.finalDoorID = level.items[i][j];
         }
         if (parseInt(level.items[i][j], 10) >= 2
-        && parseInt(level.items[i][j], 10) <= 19) {
+          && parseInt(level.items[i][j], 10) <= 19) {
           this.keysToCollect += 1;
           this.typeOfKey = level.items[i][j];
         }
       }
     }
-    this.player = {
+    this.player1 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
-      level,
+      level: JSON.parse(JSON.stringify(level)),
       pokemon: undefined,
       isWinner: false,
       isLoser: false,
@@ -57,24 +58,30 @@ class Game extends Component {
       });
   }
 
-  getPlayerPos(x, y) {
-    this.player.posX = x;
-    this.player.posY = y;
+  getPlayerPos(x, y, player) {
+    this[player].posX = x;
+    this[player].posY = y;
     const { level } = this.state;
+
     // verify if player has caught the pokeball
-    if (level.items[this.player.posY][this.player.posX] === '001') {
+    if (level.items[this[player].posY][this[player].posX] === '001') {
       this.setState({
         isWinner: true,
         ongoingGame: false,
       });
     }
+    // change the trap
+    if (level.tiles[this[player].posY][this[player].posX] === '009') {
+      level.tiles[this[player].posY][this[player].posX] = '405';
+      this.setState({ level });
+    }
     // verify if player has caught KeysToCollect
-    if (level.items[this.player.posY][this.player.posX] === level.typeOfKey) {
-      this.player.collectedKeys += 1;
-      level.items[this.player.posY][this.player.posX] = '000';
+    if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
+      this[player].collectedKeys += 1;
+      level.items[this[player].posY][this[player].posX] = '000';
       this.setState({ level });
       // Open final door when all keys collected
-      if (this.player.collectedKeys === level.keysToCollect) {
+      if (this[player].collectedKeys === level.keysToCollect) {
         this.openFinalDoor();
       }
     }
@@ -87,6 +94,17 @@ class Game extends Component {
         ongoingGame: false,
       });
     }
+  }
+  /*
+  resetState() {
+    const { level } = this.props;
+    this.setState({ level });
+  }
+  */
+
+  resetState = () => {
+    const { level } = this.props;
+    this.setState({ level: JSON.parse(JSON.stringify(level)) });
   }
 
   playerAction(y, x) {
@@ -143,7 +161,7 @@ class Game extends Component {
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser
-          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} reset={this.resetState} />
           : null
         }
         <div className="gameContainer">
@@ -156,13 +174,13 @@ class Game extends Component {
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
             className="player"
+            playerNumber="player1"
           />
           <KeysBar
-            collectedKeys={this.player.collectedKeys}
+            collectedKeys={this.player1.collectedKeys}
             finalDoorID={this.finalDoorID}
             typeOfKey={this.typeOfKey}
             numberOfKeys={this.keysToCollect}
-            playerNumber="player2"
           />
         </div>
       </div>

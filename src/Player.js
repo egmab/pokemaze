@@ -37,7 +37,7 @@ class Player extends Component {
 
     // document.addEventListener('keyUp', this.anim, false);
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.canMove = true;
       this.refreshRender();
     }, 30);
@@ -45,6 +45,7 @@ class Player extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.action, false);
+    clearInterval(this.interval);
   }
 
   refreshRender() {
@@ -64,6 +65,8 @@ class Player extends Component {
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
       || parseInt(items[posY + y][posX + x], 10) >= 900
       || (parseInt(items[posY + y][posX + x], 10) >= 700
+        && parseInt(items[posY + y][posX + x], 10) <= 799)
+      || (parseInt(items[posY + y][posX + x], 10) >= 800
         && parseInt(items[posY + y][posX + x], 10) <= 899
         && parseInt(items[posY + y][posX + x], 10) % 2 === 0)
     ) {
@@ -72,10 +75,22 @@ class Player extends Component {
     return true;
   }
 
+  // Change the position of player when trap is active
+  traps(x, y) {
+    const { tiles, startingPositions } = this.props;
+    if ((parseInt(tiles[y][x], 10) >= 400
+      && parseInt(tiles[y][x], 10) <= 499)
+      || parseInt(tiles[y][x], 10) === 9) {
+      this.posX = startingPositions.x;
+      this.posY = startingPositions.y;
+    }
+  }
+
   action(event) {
     const {
       ongoingGame, tiles, items, getPlayerPos, playerNumber,
     } = this.props;
+    const { posX, posY } = this.state;
     // MOVES
     if (this.canMove && ongoingGame
       && (event.keyCode === this.upButton
@@ -113,6 +128,7 @@ class Player extends Component {
           this.posY -= 1;
         }
       }
+      this.traps(posX, posY);
       // Callback : game gets new position of the player
       getPlayerPos(this.posX, this.posY, playerNumber);
     }
