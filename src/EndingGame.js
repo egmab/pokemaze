@@ -43,20 +43,9 @@ const EndingGame = ({ pokemon, isWinner, isLoser, reset }) => {
           !
         </h2>
         <p>
-          <Link exact to="/solo-game" onClick={() => reset()}>
-            <button
-              className="largeBtn"
-              type="button"
-              size="lg"
-            >
-              Play again
-            </button>
-          </Link>
-        </p>
-        <p>
           <Link exact to="/" onClick={() => reset()}>
             <button
-              className="smallBtn"
+              className="largeBtn"
               type="button"
               size="lg"
             >
