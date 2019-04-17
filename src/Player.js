@@ -25,7 +25,7 @@ class Player extends Component {
 
     // document.addEventListener('keyUp', this.anim, false);
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.canMove = true;
       this.refreshRender();
     }, 30);
@@ -33,6 +33,7 @@ class Player extends Component {
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.action, false);
+    clearInterval(this.interval);
   }
 
   refreshRender() {
