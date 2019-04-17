@@ -74,7 +74,7 @@
                     "y":0
                 }
             },
-            "timer":5,
+            "timer":60,
             "typeOfKey": "002",
             "keysToCollect": 3
         }

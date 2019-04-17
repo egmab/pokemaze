@@ -69,7 +69,6 @@ class Game extends Component {
         ongoingGame: false,
       });
     }
-
     // change the trap
     if (level.tiles[this.player.posY][this.player.posX] === '009') {
       level.tiles[this.player.posY][this.player.posX] = '405';
@@ -95,6 +94,17 @@ class Game extends Component {
       });
     }
   }
+
+  resetState() {
+    const { level } = this.props;
+    this.setState({ level });
+  }
+  /*
+  resetState = () => {
+    const levelTest = this.props.level;
+    this.setState({ level : levelTest });
+  }
+  */
 
   playerAction(y, x) {
     const { level } = this.state;
@@ -142,6 +152,7 @@ class Game extends Component {
     this.finalDoorOpened = true;
   }
 
+
   render() {
     const {
       isWinner, isLoser, pokemon, ongoingGame, level,
@@ -150,7 +161,7 @@ class Game extends Component {
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser
-          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} reset={this.resetState} />
           : null
         }
         <div className="gameContainer">
