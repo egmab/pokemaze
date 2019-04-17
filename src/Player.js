@@ -10,6 +10,8 @@ class Player extends Component {
     this.posX = posX;
     this.posY = posY;
     this.img = 'charBottom';
+    this.targetedTileX = this.posX;
+    this.targetedTileY = this.posY + 1;
     this.state = {
       posX: props.startingPositions.player1.x,
       posY: props.startingPositions.player1.y,
@@ -42,37 +44,26 @@ class Player extends Component {
   }
 
   //    Checks if tile is an obstacle in the level after a move
-  // (tiles named "500"+ and items named "900"+)
+  // => tiles named "500"+ and items named "900"+
+  // AND doors not activated by levers (even numbers between 800 and 899)
   checkTile(x, y) {
     const { tiles, items } = this.props;
     const { posX, posY } = this.state;
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
-      || parseInt(items[posY + y][posX + x], 10) >= 900) {
+      || parseInt(items[posY + y][posX + x], 10) >= 900
+      || (parseInt(items[posY + y][posX + x], 10) >= 800
+        && parseInt(items[posY + y][posX + x], 10) <= 899
+        && parseInt(items[posY + y][posX + x], 10) % 2 === 0)
+    ) {
       return false;
     }
     return true;
   }
 
-  /* walk()
-  {
-    setInterval(() => {
-      if(this.state.img === 'charRight' )
-      this.setState({ img: 'charRightFeet' });
-      else
-      this.setState({ img: 'charRight' });
-    }, 1000);
-  } */
-
   action(event) {
     const { ongoingGame } = this.props;
-    const { tiles } = this.props;
+    const { tiles, items } = this.props;
     // MOVES
-
-    /* if(event.keyCode === 39 && this.state.count === 0){
-      this.setState({count: this.state.count =  this.state.count + 1});
-      this.walk();
-    } */
-
     if (this.canMove && ongoingGame
       && (event.keyCode === 39
         || event.keyCode === 37
@@ -109,11 +100,51 @@ class Player extends Component {
           this.posY -= 1;
         }
       }
-
+      // Callback : game gets new position of the player
       const { getPlayerPos } = this.props;
       getPlayerPos(this.posX, this.posY);
     }
-    // To do: other actions
+    // ACTION KEY (spacebar)
+    if (event.keyCode === 32) {
+      // Sets coordinates of the targeted tile
+      switch (this.img) {
+        case 'charTop': {
+          this.targetedTileX = this.posX;
+          this.targetedTileY = this.posY - 1;
+          break;
+        }
+        case 'charLeft': {
+          this.targetedTileX = this.posX - 1;
+          this.targetedTileY = this.posY;
+          break;
+        }
+        case 'charRight': {
+          this.targetedTileX = this.posX + 1;
+          this.targetedTileY = this.posY;
+          break;
+        }
+        default: {
+          this.targetedTileX = this.posX;
+          this.targetedTileY = this.posY + 1;
+          break;
+        }
+      }
+      // Checks if targeted tile is out of the map
+      if (this.targetedTileX >= 0
+        && this.targetedTileY >= 0
+        && this.targetedTileY < tiles.length
+        && this.targetedTileX < tiles[this.targetedTileY].length
+      ) {
+        // Activate lever if there is any on tile
+        if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
+          && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
+          const { playerAction } = this.props;
+          playerAction(this.targetedTileY, this.targetedTileX);
+        }
+        this.targetedTileX = null;
+        this.targetedTileY = null;
+      }
+    }
   }
 
   render() {
