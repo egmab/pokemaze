@@ -36,17 +36,7 @@ class Pokedex extends Component {
     return (
       <div className="pokemon-container">
         <div className="pokemonSearchBar">
-        Welcome in your pokedex
-          <div>
-            <Link exact to="/">
-              <button
-                className="smallBtn"
-                type="button"
-              >
-          Home
-              </button>
-            </Link>
-          </div>
+        Il est la le menu quoi
         </div>
         {
           pokemon.map((monster, index) => (

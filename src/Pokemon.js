@@ -7,39 +7,36 @@ class Pokemon extends Component {
     this.state = {
       onePokemon: '',
     };
-    this.pokemon = this.props.pokemonName;
-
+    const { pokemonName } = this.props;
+    this.pokemon = pokemonName;
   }
-  componentWillMount() {
-    
 
+  componentWillMount() {
     fetch(`https://pokeapi.co/api/v2/pokemon/${this.pokemon}`)
       .then(response => response.json())
       .then((data) => {
         this.setState({
           onePokemon: data,
         });
-        
       });
-     
   }
- 
- 
+
+
   render() {
-    let pokemonType = ""
-    if (this.state.onePokemon.types){
-      if (this.state.onePokemon.types[1]){
-        pokemonType = this.state.onePokemon.types[1].type.name
+    const { onePokemon } = this.state;
+    let pokemonType = '';
+    if (onePokemon.types) {
+      if (onePokemon.types[1]) {
+        pokemonType = onePokemon.types[1].type.name;
+      } else {
+        pokemonType = onePokemon.types[0].type.name;
       }
-      else {
-        pokemonType = this.state.onePokemon.types[0].type.name
-      }
-    }
-    else{
-      pokemonType = ""
+    } else {
+      pokemonType = '';
     }
 
-    //this.pokemonType = this.state.onePokemon.types ? this.state.onePokemon.types[0].type.name : "undefined";
+    // this.pokemonType = onePokemon.types
+    // ? onePokemon.types[0].type.name : "undefined";
 
     switch (this.pokemon) {
       case 'nidoran-f':
@@ -55,19 +52,18 @@ class Pokemon extends Component {
         break;
     }
 
-
-
     return (
       <div
         className="pokemon-single-container"
       >
         <div>
-          <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt ={this.pokemon} />
+          <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} />
         </div>
         <div>
           <img
             className="sprites"
-            src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`} alt={this.pokemon}
+            src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`}
+            alt={this.pokemon}
           />
         </div>
         <div className="align-bottom">
@@ -77,4 +73,5 @@ class Pokemon extends Component {
     );
   }
 }
+
 export default Pokemon;

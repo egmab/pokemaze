@@ -5,16 +5,28 @@ class Player extends Component {
     super(props);
     this.canMove = true;
     this.action = this.action.bind(this);
-    const posX = props.startingPositions.player1.x;
-    const posY = props.startingPositions.player1.y;
+    const posX = props.startingPositions.x;
+    const posY = props.startingPositions.y;
     this.posX = posX;
     this.posY = posY;
     this.img = 'charBottom';
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
+    // Define buttons for each player
+    if (props.playerNumber === 'player1') {
+      this.upButton = 38;
+      this.downButton = 40;
+      this.leftButton = 37;
+      this.rightButton = 39;
+    } else if (props.playerNumber === 'player2') {
+      this.upButton = 90;
+      this.downButton = 83;
+      this.leftButton = 81;
+      this.rightButton = 68;
+    }
     this.state = {
-      posX: props.startingPositions.player1.x,
-      posY: props.startingPositions.player1.y,
+      posX: props.startingPositions.x,
+      posY: props.startingPositions.y,
       img: 'charBottom',
       pixelsPerTile: 48,
     };
@@ -22,9 +34,9 @@ class Player extends Component {
 
   componentDidMount() {
     document.addEventListener('keydown', this.action, false);
-
     // document.addEventListener('keyUp', this.anim, false);
 
+    // Refresh render
     this.interval = setInterval(() => {
       this.canMove = true;
       this.refreshRender();
@@ -46,12 +58,15 @@ class Player extends Component {
 
   //    Checks if tile is an obstacle in the level after a move
   // => tiles named "500"+ and items named "900"+
+  // AND levers (items 700 to 799)
   // AND doors not activated by levers (even numbers between 800 and 899)
   checkTile(x, y) {
     const { tiles, items } = this.props;
     const { posX, posY } = this.state;
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
       || parseInt(items[posY + y][posX + x], 10) >= 900
+      || (parseInt(items[posY + y][posX + x], 10) >= 700
+        && parseInt(items[posY + y][posX + x], 10) <= 799)
       || (parseInt(items[posY + y][posX + x], 10) >= 800
         && parseInt(items[posY + y][posX + x], 10) <= 899
         && parseInt(items[posY + y][posX + x], 10) % 2 === 0)
@@ -61,27 +76,32 @@ class Player extends Component {
     return true;
   }
 
+  // Change the position of player when trap is active
   traps(x, y) {
     const { tiles, startingPositions } = this.props;
-    if (parseInt(tiles[y][x], 10) >= 400 && parseInt(tiles[y][x], 10) <= 499) {
-      this.posX = startingPositions.player1.x;
-      this.posY = startingPositions.player1.y;
+    if ((parseInt(tiles[y][x], 10) >= 400
+      && parseInt(tiles[y][x], 10) <= 499)
+      || parseInt(tiles[y][x], 10) === 9) {
+      this.posX = startingPositions.x;
+      this.posY = startingPositions.y;
     }
   }
 
   action(event) {
-    const { ongoingGame } = this.props;
-    const { tiles, items } = this.props;
+    const {
+      ongoingGame, tiles, items, getPlayerPos, playerNumber,
+    } = this.props;
+    const { posX, posY } = this.state;
     // MOVES
     if (this.canMove && ongoingGame
-      && (event.keyCode === 39
-        || event.keyCode === 37
-        || event.keyCode === 40
-        || event.keyCode === 38
+      && (event.keyCode === this.upButton
+        || event.keyCode === this.downButton
+        || event.keyCode === this.leftButton
+        || event.keyCode === this.rightButton
       )) {
       this.canMove = false;
       // Move right
-      if (event.keyCode === 39) {
+      if (event.keyCode === this.rightButton) {
         this.img = 'charRight';
         if (this.posX + 1 < tiles[this.posY].length
           && this.checkTile(1, 0)) {
@@ -89,30 +109,29 @@ class Player extends Component {
         }
       }
       // Move left
-      if (event.keyCode === 37) {
+      if (event.keyCode === this.leftButton) {
         this.img = 'charLeft';
         if (this.posX > 0 && this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
       }
       // Move down
-      if (event.keyCode === 40) {
+      if (event.keyCode === this.downButton) {
         this.img = 'charBottom';
         if (this.posY + 1 < tiles.length && this.checkTile(0, 1)) {
           this.posY += 1;
         }
       }
       // Move up
-      if (event.keyCode === 38) {
+      if (event.keyCode === this.upButton) {
         this.img = 'charTop';
         if (this.posY > 0 && this.checkTile(0, -1)) {
           this.posY -= 1;
         }
       }
+      this.traps(posX, posY);
       // Callback : game gets new position of the player
-      this.traps(this.posX, this.posY);
-      const { getPlayerPos } = this.props;
-      getPlayerPos(this.posX, this.posY);
+      getPlayerPos(this.posX, this.posY, playerNumber);
     }
     // ACTION KEY (spacebar)
     if (event.keyCode === 32) {
@@ -149,6 +168,7 @@ class Player extends Component {
         if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
           && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
           const { playerAction } = this.props;
+          // Callback to Game
           playerAction(this.targetedTileY, this.targetedTileX);
         }
         this.targetedTileX = null;

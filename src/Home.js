@@ -32,8 +32,18 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Pokedex
+        </button>
+      </Link>
+      <Link to="/multiplayer">
+        <button
+          className="homeButton"
+          type="button"
+          size="lg"
+        >
+          Multiplayer
         </button>
       </Link>
     </div>
