@@ -62,7 +62,7 @@ class Pokemon extends Component {
         className="pokemon-single-container"
       >
         <div>
-        <img className='imgelem' src={`./assets/pokemons/elements/${pokemonType}.png`} alt ={this.pokemon} />
+          <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt ={this.pokemon} />
         </div>
         <div>
           <img
@@ -70,7 +70,9 @@ class Pokemon extends Component {
             src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`} alt={this.pokemon}
           />
         </div>
-        <div className="align-bottom"> {this.pokemon} </div>
+        <div className="align-bottom">
+          {this.pokemon}
+        </div>
       </div>
     );
   }

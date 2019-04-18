@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Pokemon from './Pokemon';
 import './Pokedex.css';
-// import { Link } from 'react-router-dom';
+
 
 class Pokedex extends Component {
   constructor(props) {
@@ -30,14 +31,23 @@ class Pokedex extends Component {
     });
   }
 
-
   render() {
     const { pokemon } = this.state;
     return (
       <div className="pokemon-container">
-      <div className='pokemonSearchBar'> 
-        Il est la le menu quoi
-      </div>
+        <div className="pokemonSearchBar">
+        Welcome in your pokedex
+          <div>
+            <Link exact to="/">
+              <button
+                className="smallBtn"
+                type="button"
+              >
+          Home
+              </button>
+            </Link>
+          </div>
+        </div>
         {
           pokemon.map((monster, index) => (
             <Pokemon
@@ -51,6 +61,5 @@ class Pokedex extends Component {
     );
   }
 }
-
 
 export default Pokedex;

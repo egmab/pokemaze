@@ -3,7 +3,9 @@ import './Modal.css';
 import { Link } from 'react-router-dom';
 
 
-const EndingGame = ({ pokemon, isWinner, isLoser, reset }) => {
+const EndingGame = ({
+  pokemon, isWinner, isLoser, reset,
+}) => {
   let pokemonName = pokemon.name;
   const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   // const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
