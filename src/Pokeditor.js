@@ -14,7 +14,6 @@ class Pokeditor extends Component {
     super(props);
     // TO DO : add a way to modify/write a json file
     // TO DO: select/edit existing levels
-    // TO DO: save the level (local storage?)
     // TO DO : add a way to get file list from assets/tiles folder...
     //    ADD YOUR TILES HERE
     this.tiles = ['000', '001', '002', '003', '004', '005', '006', '007', '008', '009', '010', '015', '016',
@@ -121,9 +120,29 @@ class Pokeditor extends Component {
     });
   }
 
-  saveLevel = () => {
-    // add argument levelName
-    // const currentData = localStorage.getItem('gameData').toString();
+  saveLevel = (levelName) => {
+    const {
+      level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer,
+    } = this.state;
+    const currentData = JSON.parse(localStorage.getItem('GameData'));
+    const currentLevel = {
+      tiles: level,
+      items,
+      startingPositions: {
+        player1: {
+          x: playerOneX,
+          y: playerOneY,
+        },
+        player2: {
+          x: playerTwoX,
+          y: playerTwoY,
+        },
+      },
+      timer,
+      typeOfKey: '002',
+    };
+    currentData.default.levels.customLevels[levelName] = currentLevel;
+    localStorage.setItem('GameData', JSON.stringify(currentData));
   }
 
   render() {

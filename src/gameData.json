@@ -109,6 +109,8 @@
                 "timer": 60,
                 "typeOfKey": "002"
             }
-        }
+        },
+      "customLevels": {
+      }
     }
 }

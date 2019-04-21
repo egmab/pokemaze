@@ -17,6 +17,7 @@ class PokeditorSaveLevel extends Component {
     const { saveLevel } = this.props;
     const { levelName } = this.state;
     saveLevel(levelName);
+    this.setState({ levelName: '' });
   }
 
   render() {
