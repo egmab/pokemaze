@@ -4,18 +4,15 @@ class PokeditorChooseSize extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      x: props.x,
-      y: props.y,
       xInput: 10,
       yInput: 10,
-    }
+    };
   }
 
   handleChange = (event) => {
     if (event.target.value > 0 && event.target.value <= 50) {
-      const target = event.target;
-      const input = target.name;
-      this.setState({ [input]: event.target.value })
+      const input = event.target.name;
+      this.setState({ [input]: event.target.value });
     }
   }
 
@@ -32,21 +29,21 @@ class PokeditorChooseSize extends Component {
       <div>
         <p>
           Change level size
-          <span style={{ color: "red" }}> WARNING: This will DELETE current level</span>
+          <span style={{ color: 'red' }}> WARNING: This will DELETE current level</span>
         </p>
         <form onSubmit={this.handleSubmit}>
-          <label>
+          <label htmlFor="Length">
             Length :
             <input name="xInput" type="number" value={xInput} onChange={this.handleChange} />
           </label>
-          <label>
+          <label htmlFor="Height">
             Height :
             <input name="yInput" type="number" value={yInput} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Confirm" />
         </form>
       </div>
-    )
+    );
   }
 }
 
