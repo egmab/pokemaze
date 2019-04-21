@@ -4,6 +4,7 @@ import PokeditorChooseItem from './PokeditorChooseItem';
 import PokeditorChooseStartingPoint from './PokeditorChooseStartingPoint';
 import PokeditorChooseSize from './PokeditorChooseSize';
 import PokeditorChooseTimer from './PokeditorChooseTimer';
+import PokeditorSaveLevel from './PokeditorSaveLevel';
 import PokeditorBoard from './PokeditorBoard';
 import PokeditorMatrix from './PokeditorMatrix';
 import './Pokeditor.css';
@@ -11,21 +12,21 @@ import './Pokeditor.css';
 class Pokeditor extends Component {
   constructor(props) {
     super(props);
-    //    TO DO : add a way to get file list from assets/tiles folder...
+    // TO DO : add a way to modify/write a json file
+    // TO DO: select/edit existing levels
+    // TO DO: save the level (local storage?)
+    // TO DO : add a way to get file list from assets/tiles folder...
     //    ADD YOUR TILES HERE
     this.tiles = ['000', '001', '002', '003', '004', '005', '006', '007', '008', '009', '010', '015', '016',
       '017', '018', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027',
       '028', '029', '030', '031', '032', '033', '034', '035', '036', '037', '038', '039',
       '040', '041', '042', '043', '044', '045', '046', '047', '048', '049', '050', '051',
       '052', '053', '054', '055', '056', '057', '058', '059', '500', '501', '502', '503',
-      '504', '505', '510', '511', '512', '513', '514', '515', '518', '519', '520', '521', '522', '523',
-      '524', '525', '526'];
+      '504', '505', '510', '511', '512', '513', '514', '515', '518', '519', '520', '521',
+      '522', '523', '524', '525', '526'];
     //    ADD YOUR ITEMS HERE
     this.items = ['000', '001', '002', '700', '701', '800', '801', '900'];
     this.state = {
-      // TO DO : add a way to modify/write a json file
-      // TO DO: select/edit existing levels
-      // TO DO: save the level (local storage?)
       level: [
         ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
         ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
@@ -120,6 +121,11 @@ class Pokeditor extends Component {
     });
   }
 
+  saveLevel = () => {
+    // add argument levelName
+    // const currentData = localStorage.getItem('gameData').toString();
+  }
+
   render() {
     const {
       level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer,
@@ -128,6 +134,7 @@ class Pokeditor extends Component {
       <div className="Pokeditor">
         <h1>Pokeditor</h1>
         <PokeditorChooseSize changeSize={this.changeSize} />
+        <PokeditorSaveLevel saveLevel={this.saveLevel} />
         <PokeditorChooseTimer changeTimer={this.changeTimer} />
         <PokeditorChooseTile tiles={this.tiles} selectTile={this.selectTile} />
         <PokeditorChooseItem items={this.items} selectItem={this.selectItem} />
