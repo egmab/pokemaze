@@ -37,7 +37,7 @@ const KeysBar = ({
   return (
     <div className={keyBarclassName}>
       {tab.map((number, index) => (
-        <div className={keyElementClassName}>
+        <div className={keyElementClassName} key={`KeyElement-${index + 1}`}>
           <KeyElement isCaught={collectedKeys === index + 1} typeOfKey={typeOfKey} />
         </div>
       ))}
