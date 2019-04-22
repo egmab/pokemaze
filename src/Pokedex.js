@@ -15,7 +15,6 @@ class Pokedex extends Component {
     this.getPokemon();
   }
 
-
   getPokemon() {
     fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
       method: 'GET',
@@ -36,7 +35,7 @@ class Pokedex extends Component {
     return (
       <div className="pokemon-container">
         <div className="pokemonSearchBar">
-        Il est la le menu quoi
+          Il est la le menu quoi
         </div>
         {
           pokemon.map((monster, index) => (
