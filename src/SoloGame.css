@@ -11,7 +11,11 @@
     min-width: 100vh;
   }
 
-  
+  .SoloLevels {
+    display:flex;
+    justify-content: center;
+  }
+
   .buttonContainerHome{
     display: flex;
     justify-content: center;

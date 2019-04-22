@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
 import './App.css';
 import SoloGame from './SoloGame';
-import SoloGame2 from './SoloGame2';
 import Multiplayer from './Multiplayer';
 import Home from './Home';
 import Pokedex from './Pokedex';
@@ -20,6 +19,9 @@ const App = () => {
   // || localStorage.getItem('Gamedata', JSON.stringify(GameData)) !== JSON.stringify(GameData)) {
     localStorage.setItem('GameData', JSON.stringify(GameData));
   }
+  if (!localStorage.getItem('PokemazeCustomLevels')) {
+    localStorage.setItem('PokemazeCustomLevels', JSON.stringify({}));
+  }
 
   return (
     <BrowserRouter>
@@ -27,7 +29,6 @@ const App = () => {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/solo-game" component={SoloGame} />
-          <Route path="/solo-game-2" component={SoloGame2} />
           <Route path="/multiplayer" component={Multiplayer} />
           <Route path="/pokedex" component={Pokedex} />
           <Route path="/pokeditor" component={Pokeditor} />

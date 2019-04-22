@@ -13,8 +13,9 @@ class Pokeditor extends Component {
   constructor(props) {
     super(props);
     // TO DO : add a way to modify/write a json file
-    // TO DO: select/edit existing levels
+    // TO DO : select/edit existing levels
     // TO DO : add a way to get file list from assets/tiles folder...
+    // TO DO : select type of key
     //    ADD YOUR TILES HERE
     this.tiles = ['000', '001', '002', '003', '004', '005', '006', '007', '008', '009', '010', '015', '016',
       '017', '018', '018', '019', '020', '021', '022', '023', '024', '025', '026', '027',
@@ -124,7 +125,10 @@ class Pokeditor extends Component {
     const {
       level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer,
     } = this.state;
-    const currentData = JSON.parse(localStorage.getItem('GameData'));
+    if (!localStorage.getItem('PokemazeCustomLevels')) {
+      localStorage.setItem('PokemazeCustomLevels', JSON.stringify({}));
+    }
+    const currentData = JSON.parse(localStorage.getItem('PokemazeCustomLevels'));
     const currentLevel = {
       tiles: level,
       items,
@@ -141,8 +145,8 @@ class Pokeditor extends Component {
       timer,
       typeOfKey: '002',
     };
-    currentData.default.levels.customLevels[levelName] = currentLevel;
-    localStorage.setItem('GameData', JSON.stringify(currentData));
+    currentData[levelName] = currentLevel;
+    localStorage.setItem('PokemazeCustomLevels', JSON.stringify(currentData));
   }
 
   render() {
