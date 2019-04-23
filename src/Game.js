@@ -105,14 +105,11 @@ class Game extends Component {
       const newPokemon = pokemon.name;
       if (localStorage.getItem('connectedPlayer')) {
         const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
-        console.log(actualPlayer, localStorage.getItem(actualPlayer))
         if (localStorage.getItem(actualPlayer)) {
           const actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
           if (actualStorage) {
             actualStorage.push(newPokemon);
-            console.log('test', actualStorage)
             localStorage.setItem(actualPlayer, JSON.stringify(actualStorage));
-            console.log('test2', localStorage.getItem(actualPlayer))
           }
         }
       }

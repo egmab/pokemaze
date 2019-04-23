@@ -24,7 +24,6 @@ class Pokemon extends Component {
 
 
   render() {
-    
     const { pokemonName } = this.props;
     let pokemonClass = 'pokemon-single-container';
     for (let i = 0; i < this.caught.length; i += 1) {
@@ -48,8 +47,6 @@ class Pokemon extends Component {
       pokemonType = '';
     }
 
-    // this.pokemonType = onePokemon.types
-    // ? onePokemon.types[0].type.name : "undefined";
 
     switch (this.pokemon) {
       case 'nidoran-f':
