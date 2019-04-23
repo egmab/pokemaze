@@ -23,11 +23,8 @@ class PokeditorChooseSize extends Component {
     const { timer } = this.state;
     return (
       <div>
-        <p>
-          Change timer
-        </p>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="Timer">
+          <label htmlFor="Change timer :">
             Timer :
             <input name="xInput" type="number" value={timer} onChange={this.handleChange} />
           </label>

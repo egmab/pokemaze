@@ -134,12 +134,12 @@ class Pokeditor extends Component {
       items,
       startingPositions: {
         player1: {
-          x: playerOneX,
-          y: playerOneY,
+          x: playerOneY,
+          y: playerOneX,
         },
         player2: {
-          x: playerTwoX,
-          y: playerTwoY,
+          x: playerTwoY,
+          y: playerTwoX,
         },
       },
       timer,
