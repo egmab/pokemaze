@@ -40,7 +40,7 @@ class Player extends Component {
     this.interval = setInterval(() => {
       this.canMove = true;
       this.refreshRender();
-    }, 30);
+    }, 50);
   }
 
   componentWillUnmount() {
