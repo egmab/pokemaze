@@ -82,7 +82,7 @@ class Game extends Component {
       level.items[this[player].posY][this[player].posX] = '000';
       this.setState({ level });
       // Open final door when all keys collected
-      if (this[player].collectedKeys === level.keysToCollect) {
+      if (this[player].collectedKeys === this.keysToCollect) {
         this.openFinalDoor();
       }
     }
