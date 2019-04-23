@@ -1,13 +1,31 @@
-.keysBar {
+.KeysBarMultiplayer{
+    display: flex;
+    justify-content: space-between;
+}
+.keysBar1 {
+    display: flex;
+    align-items: center;
+    margin-top: 0.7%;
+    flex-direction: row-reverse; 
+
+}
+.keyElement1{
+    display: flex; 
+    flex-direction: row-reverse;
+}
+.keysBar2 {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     margin-top: 0.7%;
+    
 }
-.keysContainer{
+
+.keyElement2{
     display: flex;
 }
-.keysBar img{
+
+.keysBar1 img, .keysBar2 img {
     width: 100%;
 }
 

@@ -37,15 +37,15 @@ class Home extends Component {
       localStorage.setItem(player, JSON.stringify(this.data));
       console.log(JSON.parse(localStorage.getItem('data')));
     }
-  if (localStorage.getItem("connectedPlayer")) {
-    alert('utilisateur déjà existant 2!');
-    localStorage.setItem("connectedPlayer", JSON.stringify(player));
-    console.log(localStorage.getItem("connectedPlayer"));
-  } else {
-    localStorage.setItem("connectedPlayer", JSON.stringify(player));
-    console.log(localStorage.getItem('connectedPlayer'));
+    if (localStorage.getItem('connectedPlayer')) {
+      alert('utilisateur déjà existant 2!');
+      localStorage.setItem('connectedPlayer', JSON.stringify(player));
+      console.log(localStorage.getItem('connectedPlayer'));
+    } else {
+      localStorage.setItem('connectedPlayer', JSON.stringify(player));
+      console.log(localStorage.getItem('connectedPlayer'));
+    }
   }
-}
 
   render() {
     const { user } = this.state;
@@ -73,7 +73,7 @@ class Home extends Component {
               value="Connect"
             />
           </form>
-         
+
           <Link to="/solo-game">
             <button
               className="homeButton"

@@ -15,13 +15,12 @@ class KeyElement extends Component {
     }
 
     return (
-      <div className="keysContainer">
+      <React.Fragment>
         <div className="keyCircle">
           <img src={`./assets/items/${typeOfKey}.png`} className="keyElement" style={{ ...this.style }} alt="Collected keys" />
         </div>
         <div className="separator" />
-      </div>
-
+      </React.Fragment>
     );
   }
 }

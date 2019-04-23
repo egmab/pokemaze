@@ -2,21 +2,17 @@ import React, { Component } from 'react';
 import Board from './Board';
 import Player from './Player';
 import EndingGame from './EndingGame';
-import Chrono from './Chrono';
 import KeysBar from './KeysBar';
 import './Game.css';
-import { networkInterfaces } from 'os';
+
 
 class Game extends Component {
   constructor(props) {
     super(props);
-    const { level } = props;
-    this.level = level;
     this.getPlayerPos = this.getPlayerPos.bind(this);
-    this.getTime = this.getTime.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
-
+    const { level } = props;
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
         if (parseInt(level.items[i][j], 10) >= 900
@@ -35,9 +31,14 @@ class Game extends Component {
       posY: null,
       collectedKeys: 0,
     };
+    this.player2 = {
+      posX: null,
+      posY: null,
+      collectedKeys: 0,
+    };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
-      level: JSON.parse(JSON.stringify(level)),
+      level,
       pokemon: undefined,
       isWinner: false,
       isLoser: false,
@@ -63,14 +64,12 @@ class Game extends Component {
     this[player].posX = x;
     this[player].posY = y;
     const { level } = this.state;
-
     // verify if player has caught the pokeball
     if (level.items[this[player].posY][this[player].posX] === '001') {
       this.setState({
         isWinner: true,
         ongoingGame: false,
       });
-      this.setWonPokemon();
     }
     // change the trap
     if (level.tiles[this[player].posY][this[player].posX] === '009') {
@@ -85,36 +84,6 @@ class Game extends Component {
       // Open final door when all keys collected
       if (this[player].collectedKeys === level.keysToCollect) {
         this.openFinalDoor();
-      }
-    }
-  }
-
-  getTime(count) {
-    if (count === 0) {
-      this.setState({
-        isLoser: true,
-        ongoingGame: false,
-      });
-    }
-  }
- 
-
-  setWonPokemon = () => {
-    const { isWinner, pokemon } = this.state;
-    if (isWinner) {
-      const newPokemon = pokemon.name;
-      if (localStorage.getItem('connectedPlayer')) {
-        const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
-        console.log(actualPlayer, localStorage.getItem(actualPlayer))
-        if (localStorage.getItem(actualPlayer)) {
-          const actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
-          if (actualStorage) {
-            actualStorage.push(newPokemon);
-            console.log('test', actualStorage)
-            localStorage.setItem(actualPlayer, JSON.stringify(actualStorage));
-            console.log('test2', localStorage.getItem(actualPlayer))
-          }
-        }
       }
     }
   }
@@ -171,9 +140,8 @@ class Game extends Component {
     } = this.state;
     return (
       <div className="Game">
-        <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser
-          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} reset={this.resetState} />
+          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
         }
         <div className="gameContainer">
@@ -185,15 +153,35 @@ class Game extends Component {
             startingPositions={level.startingPositions.player1}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
-            className="player"
             playerNumber="player1"
+            className="player"
           />
-          <KeysBar
-            collectedKeys={this.player1.collectedKeys}
-            finalDoorID={this.finalDoorID}
-            typeOfKey={this.typeOfKey}
-            numberOfKeys={this.keysToCollect}
+          <Player
+            ongoingGame={ongoingGame}
+            tiles={level.tiles}
+            items={level.items}
+            startingPositions={level.startingPositions.player2}
+            getPlayerPos={this.getPlayerPos}
+            playerAction={this.playerAction}
+            playerNumber="player2"
+            className="player"
           />
+          <div className="KeysBarMultiplayer">
+            <KeysBar
+              collectedKeys={this.player1.collectedKeys}
+              finalDoorID={this.finalDoorID}
+              typeOfKey={this.typeOfKey}
+              numberOfKeys={this.keysToCollect}
+              playerNumber="player1"
+            />
+            <KeysBar
+              collectedKeys={this.player2.collectedKeys}
+              finalDoorID={this.finalDoorID}
+              typeOfKey={this.typeOfKey}
+              numberOfKeys={this.keysToCollect}
+              playerNumber="player2"
+            />
+          </div>
         </div>
       </div>
     );

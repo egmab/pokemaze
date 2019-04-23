@@ -11,12 +11,20 @@
   min-width: 100vh;
 }
 
+.GameMultiplayer {
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url('./assets/pokemons/fond.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 50vh;
+  min-width: 50vh;
+}
+
 .gameContainer
 {
   position: relative;
-}
-
-/* Future items animation: heartbeat */
-@keyframes beat{
-	to { transform: scale(1.4); }
 }
