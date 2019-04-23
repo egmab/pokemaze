@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Board from './Board';
-import Player from './Player';
+import Players from './Players';
 import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
 import './Game.css';
@@ -136,27 +136,15 @@ class Game extends Component {
         }
         <div className="gameContainer">
           <Board tiles={level.tiles} items={level.items} />
-          <Player
+          <Players
             ongoingGame={ongoingGame}
             tiles={level.tiles}
             items={level.items}
-            startingPositions={level.startingPositions.player1}
+            startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
-            finalDoorOpened={this.player1.finalDoorOpened}
-            playerNumber="player1"
-            className="player"
-          />
-          <Player
-            ongoingGame={ongoingGame}
-            tiles={level.tiles}
-            items={level.items}
-            startingPositions={level.startingPositions.player2}
-            getPlayerPos={this.getPlayerPos}
-            playerAction={this.playerAction}
-            finalDoorOpened={this.player2.finalDoorOpened}
-            playerNumber="player2"
-            className="player"
+            finalDoorOpened1={this.player1.finalDoorOpened}
+            finalDoorOpened2={this.player2.finalDoorOpened}
           />
           <div className="KeysBarMultiplayer">
             <KeysBar
