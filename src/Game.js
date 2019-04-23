@@ -5,7 +5,6 @@ import EndingGame from './EndingGame';
 import Chrono from './Chrono';
 import KeysBar from './KeysBar';
 import './Game.css';
-import { networkInterfaces } from 'os';
 
 class Game extends Component {
   constructor(props) {

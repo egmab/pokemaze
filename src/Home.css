@@ -1,8 +1,9 @@
 
   .home{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
     background-size: 100%, cover;

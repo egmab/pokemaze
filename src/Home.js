@@ -96,6 +96,26 @@ class Home extends Component {
             </button>
           </Link>
         </div>
+        <Link to="/multiplayer">
+          <button
+            className="homeButton"
+            type="button"
+            size="lg"
+            style={{ marginRight: 100 }}
+          >
+            Multiplayer
+          </button>
+        </Link>
+        <Link to="/pokeditor">
+          <button
+            className="homeButton"
+            type="button"
+            size="lg"
+            style={{ marginRight: 100 }}
+          >
+            Pokeditor
+          </button>
+        </Link>
       </div>
     );
   }
