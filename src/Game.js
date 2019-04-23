@@ -97,7 +97,7 @@ class Game extends Component {
       });
     }
   }
- 
+
 
   setWonPokemon = () => {
     const { isWinner, pokemon } = this.state;
@@ -108,7 +108,7 @@ class Game extends Component {
         if (localStorage.getItem(actualPlayer)) {
           const actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
           if (actualStorage) {
-            actualStorage.push(newPokemon);
+            actualStorage.pokemons.push(newPokemon);
             localStorage.setItem(actualPlayer, JSON.stringify(actualStorage));
           }
         }
@@ -161,6 +161,7 @@ class Game extends Component {
     }
     this.finalDoorOpened = true;
   }
+
 
   render() {
     const {

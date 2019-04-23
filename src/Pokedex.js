@@ -34,8 +34,10 @@ class Pokedex extends Component {
   render() {
     const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
     let actualStorage = '';
+    let pokemonsCaught = '';
     if (localStorage.getItem(actualPlayer)) {
       actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
+      pokemonsCaught = actualStorage.pokemons;
     }
 
     const { pokemon } = this.state;
@@ -50,7 +52,7 @@ class Pokedex extends Component {
               key={monster.name}
               id={index + 1}
               pokemonName={monster.name}
-              pokemonsCaught={actualStorage}
+              pokemonsCaught={pokemonsCaught}
             />
           ))
         }
