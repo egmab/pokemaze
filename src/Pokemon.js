@@ -44,7 +44,7 @@ class Pokemon extends Component {
         pokemonType = onePokemon.types[0].type.name;
       }
     } else {
-      pokemonType = '';
+      pokemonType = undefined;
     }
 
 
@@ -67,7 +67,7 @@ class Pokemon extends Component {
         className={pokemonClass}
       >
         <div>
-          <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} />
+          {pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
         </div>
         <div>
           <img

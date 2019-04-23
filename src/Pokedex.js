@@ -15,7 +15,6 @@ class Pokedex extends Component {
     this.getPokemon();
   }
 
-
   getPokemon() {
     fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
       method: 'GET',

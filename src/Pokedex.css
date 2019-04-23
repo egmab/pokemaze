@@ -79,3 +79,19 @@
     position: absolute;
     top: 5px;
 }
+@-webkit-keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}
+.loadingType{
+    height: 50px;
+    right: 5px;
+    position: absolute;
+    top: 5px;
+    -webkit-animation: rotation 2s infinite linear;
+}
+
