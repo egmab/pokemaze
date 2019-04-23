@@ -72,14 +72,16 @@ class Player extends Component {
       tiles, items, finalDoorOpened, enemy,
     } = this.props;
     const { posX, posY } = this.state;
-    // Special check for multiplayer: can't pass through other player
-    if (enemy.x === posX + x && enemy.y === posY + y) {
-      return false;
-    }
-    // Special check for multiplayer: final door opened
-    if (parseInt(items[posY + y][posX + x], 10) >= 900
-      && finalDoorOpened) {
-      return true;
+    if (this.gameMode === 'multiplayer') {
+      // Special check for multiplayer: can't pass through other player
+      if (enemy.x === posX + x && enemy.y === posY + y) {
+        return false;
+      }
+      // Special check for multiplayer: final door opened
+      if (parseInt(items[posY + y][posX + x], 10) >= 900
+        && finalDoorOpened) {
+        return true;
+      }
     }
     // Normal checks
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
