@@ -48,7 +48,12 @@ class Home extends Component {
   }
 
   render() {
-    const { userOne, userTwo, playerOneConnected, playerTwoConnected } = this.state;
+    const {
+      userOne,
+      userTwo,
+      playerOneConnected,
+      playerTwoConnected,
+    } = this.state;
     return (
       <div className="home">
         {
@@ -56,7 +61,7 @@ class Home extends Component {
             ? (
               <div className="formOne">
                 <h3>
-                  Player :
+                  Player 1 :
                   {userOne}
                 </h3>
               </div>
@@ -64,7 +69,7 @@ class Home extends Component {
             : (
               <div className="formOne">
                 <h3>
-                  Player :
+                  Player 1 :
                   {userOne}
                 </h3>
                 <form onSubmit={this.onSubmitOne}>
@@ -90,7 +95,7 @@ class Home extends Component {
             ? (
               <div className="formTwo">
                 <h3>
-                  Player :
+                  Player 2 :
                   {userTwo}
                 </h3>
               </div>
@@ -98,7 +103,7 @@ class Home extends Component {
             : (
               <div className="formTwo">
                 <h3>
-                  Player :
+                  Player 2 :
                   {userTwo}
                 </h3>
                 <form onSubmit={this.onSubmitTwo}>
