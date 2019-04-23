@@ -17,16 +17,6 @@ const Home = () => (
           Play solo
         </button>
       </Link>
-      <Link to="/solo-game-2">
-        <button
-          className="homeButton"
-          type="button"
-          size="lg"
-          style={{ marginRight: 100 }}
-        >
-          Demo chrono
-        </button>
-      </Link>
       <Link to="/pokedex">
         <button
           className="homeButton"
@@ -42,10 +32,22 @@ const Home = () => (
           className="homeButton"
           type="button"
           size="lg"
+          style={{ marginRight: 100 }}
         >
           Multiplayer
         </button>
       </Link>
+      <Link to="/pokeditor">
+        <button
+          className="homeButton"
+          type="button"
+          size="lg"
+          style={{ marginRight: 100 }}
+        >
+          Pokeditor
+        </button>
+      </Link>
+
     </div>
   </div>
 );
