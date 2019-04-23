@@ -61,8 +61,14 @@ class Player extends Component {
   // AND levers (items 700 to 799)
   // AND doors not activated by levers (even numbers between 800 and 899)
   checkTile(x, y) {
-    const { tiles, items } = this.props;
+    const { tiles, items, finalDoorOpened } = this.props;
     const { posX, posY } = this.state;
+    // Special check for multiplayer: final door opened
+    if (parseInt(items[posY + y][posX + x], 10) >= 900
+      && finalDoorOpened) {
+      return true;
+    }
+    // Normal checks
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
       || parseInt(items[posY + y][posX + x], 10) >= 900
       || (parseInt(items[posY + y][posX + x], 10) >= 700
@@ -192,7 +198,8 @@ class Player extends Component {
       width: '38px',
       marginTop: '-0.5vh',
       marginLeft: '0.2vh',
-      transitionDuration: '500ms',
+      transitionDuration: '300ms',
+      // transitionTimingFunction: 'linear',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}px`,
       left: `${11 + posX * pixelsPerTile}px`,

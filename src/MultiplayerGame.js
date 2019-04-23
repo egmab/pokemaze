@@ -30,11 +30,13 @@ class Game extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
+      finalDoorOpened: false,
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
+      finalDoorOpened: false,
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
@@ -83,10 +85,11 @@ class Game extends Component {
       this.setState({ level });
       // Open final door when all keys collected
       if (this[player].collectedKeys === this.keysToCollect) {
-        this.openFinalDoor();
+        this[player].finalDoorOpened = true;
       }
     }
   }
+
 
   playerAction(y, x) {
     const { level } = this.state;
@@ -121,19 +124,6 @@ class Game extends Component {
     this.setState({ level });
   }
 
-  openFinalDoor() {
-    const { level } = this.state;
-    for (let i = 0; i < level.items.length; i += 1) {
-      for (let j = 0; j < level.items[i].length; j += 1) {
-        if (parseInt(level.items[i][j], 10) >= 900) {
-          level.items[i][j] = '000';
-          this.setState({ level });
-        }
-      }
-    }
-    this.finalDoorOpened = true;
-  }
-
   render() {
     const {
       isWinner, isLoser, pokemon, ongoingGame, level,
@@ -153,6 +143,7 @@ class Game extends Component {
             startingPositions={level.startingPositions.player1}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
+            finalDoorOpened={this.player1.finalDoorOpened}
             playerNumber="player1"
             className="player"
           />
@@ -163,6 +154,7 @@ class Game extends Component {
             startingPositions={level.startingPositions.player2}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
+            finalDoorOpened={this.player2.finalDoorOpened}
             playerNumber="player2"
             className="player"
           />
