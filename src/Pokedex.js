@@ -13,7 +13,7 @@ class Pokedex extends Component {
 
   componentWillMount() {
     this.getPokemon();
-  }
+}
 
 
   getPokemon() {
@@ -31,7 +31,15 @@ class Pokedex extends Component {
   }
 
 
+  
   render() {
+    let theUsername = this.props.location.state.oneusername;
+    console.log("haah2", theUsername);
+    if (localStorage.getItem(theUsername)) {
+      const caughtPokemon = localStorage.getItem(theUsername);
+      console.log("hello", caughtPokemon);
+  }
+  
     const { pokemon } = this.state;
     return (
       <div className="pokemon-container">

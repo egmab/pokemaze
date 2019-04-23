@@ -5,6 +5,7 @@ import EndingGame from './EndingGame';
 import Chrono from './Chrono';
 import KeysBar from './KeysBar';
 import './Game.css';
+import { networkInterfaces } from 'os';
 
 
 class Game extends Component {
@@ -22,7 +23,7 @@ class Game extends Component {
           this.finalDoorID = level.items[i][j];
         }
         if (parseInt(level.items[i][j], 10) >= 2
-        && parseInt(level.items[i][j], 10) <= 19) {
+          && parseInt(level.items[i][j], 10) <= 19) {
           this.keysToCollect += 1;
           this.typeOfKey = level.items[i][j];
         }
@@ -67,6 +68,7 @@ class Game extends Component {
         isWinner: true,
         ongoingGame: false,
       });
+      this.setWonPokemon();
     }
     // verify if player has caught KeysToCollect
     if (level.items[this.player.posY][this.player.posX] === level.typeOfKey) {
@@ -99,7 +101,7 @@ class Game extends Component {
     this.setState({ level : levelTest });
   }
   */
-  
+
 
   playerAction(y, x) {
     const { level } = this.state;
@@ -147,6 +149,25 @@ class Game extends Component {
     this.finalDoorOpened = true;
   }
 
+  setWonPokemon = () => {
+    const { isWinner, pokemon } = this.state;
+    if (isWinner) {
+      const newPokemon = pokemon.name;
+      if (localStorage.getItem('connectedPlayer')) {
+        const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+        console.log(actualPlayer, localStorage.getItem(actualPlayer))
+        if (localStorage.getItem(actualPlayer)) {
+          const actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
+          if (actualStorage) {
+            actualStorage.push(newPokemon);
+            console.log('test', actualStorage)
+            localStorage.setItem(actualPlayer, JSON.stringify(actualStorage));
+            console.log('test2', localStorage.getItem(actualPlayer))
+          }
+        }
+      }
+    }
+  }
 
   render() {
     const {

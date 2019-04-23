@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-
+let player;
 class Home extends Component {
   constructor(props) {
     super(props);
     this.data = {
-      pokemons: [1, 2, 3],
+      pokemons: [],
       badges: [23, 13],
       titre: 'je suis très très fort',
     };
@@ -28,19 +28,28 @@ class Home extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     const { user } = this.state;
-    const player = user;
+    player = user;
     this.connectedUser = user;
     if (localStorage.getItem(player)) {
-      alert('utilisateur déjà existant');
+      alert('utilisateur déjà existant!');
+      console.log(localStorage.getItem(player));
     } else {
       localStorage.setItem(player, JSON.stringify(this.data));
       console.log(JSON.parse(localStorage.getItem('data')));
     }
-    this.setState({ user: '' });
+  if (localStorage.getItem("connectedPlayer")) {
+    alert('utilisateur déjà existant 2!');
+    localStorage.setItem("connectedPlayer", JSON.stringify(player));
+    console.log(localStorage.getItem("connectedPlayer"));
+  } else {
+    localStorage.setItem("connectedPlayer", JSON.stringify(player));
+    console.log(localStorage.getItem('connectedPlayer'));
   }
+}
 
   render() {
     const { user } = this.state;
+    console.log(user)
     return (
       <div className="home">
         <img src="./assets/logopokemaze.png" alt="logo" />
@@ -64,6 +73,7 @@ class Home extends Component {
               value="Connect"
             />
           </form>
+         
           <Link to="/solo-game">
             <button
               className="homeButton"
