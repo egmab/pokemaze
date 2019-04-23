@@ -15,7 +15,6 @@ class Pokedex extends Component {
     this.getPokemon();
   }
 
-
   getPokemon() {
     fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
       method: 'GET',
@@ -31,12 +30,21 @@ class Pokedex extends Component {
   }
 
 
+
   render() {
+    const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+    let actualStorage = '';
+    let pokemonsCaught = '';
+    if (localStorage.getItem(actualPlayer)) {
+      actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
+      pokemonsCaught = actualStorage.pokemons;
+    }
+
     const { pokemon } = this.state;
     return (
       <div className="pokemon-container">
         <div className="pokemonSearchBar">
-        Il est la le menu quoi
+          Il est la le menu quoi
         </div>
         {
           pokemon.map((monster, index) => (
@@ -44,6 +52,7 @@ class Pokedex extends Component {
               key={monster.name}
               id={index + 1}
               pokemonName={monster.name}
+              pokemonsCaught={pokemonsCaught}
             />
           ))
         }

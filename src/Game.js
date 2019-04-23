@@ -69,6 +69,7 @@ class Game extends Component {
         isWinner: true,
         ongoingGame: false,
       });
+      this.setWonPokemon();
     }
     // change the trap
     if (level.tiles[this[player].posY][this[player].posX] === '009') {
@@ -81,7 +82,7 @@ class Game extends Component {
       level.items[this[player].posY][this[player].posX] = '000';
       this.setState({ level });
       // Open final door when all keys collected
-      if (this[player].collectedKeys === level.keysToCollect) {
+      if (this[player].collectedKeys === this.keysToCollect) {
         this.openFinalDoor();
       }
     }
@@ -95,16 +96,23 @@ class Game extends Component {
       });
     }
   }
-  /*
-  resetState() {
-    const { level } = this.props;
-    this.setState({ level });
-  }
-  */
 
-  resetState = () => {
-    const { level } = this.props;
-    this.setState({ level: JSON.parse(JSON.stringify(level)) });
+
+  setWonPokemon = () => {
+    const { isWinner, pokemon } = this.state;
+    if (isWinner) {
+      const newPokemon = pokemon.name;
+      if (localStorage.getItem('connectedPlayer')) {
+        const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+        if (localStorage.getItem(actualPlayer)) {
+          const actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
+          if (actualStorage) {
+            actualStorage.pokemons.push(newPokemon);
+            localStorage.setItem(actualPlayer, JSON.stringify(actualStorage));
+          }
+        }
+      }
+    }
   }
 
   playerAction(y, x) {
@@ -152,6 +160,7 @@ class Game extends Component {
     }
     this.finalDoorOpened = true;
   }
+
 
   render() {
     const {
