@@ -12,38 +12,116 @@ class Home extends Component {
       titre: 'je suis très très fort',
     };
     this.state = {
-      user: '',
+      userOne: '',
+      userTwo: '',
+      playerOneConnected: false,
+      playerTwoConnected: false,
     };
     this.onChange = this.onChange.bind(this);
   }
 
 
   onChange(event) {
+    const user = event.target.id;
     this.setState({
-      user: event.target.value,
+      [user]: event.target.value,
     });
   }
 
 
-  onSubmit = (event) => {
+  onSubmitOne = (event) => {
     event.preventDefault();
-    const { user } = this.state;
-    const player = user;
-    this.connectedUser = user;
-    if (localStorage.getItem(player)) {
-      alert('utilisateur déjà existant');
-    } else {
-      localStorage.setItem(player, JSON.stringify(this.data));
-      console.log(JSON.parse(localStorage.getItem('data')));
+    const { userOne, playerOneConnected } = this.state;
+    if (!localStorage.getItem(userOne)) {
+      localStorage.setItem(userOne, JSON.stringify(this.data));
     }
-    this.setState({ user: '' });
+    this.setState({ playerOneConnected: !playerOneConnected });
+  }
+
+  onSubmitTwo = (event) => {
+    event.preventDefault();
+    const { userTwo, playerTwoConnected } = this.state;
+    if (!localStorage.getItem(userTwo)) {
+      localStorage.setItem(userTwo, JSON.stringify(this.data));
+    }
+    this.setState({ playerTwoConnected: !playerTwoConnected });
   }
 
   render() {
-    const { user } = this.state;
+    const { userOne, userTwo, playerOneConnected, playerTwoConnected } = this.state;
     return (
       <div className="home">
-        <img src="./assets/logopokemaze.png" alt="logo" />
+        {
+          playerOneConnected
+            ? (
+              <div className="formOne">
+                <h3>
+                  Player :
+                  {userOne}
+                </h3>
+              </div>
+            )
+            : (
+              <div className="formOne">
+                <h3>
+                  Player :
+                  {userOne}
+                </h3>
+                <form onSubmit={this.onSubmitOne}>
+                  <input
+                    onChange={this.onChange}
+                    type="text"
+                    id="userOne"
+                    name="title"
+                    value={userOne}
+                  />
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Connect"
+                  />
+                </form>
+              </div>
+            )
+        }
+        {
+          playerTwoConnected
+            ? (
+              <div className="formTwo">
+                <h3>
+                  Player :
+                  {userTwo}
+                </h3>
+              </div>
+            )
+            : (
+              <div className="formTwo">
+                <h3>
+                  Player :
+                  {userTwo}
+                </h3>
+                <form onSubmit={this.onSubmitTwo}>
+                  <input
+                    onChange={this.onChange}
+                    type="text"
+                    id="userTwo"
+                    name="title"
+                    value={userTwo}
+                  />
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Connect"
+                  />
+                </form>
+              </div>
+            )
+        }
+        <div className="logo">
+          <img src="./assets/logopokemaze.png" alt="logo" />
+        </div>
         <div className="buttonContainerHome">
           <Link to="/solo-game">
             <button
@@ -87,7 +165,7 @@ class Home extends Component {
           </Link>
 
         </div>
-      </div>
+      </div >
     );
   }
 }
