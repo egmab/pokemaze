@@ -25,13 +25,13 @@ class Pokemon extends Component {
 
   render() {
     const { pokemonName } = this.props;
-    let pokemonClass = 'pokemon-single-container';
+    let pokemonClass = 'notHave';
     for (let i = 0; i < this.caught.length; i += 1) {
       if (this.caught[i] === pokemonName) {
-        pokemonClass = 'pokemon-single-container2';
+        pokemonClass = 'pokemon-single-container';
         break;
       } else {
-        pokemonClass = 'pokemon-single-container';
+        pokemonClass = 'notHave';
       }
     }
 
