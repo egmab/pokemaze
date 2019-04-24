@@ -54,7 +54,7 @@ class Pokemon extends Component {
 
     return (
       <div
-        className="pokemon-single-container"
+        className="pokemon-single-container notHave"
       >
         <div>
           <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} />

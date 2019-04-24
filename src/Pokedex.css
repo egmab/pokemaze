@@ -36,7 +36,14 @@
     border-radius: 5px;
     margin: 20px;
     border:1px solid black;
-    text-align: center;
+}
+
+.searchLeft{
+    text-align: left;
+}
+
+.searchRight{
+    text-align: right;
 }
 
 .align-bottom{
@@ -62,4 +69,27 @@
     right: 5px;
     position: absolute;
     top: 5px;
+}
+
+.notHave{
+    filter: contrast(100%);
+
+}
+.notHave div img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+}
+.notHave div:hover img {
+	-webkit-filter: grayscale(0);
+	filter: grayscale(0);
+}
+
+.typeArray{
+    border: solid 1px black;
+}
+
+.arrayFirstRow{
+    background-color: rgb(182, 181, 181);
 }
