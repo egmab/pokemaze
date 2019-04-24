@@ -28,24 +28,6 @@
     opacity: 0.9;
     font: bold;
   }
-  .pokemon-single-container2 {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color:red;
-    color: #424242;
-    margin: 12px;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    border:1px solid black;
-    opacity: 0.9;
-    font: bold;
-  }
 
 .pokemonSearchBar {
     background-color: #ededed;
@@ -89,6 +71,10 @@
     top: 5px;
 }
 
+.imgelemArray{
+    height: 40px;
+}
+
 .notHave{
     filter: contrast(100%);
     width: 200px;
@@ -119,8 +105,17 @@
 	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
 }
-
+.arrayBox{
+    width: -webkit-fill-available;
+    text-align: center;
+    display: flex;
+}
 .typeArray{
+    border: solid 2px black;
+    width: -webkit-fill-available;
+}
+
+td{
     border: solid 1px black;
 }
 
