@@ -38,6 +38,7 @@ class Game extends Component {
     this.state = {
       level: JSON.parse(JSON.stringify(level)),
       pokemon: undefined,
+      winner: undefined,
       isWinner: false,
       isLoser: false,
       ongoingGame: true,
@@ -66,6 +67,7 @@ class Game extends Component {
     // verify if player has caught the pokeball
     if (level.items[this[player].posY][this[player].posX] === '001') {
       this.setState({
+        winner: player,
         isWinner: true,
         ongoingGame: false,
       });
@@ -99,18 +101,17 @@ class Game extends Component {
 
 
   setWonPokemon = () => {
-    const { isWinner, pokemon } = this.state;
+    const { isWinner, pokemon, winner } = this.state;
     if (isWinner) {
       const newPokemon = pokemon.name;
-      if (localStorage.getItem('connectedPlayer')) {
-        const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
-        if (localStorage.getItem(actualPlayer)) {
-          const actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
-          if (actualStorage) {
-            actualStorage.pokemons.push(newPokemon);
-            localStorage.setItem(actualPlayer, JSON.stringify(actualStorage));
-          }
-        }
+      let winnerName = 'winner';
+      if (winner === 'player1') {
+        winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
+      }
+      if (localStorage.getItem(winnerName)) {
+        const actualPlayer = JSON.parse(localStorage.getItem(winnerName));
+        actualPlayer.pokemons.push(newPokemon);
+        localStorage.setItem(winnerName, JSON.stringify(actualPlayer));
       }
     }
   }
@@ -164,13 +165,13 @@ class Game extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level,
+      isWinner, isLoser, pokemon, ongoingGame, level, winner,
     } = this.state;
     return (
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser
-          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} reset={this.resetState} />
+          ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} reset={this.resetState} />
           : null
         }
         <div className="gameContainer">
