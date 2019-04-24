@@ -121,10 +121,13 @@
 
 .typeArray{
     border: solid 1px black;
+    width: 100%;
 }
 
 .arrayFirstRow{
-    background-color: rgb(182, 181, 181);
+    background-color: rgb(85, 138, 183);
+    color: white;
+    text-align: center;
 }
 @-webkit-keyframes rotation {
     from {
