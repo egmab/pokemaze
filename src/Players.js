@@ -1,17 +1,6 @@
 import React, { Component } from 'react';
 import Player from './Player';
-/*
-          <Players
-            ongoingGame={ongoingGame}
-            tiles={level.tiles}
-            items={level.items}
-            startingPositions={level.startingPositions}
-            getPlayerPos={this.getPlayerPos}
-            playerAction={this.playerAction}
-            finalDoorOpened1={this.player1.finalDoorOpened}
-            finalDoorOpened2={this.player2.finalDoorOpened}
-          />
-          */
+
 class Players extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +17,12 @@ class Players extends Component {
   }
 
   multiplayerActions = (x, y, player) => {
+    this.setState({
+      [player]: { x, y },
+    });
+  }
+
+  multiplayerCoordinates = (x, y, player) => {
     this.setState({
       [player]: { x, y },
     });
