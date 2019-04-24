@@ -3,10 +3,11 @@ import Board from './Board';
 import Players from './Players';
 import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
+// import Capacities from './Capacities';
 import './Game.css';
 
 
-class Game extends Component {
+class MultiplayerGame extends Component {
   constructor(props) {
     super(props);
     this.getPlayerPos = this.getPlayerPos.bind(this);
@@ -31,12 +32,14 @@ class Game extends Component {
       posY: null,
       collectedKeys: 0,
       finalDoorOpened: false,
+      capacities: ['punch', 'punch', 'punch'],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
       finalDoorOpened: false,
+      capacities: ['punch'],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
@@ -162,10 +165,16 @@ class Game extends Component {
               playerNumber="player2"
             />
           </div>
+          {/*
+          <div className="Capacities">
+            <Capacities playerNumber="player1" capacities={this.player1.capacities} />
+            <Capacities playerNumber="player2" capacities={this.player2.capacities} />
+          </div>
+          */}
         </div>
       </div>
     );
   }
 }
 
-export default Game;
+export default MultiplayerGame;
