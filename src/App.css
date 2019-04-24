@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
+@import url('https://fonts.googleapis.com/css?family=Oswald');
+
 
 body {
   background-color: #000;
@@ -8,13 +10,41 @@ body {
 
 h1
 {
-  font-family: 'Roboto', sans-serif;
-  font-size: 2.3em;
+  font-family: 'Oswald', sans-serif;
+  font-size: 3em;
+  text-transform: uppercase;
+  text-align: center;
   font-weight: bold;
+  margin-top: 4px;
+  color:rgb(3, 3, 104);
+
 }
 h2
 {
+  font-family: 'Oswald', sans-serif;
+  font-size: 2.4em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 5px;
+  color:rgb(3, 3, 104);
+}
+h3
+{
+  font-family: 'Oswald', sans-serif;
+  font-size: 2em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: 4px;
+  margin-bottom: 6px;
+}
+h4
+{
   font-family: 'Roboto', sans-serif;
-  font-size: 1.7em;
-  font-weight: bold;
+  font-size: 1.8em;
+}
+h5
+{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6em;
 }

@@ -42,6 +42,7 @@ class Pokedex extends Component {
     const { pokemon } = this.state;
     return (
       <div className="pokemon-container">
+        <h2>My pokedex</h2>
         <div className="pokemonSearchBar">
           <div>
             <table className="typeArray">

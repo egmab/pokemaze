@@ -1,9 +1,8 @@
 .pokemon-container{
     display: flex;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.4);
     flex-wrap: wrap;
     width: 100%;
-    background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
     background-size: 100%, cover;
     min-height: 100vh;
     min-width: 100vh;
@@ -50,7 +49,7 @@
 .pokemonSearchBar {
     background-color: #ededed;
     min-height: 100px;
-    width: inherit; 
+    width: 100%; 
     border-radius: 5px;
     margin: 20px;
     border:1px solid black;
