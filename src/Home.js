@@ -17,6 +17,15 @@ class Home extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  componentWillMount() {
+    if (localStorage.getItem('connectedPlayer')) {
+      this.setState({ userOne: JSON.parse(localStorage.getItem('connectedPlayer')), playerOneConnected: true });
+    }
+    if (localStorage.getItem('connectedPlayer2')) {
+      this.setState({ userTwo: JSON.parse(localStorage.getItem('connectedPlayer2')), playerTwoConnected: true });
+    }
+  }
+
   onChange(event) {
     const user = event.target.id;
     this.setState({
@@ -39,6 +48,18 @@ class Home extends Component {
     }
   }
 
+  onDisconnectOne = (event) => {
+    event.preventDefault();
+    const { playerOneConnected } = this.state;
+    this.setState({ playerOneConnected: !playerOneConnected });
+  }
+
+  onDisconnectTwo = (event) => {
+    event.preventDefault();
+    const { playerTwoConnected } = this.state;
+    this.setState({ playerTwoConnected: !playerTwoConnected });
+  }
+
 
   onSubmitTwo = (event) => {
     event.preventDefault();
@@ -55,7 +76,12 @@ class Home extends Component {
   }
 
   render() {
-    const { userOne, userTwo, playerOneConnected, playerTwoConnected } = this.state;
+    const {
+      userOne,
+      userTwo,
+      playerOneConnected,
+      playerTwoConnected,
+    } = this.state;
     return (
       <div className="home">
         {
@@ -63,15 +89,23 @@ class Home extends Component {
             ? (
               <div className="formOne">
                 <h3>
-                  Player :
+                  Player 1 :
                   {userOne}
                 </h3>
+                <form onSubmit={this.onDisconnectOne}>
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Disconnect"
+                  />
+                </form>
               </div>
             )
             : (
               <div className="formOne">
                 <h3>
-                  Player :
+                  Player 1 :
                   {userOne}
                 </h3>
                 <form onSubmit={this.onSubmitOne}>
@@ -97,15 +131,23 @@ class Home extends Component {
             ? (
               <div className="formTwo">
                 <h3>
-                  Player :
+                  Player 2 :
                   {userTwo}
                 </h3>
+                <form onSubmit={this.onDisconnectTwo}>
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Disconnect"
+                  />
+                </form>
               </div>
             )
             : (
               <div className="formTwo">
                 <h3>
-                  Player :
+                  Player 2 :
                   {userTwo}
                 </h3>
                 <form onSubmit={this.onSubmitTwo}>
@@ -140,26 +182,7 @@ class Home extends Component {
               Play solo
             </button>
           </Link>
-          <Link to="/pokedex">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Pokedex
-            </button>
-          </Link>
-          <Link to="/multiplayer">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Multiplayer
-            </button>
-          </Link>
+
           <Link to="/pokeditor">
             <button
               className="homeButton"
@@ -171,8 +194,31 @@ class Home extends Component {
             </button>
           </Link>
 
+          <Link to="/pokedex">
+            <button
+              className="homeButton"
+              type="button"
+              size="lg"
+              style={{ marginRight: 100 }}
+            >
+              Pokedex
+            </button>
+          </Link>
+
+          <Link to="/multiplayer">
+            <button
+              className="homeButton"
+              type="button"
+              size="lg"
+              style={{ marginRight: 100 }}
+            >
+              Multiplayer
+            </button>
+          </Link>
+
+
         </div>
-      </div >
+      </div>
     );
   }
 }
