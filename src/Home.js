@@ -88,10 +88,11 @@ class Home extends Component {
           playerOneConnected
             ? (
               <div className="formOne">
-                <h3>
+                <h4>
                   Player 1 :
+                  {' '}
                   {userOne}
-                </h3>
+                </h4>
                 <form onSubmit={this.onDisconnectOne}>
                   <input
                     className="connectButton"
@@ -104,10 +105,11 @@ class Home extends Component {
             )
             : (
               <div className="formOne">
-                <h3>
+                <h4>
                   Player 1 :
+                  {' '}
                   {userOne}
-                </h3>
+                </h4>
                 <form onSubmit={this.onSubmitOne}>
                   <input
                     onChange={this.onChange}
@@ -130,10 +132,11 @@ class Home extends Component {
           playerTwoConnected
             ? (
               <div className="formTwo">
-                <h3>
+                <h4>
                   Player 2 :
+                  {' '}
                   {userTwo}
-                </h3>
+                </h4>
                 <form onSubmit={this.onDisconnectTwo}>
                   <input
                     className="connectButton"
@@ -146,10 +149,11 @@ class Home extends Component {
             )
             : (
               <div className="formTwo">
-                <h3>
+                <h4>
                   Player 2 :
+                  {' '}
                   {userTwo}
-                </h3>
+                </h4>
                 <form onSubmit={this.onSubmitTwo}>
                   <input
                     onChange={this.onChange}
