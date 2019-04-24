@@ -172,55 +172,45 @@ class Home extends Component {
               </div>
             )
         }
-        <div className="logo">
-          <img src="./assets/logopokemaze.png" alt="logo" />
-        </div>
-        <div className="buttonContainerHome">
-          <Link to="/solo-game">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Play solo
-            </button>
-          </Link>
+        <div className="logoButtons">
+          <div className="logo">
+            <img src="./assets/logopokemaze.png" alt="logo" />
+          </div>
+          <div className="buttonContainerHome">
+            <Link to="/solo-game">
+              <button
+                className="homeButton"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                Play solo
+              </button>
+            </Link>
 
-          <Link to="/pokeditor">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Pokeditor
-            </button>
-          </Link>
+            <Link to="/pokeditor">
+              <button
+                className="homeButton"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                Pokeditor
+              </button>
+            </Link>
 
-          <Link to="/pokedex">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Pokedex
-            </button>
-          </Link>
+            <Link to="/duo-game">
+              <button
+                className="homeButton"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                Multiplayer
+              </button>
+            </Link>
 
-          <Link to="/multiplayer">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Multiplayer
-            </button>
-          </Link>
-
-
+          </div>
         </div>
       </div>
     );

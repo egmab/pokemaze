@@ -73,8 +73,8 @@ class SoloGame extends Component {
                 }
               </div>
             </div>
-            <div className="pokedexJ1">
-              <Pokedex />
+            <div className="pokedexJ1solo">
+              <Pokedex player="player1" />
             </div>
           </div>
         )

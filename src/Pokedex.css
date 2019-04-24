@@ -10,8 +10,8 @@
     align-items: center;
 }
 .pokemon-single-container {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     position: relative;
     text-transform: uppercase;
     display: flex;
@@ -28,8 +28,8 @@
     font: bold;
   }
   .pokemon-single-container2 {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     position: relative;
     text-transform: uppercase;
     display: flex;
@@ -68,7 +68,7 @@
     height: 30px;
     position:absolute; bottom:0;
     font-family: 'Lato', sans-serif;
-    width: 200px;
+    width: 180px;
     font: bolder;
     background-color: rgb(190, 217, 241);
     border-radius: 5px; 
@@ -90,8 +90,8 @@
 
 .notHave{
     filter: contrast(100%);
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     position: relative;
     text-transform: uppercase;
     display: flex;

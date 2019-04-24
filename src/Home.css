@@ -22,12 +22,18 @@
     border-radius:20px;
   }
   
-  .buttonContainerHome{    padding: 2%;
+  .buttonContainerHome { 
     display: flex;
     justify-content: center;
     padding-top: 3vh;
   }
   
+  .logoButtons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
  
   .homeButton {
     padding:20px 60px;

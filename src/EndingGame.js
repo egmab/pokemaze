@@ -44,13 +44,13 @@ const EndingGame = ({
       <div className="modal-body">
         <h5>{title}</h5>
         <img className="imgPoke" src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-        <h3>
+        <h4>
           {message}
           {' '}
           {pokemonNameMaj}
           {' '}
           !
-        </h3>
+        </h4>
         <p>
           <Link exact to="/" onClick={() => reset()}>
             <button
