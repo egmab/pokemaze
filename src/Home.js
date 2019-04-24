@@ -6,9 +6,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.data = {
-      pokemons: [1, 2, 3],
-      badges: [23, 13],
-      titre: 'je suis très très fort',
+      pokemons: [],
     };
     this.state = {
       userOne: '',
@@ -18,7 +16,6 @@ class Home extends Component {
     };
     this.onChange = this.onChange.bind(this);
   }
-
 
   onChange(event) {
     const user = event.target.id;
@@ -35,7 +32,13 @@ class Home extends Component {
       localStorage.setItem(userOne, JSON.stringify(this.data));
     }
     this.setState({ playerOneConnected: !playerOneConnected });
+    if (localStorage.getItem('connectedPlayer')) {
+      localStorage.setItem('connectedPlayer', JSON.stringify(userOne));
+    } else {
+      localStorage.setItem('connectedPlayer', JSON.stringify(userOne));
+    }
   }
+
 
   onSubmitTwo = (event) => {
     event.preventDefault();
@@ -44,6 +47,11 @@ class Home extends Component {
       localStorage.setItem(userTwo, JSON.stringify(this.data));
     }
     this.setState({ playerTwoConnected: !playerTwoConnected });
+    if (localStorage.getItem('connectedPlayer2')) {
+      localStorage.setItem('connectedPlayer2', JSON.stringify(userTwo));
+    } else {
+      localStorage.setItem('connectedPlayer2', JSON.stringify(userTwo));
+    }
   }
 
   render() {
