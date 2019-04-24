@@ -8,24 +8,39 @@ class Players extends Component {
       player1: {
         x: props.startingPositions.player1.x,
         y: props.startingPositions.player1.y,
+        gettingTargeted: null,
       },
       player2: {
         x: props.startingPositions.player2.x,
         y: props.startingPositions.player2.y,
+        gettingTargeted: null,
       },
     };
   }
 
-  multiplayerActions = (x, y, player) => {
-    this.setState({
-      [player]: { x, y },
-    });
-  }
 
   multiplayerCoordinates = (x, y, player) => {
     this.setState({
       [player]: { x, y },
     });
+  }
+
+  multiplayerActions = (enemy, capacity, directionX, directionY) => {
+    if (capacity === 'normal') {
+      this.setState({
+        [enemy]: {
+          gettingTargeted: {
+            byCapacity: capacity,
+            directionX,
+            directionY,
+          },
+        },
+      });
+    }
+  }
+
+  resetActions = (player) => {
+    this.setState({ [player]: { gettingTargeted: null } });
   }
 
   render() {
@@ -44,8 +59,11 @@ class Players extends Component {
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}
           finalDoorOpened={finalDoorOpened1}
+          player={player1}
           enemy={player2}
           multiplayerActions={this.multiplayerActions}
+          resetActions={this.resetActions}
+          multiplayerCoordinates={this.multiplayerCoordinates}
           gameMode="multiplayer"
           playerNumber="player1"
           className="player"
@@ -58,8 +76,11 @@ class Players extends Component {
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}
           finalDoorOpened={finalDoorOpened2}
+          player={player2}
           enemy={player1}
           multiplayerActions={this.multiplayerActions}
+          resetActions={this.resetActions}
+          multiplayerCoordinates={this.multiplayerCoordinates}
           gameMode="multiplayer"
           playerNumber="player2"
           className="player"
