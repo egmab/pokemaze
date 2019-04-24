@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
-let player;
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -10,62 +9,127 @@ class Home extends Component {
       pokemons: [],
     };
     this.state = {
-      user: '',
+      userOne: '',
+      userTwo: '',
+      playerOneConnected: false,
+      playerTwoConnected: false,
     };
     this.onChange = this.onChange.bind(this);
   }
 
-
   onChange(event) {
+    const user = event.target.id;
     this.setState({
-      user: event.target.value,
+      [user]: event.target.value,
     });
   }
 
 
-  onSubmit = (event) => {
+  onSubmitOne = (event) => {
     event.preventDefault();
-    const { user } = this.state;
-    player = user;
-    this.connectedUser = user;
-    if (localStorage.getItem(player)) {
-      console.log("welcome back")
-    } else {
-      localStorage.setItem(player, JSON.stringify(this.data));
+    const { userOne, playerOneConnected } = this.state;
+    if (!localStorage.getItem(userOne)) {
+      localStorage.setItem(userOne, JSON.stringify(this.data));
     }
+    this.setState({ playerOneConnected: !playerOneConnected });
     if (localStorage.getItem('connectedPlayer')) {
-      localStorage.setItem('connectedPlayer', JSON.stringify(player));
+      localStorage.setItem('connectedPlayer', JSON.stringify(userOne));
     } else {
-      localStorage.setItem('connectedPlayer', JSON.stringify(player));
+      localStorage.setItem('connectedPlayer', JSON.stringify(userOne));
+    }
+  }
+
+
+  onSubmitTwo = (event) => {
+    event.preventDefault();
+    const { userTwo, playerTwoConnected } = this.state;
+    if (!localStorage.getItem(userTwo)) {
+      localStorage.setItem(userTwo, JSON.stringify(this.data));
+    }
+    this.setState({ playerTwoConnected: !playerTwoConnected });
+    if (localStorage.getItem('connectedPlayer2')) {
+      localStorage.setItem('connectedPlayer2', JSON.stringify(userTwo));
+    } else {
+      localStorage.setItem('connectedPlayer2', JSON.stringify(userTwo));
     }
   }
 
   render() {
-    const { user } = this.state;
+    const { userOne, userTwo, playerOneConnected, playerTwoConnected } = this.state;
     return (
       <div className="home">
-        <img src="./assets/logopokemaze.png" alt="logo" />
-        <div className="form">
-          <h3>
-            Player :
-            {user}
-          </h3>
-          <form onSubmit={this.onSubmit}>
-            <input
-              onChange={this.onChange}
-              type="text"
-              id="title"
-              name="title"
-              value={user}
-            />
-            <input
-              className="homeButton"
-              size="lg"
-              type="submit"
-              value="Connect"
-            />
-          </form>
-
+        {
+          playerOneConnected
+            ? (
+              <div className="formOne">
+                <h3>
+                  Player :
+                  {userOne}
+                </h3>
+              </div>
+            )
+            : (
+              <div className="formOne">
+                <h3>
+                  Player :
+                  {userOne}
+                </h3>
+                <form onSubmit={this.onSubmitOne}>
+                  <input
+                    onChange={this.onChange}
+                    type="text"
+                    id="userOne"
+                    name="title"
+                    value={userOne}
+                  />
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Connect"
+                  />
+                </form>
+              </div>
+            )
+        }
+        {
+          playerTwoConnected
+            ? (
+              <div className="formTwo">
+                <h3>
+                  Player :
+                  {userTwo}
+                </h3>
+              </div>
+            )
+            : (
+              <div className="formTwo">
+                <h3>
+                  Player :
+                  {userTwo}
+                </h3>
+                <form onSubmit={this.onSubmitTwo}>
+                  <input
+                    onChange={this.onChange}
+                    type="text"
+                    id="userTwo"
+                    name="title"
+                    value={userTwo}
+                  />
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Connect"
+                  />
+                </form>
+              </div>
+            )
+        }
+        <div className="logo">
+          <img src="./assets/logopokemaze.png" alt="logo" />
+        </div>
+        <div className="buttonContainerHome">
           <Link to="/solo-game">
             <button
               className="homeButton"
@@ -76,47 +140,39 @@ class Home extends Component {
               Play solo
             </button>
           </Link>
-          <Link to="/solo-game-2">
+          <Link to="/pokedex">
             <button
               className="homeButton"
               type="button"
               size="lg"
               style={{ marginRight: 100 }}
             >
-              Demo chrono
+              Pokedex
             </button>
           </Link>
-          <Link to="/pokedex">
+          <Link to="/multiplayer">
             <button
               className="homeButton"
               type="button"
               size="lg"
+              style={{ marginRight: 100 }}
             >
-              Pokedex
+              Multiplayer
             </button>
           </Link>
+          <Link to="/pokeditor">
+            <button
+              className="homeButton"
+              type="button"
+              size="lg"
+              style={{ marginRight: 100 }}
+            >
+              Pokeditor
+            </button>
+          </Link>
+
         </div>
-        <Link to="/multiplayer">
-          <button
-            className="homeButton"
-            type="button"
-            size="lg"
-            style={{ marginRight: 100 }}
-          >
-            Multiplayer
-          </button>
-        </Link>
-        <Link to="/pokeditor">
-          <button
-            className="homeButton"
-            type="button"
-            size="lg"
-            style={{ marginRight: 100 }}
-          >
-            Pokeditor
-          </button>
-        </Link>
-      </div>
+      </div >
     );
   }
 }
