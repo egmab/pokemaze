@@ -7,11 +7,11 @@ import './DuoGame.css';
 const DuoGame = () => {
   return (
     <div className="DuoHome">
-      <div className="pokedexJ1">
-        <Pokedex player="player1" />
-      </div>
       <div className="pokedexJ2">
         <Pokedex player="player2" />
+      </div>
+      <div className="pokedexJ1">
+        <Pokedex player="player1" />
       </div>
       <Link to="/multiplayer">
         <button

@@ -170,18 +170,18 @@ class Game extends Component {
           />
           <div className="KeysBarMultiplayer">
             <KeysBar
-              collectedKeys={this.player1.collectedKeys}
-              finalDoorID={this.finalDoorID}
-              typeOfKey={this.typeOfKey}
-              numberOfKeys={this.keysToCollect}
-              playerNumber="player1"
-            />
-            <KeysBar
               collectedKeys={this.player2.collectedKeys}
               finalDoorID={this.finalDoorID}
               typeOfKey={this.typeOfKey}
               numberOfKeys={this.keysToCollect}
               playerNumber="player2"
+            />
+            <KeysBar
+              collectedKeys={this.player1.collectedKeys}
+              finalDoorID={this.finalDoorID}
+              typeOfKey={this.typeOfKey}
+              numberOfKeys={this.keysToCollect}
+              playerNumber="player1"
             />
           </div>
         </div>
