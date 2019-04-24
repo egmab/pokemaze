@@ -3,7 +3,6 @@ import Board from './Board';
 import Players from './Players';
 import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
-// import Capacities from './Capacities';
 import './Game.css';
 
 
@@ -32,14 +31,14 @@ class MultiplayerGame extends Component {
       posY: null,
       collectedKeys: 0,
       finalDoorOpened: false,
-      capacities: ['punch', 'punch', 'punch'],
+      capacities: ['punch1', 'punch2', 'punch3'],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
       finalDoorOpened: false,
-      capacities: ['punch'],
+      capacities: ['punch3'],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
@@ -148,6 +147,8 @@ class MultiplayerGame extends Component {
             playerAction={this.playerAction}
             finalDoorOpened1={this.player1.finalDoorOpened}
             finalDoorOpened2={this.player2.finalDoorOpened}
+            capacities1={this.player1.capacities}
+            capacities2={this.player2.capacities}
           />
           <div className="KeysBarMultiplayer">
             <KeysBar
@@ -165,12 +166,6 @@ class MultiplayerGame extends Component {
               playerNumber="player2"
             />
           </div>
-          {/*
-          <div className="Capacities">
-            <Capacities playerNumber="player1" capacities={this.player1.capacities} />
-            <Capacities playerNumber="player2" capacities={this.player2.capacities} />
-          </div>
-          */}
         </div>
       </div>
     );

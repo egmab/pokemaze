@@ -11,10 +11,11 @@ class Capacities extends Component {
   }
 
   render() {
+    const { timers, capacities } = this.props;
     return (
       <div className="Capacities">
         {
-          this.capacities.map((capacity, index) => <Capacity className="Capacity" name={capacity} timer={capacity[index]} key={`capacityId-${index + 1}`} />)
+          this.capacities.map((capacity, index) => <Capacity className="Capacity" name={capacities[index]} timer={timers[index]} key={`capacityId-${index + 1}`} />)
         }
       </div>
     );

@@ -10,16 +10,19 @@ class Capacity extends Component {
 
   render() {
     const { name, timer } = this.props;
+    let isReady;
+    if (timer === 0) {
+      isReady = true;
+    }
     if (isReady) {
       this.style.opacity = 1;
     }
 
     return (
-      <React.Fragment>
-        <div className="keyCircle">
-          <img src="./assets/pokemons/elements/normal.png" className="Capacity" alt={name} />
-        </div>
-      </React.Fragment>
+      <div>
+        <p>{timer}</p>
+        <img style={{ ...this.style }} src="./assets/pokemons/elements/normal.png" className="Capacity" alt={name} />
+      </div>
     );
   }
 }
