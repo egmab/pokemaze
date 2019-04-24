@@ -28,6 +28,24 @@
     opacity: 0.9;
     font: bold;
   }
+  .pokemon-single-container2 {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color:red;
+    color: #424242;
+    margin: 12px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border:1px solid black;
+    opacity: 0.9;
+    font: bold;
+  }
 
 .pokemonSearchBar {
     background-color: #ededed;
@@ -73,6 +91,22 @@
 
 .notHave{
     filter: contrast(100%);
+    width: 200px;
+    height: 200px;
+    position: relative;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #ededed;
+    color: #424242;
+    margin: 12px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border:1px solid black;
+    opacity: 0.9;
+    font: bold;
 
 }
 .notHave div img {
@@ -93,3 +127,19 @@
 .arrayFirstRow{
     background-color: rgb(182, 181, 181);
 }
+@-webkit-keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}
+.loadingType{
+    height: 50px;
+    right: 5px;
+    position: absolute;
+    top: 5px;
+    -webkit-animation: rotation 2s infinite linear;
+}
+
