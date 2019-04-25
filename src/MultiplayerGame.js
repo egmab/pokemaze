@@ -31,18 +31,18 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      finalDoorOpened: false,
       capacities: ['punch1', 'punch2', 'punch3'],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      finalDoorOpened: false,
       capacities: ['punch3'],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
+      finalDoorOpened1: false,
+      finalDoorOpened2: false,
       level,
       winner: undefined,
       pokemon: undefined,
@@ -92,7 +92,12 @@ class MultiplayerGame extends Component {
         this.setState({ level });
         // Open final door when all keys collected
         if (this[player].collectedKeys === this.keysToCollect) {
-          this[player].finalDoorOpened = true;
+          if (player === 'player1') {
+            this.setState({ finalDoorOpened1: true });
+          }
+          if (player === 'player2') {
+            this.setState({ finalDoorOpened2: true });
+          }
         }
       }
     }
@@ -153,7 +158,7 @@ class MultiplayerGame extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level, winner,
+      isWinner, isLoser, pokemon, ongoingGame, level, winner, finalDoorOpened1, finalDoorOpened2,
     } = this.state;
     return (
       <div className="Game">
@@ -170,8 +175,8 @@ class MultiplayerGame extends Component {
             startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
-            finalDoorOpened1={this.player1.finalDoorOpened}
-            finalDoorOpened2={this.player2.finalDoorOpened}
+            finalDoorOpened1={finalDoorOpened1}
+            finalDoorOpened2={finalDoorOpened2}
             capacities1={this.player1.capacities}
             capacities2={this.player2.capacities}
           />
