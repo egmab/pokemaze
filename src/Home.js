@@ -77,6 +77,11 @@ class Home extends Component {
     }
   }
 
+  checkConnection = () => {
+    console.log('coucou, trop darrrr');
+    return false;
+  }
+
   render() {
     const {
       userOne,
@@ -181,7 +186,10 @@ class Home extends Component {
             <img src="./assets/logopokemaze.png" alt="logo" />
           </div>
           <div className="buttonContainerHome">
-            <Link to="/solo-game">
+            <Link
+              to="/solo-game"
+              onClick={this.checkConnection}
+            >
               <button
                 className="homeButton"
                 type="button"
@@ -192,7 +200,10 @@ class Home extends Component {
               </button>
             </Link>
 
-            <Link to="/duo-game">
+            <Link
+              to="/duo-game"
+              onClick={this.checkConnection}
+            >
               <button
                 className="homeButton"
                 type="button"
@@ -211,7 +222,7 @@ class Home extends Component {
                 style={{ marginRight: 100 }}
               >
                 <img src="./assets/pokeditor2.png" alt="imgeditor" />
-                { ' ' }
+                {' '}
                 Pokeditor
               </button>
             </Link>
