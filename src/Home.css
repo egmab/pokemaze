@@ -81,6 +81,7 @@
     top:1px;
   }
   .forms{
+    min-width: 17%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
