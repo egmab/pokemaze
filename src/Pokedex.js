@@ -31,11 +31,10 @@ class Pokedex extends Component {
   }
 
   changeType = (event) => {
-
     let pokemonsClicked = '';
     const { player } = this.props;
     let allPokemons = '';
-    
+
     if (player === 'player1') {
       pokemonsClicked = document.getElementsByClassName(event.target.value);
       allPokemons = document.getElementById('pokemon-container1');
@@ -63,10 +62,10 @@ class Pokedex extends Component {
 
     let actualPlayer = 'Player';
     if (player === 'player1') {
-      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'));
     }
     if (player === 'player2') {
-      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer2'))
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer2'));
     }
     let actualStorage = '';
     let pokemonsCaught = '';

@@ -26,7 +26,7 @@ const DuoGame = () => {
       <div>
         <Link to="/">
           <button
-            className="homeButton"
+            className="backButton"
             type="button"
             size="lg"
             style={{ marginRight: 100 }}
