@@ -11,9 +11,9 @@
     min-width: 100vh;
   }
 
-  .home img{
+  /* .home img{
     padding-top: 18vh;
-  }
+  } */
 
   .home input{
     padding:10px;
@@ -25,7 +25,7 @@
   .buttonContainerHome { 
     display: flex;
     justify-content: center;
-    padding-top: 3vh;
+    padding-bottom: 8vw;
   }
   
   .logoButtons{
@@ -73,8 +73,9 @@
     background:-ms-linear-gradient(top, #77a809 5%, #89c403 100%);
     background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
     filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
-      background-color:#77a809;
+    background-color: #77a809;
   }
+
   .homeButton:active {
     position:relative;
     top:1px;
@@ -88,6 +89,7 @@
     position: fixed;
     top:0;
     left:0;
+    min-width: 17%;
   }
   .formOne{
     margin:auto;
@@ -128,7 +130,7 @@
 
 .logo{
     align-items: center;
-    justify-content: center;
+    padding-bottom: 10vw;
 
   }
 
@@ -146,4 +148,33 @@
     background-color:#89c403;
     color: white;
     text-align: center;
+  }
+
+  .disconnectButton{
+    background-color:#df1414;
+    color: white;
+    text-align: center;
+  }
+
+  .pokeditor {
+    padding:10px 40px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #2b55a3;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:1.5em;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #2b55a3;
+    color: white;
+    text-align: center;
+    align-items: center;
+    background-color: #2b55a3;
+  }
+
+  .pokeditor img{ 
+    vertical-align: middle;
   }
