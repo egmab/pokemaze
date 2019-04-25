@@ -51,13 +51,15 @@ class Home extends Component {
   onDisconnectOne = (event) => {
     event.preventDefault();
     const { playerOneConnected } = this.state;
-    this.setState({ playerOneConnected: !playerOneConnected });
+    this.setState({ playerOneConnected: !playerOneConnected, userOne: '' });
+    localStorage.setItem('connectedPlayer', '');
   }
 
   onDisconnectTwo = (event) => {
     event.preventDefault();
     const { playerTwoConnected } = this.state;
-    this.setState({ playerTwoConnected: !playerTwoConnected });
+    this.setState({ playerTwoConnected: !playerTwoConnected, userTwo: '' });
+    localStorage.setItem('connectedPlayer2', '');
   }
 
 
