@@ -31,7 +31,7 @@ class Pokedex extends Component {
   }
 
   render() {
-    const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+    const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'));
     let actualStorage = '';
     let pokemonsCaught = '';
     if (localStorage.getItem(actualPlayer)) {
@@ -43,54 +43,82 @@ class Pokedex extends Component {
     return (
       <div className="pokemon-container">
         <div className="pokemonSearchBar">
-          <div>
+          <div className="arrayBox">
             <table className="typeArray">
               <tr className="arrayFirstRow">
                 <td>type</td>
                 <td>obtenu</td>
-                <td>type</td>
-                <td>obtenu</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/water.png" alt="water" /></td>
+                <td>/28</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/grass.png" alt="grass" /></td>
+                <td>/12</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/electric.png" alt="electric" /></td>
+                <td>/9</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/psychic.png" alt="psychic" /></td>
+                <td>/8</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/dragon.png" alt="dragon" /></td>
+                <td>/3</td>
+              </tr>
+            </table>
+            <table className="typeArray">
+              <tr className="arrayFirstRow">
                 <td>type</td>
                 <td>obtenu</td>
               </tr>
               <tr>
-                <td>eau</td>
-                <td>/28</td>
-                <td>normal</td>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/normal.png" alt="normal" /></td>
                 <td>/22</td>
-                <td>poison</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/fire.png" alt="fire" /></td>
+                <td>/12</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/rock.png" alt="rock" /></td>
+                <td>/9</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/fighting.png" alt="fighting" /></td>
+                <td>/7</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/fairy.png" alt="fairy" /></td>
+                <td>/2</td>
+              </tr>
+            </table>
+            <table className="typeArray">
+              <tr className="arrayFirstRow">
+                <td>type</td>
+                <td>obtenu</td>
+              </tr>
+              <tr>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/poison.png" alt="poison" /></td>
                 <td>/14</td>
               </tr>
               <tr>
-                <td>plante</td>
-                <td>/12</td>
-                <td>feu</td>
-                <td>/12</td>
-                <td>insecte</td>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/bug.png" alt="bug" /></td>
                 <td>/12</td>
               </tr>
               <tr>
-                <td>electric</td>
-                <td>/9</td>
-                <td>pierre</td>
-                <td>/9</td>
-                <td>sol</td>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/ground.png" alt="ground" /></td>
                 <td>/8</td>
               </tr>
               <tr>
-                <td>psy</td>
-                <td>/8</td>
-                <td>combat</td>
-                <td>/7</td>
-                <td>fantome</td>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/ghost.png" alt="ghost" /></td>
                 <td>/3</td>
               </tr>
               <tr>
-                <td>dragon</td>
-                <td>/3</td>
-                <td>fee</td>
-                <td>/2</td>
-                <td>glace</td>
+                <td><img className="imgelemArray" src="./assets/pokemons/elements/ice.png" alt="ice" /></td>
                 <td>/2</td>
               </tr>
             </table>
