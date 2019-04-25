@@ -4,15 +4,22 @@ import { Link } from 'react-router-dom';
 
 
 const EndingGame = ({
-  pokemon, isWinner, isLoser, reset,
+  pokemon, isWinner, isLoser, reset, winner,
 }) => {
   let pokemonName = pokemon.name;
   const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   // const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
+  let winnerName = 'winner';
   let title = '';
   let message = '';
   if (isWinner) {
-    title = 'Congrats !';
+    if (winner === 'player1') {
+      winnerName = JSON.parse(localStorage.getItem('connectedPlayer'))
+    }
+    if (winner === 'player2') {
+      winnerName = JSON.parse(localStorage.getItem('connectedPlayer2'))
+    }
+    title = `Congrats ${winnerName}!`;
     message = 'You win';
   }
   if (isLoser) {
@@ -35,15 +42,15 @@ const EndingGame = ({
   return (
     <div className="modal-wrapper">
       <div className="modal-body">
-        <h3>{title}</h3>
+        <h5>{title}</h5>
         <img className="imgPoke" src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-        <h2>
+        <h4>
           {message}
           {' '}
           {pokemonNameMaj}
           {' '}
           !
-        </h2>
+        </h4>
         <p>
           <Link exact to="/" onClick={() => reset()}>
             <button

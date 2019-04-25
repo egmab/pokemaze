@@ -17,6 +17,15 @@ class Home extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  componentWillMount() {
+    if (localStorage.getItem('connectedPlayer')) {
+      this.setState({ userOne: JSON.parse(localStorage.getItem('connectedPlayer')), playerOneConnected: true });
+    }
+    if (localStorage.getItem('connectedPlayer2')) {
+      this.setState({ userTwo: JSON.parse(localStorage.getItem('connectedPlayer2')), playerTwoConnected: true });
+    }
+  }
+
   onChange(event) {
     const user = event.target.id;
     this.setState({
@@ -39,6 +48,18 @@ class Home extends Component {
     }
   }
 
+  onDisconnectOne = (event) => {
+    event.preventDefault();
+    const { playerOneConnected } = this.state;
+    this.setState({ playerOneConnected: !playerOneConnected });
+  }
+
+  onDisconnectTwo = (event) => {
+    event.preventDefault();
+    const { playerTwoConnected } = this.state;
+    this.setState({ playerTwoConnected: !playerTwoConnected });
+  }
+
 
   onSubmitTwo = (event) => {
     event.preventDefault();
@@ -55,124 +76,145 @@ class Home extends Component {
   }
 
   render() {
-    const { userOne, userTwo, playerOneConnected, playerTwoConnected } = this.state;
+    const {
+      userOne,
+      userTwo,
+      playerOneConnected,
+      playerTwoConnected,
+    } = this.state;
     return (
       <div className="home">
-        {
-          playerOneConnected
-            ? (
-              <div className="formOne">
-                <h3>
-                  Player :
-                  {userOne}
-                </h3>
-              </div>
-            )
-            : (
-              <div className="formOne">
-                <h3>
-                  Player :
-                  {userOne}
-                </h3>
-                <form onSubmit={this.onSubmitOne}>
-                  <input
-                    onChange={this.onChange}
-                    type="text"
-                    id="userOne"
-                    name="title"
-                    value={userOne}
-                  />
-                  <input
-                    className="connectButton"
-                    size="lg"
-                    type="submit"
-                    value="Connect"
-                  />
-                </form>
-              </div>
-            )
-        }
-        {
-          playerTwoConnected
-            ? (
-              <div className="formTwo">
-                <h3>
-                  Player :
-                  {userTwo}
-                </h3>
-              </div>
-            )
-            : (
-              <div className="formTwo">
-                <h3>
-                  Player :
-                  {userTwo}
-                </h3>
-                <form onSubmit={this.onSubmitTwo}>
-                  <input
-                    onChange={this.onChange}
-                    type="text"
-                    id="userTwo"
-                    name="title"
-                    value={userTwo}
-                  />
-                  <input
-                    className="connectButton"
-                    size="lg"
-                    type="submit"
-                    value="Connect"
-                  />
-                </form>
-              </div>
-            )
-        }
-        <div className="logo">
-          <img src="./assets/logopokemaze.png" alt="logo" />
+        <div className="forms">
+          {
+            playerOneConnected
+              ? (
+                <div className="formOne">
+                  <h4>
+                    Player 1 :
+                    {' '}
+                    {userOne}
+                  </h4>
+                  <form onSubmit={this.onDisconnectOne}>
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Disconnect"
+                    />
+                  </form>
+                </div>
+              )
+              : (
+                <div className="formOne">
+                  <h4>
+                    Player 1 :
+                    {' '}
+                    {userOne}
+                  </h4>
+                  <form onSubmit={this.onSubmitOne}>
+                    <input
+                      onChange={this.onChange}
+                      type="text"
+                      id="userOne"
+                      name="title"
+                      value={userOne}
+                    />
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Connect"
+                    />
+                  </form>
+                </div>
+              )
+          }
+          {
+            playerTwoConnected
+              ? (
+                <div className="formTwo">
+                  <h4>
+                    Player 2 :
+                    {' '}
+                    {userTwo}
+                  </h4>
+                  <form onSubmit={this.onDisconnectTwo}>
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Disconnect"
+                    />
+                  </form>
+                </div>
+              )
+              : (
+                <div className="formTwo">
+                  <h4>
+                    Player 2 :
+                    {' '}
+                    {userTwo}
+                  </h4>
+                  <form onSubmit={this.onSubmitTwo}>
+                    <input
+                      onChange={this.onChange}
+                      type="text"
+                      id="userTwo"
+                      name="title"
+                      value={userTwo}
+                    />
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Connect"
+                    />
+                  </form>
+                </div>
+              )
+          }
         </div>
-        <div className="buttonContainerHome">
-          <Link to="/solo-game">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Play solo
-            </button>
-          </Link>
-          <Link to="/pokedex">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Pokedex
-            </button>
-          </Link>
-          <Link to="/multiplayer">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Multiplayer
-            </button>
-          </Link>
-          <Link to="/pokeditor">
-            <button
-              className="homeButton"
-              type="button"
-              size="lg"
-              style={{ marginRight: 100 }}
-            >
-              Pokeditor
-            </button>
-          </Link>
+        <div className="logoButtons">
+          <div className="logo">
+            <img src="./assets/logopokemaze.png" alt="logo" />
+          </div>
+          <div className="buttonContainerHome">
+            <Link to="/solo-game">
+              <button
+                className="homeButton"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                Play solo
+              </button>
+            </Link>
 
+            <Link to="/pokeditor">
+              <button
+                className="homeButton"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                Pokeditor
+              </button>
+            </Link>
+
+            <Link to="/duo-game">
+              <button
+                className="homeButton"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                Multiplayer
+              </button>
+            </Link>
+
+          </div>
         </div>
-      </div >
+      </div>
     );
   }
 }

@@ -31,7 +31,14 @@ class Pokedex extends Component {
   }
 
   render() {
-    const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+    const { player } = this.props;
+    let actualPlayer = '';
+    if (player === 'player1') {
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+    }
+    if (player === 'player2') {
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer2'))
+    }
     let actualStorage = '';
     let pokemonsCaught = '';
     if (localStorage.getItem(actualPlayer)) {
@@ -39,9 +46,14 @@ class Pokedex extends Component {
       pokemonsCaught = actualStorage.pokemons;
     }
 
+
     const { pokemon } = this.state;
     return (
       <div className="pokemon-container">
+        <h2>
+          {actualPlayer}
+          &apos;s pokedex
+        </h2>
         <div className="pokemonSearchBar">
           <div>
             <table className="typeArray">
