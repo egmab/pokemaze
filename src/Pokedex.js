@@ -9,7 +9,6 @@ class Pokedex extends Component {
     super(props);
     this.state = {
       pokemon: [],
-      typeClicked: '',
     };
   }
 
@@ -32,13 +31,29 @@ class Pokedex extends Component {
   }
 
   changeType = (event) => {
-    this.setState({
-      typeClicked: event.target.value,
-    });
+    const pokemonsClicked = document.getElementsByClassName(event.target.value);
+    const allPokemons = document.getElementById('pokemon-container2');
+    const eachPokemon = allPokemons.childNodes;
+
+    if (eachPokemon) {
+      for (let i = 0; i < eachPokemon.length; i += 1) {
+        eachPokemon[i].style.display = 'none';
+      }
+    }
+    for (let i = 0; i < pokemonsClicked.length; i += 1) {
+      pokemonsClicked[i].style.display = 'block';
+    }
   }
 
   render() {
-    const actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'));
+    const { player } = this.props;
+    let actualPlayer = 'Player';
+    if (player === 'player1') {
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
+    }
+    if (player === 'player2') {
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer2'))
+    }
     let actualStorage = '';
     let pokemonsCaught = '';
     if (localStorage.getItem(actualPlayer)) {
@@ -46,9 +61,14 @@ class Pokedex extends Component {
       pokemonsCaught = actualStorage.pokemons;
     }
 
+
     const { pokemon } = this.state;
     return (
       <div className="pokemon-container">
+        <h2>
+          {actualPlayer}
+          &apos;s pokedex
+        </h2>
         <div className="pokemonSearchBar">
           <div className="arrayBox">
             <table className="typeArray">
@@ -281,16 +301,18 @@ class Pokedex extends Component {
             </table>
           </div>
         </div>
-        {
-          pokemon.map((monster, index) => (
-            <Pokemon
-              key={monster.name}
-              id={index + 1}
-              pokemonName={monster.name}
-              pokemonsCaught={pokemonsCaught}
-            />
-          ))
-        }
+        <div id="pokemon-container2">
+          {
+            pokemon.map((monster, index) => (
+              <Pokemon
+                key={monster.name}
+                id={index + 1}
+                pokemonName={monster.name}
+                pokemonsCaught={pokemonsCaught}
+              />
+            ))
+          }
+        </div>
       </div>
     );
   }

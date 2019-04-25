@@ -1,18 +1,36 @@
-.pokemon-container{
+.displayNone div{
+    display: none;
+}
+
+.displayFire .fire{
+    display: block;
+}
+.pokemon-container {
     display: flex;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.4);
     flex-wrap: wrap;
     width: 100%;
-    background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
     background-size: 100%, cover;
     min-height: 100vh;
     min-width: 100vh;
     justify-content: center;
     align-items: center;
 }
+#pokemon-container2 {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.4);
+    flex-wrap: wrap;
+    width: 100%;
+    background-size: 100%, cover;
+    min-height: 100vh;
+    min-width: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 .pokemon-single-container {
-    width: 200px;
-    height: 200px;
+    width: 10vw;
+    height: 10vw;
     position: relative;
     text-transform: uppercase;
     display: flex;
@@ -32,7 +50,7 @@
 .pokemonSearchBar {
     background-color: #ededed;
     min-height: 100px;
-    width: inherit; 
+    width: 100%; 
     border-radius: 5px;
     margin: 20px;
     border:1px solid black;
@@ -51,7 +69,7 @@
     height: 30px;
     position:absolute; bottom:0;
     font-family: 'Lato', sans-serif;
-    width: 200px;
+    width: 10vw;
     font: bolder;
     background-color: rgb(190, 217, 241);
     border-radius: 5px; 
@@ -80,8 +98,8 @@
 
 .notHave{
     filter: contrast(100%);
-    width: 200px;
-    height: 200px;
+    width: 10vw;
+    height: 10vw;
     position: relative;
     text-transform: uppercase;
     display: flex;
@@ -120,10 +138,13 @@
 
 td{
     border: solid 1px black;
+    width: 100%;
 }
 
 .arrayFirstRow{
-    background-color: rgb(182, 181, 181);
+    background-color: rgb(85, 138, 183);
+    color: white;
+    text-align: center;
 }
 @-webkit-keyframes rotation {
     from {
