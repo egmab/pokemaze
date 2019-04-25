@@ -21,11 +21,15 @@ class Player extends Component {
       this.downButton = 40;
       this.leftButton = 37;
       this.rightButton = 39;
+      this.actionButton = 17;
+      this.enemy = 'player2';
     } else if (props.playerNumber === 'player2') {
       this.upButton = 90;
       this.downButton = 83;
       this.leftButton = 81;
       this.rightButton = 68;
+      this.actionButton = 70;
+      this.enemy = 'player1';
     }
     this.state = {
       posX: props.startingPositions.x,
@@ -58,8 +62,43 @@ class Player extends Component {
       img: this.img,
     });
     if (this.gameMode === 'multiplayer') {
-      const { multiplayerActions, playerNumber } = this.props;
-      multiplayerActions(this.posX, this.posY, playerNumber);
+      this.multiplayerRefresh();
+    }
+  }
+
+  multiplayerRefresh() {
+    const {
+      multiplayerCoordinates, playerNumber, player, resetActions,
+    } = this.props;
+    multiplayerCoordinates(this.posX, this.posY, playerNumber);
+    if (player.gettingTargeted) {
+      switch (player.gettingTargeted.byCapacity) {
+        // Default capacity
+        default: {
+          document.removeEventListener('keydown', this.action, false);
+          let gettingPunched = true;
+          while (gettingPunched) {
+            const { posX, posY } = this.state;
+            if (this.checkTile(
+              player.gettingTargeted.directionX, player.gettingTargeted.directionY,
+            )) {
+              this.setState({
+                posX: this.posX,
+                posY: this.posY,
+              });
+              this.posX = posX + player.gettingTargeted.directionX;
+              this.posY = posY + player.gettingTargeted.directionY;
+              this.traps(this.posX, this.posY);
+            } else {
+              gettingPunched = false;
+            }
+          }
+          setTimeout(() => document.addEventListener('keydown', this.action, false),
+            1000);
+          resetActions();
+          break;
+        }
+      }
     }
   }
 
@@ -72,6 +111,13 @@ class Player extends Component {
       tiles, items, finalDoorOpened, enemy,
     } = this.props;
     const { posX, posY } = this.state;
+    if (posX + x < 0
+      || posY + y < 0
+      || posY + y > tiles.length
+      || posX + x > tiles[posY].length
+    ) {
+      return false;
+    }
     if (this.gameMode === 'multiplayer') {
       // Special check for multiplayer: can't pass through other player
       if (enemy.x === posX + x && enemy.y === posY + y) {
@@ -124,29 +170,28 @@ class Player extends Component {
       // Move right
       if (event.keyCode === this.rightButton) {
         this.img = 'charRight';
-        if (this.posX + 1 < tiles[this.posY].length
-          && this.checkTile(1, 0)) {
+        if (this.checkTile(1, 0)) {
           this.posX += 1;
         }
       }
       // Move left
       if (event.keyCode === this.leftButton) {
         this.img = 'charLeft';
-        if (this.posX > 0 && this.checkTile(-1, 0)) {
+        if (this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
       }
       // Move down
       if (event.keyCode === this.downButton) {
         this.img = 'charBottom';
-        if (this.posY + 1 < tiles.length && this.checkTile(0, 1)) {
+        if (this.checkTile(0, 1)) {
           this.posY += 1;
         }
       }
       // Move up
       if (event.keyCode === this.upButton) {
         this.img = 'charTop';
-        if (this.posY > 0 && this.checkTile(0, -1)) {
+        if (this.checkTile(0, -1)) {
           this.posY -= 1;
         }
       }
@@ -155,27 +200,43 @@ class Player extends Component {
       getPlayerPos(this.posX, this.posY, playerNumber);
     }
     // ACTION KEY (spacebar)
-    if (event.keyCode === 32) {
+    if (event.keyCode === this.actionButton) {
       // Sets coordinates of the targeted tile
       switch (this.img) {
         case 'charTop': {
           this.targetedTileX = this.posX;
           this.targetedTileY = this.posY - 1;
+          this.targetedDirection = {
+            x: 0,
+            y: -1,
+          };
           break;
         }
         case 'charLeft': {
           this.targetedTileX = this.posX - 1;
           this.targetedTileY = this.posY;
+          this.targetedDirection = {
+            x: -1,
+            y: 0,
+          };
           break;
         }
         case 'charRight': {
           this.targetedTileX = this.posX + 1;
           this.targetedTileY = this.posY;
+          this.targetedDirection = {
+            x: 1,
+            y: 0,
+          };
           break;
         }
         default: {
           this.targetedTileX = this.posX;
           this.targetedTileY = this.posY + 1;
+          this.targetedDirection = {
+            x: 0,
+            y: 1,
+          };
           break;
         }
       }
@@ -185,12 +246,25 @@ class Player extends Component {
         && this.targetedTileY < tiles.length
         && this.targetedTileX < tiles[this.targetedTileY].length
       ) {
+        const { gameMode } = this.props;
         // Activate lever if there is any on tile
         if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
           && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
           const { playerAction } = this.props;
           // Callback to Game
           playerAction(this.targetedTileY, this.targetedTileX);
+          // Multiplayer actions;
+        } else if (gameMode === 'multiplayer') {
+          const { multiplayerActions } = this.props;
+          const { enemy } = this.props;
+          const capacity = 'normal';
+          if (capacity === 'normal') {
+            if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+              multiplayerActions(
+                this.enemy, capacity, this.targetedDirection.x, this.targetedDirection.y,
+              );
+            }
+          }
         }
         this.targetedTileX = null;
         this.targetedTileY = null;

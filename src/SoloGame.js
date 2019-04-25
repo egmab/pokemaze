@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Game from './Game';
+import Pokedex from './Pokedex';
+import './SoloGame.css';
 
 class SoloGame extends Component {
   constructor(props) {
@@ -27,48 +29,52 @@ class SoloGame extends Component {
       selectionDone
         ? <Game level={this.selectedLevel} />
         : (
-          <div className="home">
-            <div className="SoloLevels">
-              <p style={{ fontSize: '150%' }}>Solo levels</p>
-              {
-                soloLevels.map((level, index) => (
-                  <button
-                    className="homeButton"
-                    style={{ marginRight: 20 }}
-                    type="button"
-                    key={`levelId-${index + 1}`}
-                    value={level}
-                    onClick={this.selectLevel}
-                  >
-                    {level}
-                  </button>
-                ))
-              }
-            </div>
-            <div className="CustomLevels">
-              <p style={{ fontSize: '150%' }}>
-                Custom levels
-                <span style={{ color: 'darkred' }}>
-                  You can
-                  {"'"}
-                  t earn new Pokemons in this mode
-                </span>
-              </p>
-              {
-                selectionDone
-                  ? null
-                  : customLevels.map((level, index) => (
+          <div className="soloHome">
+            <div className="levels">
+              <div className="SoloLevels">
+                <h1>Choose your level</h1>
+                <h3>Solo levels</h3>
+                {
+                  soloLevels.map((level, index) => (
                     <button
                       className="homeButton"
+                      style={{ marginRight: 20 }}
                       type="button"
-                      key={`customLevelId-${index + 1}`}
+                      key={`levelId-${index + 1}`}
                       value={level}
-                      onClick={this.selectCustomLevel}
+                      onClick={this.selectLevel}
                     >
                       {level}
                     </button>
                   ))
-              }
+                }
+              </div>
+              <div className="CustomLevels">
+                <h3>Custom levels</h3>
+                <p>
+                  You can
+                  {"'"}
+                  t earn new Pokemons in this mode
+                </p>
+                {
+                  selectionDone
+                    ? null
+                    : customLevels.map((level, index) => (
+                      <button
+                        className="homeButton"
+                        type="button"
+                        key={`customLevelId-${index + 1}`}
+                        value={level}
+                        onClick={this.selectCustomLevel}
+                      >
+                        {level}
+                      </button>
+                    ))
+                }
+              </div>
+            </div>
+            <div className="pokedexJ1solo">
+              <Pokedex player="player1" />
             </div>
           </div>
         )
