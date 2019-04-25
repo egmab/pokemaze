@@ -9,6 +9,7 @@ class Pokedex extends Component {
     super(props);
     this.state = {
       pokemon: [],
+      typeClicked: '',
     };
   }
 
@@ -27,6 +28,12 @@ class Pokedex extends Component {
           });
         });
       }
+    });
+  }
+
+  changeType = (event) => {
+    this.setState({
+      typeClicked: event.target.value,
     });
   }
 
@@ -50,23 +57,73 @@ class Pokedex extends Component {
                 <td>obtenu</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/water.png" alt="water" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/water.png)',
+                    }}
+                    className="imgelemArray"
+                    value="water"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/28</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/grass.png" alt="grass" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/grass.png)',
+                    }}
+                    className="imgelemArray"
+                    value="grass"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/12</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/electric.png" alt="electric" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/electric.png)',
+                    }}
+                    className="imgelemArray"
+                    value="electric"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/9</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/psychic.png" alt="psychic" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/psychic.png)',
+                    }}
+                    className="imgelemArray"
+                    value="psychic"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/8</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/dragon.png" alt="dragon" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/dragon.png)',
+                    }}
+                    className="imgelemArray"
+                    value="dragon"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/3</td>
               </tr>
             </table>
@@ -76,23 +133,73 @@ class Pokedex extends Component {
                 <td>obtenu</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/normal.png" alt="normal" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/normal.png)',
+                    }}
+                    className="imgelemArray"
+                    value="normal"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/22</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/fire.png" alt="fire" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/fire.png)',
+                    }}
+                    className="imgelemArray"
+                    value="fire"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/12</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/rock.png" alt="rock" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/rock.png)',
+                    }}
+                    className="imgelemArray"
+                    value="rock"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/9</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/fighting.png" alt="fighting" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/fighting.png)',
+                    }}
+                    className="imgelemArray"
+                    value="fighting"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/7</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/fairy.png" alt="fairy" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/fairy.png)',
+                    }}
+                    className="imgelemArray"
+                    value="fairy"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/2</td>
               </tr>
             </table>
@@ -102,23 +209,73 @@ class Pokedex extends Component {
                 <td>obtenu</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/poison.png" alt="poison" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/poison.png)',
+                    }}
+                    className="imgelemArray"
+                    value="poison"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/14</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/bug.png" alt="bug" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/bug.png)',
+                    }}
+                    className="imgelemArray"
+                    value="bug"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/12</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/ground.png" alt="ground" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/ground.png)',
+                    }}
+                    className="imgelemArray"
+                    value="ground"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/8</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/ghost.png" alt="ghost" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/ghost.png)',
+                    }}
+                    className="imgelemArray"
+                    value="ghost"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/3</td>
               </tr>
               <tr>
-                <td><img className="imgelemArray" src="./assets/pokemons/elements/ice.png" alt="ice" /></td>
+                <td>
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: 'url(./assets/pokemons/elements/ice.png)',
+                    }}
+                    className="imgelemArray"
+                    value="ice"
+                    onClick={this.changeType}
+                  />
+                </td>
                 <td>/2</td>
               </tr>
             </table>
