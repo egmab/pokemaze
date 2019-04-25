@@ -81,16 +81,6 @@
     text-decoration:none;
     color:#ffffff;
   }
-  .homeButton:hover {
-    background:-webkit-gradient(linear, left top, left bottom, c    padding: 2%;olor-stop(0.05, #77a809), color-stop(1, #89c403));
-    background:-moz-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:-webkit-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:-o-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:-ms-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
-    background-color: #77a809;
-  }
 
   .homeButton:active {
     position:relative;

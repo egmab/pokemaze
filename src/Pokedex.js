@@ -31,11 +31,10 @@ class Pokedex extends Component {
   }
 
   changeType = (event) => {
-
     let pokemonsClicked = '';
     const { player } = this.props;
     let allPokemons = '';
-    
+
     if (player === 'player1') {
       pokemonsClicked = document.getElementsByClassName(event.target.value);
       allPokemons = document.getElementById('pokemon-container1');
