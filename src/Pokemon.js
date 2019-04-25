@@ -24,7 +24,7 @@ class Pokemon extends Component {
 
 
   render() {
-    const { pokemonName } = this.props;
+    const { pokemonName, player } = this.props;
     let pokemonClass = 'notHave';
     for (let i = 0; i < this.caught.length; i += 1) {
       if (this.caught[i] === pokemonName) {
@@ -61,23 +61,31 @@ class Pokemon extends Component {
       default:
         break;
     }
-
+    let classType = pokemonType;
+    if (player === 'player1') {
+      classType = pokemonType;
+    }
+    if (player === 'player2') {
+      classType = `${pokemonType}2`;
+    }
     return (
-      <div
-        className={pokemonClass}
-      >
-        <div>
-          {pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
-        </div>
-        <div>
-          <img
-            className="sprites"
-            src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`}
-            alt={this.pokemon}
-          />
-        </div>
-        <div className="align-bottom">
-          {this.pokemon}
+      <div className={classType}>
+        <div
+          className={pokemonClass}
+        >
+          <div>
+            {pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
+          </div>
+          <div>
+            <img
+              className="sprites"
+              src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`}
+              alt={this.pokemon}
+            />
+          </div>
+          <div className="align-bottom">
+            {this.pokemon}
+          </div>
         </div>
       </div>
     );

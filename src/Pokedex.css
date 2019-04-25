@@ -1,4 +1,11 @@
-.pokemon-container{
+.displayNone div{
+    display: none;
+}
+
+.displayFire .fire{
+    display: block;
+}
+.global-container {
     display: flex;
     background-color: rgba(255, 255, 255, 0.4);
     flex-wrap: wrap;
@@ -7,11 +14,28 @@
     min-height: 100vh;
     min-width: 100vh;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
+#pokemon-container1 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-size: 100%, cover;
+    justify-content: center;
+    align-items: flex-start;
+}
+#pokemon-container2 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-size: 100%, cover;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 .pokemon-single-container {
-    width: 180px;
-    height: 180px;
+    width: 10vw;
+    height: 10vw;
     position: relative;
     text-transform: uppercase;
     display: flex;
@@ -19,24 +43,6 @@
     justify-content: center;
     text-align: center;
     background-color: #ededed;
-    color: #424242;
-    margin: 12px;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    border:1px solid black;
-    opacity: 0.9;
-    font: bold;
-  }
-  .pokemon-single-container2 {
-    width: 180px;
-    height: 180px;
-    position: relative;
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    background-color:red;
     color: #424242;
     margin: 12px;
     border-radius: 5px;
@@ -68,7 +74,7 @@
     height: 30px;
     position:absolute; bottom:0;
     font-family: 'Lato', sans-serif;
-    width: 180px;
+    width: 10vw;
     font: bolder;
     background-color: rgb(190, 217, 241);
     border-radius: 5px; 
@@ -88,10 +94,17 @@
     top: 5px;
 }
 
+.imgelemArray{
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    background-size: contain;
+}
+
 .notHave{
     filter: contrast(100%);
-    width: 180px;
-    height: 180px;
+    width: 10vw;
+    height: 10vw;
     position: relative;
     text-transform: uppercase;
     display: flex;
@@ -118,8 +131,17 @@
 	-webkit-filter: grayscale(0);
 	filter: grayscale(0);
 }
-
+.arrayBox{
+    width: -webkit-fill-available;
+    text-align: center;
+    display: flex;
+}
 .typeArray{
+    border: solid 2px black;
+    width: -webkit-fill-available;
+}
+
+td{
     border: solid 1px black;
     width: 100%;
 }
