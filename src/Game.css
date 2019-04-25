@@ -7,7 +7,6 @@
   background-image: url('./assets/pokemons/fond.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 49.2vw;
   width: 95.2%;
   transform: scale(1.1);
 }
@@ -21,8 +20,6 @@
   background-image: url('./assets/pokemons/fond.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  min-height: 50vw;
-  min-width: 50vw;
 }
 
 .gameContainer
