@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import Game from './Game';
 import Pokedex from './Pokedex';
 import './SoloGame.css';
@@ -72,6 +73,19 @@ class SoloGame extends Component {
                     ))
                 }
               </div>
+              <div>
+                <Link to="/">
+                  <button
+                    className="homeButton"
+                    type="button"
+                    size="lg"
+                    style={{ marginRight: 100 }}
+                  >
+                    Back to menu
+                  </button>
+                </Link>
+              </div>
+
             </div>
             <div className="pokedexJ1solo">
               <Pokedex player="player1" />

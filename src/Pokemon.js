@@ -63,21 +63,23 @@ class Pokemon extends Component {
     }
 
     return (
-      <div
-        className={pokemonClass}
-      >
-        <div>
-          {pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
-        </div>
-        <div>
-          <img
-            className="sprites"
-            src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`}
-            alt={this.pokemon}
-          />
-        </div>
-        <div className="align-bottom">
-          {this.pokemon}
+      <div className={pokemonType}>
+        <div
+          className={pokemonClass}
+        >
+          <div>
+            {pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
+          </div>
+          <div>
+            <img
+              className="sprites"
+              src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`}
+              alt={this.pokemon}
+            />
+          </div>
+          <div className="align-bottom">
+            {this.pokemon}
+          </div>
         </div>
       </div>
     );

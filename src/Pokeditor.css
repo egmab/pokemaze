@@ -36,3 +36,9 @@
 .Pokeditor .Tile:hover{
   opacity: 0.7
 }
+
+.menu{
+  position: fixed;
+  top:0;
+  right: 0;
+}

@@ -1,4 +1,11 @@
-.pokemon-container{
+.displayNone div{
+    display: none;
+}
+
+.displayFire .fire{
+    display: block;
+}
+.pokemon-container {
     display: flex;
     background-color: rgba(255, 255, 255, 0.4);
     flex-wrap: wrap;
@@ -9,9 +16,21 @@
     justify-content: center;
     align-items: center;
 }
+#pokemon-container2 {
+    display: flex;
+    background-color: rgba(255, 255, 255, 0.4);
+    flex-wrap: wrap;
+    width: 100%;
+    background-size: 100%, cover;
+    min-height: 100vh;
+    min-width: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+}
+
 .pokemon-single-container {
-    width: 180px;
-    height: 180px;
+    width: 10vw;
+    height: 10vw;
     position: relative;
     text-transform: uppercase;
     display: flex;
@@ -52,10 +71,8 @@
     position:absolute;
     bottom: -2px;
     font-family: 'Lato', sans-serif;
-    width: 180px;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 27.7px;
+    width: 10vw;
+    font: bolder;
     background-color: rgb(190, 217, 241);
     border: 1px solid grey;
 }
@@ -81,8 +98,8 @@
 
 .notHave{
     filter: contrast(100%);
-    width: 180px;
-    height: 180px;
+    width: 10vw;
+    height: 10vw;
     position: relative;
     text-transform: uppercase;
     display: flex;

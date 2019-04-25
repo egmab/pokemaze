@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const EndingGame = ({
-  pokemon, isWinner, isLoser, reset, winner,
+  pokemon, isWinner, isLoser, winner, tutoWinner,
 }) => {
   let pokemonName = pokemon.name;
   const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
@@ -21,6 +21,10 @@ const EndingGame = ({
     }
     title = `Congrats ${winnerName}!`;
     message = 'You win';
+  }
+  if (tutoWinner) {
+    title = 'Congrats, you got it!';
+    message = 'You would have won';
   }
   if (isLoser) {
     title = 'Too late !';
@@ -52,7 +56,7 @@ const EndingGame = ({
           !
         </h4>
         <p>
-          <Link exact to="/" onClick={() => reset()}>
+          <Link exact to="/">
             <button
               className="largeBtn"
               type="button"

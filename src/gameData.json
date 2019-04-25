@@ -33,7 +33,8 @@
                     }
                 },
                 "timer": 60,
-                "typeOfKey": "002"
+                "typeOfKey": "002",
+                "isTuto": false
             },
             "Levels tutorial": {
               "tiles": [
@@ -67,7 +68,8 @@
                   }
               },
               "timer": 60,
-              "typeOfKey": "002"
+              "typeOfKey": "002",
+              "isTuto": true
           },
             "Démo Chrono": {
                 "tiles": [
@@ -101,7 +103,8 @@
                     }
                 },
                 "timer": 5,
-                "typeOfKey": "002"
+                "typeOfKey": "002",
+                "isTuto": false
             }
         },
         "multiplayer": {
@@ -141,7 +144,8 @@
                     }
                 },
                 "timer": 60,
-                "typeOfKey": "002"
+                "typeOfKey": "002",
+                "isTuto": false
             }
         }
     }
