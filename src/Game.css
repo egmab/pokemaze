@@ -27,6 +27,18 @@
 
 .gameContainer
 {
-  margin-left: 4vw;
+  /*margin-left: 4vw;*/
   position: relative;
 }
+
+.keyBar
+{
+ width: 85%;
+ display: flex;
+ justify-content: flex-end;
+}
+
+.KeysBarMultiplayer
+{
+  width: 85%;
+ }

@@ -192,6 +192,8 @@ class Game extends Component {
             className="player"
             playerNumber="player1"
           />
+        </div>
+        <div className="keyBar">
           <KeysBar
             collectedKeys={this.player1.collectedKeys}
             finalDoorID={this.finalDoorID}
