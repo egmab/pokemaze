@@ -84,94 +84,96 @@ class Home extends Component {
     } = this.state;
     return (
       <div className="home">
-        {
-          playerOneConnected
-            ? (
-              <div className="formOne">
-                <h4>
-                  Player 1 :
-                  {' '}
-                  {userOne}
-                </h4>
-                <form onSubmit={this.onDisconnectOne}>
-                  <input
-                    className="connectButton"
-                    size="lg"
-                    type="submit"
-                    value="Disconnect"
-                  />
-                </form>
-              </div>
-            )
-            : (
-              <div className="formOne">
-                <h4>
-                  Player 1 :
-                  {' '}
-                  {userOne}
-                </h4>
-                <form onSubmit={this.onSubmitOne}>
-                  <input
-                    onChange={this.onChange}
-                    type="text"
-                    id="userOne"
-                    name="title"
-                    value={userOne}
-                  />
-                  <input
-                    className="connectButton"
-                    size="lg"
-                    type="submit"
-                    value="Connect"
-                  />
-                </form>
-              </div>
-            )
-        }
-        {
-          playerTwoConnected
-            ? (
-              <div className="formTwo">
-                <h4>
-                  Player 2 :
-                  {' '}
-                  {userTwo}
-                </h4>
-                <form onSubmit={this.onDisconnectTwo}>
-                  <input
-                    className="connectButton"
-                    size="lg"
-                    type="submit"
-                    value="Disconnect"
-                  />
-                </form>
-              </div>
-            )
-            : (
-              <div className="formTwo">
-                <h4>
-                  Player 2 :
-                  {' '}
-                  {userTwo}
-                </h4>
-                <form onSubmit={this.onSubmitTwo}>
-                  <input
-                    onChange={this.onChange}
-                    type="text"
-                    id="userTwo"
-                    name="title"
-                    value={userTwo}
-                  />
-                  <input
-                    className="connectButton"
-                    size="lg"
-                    type="submit"
-                    value="Connect"
-                  />
-                </form>
-              </div>
-            )
-        }
+        <div className="forms">
+          {
+            playerOneConnected
+              ? (
+                <div className="formOne">
+                  <h4>
+                    Player 1 :
+                    {' '}
+                    {userOne}
+                  </h4>
+                  <form onSubmit={this.onDisconnectOne}>
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Disconnect"
+                    />
+                  </form>
+                </div>
+              )
+              : (
+                <div className="formOne">
+                  <h4>
+                    Player 1 :
+                    {' '}
+                    {userOne}
+                  </h4>
+                  <form onSubmit={this.onSubmitOne}>
+                    <input
+                      onChange={this.onChange}
+                      type="text"
+                      id="userOne"
+                      name="title"
+                      value={userOne}
+                    />
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Connect"
+                    />
+                  </form>
+                </div>
+              )
+          }
+          {
+            playerTwoConnected
+              ? (
+                <div className="formTwo">
+                  <h4>
+                    Player 2 :
+                    {' '}
+                    {userTwo}
+                  </h4>
+                  <form onSubmit={this.onDisconnectTwo}>
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Disconnect"
+                    />
+                  </form>
+                </div>
+              )
+              : (
+                <div className="formTwo">
+                  <h4>
+                    Player 2 :
+                    {' '}
+                    {userTwo}
+                  </h4>
+                  <form onSubmit={this.onSubmitTwo}>
+                    <input
+                      onChange={this.onChange}
+                      type="text"
+                      id="userTwo"
+                      name="title"
+                      value={userTwo}
+                    />
+                    <input
+                      className="connectButton"
+                      size="lg"
+                      type="submit"
+                      value="Connect"
+                    />
+                  </form>
+                </div>
+              )
+          }
+        </div>
         <div className="logoButtons">
           <div className="logo">
             <img src="./assets/logopokemaze.png" alt="logo" />
