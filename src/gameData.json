@@ -68,7 +68,8 @@
           }
         },
         "timer": 30,
-        "typeOfKey": "002"
+        "typeOfKey": "002",
+        "isTuto": false
       },
       "Level 2": {
         "tiles": [
