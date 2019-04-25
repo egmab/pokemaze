@@ -1,29 +1,30 @@
-.Tile {
-  background-size: contain;
-  height: 48px;
-  width: 48px;
-  position: relative;
-  z-index: 2;
-}
 
 .Item {
-  width: 60%;
-  height: 60%;
+  width: 1.9vw;
+  height: 1.9vw;
 }
 
 .Objectives {
-  width: 50%;
-  height: 50%;
-  margin-top: 25%;
+  width: 1.5vw;
+  height: 1.5vw;
+  margin-top: 0.7vw;
   animation: beat 1s infinite alternate;
 }
 
 .FinalDoor {
-  width:90%;
-  margin-top: -5.5vh;
+  width:2.8vw;
+  margin-top: -3vw;
   z-index: 5;
 }
 
 @keyframes beat{
-	to {transform: scale(1.2); }
+  to {transform: scale(1.2); }
+}
+
+.Tile {
+  background-size: contain;
+  background-repeat: repeat;
+  height: 3.1235455vw;
+  width: 3.1235455vw;
+  z-index: 2;
 }

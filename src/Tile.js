@@ -13,7 +13,7 @@ function Tile(props) {
     tile = (
       <div
         className="Tile"
-        style={{ background: `url(${`./assets/tiles/${tileId}.png`})` }}
+        style={{ backgroundImage: `url(${`./assets/tiles/${tileId}.png`})` }}
       />
     );
     // if item found on tile, display the item and tile:
@@ -32,7 +32,8 @@ function Tile(props) {
       <div
         className="Tile"
         style={{
-          background: `url(${`./assets/tiles/${tileId}.png`})`,
+          backgroundImage: `url(${`./assets/tiles/${tileId}.png`})`,
+          backgroundSize: 'contain',
         }}
       >
         <img

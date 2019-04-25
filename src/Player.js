@@ -28,7 +28,7 @@ class Player extends Component {
       posX: props.startingPositions.x,
       posY: props.startingPositions.y,
       img: 'charBottom',
-      pixelsPerTile: 48,
+      pixelsPerTile: 3.1,
     };
   }
 
@@ -188,14 +188,14 @@ class Player extends Component {
       backgroundImage: `url(./assets/characters/${img}.png`,
       backgroundSize: 'contain',
       backgroundRepeat: 'no-repeat',
-      height: '38px',
-      width: '38px',
-      marginTop: '-0.5vh',
-      marginLeft: '0.2vh',
+      height: '2.5vw',
+      width: '2.5vw',
+      marginTop: '-0.2vw',
+      marginLeft: '-9.835315vw',
       transitionDuration: '500ms',
       // To do: cleaner calculation
-      top: `${posY * pixelsPerTile}px`,
-      left: `${11 + posX * pixelsPerTile}px`,
+      top: `${posY * pixelsPerTile}vw`,
+      left: `${11 + posX * pixelsPerTile}vw`,
     };
 
     return (
