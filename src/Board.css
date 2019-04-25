@@ -1,5 +1,6 @@
 .Board
 {
+  margin-top: 5vw;
   border-style: solid;
   border-radius: 3vw;
   border-color: grey;

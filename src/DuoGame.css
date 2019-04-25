@@ -12,20 +12,18 @@
     .pokedexJ1{
     width: 50%;
     height: 74vh;
-    overflow-y: scroll; 
     overflow-x: hidden;
   }
 
   .pokedexJ2{
     width: 50%;
     height: 74vh;
-    overflow-y: scroll; 
     overflow-x: hidden;
   }
 
 ::-webkit-scrollbar-track
 {
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
 	background-color: rgb(213, 219, 243);
 	border-radius: 10px;
 }

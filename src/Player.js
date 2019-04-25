@@ -285,8 +285,8 @@ class Player extends Component {
       backgroundRepeat: 'no-repeat',
       height: '2.5vw',
       width: '2.5vw',
-      marginTop: '-0.2vw',
-      marginLeft: '-9.835315vw',
+      marginTop: '4.9vw',
+      marginLeft: '-10.035315vw',
       transitionDuration: '500ms',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}vw`,
