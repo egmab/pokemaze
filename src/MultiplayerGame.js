@@ -26,6 +26,7 @@ class MultiplayerGame extends Component {
         }
       }
     }
+    this.keysToCollect = Math.floor(this.keysToCollect / 2);
     this.player1 = {
       posX: null,
       posY: null,
@@ -85,12 +86,14 @@ class MultiplayerGame extends Component {
     }
     // verify if player has caught KeysToCollect
     if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
-      this[player].collectedKeys += 1;
-      level.items[this[player].posY][this[player].posX] = '000';
-      this.setState({ level });
-      // Open final door when all keys collected
-      if (this[player].collectedKeys === this.keysToCollect) {
-        this[player].finalDoorOpened = true;
+      if (this[player].collectedKeys < this.keysToCollect) {
+        this[player].collectedKeys += 1;
+        level.items[this[player].posY][this[player].posX] = '000';
+        this.setState({ level });
+        // Open final door when all keys collected
+        if (this[player].collectedKeys === this.keysToCollect) {
+          this[player].finalDoorOpened = true;
+        }
       }
     }
   }
