@@ -26,11 +26,29 @@ class Home extends Component {
     }
   }
 
+  componentDidMount() {
+    this.switchButton();
+  }
+
+
   onChange(event) {
     const user = event.target.id;
     this.setState({
       [user]: event.target.value,
     });
+  }
+
+  switchButton = () => {
+    if (localStorage.getItem('connectedPlayer')) {
+      document.getElementById('solo').disabled = false;
+    } else {
+      document.getElementById('solo').disabled = true;
+    }
+    if (localStorage.getItem('connectedPlayer') && localStorage.getItem('connectedPlayer2')) {
+      document.getElementById('multi').disabled = false;
+    } else {
+      document.getElementById('multi').disabled = true;
+    }
   }
 
 
@@ -46,6 +64,7 @@ class Home extends Component {
     } else {
       localStorage.setItem('connectedPlayer', JSON.stringify(userOne));
     }
+    this.switchButton();
   }
 
   onDisconnectOne = (event) => {
@@ -53,6 +72,7 @@ class Home extends Component {
     const { playerOneConnected } = this.state;
     this.setState({ playerOneConnected: !playerOneConnected, userOne: '' });
     localStorage.setItem('connectedPlayer', '');
+    this.switchButton();
   }
 
   onDisconnectTwo = (event) => {
@@ -60,6 +80,7 @@ class Home extends Component {
     const { playerTwoConnected } = this.state;
     this.setState({ playerTwoConnected: !playerTwoConnected, userTwo: '' });
     localStorage.setItem('connectedPlayer2', '');
+    this.switchButton();
   }
 
 
@@ -75,11 +96,7 @@ class Home extends Component {
     } else {
       localStorage.setItem('connectedPlayer2', JSON.stringify(userTwo));
     }
-  }
-
-  checkConnection = () => {
-    console.log('coucou, trop darrrr');
-    return false;
+    this.switchButton();
   }
 
   render() {
@@ -188,10 +205,10 @@ class Home extends Component {
           <div className="buttonContainerHome">
             <Link
               to="/solo-game"
-              onClick={this.checkConnection}
             >
               <button
                 className="homeButton"
+                id="solo"
                 type="button"
                 size="lg"
                 style={{ marginRight: 100 }}
@@ -202,10 +219,10 @@ class Home extends Component {
 
             <Link
               to="/duo-game"
-              onClick={this.checkConnection}
             >
               <button
                 className="homeButton"
+                id="multi"
                 type="button"
                 size="lg"
                 style={{ marginRight: 100 }}

@@ -5,7 +5,7 @@
 .displayFire .fire{
     display: block;
 }
-.pokemon-container {
+.global-container {
     display: flex;
     background-color: rgba(255, 255, 255, 0.4);
     flex-wrap: wrap;
@@ -14,16 +14,21 @@
     min-height: 50vw;
     min-width: 50vw;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
 }
-#pokemon-container2 {
+#pokemon-container1 {
     display: flex;
-    background-color: rgba(255, 255, 255, 0.4);
     flex-wrap: wrap;
     width: 100%;
     background-size: 100%, cover;
-    min-height: 100vh;
-    min-width: 100vh;
+    justify-content: center;
+    align-items: flex-start;
+}
+#pokemon-container2 {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    background-size: 100%, cover;
     justify-content: center;
     align-items: flex-start;
 }
