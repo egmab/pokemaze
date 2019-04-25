@@ -27,18 +27,20 @@
 
 .gameContainer
 {
-  /*margin-left: 4vw;*/
+  margin-left: 4vw;
   position: relative;
 }
 
 .keyBar
 {
- width: 85%;
+  margin-left: 4vw;
+  width: 85%;
  display: flex;
- justify-content: flex-end;
+ justify-content: center;
 }
 
 .KeysBarMultiplayer
 {
+  margin-left: 4vw;
   width: 85%;
  }
