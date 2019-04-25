@@ -6,7 +6,7 @@ import KeysBar from './KeysBar';
 import './Game.css';
 
 
-class Game extends Component {
+class MultiplayerGame extends Component {
   constructor(props) {
     super(props);
     this.getPlayerPos = this.getPlayerPos.bind(this);
@@ -31,12 +31,14 @@ class Game extends Component {
       posY: null,
       collectedKeys: 0,
       finalDoorOpened: false,
+      capacities: ['punch1', 'punch2', 'punch3'],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
       finalDoorOpened: false,
+      capacities: ['punch3'],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
@@ -167,6 +169,8 @@ class Game extends Component {
             playerAction={this.playerAction}
             finalDoorOpened1={this.player1.finalDoorOpened}
             finalDoorOpened2={this.player2.finalDoorOpened}
+            capacities1={this.player1.capacities}
+            capacities2={this.player2.capacities}
           />
           <div className="KeysBarMultiplayer">
             <KeysBar
@@ -190,4 +194,4 @@ class Game extends Component {
   }
 }
 
-export default Game;
+export default MultiplayerGame;
