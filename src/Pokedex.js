@@ -62,7 +62,6 @@ class Pokedex extends Component {
     }
 
 
-
     const { pokemon } = this.state;
     return (
       <div className="pokemon-container">
