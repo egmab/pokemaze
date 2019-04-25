@@ -113,8 +113,8 @@ class Player extends Component {
     const { posX, posY } = this.state;
     if (posX + x < 0
       || posY + y < 0
-      || posY + y > tiles.length
-      || posX + x > tiles[posY].length
+      || posY + y >= tiles.length
+      || posX + x >= tiles[posY].length
     ) {
       return false;
     }
