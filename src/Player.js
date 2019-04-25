@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 class Player extends Component {
   constructor(props) {
     super(props);
+    if (props.gameMode) {
+      this.gameMode = props.gameMode;
+    }
     this.canMove = true;
     this.action = this.action.bind(this);
     const posX = props.startingPositions.x;
@@ -40,7 +43,7 @@ class Player extends Component {
     this.interval = setInterval(() => {
       this.canMove = true;
       this.refreshRender();
-    }, 30);
+    }, 50);
   }
 
   componentWillUnmount() {
@@ -54,6 +57,10 @@ class Player extends Component {
       posY: this.posY,
       img: this.img,
     });
+    if (this.gameMode === 'multiplayer') {
+      const { multiplayerActions, playerNumber } = this.props;
+      multiplayerActions(this.posX, this.posY, playerNumber);
+    }
   }
 
   //    Checks if tile is an obstacle in the level after a move
@@ -61,8 +68,22 @@ class Player extends Component {
   // AND levers (items 700 to 799)
   // AND doors not activated by levers (even numbers between 800 and 899)
   checkTile(x, y) {
-    const { tiles, items } = this.props;
+    const {
+      tiles, items, finalDoorOpened, enemy,
+    } = this.props;
     const { posX, posY } = this.state;
+    if (this.gameMode === 'multiplayer') {
+      // Special check for multiplayer: can't pass through other player
+      if (enemy.x === posX + x && enemy.y === posY + y) {
+        return false;
+      }
+      // Special check for multiplayer: final door opened
+      if (parseInt(items[posY + y][posX + x], 10) >= 900
+        && finalDoorOpened) {
+        return true;
+      }
+    }
+    // Normal checks
     if (parseInt(tiles[posY + y][posX + x], 10) >= 500
       || parseInt(items[posY + y][posX + x], 10) >= 900
       || (parseInt(items[posY + y][posX + x], 10) >= 700

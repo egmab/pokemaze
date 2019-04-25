@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Board from './Board';
-import Player from './Player';
+import Players from './Players';
 import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
 import './Game.css';
@@ -30,15 +30,18 @@ class Game extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
+      finalDoorOpened: false,
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
+      finalDoorOpened: false,
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
       level,
+      winner: undefined,
       pokemon: undefined,
       isWinner: false,
       isLoser: false,
@@ -68,8 +71,10 @@ class Game extends Component {
     if (level.items[this[player].posY][this[player].posX] === '001') {
       this.setState({
         isWinner: true,
+        winner: player,
         ongoingGame: false,
       });
+      this.setWonPokemon();
     }
     // change the trap
     if (level.tiles[this[player].posY][this[player].posX] === '009') {
@@ -82,11 +87,31 @@ class Game extends Component {
       level.items[this[player].posY][this[player].posX] = '000';
       this.setState({ level });
       // Open final door when all keys collected
-      if (this[player].collectedKeys === level.keysToCollect) {
-        this.openFinalDoor();
+      if (this[player].collectedKeys === this.keysToCollect) {
+        this[player].finalDoorOpened = true;
       }
     }
   }
+
+  setWonPokemon = () => {
+    const { isWinner, pokemon, winner } = this.state;
+    if (isWinner) {
+      const newPokemon = pokemon.name;
+      let winnerName = 'winner';
+      if (winner === 'player1') {
+        winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
+      }
+      if (winner === 'player2') {
+        winnerName = JSON.parse(localStorage.getItem('connectedPlayer2'));
+      }
+      if (localStorage.getItem(winnerName)) {
+        const actualPlayer = JSON.parse(localStorage.getItem(winnerName));
+        actualPlayer.pokemons.push(newPokemon);
+        localStorage.setItem(winnerName, JSON.stringify(actualPlayer));
+      }
+    }
+  }
+
 
   playerAction(y, x) {
     const { level } = this.state;
@@ -121,50 +146,27 @@ class Game extends Component {
     this.setState({ level });
   }
 
-  openFinalDoor() {
-    const { level } = this.state;
-    for (let i = 0; i < level.items.length; i += 1) {
-      for (let j = 0; j < level.items[i].length; j += 1) {
-        if (parseInt(level.items[i][j], 10) >= 900) {
-          level.items[i][j] = '000';
-          this.setState({ level });
-        }
-      }
-    }
-    this.finalDoorOpened = true;
-  }
-
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level,
+      isWinner, isLoser, pokemon, ongoingGame, level, winner,
     } = this.state;
     return (
       <div className="Game">
         {isWinner || isLoser
-          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
         }
         <div className="gameContainer">
           <Board tiles={level.tiles} items={level.items} />
-          <Player
+          <Players
             ongoingGame={ongoingGame}
             tiles={level.tiles}
             items={level.items}
-            startingPositions={level.startingPositions.player1}
+            startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
-            playerNumber="player1"
-            className="player"
-          />
-          <Player
-            ongoingGame={ongoingGame}
-            tiles={level.tiles}
-            items={level.items}
-            startingPositions={level.startingPositions.player2}
-            getPlayerPos={this.getPlayerPos}
-            playerAction={this.playerAction}
-            playerNumber="player2"
-            className="player"
+            finalDoorOpened1={this.player1.finalDoorOpened}
+            finalDoorOpened2={this.player2.finalDoorOpened}
           />
           <div className="KeysBarMultiplayer">
             <KeysBar

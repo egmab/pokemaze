@@ -22,7 +22,10 @@ function Tile(props) {
     if (parseInt(items[rowIndex][colIndex], 10) >= 2
       && parseInt(items[rowIndex][colIndex], 10) <= 19) {
       itemClassName = 'Objectives';
-    // Final doors (items 900+)
+    } else if (parseInt(items[rowIndex][colIndex], 10) >= 800
+      && parseInt(items[rowIndex][colIndex], 10) <= 899) {
+      itemClassName = 'Statues';
+      // Final doors (items 900+)
     } else if (parseInt(items[rowIndex][colIndex], 10) >= 900) {
       itemClassName = 'FinalDoor';
     } else {

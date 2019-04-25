@@ -11,6 +11,12 @@
   animation: beat 1s infinite alternate;
 }
 
+.Statues {
+  width:90%;
+  z-index: 5;
+  margin-top: -2.5vh;
+}
+
 .FinalDoor {
   width:2.8vw;
   margin-top: -3vw;

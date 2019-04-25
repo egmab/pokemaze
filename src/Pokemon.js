@@ -7,8 +7,9 @@ class Pokemon extends Component {
     this.state = {
       onePokemon: '',
     };
-    const { pokemonName } = this.props;
+    const { pokemonName, pokemonsCaught } = this.props;
     this.pokemon = pokemonName;
+    this.caught = pokemonsCaught;
   }
 
   componentWillMount() {
@@ -23,6 +24,17 @@ class Pokemon extends Component {
 
 
   render() {
+    const { pokemonName } = this.props;
+    let pokemonClass = 'notHave';
+    for (let i = 0; i < this.caught.length; i += 1) {
+      if (this.caught[i] === pokemonName) {
+        pokemonClass = 'pokemon-single-container';
+        break;
+      } else {
+        pokemonClass = 'notHave';
+      }
+    }
+
     const { onePokemon } = this.state;
     let pokemonType = '';
     if (onePokemon.types) {
@@ -32,11 +44,9 @@ class Pokemon extends Component {
         pokemonType = onePokemon.types[0].type.name;
       }
     } else {
-      pokemonType = '';
+      pokemonType = undefined;
     }
 
-    // this.pokemonType = onePokemon.types
-    // ? onePokemon.types[0].type.name : "undefined";
 
     switch (this.pokemon) {
       case 'nidoran-f':
@@ -54,10 +64,10 @@ class Pokemon extends Component {
 
     return (
       <div
-        className="pokemon-single-container"
+        className={pokemonClass}
       >
         <div>
-          <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} />
+          {pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
         </div>
         <div>
           <img
