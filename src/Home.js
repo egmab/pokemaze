@@ -89,14 +89,14 @@ class Home extends Component {
             playerOneConnected
               ? (
                 <div className="formOne">
-                  <h4>
+                  <h6>
                     Player 1 :
                     {' '}
                     {userOne}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onDisconnectOne}>
                     <input
-                      className="connectButton"
+                      className="disconnectButton"
                       size="lg"
                       type="submit"
                       value="Disconnect"
@@ -106,11 +106,11 @@ class Home extends Component {
               )
               : (
                 <div className="formOne">
-                  <h4>
+                  <h6>
                     Player 1 :
                     {' '}
                     {userOne}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onSubmitOne}>
                     <input
                       onChange={this.onChange}
@@ -133,14 +133,14 @@ class Home extends Component {
             playerTwoConnected
               ? (
                 <div className="formTwo">
-                  <h4>
+                  <h6>
                     Player 2 :
                     {' '}
                     {userTwo}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onDisconnectTwo}>
                     <input
-                      className="connectButton"
+                      className="disconnectButton"
                       size="lg"
                       type="submit"
                       value="Disconnect"
@@ -150,11 +150,11 @@ class Home extends Component {
               )
               : (
                 <div className="formTwo">
-                  <h4>
+                  <h6>
                     Player 2 :
                     {' '}
                     {userTwo}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onSubmitTwo}>
                     <input
                       onChange={this.onChange}
@@ -190,17 +190,6 @@ class Home extends Component {
               </button>
             </Link>
 
-            <Link to="/pokeditor">
-              <button
-                className="homeButton"
-                type="button"
-                size="lg"
-                style={{ marginRight: 100 }}
-              >
-                Pokeditor
-              </button>
-            </Link>
-
             <Link to="/duo-game">
               <button
                 className="homeButton"
@@ -209,6 +198,19 @@ class Home extends Component {
                 style={{ marginRight: 100 }}
               >
                 Multiplayer
+              </button>
+            </Link>
+
+            <Link to="/pokeditor">
+              <button
+                className="pokeditor"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                <img src="./assets/pokeditor2.png" alt="imgeditor" />
+                { ' ' }
+                Pokeditor
               </button>
             </Link>
 

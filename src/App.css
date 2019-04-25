@@ -50,3 +50,10 @@ h5
   font-family: 'Roboto', sans-serif;
   font-size: 1.6em;
 }
+
+h6
+{
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.3em;
+  margin: 10px;
+}
