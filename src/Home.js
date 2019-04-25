@@ -26,11 +26,29 @@ class Home extends Component {
     }
   }
 
+  componentDidMount() {
+    this.switchButton();
+  }
+
+
   onChange(event) {
     const user = event.target.id;
     this.setState({
       [user]: event.target.value,
     });
+  }
+
+  switchButton = () => {
+    if (localStorage.getItem('connectedPlayer')) {
+      document.getElementById('solo').disabled = false;
+    } else {
+      document.getElementById('solo').disabled = true;
+    }
+    if (localStorage.getItem('connectedPlayer') && localStorage.getItem('connectedPlayer2')) {
+      document.getElementById('multi').disabled = false;
+    } else {
+      document.getElementById('multi').disabled = true;
+    }
   }
 
 
@@ -46,18 +64,23 @@ class Home extends Component {
     } else {
       localStorage.setItem('connectedPlayer', JSON.stringify(userOne));
     }
+    this.switchButton();
   }
 
   onDisconnectOne = (event) => {
     event.preventDefault();
     const { playerOneConnected } = this.state;
-    this.setState({ playerOneConnected: !playerOneConnected });
+    this.setState({ playerOneConnected: !playerOneConnected, userOne: '' });
+    localStorage.setItem('connectedPlayer', '');
+    this.switchButton();
   }
 
   onDisconnectTwo = (event) => {
     event.preventDefault();
     const { playerTwoConnected } = this.state;
-    this.setState({ playerTwoConnected: !playerTwoConnected });
+    this.setState({ playerTwoConnected: !playerTwoConnected, userTwo: '' });
+    localStorage.setItem('connectedPlayer2', '');
+    this.switchButton();
   }
 
 
@@ -73,6 +96,7 @@ class Home extends Component {
     } else {
       localStorage.setItem('connectedPlayer2', JSON.stringify(userTwo));
     }
+    this.switchButton();
   }
 
   render() {
@@ -89,14 +113,14 @@ class Home extends Component {
             playerOneConnected
               ? (
                 <div className="formOne">
-                  <h4>
+                  <h6>
                     Player 1 :
                     {' '}
                     {userOne}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onDisconnectOne}>
                     <input
-                      className="connectButton"
+                      className="disconnectButton"
                       size="lg"
                       type="submit"
                       value="Disconnect"
@@ -106,11 +130,11 @@ class Home extends Component {
               )
               : (
                 <div className="formOne">
-                  <h4>
+                  <h6>
                     Player 1 :
                     {' '}
                     {userOne}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onSubmitOne}>
                     <input
                       onChange={this.onChange}
@@ -133,14 +157,14 @@ class Home extends Component {
             playerTwoConnected
               ? (
                 <div className="formTwo">
-                  <h4>
+                  <h6>
                     Player 2 :
                     {' '}
                     {userTwo}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onDisconnectTwo}>
                     <input
-                      className="connectButton"
+                      className="disconnectButton"
                       size="lg"
                       type="submit"
                       value="Disconnect"
@@ -150,11 +174,11 @@ class Home extends Component {
               )
               : (
                 <div className="formTwo">
-                  <h4>
+                  <h6>
                     Player 2 :
                     {' '}
                     {userTwo}
-                  </h4>
+                  </h6>
                   <form onSubmit={this.onSubmitTwo}>
                     <input
                       onChange={this.onChange}
@@ -179,9 +203,12 @@ class Home extends Component {
             <img src="./assets/logopokemaze.png" alt="logo" />
           </div>
           <div className="buttonContainerHome">
-            <Link to="/solo-game">
+            <Link
+              to="/solo-game"
+            >
               <button
                 className="homeButton"
+                id="solo"
                 type="button"
                 size="lg"
                 style={{ marginRight: 100 }}
@@ -190,25 +217,30 @@ class Home extends Component {
               </button>
             </Link>
 
-            <Link to="/pokeditor">
+            <Link
+              to="/duo-game"
+            >
               <button
                 className="homeButton"
-                type="button"
-                size="lg"
-                style={{ marginRight: 100 }}
-              >
-                Pokeditor
-              </button>
-            </Link>
-
-            <Link to="/duo-game">
-              <button
-                className="homeButton"
+                id="multi"
                 type="button"
                 size="lg"
                 style={{ marginRight: 100 }}
               >
                 Multiplayer
+              </button>
+            </Link>
+
+            <Link to="/pokeditor">
+              <button
+                className="pokeditor"
+                type="button"
+                size="lg"
+                style={{ marginRight: 100 }}
+              >
+                <img src="./assets/pokeditor2.png" alt="imgeditor" />
+                {' '}
+                Pokeditor
               </button>
             </Link>
 

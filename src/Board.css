@@ -1,7 +1,7 @@
 .Board
 {
   border-style: solid;
-  border-radius: 3vh;
+  border-radius: 3vw;
   border-color: grey;
   overflow: hidden;
   width: auto;
