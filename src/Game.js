@@ -42,6 +42,7 @@ class Game extends Component {
       isWinner: false,
       isLoser: false,
       ongoingGame: true,
+      tutoWinner: false,
     };
   }
 
@@ -65,13 +66,18 @@ class Game extends Component {
     const { level } = this.state;
 
     // verify if player has caught the pokeball
-    if (level.items[this[player].posY][this[player].posX] === '001') {
+    if (!level.isTuto && level.items[this[player].posY][this[player].posX] === '001') {
       this.setState({
         winner: player,
         isWinner: true,
         ongoingGame: false,
       });
       this.setWonPokemon();
+    }
+    if (level.isTuto && level.items[this[player].posY][this[player].posX] === '001') {
+      this.setState({
+        tutoWinner: true,
+      });
     }
     // change the trap
     if (level.tiles[this[player].posY][this[player].posX] === '009') {
@@ -165,13 +171,13 @@ class Game extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level, winner,
+      isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner,
     } = this.state;
     return (
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
-        {isWinner || isLoser
-          ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} reset={this.resetState} />
+        {isWinner || isLoser || tutoWinner
+          ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
         }
         <div className="gameContainer">
