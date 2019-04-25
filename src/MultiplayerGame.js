@@ -153,7 +153,7 @@ class MultiplayerGame extends Component {
       isWinner, isLoser, pokemon, ongoingGame, level, winner,
     } = this.state;
     return (
-      <div className="Game">
+      <div className="GameMultiplayer">
         {isWinner || isLoser
           ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null

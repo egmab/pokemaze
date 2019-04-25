@@ -1,15 +1,11 @@
 .Game {
   text-align: center;
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('./assets/pokemons/fond.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 49.2vw;
   width: 95.2%;
-  transform: scale(1.1);
+  height: 80%;
+  transform: scale(1.1, 1);
 }
 
 .GameMultiplayer {
