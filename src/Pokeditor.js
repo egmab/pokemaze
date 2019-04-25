@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import PokeditorChooseTile from './PokeditorChooseTile';
 import PokeditorChooseItem from './PokeditorChooseItem';
 import PokeditorChooseStartingPoint from './PokeditorChooseStartingPoint';
@@ -157,6 +158,18 @@ class Pokeditor extends Component {
     return (
       <div className="Pokeditor">
         <h1>Pokeditor</h1>
+        <div className="menu">
+          <Link to="/">
+            <button
+              className="homeButton"
+              type="button"
+              size="lg"
+              style={{ marginRight: 100 }}
+            >
+              Back to menu
+            </button>
+          </Link>
+        </div>
         <PokeditorChooseSize changeSize={this.changeSize} />
         <PokeditorSaveLevel saveLevel={this.saveLevel} />
         <PokeditorChooseTimer changeTimer={this.changeTimer} />
