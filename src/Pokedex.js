@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Pokemon from './Pokemon';
 import './Pokedex.css';
 
-
+let pokemonContainer = 'pokemon-container1';
 class Pokedex extends Component {
   constructor(props) {
     super(props);
@@ -31,8 +31,21 @@ class Pokedex extends Component {
   }
 
   changeType = (event) => {
-    const pokemonsClicked = document.getElementsByClassName(event.target.value);
-    const allPokemons = document.getElementById('pokemon-container2');
+
+    let pokemonsClicked = '';
+    const { player } = this.props;
+    let allPokemons = '';
+    
+    if (player === 'player1') {
+      pokemonsClicked = document.getElementsByClassName(event.target.value);
+      allPokemons = document.getElementById('pokemon-container1');
+    }
+    if (player === 'player2') {
+      const eventTarget = event.target.value;
+      const targetClass = `${eventTarget}2`;
+      pokemonsClicked = document.getElementsByClassName(targetClass);
+      allPokemons = document.getElementById('pokemon-container2');
+    }
     const eachPokemon = allPokemons.childNodes;
 
     if (eachPokemon) {
@@ -47,6 +60,7 @@ class Pokedex extends Component {
 
   render() {
     const { player } = this.props;
+
     let actualPlayer = 'Player';
     if (player === 'player1') {
       actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'))
@@ -60,11 +74,17 @@ class Pokedex extends Component {
       actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
       pokemonsCaught = actualStorage.pokemons;
     }
+    if (player === 'player1') {
+      pokemonContainer = 'pokemon-container1';
+    }
+    if (player === 'player2') {
+      pokemonContainer = 'pokemon-container2';
+    }
 
 
     const { pokemon } = this.state;
     return (
-      <div className="pokemon-container">
+      <div className="global-container">
         <h2>
           {actualPlayer}
           &apos;s pokedex
@@ -73,8 +93,8 @@ class Pokedex extends Component {
           <div className="arrayBox">
             <table className="typeArray">
               <tr className="arrayFirstRow">
-                <td>type</td>
-                <td>obtenu</td>
+                <td>Type</td>
+                <td>Earned</td>
               </tr>
               <tr>
                 <td>
@@ -149,8 +169,8 @@ class Pokedex extends Component {
             </table>
             <table className="typeArray">
               <tr className="arrayFirstRow">
-                <td>type</td>
-                <td>obtenu</td>
+                <td>Type</td>
+                <td>Earned</td>
               </tr>
               <tr>
                 <td>
@@ -225,8 +245,8 @@ class Pokedex extends Component {
             </table>
             <table className="typeArray">
               <tr className="arrayFirstRow">
-                <td>type</td>
-                <td>obtenu</td>
+                <td>Type</td>
+                <td>Earned</td>
               </tr>
               <tr>
                 <td>
@@ -301,7 +321,7 @@ class Pokedex extends Component {
             </table>
           </div>
         </div>
-        <div id="pokemon-container2">
+        <div id={pokemonContainer}>
           {
             pokemon.map((monster, index) => (
               <Pokemon
@@ -309,6 +329,7 @@ class Pokedex extends Component {
                 id={index + 1}
                 pokemonName={monster.name}
                 pokemonsCaught={pokemonsCaught}
+                player={player}
               />
             ))
           }
