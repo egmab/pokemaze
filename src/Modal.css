@@ -17,6 +17,8 @@
 
 .imgPoke {
 	z-index: 3;
+	width:4vw;
+	height: 6vw;
   }
 
 .modal-header {
@@ -112,16 +114,16 @@
 	background-color:#89c403;
 	-moz-border-radius:6px;
 	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #74b807;
+	border-radius:1vw;
+	border:0.01vw solid #74b807;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	font-size:1.5em;
+	font-size:1.5vw;
 	font-weight:bold;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #528009;
-	padding:6px 24px;
+	padding:1vw 4vw;
 }
 .largeBtn a {
 	text-decoration:none;
