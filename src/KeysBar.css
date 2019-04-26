@@ -5,9 +5,8 @@
 .keysBar2 {
     display: flex;
     align-items: center;
-    margin-top: 0.7vw;
+    margin-top: 1.7vw;
     flex-direction: row-reverse; 
-
 }
 .keyElement2{
     display: flex; 
@@ -17,7 +16,7 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-top: 0.7vw;
+    margin-top: 1.7vw;
     
 }
 
@@ -26,7 +25,8 @@
 }
 
 .keysBar1 img, .keysBar2 img {
-    width: 2.55vw;
+    width: 3vw;
+    margin: -0.1vw 0 0 -0.07vw;
 }
 
 .keyNotCaught {
@@ -39,8 +39,8 @@
 .keyCircle {
     border: solid 0.2vw #3b4c6b;
     border-radius: 5vw;
-    width: 2.55vw;
-    height: 2.55vw;
+    width: 2.8vw;
+    height: 2.8vw;
 }
 .bigKeyCircle {
     border: solid 0.2vw #3b4c6b;
@@ -53,7 +53,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    padding: 1vw;
+    padding: 0.8vw;
 }
 .keysContainer{
     display: flex;

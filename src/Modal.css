@@ -1,5 +1,5 @@
 .modal-wrapper {
-    background: white;
+    background-image: url('./assets/pokemons/fondB.png');
     border: 0.01vw solid #d0cccc;
     box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
     transition: all .8s;
@@ -11,13 +11,12 @@
 	left: 50vw;
 	top: 5vw;
     transform: translate(-20vw, 10vw);
-	opacity: 0.9;
 	font-size: 1vw;
 }
 
 .imgPoke {
 	z-index: 3;
-	width: 6vw;
+	width: 5vw;
 	height: 6vw;
   }
 
@@ -30,7 +29,7 @@
 }
 
 .modal-header h3 {
-    color: white;
+    background-image: url('./assets/pokemons/fondB.png');
     float: left;
     margin: 0;
     padding: 0;
@@ -40,7 +39,10 @@
     padding: 0.05vw 10vw;
     text-align: center;
     border-radius: 30px;
-    
+}
+
+.modal-body h5{
+	margin: 1vw 0 1vw 0;
 }
 
 .modal-footer {

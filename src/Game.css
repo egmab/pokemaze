@@ -4,7 +4,6 @@
   flex-direction: column;
   align-items: center;
   width: 95.2%;
-  height: 80%;
   transform: scale(1.1, 1);
 }
 
@@ -14,11 +13,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-image: url('./assets/pokemons/fond.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  min-height: 50vw;
-  min-width: 50vw;
 }
 
 .gameContainer
