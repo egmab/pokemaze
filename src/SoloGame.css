@@ -46,7 +46,7 @@
     padding: 8px;
   }
   .buttonCustom button {
-    width: 32%;
+    width: auto;
     font-size: 1.2em;
     padding: 8px;
   }
