@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, HashRouter, Switch } from 'react-router-dom';
 import './App.css';
 import SoloGame from './SoloGame';
 import DuoGame from './DuoGame';
@@ -25,7 +25,7 @@ const App = () => {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <div>
         <Switch>
           <Route exact path="/" component={Home} />
@@ -36,7 +36,7 @@ const App = () => {
           <Route path="/pokeditor" component={Pokeditor} />
         </Switch>
       </div>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
