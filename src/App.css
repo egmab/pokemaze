@@ -14,7 +14,8 @@ body {
 #root
 {
   height: 100%;
-  background: url('./assets/pokemons/pattern-pokeball.png'), url('./assets/pokemons/fondB3.png') fixed;
+  background: url('./assets/pokemons/pattern-pokeball.png'), url('./assets/pokemons/fondB3.png') no-repeat;
+  background-size: auto, cover;
 }
 
 h1

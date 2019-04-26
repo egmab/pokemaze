@@ -1,6 +1,4 @@
 
- 
-
   .home{
     display: flex;
     flex-wrap: wrap;
@@ -28,6 +26,7 @@
     display: flex;
     justify-content: center;
     padding-bottom: 8vw;
+    margin-left:5vw;
   }
   
   .logoButtons{
@@ -38,7 +37,7 @@
   }
  
   .homeButton {
-    padding:20px 60px;
+    padding:1vw 3vw;
     background-color:#89c403;
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
@@ -47,14 +46,14 @@
     display:inline-block;
     cursor:pointer;
     color:#ffffff;
-    font-size:1.5em;
+    font-size:1.7vw;
     font-weight:bold;
     text-decoration:none;
     text-shadow:0px 1px 0px #528009;
   }
 
   .homeButton:disabled {
-    padding:20px 60px;
+    padding:1vw 3vw;
     background-color:grey;
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
@@ -63,7 +62,7 @@
     display:inline-block;
     cursor:pointer;
     color:#ffffff;
-    font-size:1.5em;
+    font-size:1.42em;
     font-weight:bold;
     text-decoration:none;
     text-shadow:0px 1px 0px #528009;
@@ -96,15 +95,14 @@
     margin-right: 60vw;
     display:flex;
     flex-direction:column;
-    padding-top:10px;
-    padding-bottom:20px;
-    margin-bottom: 10px;
+    padding-top:1.5vw;
+    padding-bottom:1.5vw;
     width:20vw;
     background-color:rgba(0,0,0,0.38);
     color:white;
     align-items: center;
     justify-content: center;
-
+    font-size: 1.5vw;
   }
 
   form{
@@ -117,21 +115,21 @@
   .formTwo{
     display:flex;
     flex-direction:column;
-    padding-top:10px;
-    padding-bottom:20px;
+    padding-top:1.5vw;
+    padding-bottom:1.5vw;
     width:20vw;
     background-color:rgba(0,0,0,0.38);
     color:white;
     align-items: center;
     justify-content: center;
+    font-size: 1.5vw;
   }
 
 
 
 .logo{
     align-items: center;
-    padding-bottom: 10vw;
-
+    padding: 4vw 0 3vw 0;
   }
 
   .connectButton{
@@ -157,7 +155,7 @@
   }
 
   .pokeditor {
-    padding:10px 40px;
+    padding:0.99vw 2vw;
     -moz-border-radius:6px;
     -webkit-border-radius:6px;
     border-radius:6px;
@@ -165,7 +163,7 @@
     display:inline-block;
     cursor:pointer;
     color:#ffffff;
-    font-size:1.5em;
+    font-size:1.7vw;
     font-weight:bold;
     text-decoration:none;
     text-shadow:0px 1px 0px #2b55a3;
@@ -175,7 +173,11 @@
     background-color: #2b55a3;
   }
 
+  .pokeditor:hover {
+    background-color: #1d3b72;
+  }
+
   .pokeditor img{ 
     vertical-align: middle;
-    width: 25%;
+    width: 15%;
   }

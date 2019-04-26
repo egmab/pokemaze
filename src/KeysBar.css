@@ -5,7 +5,7 @@
 .keysBar1 {
     display: flex;
     align-items: center;
-    margin-top: 0.7vw;
+    margin: 1.7vw 0 0 -3.7vw;
     flex-direction: row-reverse; 
 
 }
@@ -15,7 +15,7 @@
 }
 .keysBar2 {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     align-items: center;
     margin-top: 0.7vw;
     
