@@ -1,30 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Capacity extends Component {
-  constructor(props) {
-    super(props);
-    this.style = {
-      opacity: 0.32,
-    };
-  }
-
-  render() {
-    const { name, timer } = this.props;
-    let isReady;
-    if (timer === 0) {
-      isReady = true;
-    }
-    if (isReady) {
-      this.style.opacity = 1;
-    }
-
-    return (
-      <div>
-        <p>{timer}</p>
-        <img style={{ ...this.style }} src="./assets/pokemons/elements/normal.png" className="Capacity" alt={name} />
-      </div>
-    );
-  }
-}
+const Capacity = (props) => {
+  const { timer, maxtimer } = props;
+  const progress = timer * 100 / maxtimer;
+  return (
+    <div style={{
+      backgroundImage: 'url("./assets/pokemons/elements/normal.png")',
+      backgroundSize: 'contain',
+      width: '100%',
+      height: '100%',
+    }}
+    >
+      <div style={{
+        height: `${progress}%`,
+        filter: 'grayscale(1)',
+        zIndex: '2',
+        backgroundImage: 'url("./assets/pokemons/elements/normal.png")',
+        backgroundSize: '100%',
+        transition: '1000ms linear',
+      }}
+      />
+    </div>
+  );
+};
 
 export default Capacity;

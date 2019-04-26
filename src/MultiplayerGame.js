@@ -31,7 +31,7 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['punch1', 'punch2', 'punch3'],
+      capacities: ['punch1'],
     };
     this.player2 = {
       posX: null,

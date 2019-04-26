@@ -246,22 +246,24 @@ class Player extends Component {
         && this.targetedTileY < tiles.length
         && this.targetedTileX < tiles[this.targetedTileY].length
       ) {
-        const { gameMode } = this.props;
+        const { gameMode, timers } = this.props;
         // Activate lever if there is any on tile
         if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
           && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
           const { playerAction } = this.props;
-          // Callback to Game
+          // Callback to Game for solo, MultiplayerGame for multiplayer
           playerAction(this.targetedTileY, this.targetedTileX);
           // Multiplayer actions;
-        } else if (gameMode === 'multiplayer') {
-          const { multiplayerActions } = this.props;
-          const { enemy } = this.props;
+          // To do: multiple timers if multiple abilities
+        } else if (gameMode === 'multiplayer' && timers[0] === 0) {
+          const { multiplayerActions, enemy } = this.props;
           const capacity = 'normal';
           if (capacity === 'normal') {
             if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+              // Callback to Players
               multiplayerActions(
-                this.enemy, capacity, this.targetedDirection.x, this.targetedDirection.y,
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
               );
             }
           }
