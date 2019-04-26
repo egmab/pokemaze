@@ -14,10 +14,10 @@ const EndingGame = ({
   let message = '';
   if (isWinner) {
     if (winner === 'player1') {
-      winnerName = JSON.parse(localStorage.getItem('connectedPlayer'))
+      winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
     }
     if (winner === 'player2') {
-      winnerName = JSON.parse(localStorage.getItem('connectedPlayer2'))
+      winnerName = JSON.parse(localStorage.getItem('connectedPlayer2'));
     }
     title = `Congrats ${winnerName}!`;
     message = 'You win';

@@ -1,4 +1,6 @@
 
+ 
+
   .home{
     display: flex;
     flex-wrap: wrap;
@@ -72,13 +74,6 @@
     color:#ffffff;
   }
   .homeButton:hover:enabled {
-    background:-webkit-gradient(linear, left top, left bottom, c    padding: 2%;olor-stop(0.05, #77a809), color-stop(1, #89c403));
-    background:-moz-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:-webkit-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:-o-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:-ms-linear-gradient(top, #77a809 5%, #89c403 100%);
-    background:linear-gradient(to bottom, #77a809 5%, #89c403 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#77a809', endColorstr='#89c403',GradientType=0);
     background-color: #77a809;
   }
 
@@ -89,7 +84,7 @@
   .forms{
     min-width: 17%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
     position: fixed;
@@ -98,13 +93,13 @@
     min-width: 17%;
   }
   .formOne{
-    margin:auto;
+    margin-right: 60vw;
     display:flex;
     flex-direction:column;
     padding-top:10px;
     padding-bottom:20px;
     margin-bottom: 10px;
-    width:100%;
+    width:20vw;
     background-color:rgba(0,0,0,0.38);
     color:white;
     align-items: center;
@@ -120,12 +115,11 @@
   }
 
   .formTwo{
-    margin:auto;
     display:flex;
     flex-direction:column;
     padding-top:10px;
     padding-bottom:20px;
-    width:100%;
+    width:20vw;
     background-color:rgba(0,0,0,0.38);
     color:white;
     align-items: center;

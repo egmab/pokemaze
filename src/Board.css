@@ -6,6 +6,7 @@
   border-color: grey;
   overflow: hidden;
   width: auto;
+  box-shadow: 0.1vw 2vw 5vw 0.01vw;
 }
 
 .row{

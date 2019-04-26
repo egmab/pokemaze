@@ -1,22 +1,23 @@
 .Timer{
   display: flex;
   justify-content: center;
-  width: 6vw;
-  margin-bottom: -5vw;
+  width: 7vw;
+  margin-bottom: -3.5vw;
 }
 
 .Count{
-  line-height: 19.5vw;
+  line-height: 19.7vw;
   background-image: url('./assets/pokemons/ronflex1.png');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  margin-bottom: -6vw;
-  font-size: 1vw;
+  margin-bottom: -7vw;
+  font-size: 1.4vw;
   font-weight: bold;
   width: 15vw;
   height: 18vw;
-  margin-top: -4vw;
-  
+  margin-top: -5.5vw;
 }
+
+
 
