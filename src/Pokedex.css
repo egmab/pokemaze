@@ -24,7 +24,7 @@
     flex-wrap: wrap;
     width: 100%;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
 }
 
 .pokemon-single-container {

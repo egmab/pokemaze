@@ -32,23 +32,25 @@ class SoloGame extends Component {
         : (
           <div className="soloHome">
             <div className="levels">
+              <h1>Choose your level</h1>
               <div className="SoloLevels">
-                <h1>Choose your level</h1>
                 <h3>Solo levels</h3>
-                {
-                  soloLevels.map((level, index) => (
-                    <button
-                      className="homeButton"
-                      style={{ marginRight: 20 }}
-                      type="button"
-                      key={`levelId-${index + 1}`}
-                      value={level}
-                      onClick={this.selectLevel}
-                    >
-                      {level}
-                    </button>
-                  ))
-                }
+                <div className="buttonSolo">
+                  {
+                    soloLevels.map((level, index) => (
+                      <button
+                        className="homeButton"
+                        style={{ marginRight: 5 }}
+                        type="button"
+                        key={`levelId-${index + 1}`}
+                        value={level}
+                        onClick={this.selectLevel}
+                      >
+                        {level}
+                      </button>
+                    ))
+                  }
+                </div>
               </div>
               <div className="CustomLevels">
                 <h3>Custom levels</h3>
@@ -57,33 +59,37 @@ class SoloGame extends Component {
                   {"'"}
                   t earn new Pokemons in this mode
                 </p>
-                {
-                  selectionDone
-                    ? null
-                    : customLevels.map((level, index) => (
-                      <button
-                        className="homeButton"
-                        type="button"
-                        key={`customLevelId-${index + 1}`}
-                        value={level}
-                        onClick={this.selectCustomLevel}
-                      >
-                        {level}
-                      </button>
-                    ))
-                }
+                <div className="buttonCustom">
+                  {
+                    selectionDone
+                      ? null
+                      : customLevels.map((level, index) => (
+                        <button
+                          className="homeButton"
+                          type="button"
+                          key={`customLevelId-${index + 1}`}
+                          value={level}
+                          onClick={this.selectCustomLevel}
+                          style={{ marginRight: 5 }}
+                        >
+                          {level}
+                        </button>
+                      ))
+                  }
+                </div>
               </div>
-              <div>
-                <Link to="/">
-                  <button
-                    className="homeButton"
-                    type="button"
-                    size="lg"
-                    style={{ marginRight: 100 }}
-                  >
+              <div className="homeContainer">
+
+                <button
+                  className="backButton"
+                  type="button"
+                  size="lg"
+                >
+                  <Link to="/">
                     Back to menu
-                  </button>
-                </Link>
+                  </Link>
+                </button>
+
               </div>
 
             </div>

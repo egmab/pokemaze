@@ -26,22 +26,23 @@ class MultiplayerGame extends Component {
         }
       }
     }
+    this.keysToCollect = Math.floor(this.keysToCollect / 2);
     this.player1 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      finalDoorOpened: false,
       capacities: ['punch1', 'punch2', 'punch3'],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      finalDoorOpened: false,
       capacities: ['punch3'],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
+      finalDoorOpened1: false,
+      finalDoorOpened2: false,
       level,
       winner: undefined,
       pokemon: undefined,
@@ -85,12 +86,19 @@ class MultiplayerGame extends Component {
     }
     // verify if player has caught KeysToCollect
     if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
-      this[player].collectedKeys += 1;
-      level.items[this[player].posY][this[player].posX] = '000';
-      this.setState({ level });
-      // Open final door when all keys collected
-      if (this[player].collectedKeys === this.keysToCollect) {
-        this[player].finalDoorOpened = true;
+      if (this[player].collectedKeys < this.keysToCollect) {
+        this[player].collectedKeys += 1;
+        level.items[this[player].posY][this[player].posX] = '000';
+        this.setState({ level });
+        // Open final door when all keys collected
+        if (this[player].collectedKeys === this.keysToCollect) {
+          if (player === 'player1') {
+            this.setState({ finalDoorOpened1: true });
+          }
+          if (player === 'player2') {
+            this.setState({ finalDoorOpened2: true });
+          }
+        }
       }
     }
   }
@@ -130,6 +138,9 @@ class MultiplayerGame extends Component {
           if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
             const switchedDoor = parseInt(level.items[i][j], 10) + 1;
             level.items[i][j] = `${switchedDoor}`;
+          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+            level.items[i][j] = `${switchedDoor}`;
           }
         }
       }
@@ -141,6 +152,9 @@ class MultiplayerGame extends Component {
           if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
             const switchedDoor = parseInt(level.items[i][j], 10) - 1;
             level.items[i][j] = `${switchedDoor}`;
+          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+            level.items[i][j] = `${switchedDoor}`;
           }
         }
       }
@@ -150,7 +164,7 @@ class MultiplayerGame extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level, winner,
+      isWinner, isLoser, pokemon, ongoingGame, level, winner, finalDoorOpened1, finalDoorOpened2,
     } = this.state;
     return (
       <div className="GameMultiplayer">
@@ -167,27 +181,27 @@ class MultiplayerGame extends Component {
             startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
-            finalDoorOpened1={this.player1.finalDoorOpened}
-            finalDoorOpened2={this.player2.finalDoorOpened}
+            finalDoorOpened1={finalDoorOpened1}
+            finalDoorOpened2={finalDoorOpened2}
             capacities1={this.player1.capacities}
             capacities2={this.player2.capacities}
           />
-          <div className="KeysBarMultiplayer">
-            <KeysBar
-              collectedKeys={this.player2.collectedKeys}
-              finalDoorID={this.finalDoorID}
-              typeOfKey={this.typeOfKey}
-              numberOfKeys={this.keysToCollect}
-              playerNumber="player2"
-            />
-            <KeysBar
-              collectedKeys={this.player1.collectedKeys}
-              finalDoorID={this.finalDoorID}
-              typeOfKey={this.typeOfKey}
-              numberOfKeys={this.keysToCollect}
-              playerNumber="player1"
-            />
-          </div>
+        </div>
+        <div className="KeysBarMultiplayer">
+          <KeysBar
+            collectedKeys={this.player2.collectedKeys}
+            finalDoorID={this.finalDoorID}
+            typeOfKey={this.typeOfKey}
+            numberOfKeys={this.keysToCollect}
+            playerNumber="player2"
+          />
+          <KeysBar
+            collectedKeys={this.player1.collectedKeys}
+            finalDoorID={this.finalDoorID}
+            typeOfKey={this.typeOfKey}
+            numberOfKeys={this.keysToCollect}
+            playerNumber="player1"
+          />
         </div>
       </div>
     );

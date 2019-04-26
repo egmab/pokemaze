@@ -137,6 +137,9 @@ class Game extends Component {
           if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
             const switchedDoor = parseInt(level.items[i][j], 10) + 1;
             level.items[i][j] = `${switchedDoor}`;
+          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+            level.items[i][j] = `${switchedDoor}`;
           }
         }
       }
@@ -147,6 +150,9 @@ class Game extends Component {
         for (let j = 0; j < level.items[i].length; j += 1) {
           if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
             const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+            level.items[i][j] = `${switchedDoor}`;
+          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
             level.items[i][j] = `${switchedDoor}`;
           }
         }
@@ -192,6 +198,8 @@ class Game extends Component {
             className="player"
             playerNumber="player1"
           />
+        </div>
+        <div className="keyBar">
           <KeysBar
             collectedKeys={this.player1.collectedKeys}
             finalDoorID={this.finalDoorID}
