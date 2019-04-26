@@ -17,18 +17,18 @@ class Player extends Component {
     this.targetedTileY = this.posY + 1;
     // Define buttons for each player
     if (props.playerNumber === 'player1') {
-      this.upButton = 38;
-      this.downButton = 40;
-      this.leftButton = 37;
-      this.rightButton = 39;
-      this.actionButton = 17;
-      this.enemy = 'player2';
-    } else if (props.playerNumber === 'player2') {
       this.upButton = 90;
       this.downButton = 83;
       this.leftButton = 81;
       this.rightButton = 68;
-      this.actionButton = 70;
+      this.actionButton = 16;
+      this.enemy = 'player2';
+    } else if (props.playerNumber === 'player2') {
+      this.upButton = 38;
+      this.downButton = 40;
+      this.leftButton = 37;
+      this.rightButton = 39;
+      this.actionButton = 32;
       this.enemy = 'player1';
     }
     this.state = {
