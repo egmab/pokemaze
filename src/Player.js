@@ -32,7 +32,7 @@ class Player extends Component {
       this.enemy = 'player1';
     }
     this.state = {
-      // playerFrozen: true,
+      playerFrozen: false,
       playerOpacity: 1,
       posX: props.startingPositions.x,
       posY: props.startingPositions.y,
@@ -58,12 +58,12 @@ class Player extends Component {
   }
 
   refreshRender() {
+    this.traps(this.posX, this.posY);
     this.setState({
       posX: this.posX,
       posY: this.posY,
       img: this.img,
     });
-    this.traps(this.posX, this.posY);
     if (this.gameMode === 'multiplayer') {
       this.multiplayerRefresh();
     }
@@ -101,12 +101,13 @@ class Player extends Component {
           }, 3000);
           break;
         }
+        // Ice: needs a rework
         case 'ice': {
           document.removeEventListener('keydown', this.action, false);
-          // this.setState({ playerFrozen: true });
+          this.setState({ playerFrozen: true });
           setTimeout(() => {
             document.addEventListener('keydown', this.action, false);
-            // this.setState({ playerFrozen: false });
+            this.setState({ playerFrozen: false });
           }, 3000);
           break;
         }
@@ -131,7 +132,7 @@ class Player extends Component {
             }
           }
           setTimeout(() => document.addEventListener('keydown', this.action, false),
-            1000);
+            2000);
           resetActions();
           break;
         }
@@ -182,12 +183,18 @@ class Player extends Component {
 
   // Change the position of player when trap is active
   traps(x, y) {
+    const { posX, posY } = this.state;
     const { tiles, items, startingPositions } = this.props;
     if ((parseInt(tiles[y][x], 10) >= 400
       && parseInt(tiles[y][x], 10) <= 499)
       || parseInt(tiles[y][x], 10) === 9
       || (parseInt(items[y][x], 10) >= 400
-        && parseInt(items[y][x], 10) <= 499)) {
+        && parseInt(items[y][x], 10) <= 499)
+      || (parseInt(tiles[posY][posX], 10) >= 400
+        && parseInt(tiles[posY][posX], 10) <= 499)
+      || parseInt(tiles[posY][posX], 10) === 9
+      || (parseInt(items[posY][posX], 10) >= 400
+        && parseInt(items[posY][posX], 10) <= 499)) {
       document.removeEventListener('keydown', this.action, false);
       setTimeout(() => {
         this.posX = startingPositions.x;
@@ -297,13 +304,14 @@ class Player extends Component {
           // Callback to Game for solo, MultiplayerGame for multiplayer
           playerAction(this.targetedTileY, this.targetedTileX);
           // Multiplayer actions;
-          // To do: multiple timers if multiple abilities
+          // To do: multiple timers if multiple abilities (timers[0] -> timers[selectedAbility])
         } else if (gameMode === 'multiplayer' && timers[0] === 0) {
           const { multiplayerActions, enemy, capacities } = this.props;
           const capacity = capacities[0];
           switch (capacity.slice(0, -1)) {
             case 'ice': {
               if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+                // Callback to Players
                 multiplayerActions(
                   playerNumber, this.enemy, capacity,
                   this.targetedDirection.x, this.targetedDirection.y,
@@ -312,7 +320,6 @@ class Player extends Component {
               break;
             }
             case 'invisibility': {
-              // Callback to Players
               multiplayerActions(
                 playerNumber, this.enemy, capacity,
                 this.targetedDirection.x, this.targetedDirection.y,
@@ -361,7 +368,7 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, playerOpacity, // playerFrozen,
+      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen,
     } = this.state;
     //  Player CSS
     const playerStyle = {
@@ -384,15 +391,17 @@ class Player extends Component {
     return (
       <div className="player">
         <div style={playerStyle}>
-          {/*
+          {
             playerFrozen
               ? (
                 <div
                   style={{
-                    width: 'auto',
-                    height: 'auto',
+                    width: '2.5vw',
+                    height: '2.5vw',
+                    marginTop: '0.5vw',
+                    marginLeft: '-0.3vw',
                     zIndex: 5,
-                    opacity: 0.8,
+                    opacity: 0.7,
                     backgroundImage: 'url(./assets/capacities/icecube.png)',
                     backgroundSize: 'contain',
                     backgroundRepeat: 'no-repeat',
@@ -400,7 +409,7 @@ class Player extends Component {
                 />
               )
               : null
-                */}
+          }
         </div>
       </div>
 

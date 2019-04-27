@@ -37,7 +37,7 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['invisibility2'],
+      capacities: ['ice3'],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
@@ -174,12 +174,15 @@ class MultiplayerGame extends Component {
             || this.fireballs[fireballId].x >= level.tiles[this.fireballs[fireballId].y].length
             || level.items[this.fireballs[fireballId].y][this.fireballs[fireballId].x] !== '000') {
             clearInterval(this.fireballs[fireballId].running);
+            level.items[this.fireballs[fireballId].y - directionY * 2][this.fireballs[fireballId].x - directionX * 2] = '000';
             setTimeout(() => {
               level.items[this.fireballs[fireballId].y - directionY][this.fireballs[fireballId].x - directionX] = '000';
               this.setState({ level });
             }, 3000);
           } else {
-            level.items[this.fireballs[fireballId].y - directionY][this.fireballs[fireballId].x - directionX] = '000';
+            setTimeout(() => {
+              level.items[this.fireballs[fireballId].y - directionY][this.fireballs[fireballId].x - directionX] = '000';
+            }, 50);
             level.items[this.fireballs[fireballId].y][this.fireballs[fireballId].x] = '400';
             this.setState({ level });
           }
