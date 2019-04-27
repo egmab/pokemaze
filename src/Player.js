@@ -57,13 +57,12 @@ class Player extends Component {
   }
 
   refreshRender() {
-    const { posX, posY } = this.state;
     this.setState({
       posX: this.posX,
       posY: this.posY,
       img: this.img,
     });
-    this.traps(posX, posY);
+    this.traps(this.posX, this.posY);
     if (this.gameMode === 'multiplayer') {
       this.multiplayerRefresh();
     }

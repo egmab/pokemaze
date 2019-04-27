@@ -11,6 +11,7 @@ class MultiplayerGame extends Component {
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
+    this.fireballs = {};
     const { level } = props;
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
@@ -122,7 +123,7 @@ class MultiplayerGame extends Component {
   }
 
 
-  playerAction(y, x, ability) {
+  playerAction(y, x, ability, directionX, directionY) {
     const { level } = this.state;
     // Switches lever ON/OFF: even=> item+1, odd=> item-1
     // Example: Lever(id: 700) becomes 701. Lever (id: 701) becomes 700
@@ -159,12 +160,30 @@ class MultiplayerGame extends Component {
       }
     }
     if (ability) {
+      // Fireballs! :-)
       if (ability.slice(0, -1) === 'fire') {
         level.items[y][x] = '400';
-        setTimeout(() => {
-          level.items[y][x] = '000';
-          this.setState({ level });
-        }, 6000);
+        const fireballId = Math.floor(Math.random() * 99999);
+        this.fireballs[fireballId] = { y, x };
+        this.fireballs[fireballId].running = setInterval(() => {
+          this.fireballs[fireballId].y += directionY;
+          this.fireballs[fireballId].x += directionX;
+          if (this.fireballs[fireballId].y <= 0
+            || this.fireballs[fireballId].y >= level.tiles.length
+            || this.fireballs[fireballId].x <= 0
+            || this.fireballs[fireballId].x >= level.tiles[this.fireballs[fireballId].y].length
+            || level.items[this.fireballs[fireballId].y][this.fireballs[fireballId].x] !== '000') {
+            clearInterval(this.fireballs[fireballId].running);
+            setTimeout(() => {
+              level.items[this.fireballs[fireballId].y - directionY][this.fireballs[fireballId].x - directionX] = '000';
+              this.setState({ level });
+            }, 3000);
+          } else {
+            level.items[this.fireballs[fireballId].y - directionY][this.fireballs[fireballId].x - directionX] = '000';
+            level.items[this.fireballs[fireballId].y][this.fireballs[fireballId].x] = '400';
+            this.setState({ level });
+          }
+        }, 300);
       }
     }
     this.setState({ level });
