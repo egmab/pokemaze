@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import Pokemon from './Pokemon';
 import './Pokedex.css';
 
+
+
 let pokemonContainer = 'pokemon-container1';
 class Pokedex extends Component {
   constructor(props) {
@@ -10,6 +12,9 @@ class Pokedex extends Component {
     this.state = {
       pokemon: [],
     };
+    this.typeArray = ['water', 'fire', 'grass', 'electric',
+      'psychic', 'dragon', 'normal', 'rock', 'fighting', 'fairy',
+      'bug', 'ground', 'poison', 'ghost', 'ice'];
   }
 
   componentWillMount() {
@@ -58,6 +63,23 @@ class Pokedex extends Component {
   }
 
   render() {
+    const types = {
+      water: { number: 0, max: 28 },
+      fire: { number: 0, max: 12 },
+      grass: { number: 0, max: 12 },
+      electric: { number: 0, max: 9 },
+      psychic: { number: 0, max: 8 },
+      dragon: { number: 0, max: 3 },
+      normal: { number: 0, max: 22 },
+      rock: { number: 0, max: 9 },
+      fighting: { number: 0, max: 7 },
+      fairy: { number: 0, max: 2 },
+      bug: { number: 0, max: 12 },
+      ground: { number: 0, max: 8 },
+      poison: { number: 0, max: 14 },
+      ghost: { number: 0, max: 3 },
+      ice: { number: 0, max: 2 },
+    }
     const { player } = this.props;
 
     let actualPlayer = 'Player';
@@ -73,6 +95,27 @@ class Pokedex extends Component {
       actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
       pokemonsCaught = actualStorage.pokemons;
     }
+    const { pokemon } = this.state;
+    let pokemonType;
+
+
+    for (let i = 0; i < pokemonsCaught.length; i += 1) {
+      if (pokemonsCaught[i].types) {
+        if (pokemonsCaught[i].types[1]) {
+          pokemonType = pokemonsCaught[i].types[1].type.name;
+        } else {
+          pokemonType = pokemonsCaught[i].types[0].type.name;
+        }
+      }
+      console.log('type', pokemonType);
+      for (let j = 0; j < this.typeArray.length; j += 1) {
+        console.log(this.typeArray[j]);
+        if (this.typeArray[j] === pokemonType) {
+          types[pokemonType].number += 1;
+        }
+      }
+    }
+
     if (player === 'player1') {
       pokemonContainer = 'pokemon-container1';
     }
@@ -80,8 +123,7 @@ class Pokedex extends Component {
       pokemonContainer = 'pokemon-container2';
     }
 
-
-    const { pokemon } = this.state;
+   
     return (
       <div className="global-container">
         <h2>
@@ -107,7 +149,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/28</td>
+                <td>
+                  {types.water.number}
+                  /28
+                </td>
               </tr>
               <tr>
                 <td>
@@ -121,7 +166,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/12</td>
+                <td>
+                  {types.grass.number}
+                  /12
+                </td>
               </tr>
               <tr>
                 <td>
@@ -135,7 +183,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/9</td>
+                <td>
+                  {types.electric.number}
+                  /9
+                </td>
               </tr>
               <tr>
                 <td>
@@ -149,7 +200,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/8</td>
+                <td>
+                  {types.psychic.number}
+                  /8
+                </td>
               </tr>
               <tr>
                 <td>
@@ -163,7 +217,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/3</td>
+                <td>
+                  {types.dragon.number}
+                  /3
+                </td>
               </tr>
             </table>
             <table className="typeArray">
@@ -183,7 +240,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/22</td>
+                <td>
+                  {types.normal.number}
+                  /22
+                </td>
               </tr>
               <tr>
                 <td>
@@ -197,7 +257,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/12</td>
+                <td>
+                  {types.fire.number}
+                  /12
+                </td>
               </tr>
               <tr>
                 <td>
@@ -211,7 +274,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/9</td>
+                <td>
+                  {types.rock.number}
+                  /9
+                </td>
               </tr>
               <tr>
                 <td>
@@ -225,7 +291,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/7</td>
+                <td>
+                  {types.fighting.number}
+                  /7
+                </td>
               </tr>
               <tr>
                 <td>
@@ -239,7 +308,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/2</td>
+                <td>
+                  {types.fairy.number}
+                  /2
+                </td>
               </tr>
             </table>
             <table className="typeArray">
@@ -259,7 +331,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/14</td>
+                <td>
+                  {types.poison.number}
+                  /14
+                </td>
               </tr>
               <tr>
                 <td>
@@ -273,7 +348,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/12</td>
+                <td>
+                  {types.bug.number}
+                  /12
+                </td>
               </tr>
               <tr>
                 <td>
@@ -287,7 +365,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/8</td>
+                <td>
+                  {types.ground.number}
+                  /8
+                </td>
               </tr>
               <tr>
                 <td>
@@ -301,7 +382,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/3</td>
+                <td>
+                  {types.ghost.number}
+                  /3
+                </td>
               </tr>
               <tr>
                 <td>
@@ -315,7 +399,10 @@ class Pokedex extends Component {
                     onClick={this.changeType}
                   />
                 </td>
-                <td>/2</td>
+                <td>
+                  {types.ice.number}
+                  /2
+                </td>
               </tr>
             </table>
           </div>

@@ -109,7 +109,7 @@ class Game extends Component {
   setWonPokemon = () => {
     const { isWinner, pokemon, winner } = this.state;
     if (isWinner) {
-      const newPokemon = pokemon.name;
+      const newPokemon = pokemon;
       let winnerName = 'winner';
       if (winner === 'player1') {
         winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
