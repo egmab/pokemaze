@@ -23,6 +23,13 @@
   z-index: 5;
 }
 
+.Fire {
+  width: 2vw;
+  height: 2vw;
+  margin-top: 0.2vw;
+  animation: beat 0.1s infinite alternate;
+}
+
 @keyframes beat{
   to {transform: scale(1.2); }
 }

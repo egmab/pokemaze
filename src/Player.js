@@ -57,11 +57,13 @@ class Player extends Component {
   }
 
   refreshRender() {
+    const { posX, posY } = this.state;
     this.setState({
       posX: this.posX,
       posY: this.posY,
       img: this.img,
     });
+    this.traps(posX, posY);
     if (this.gameMode === 'multiplayer') {
       this.multiplayerRefresh();
     }
@@ -72,11 +74,37 @@ class Player extends Component {
       multiplayerCoordinates, playerNumber, player, resetActions,
     } = this.props;
     multiplayerCoordinates(this.posX, this.posY, playerNumber);
+    // When a player gets targeted by a capacity:
     if (player.gettingTargeted) {
       switch (player.gettingTargeted.byCapacity.slice(0, -1)) {
+        // Invisibility
         case 'invisibility': {
           this.setState({ playerOpacity: 0 });
           setTimeout(() => this.setState({ playerOpacity: 1 }), 2000);
+          break;
+        }
+        // Psychic: reverse buttons
+        case 'psychic': {
+          this.defaultUpButton = this.upButton;
+          this.defaultDownButton = this.downButton;
+          this.defaultleftButton = this.leftButton;
+          this.defaultRightButton = this.rightButton;
+          this.upButton = this.defaultDownButton;
+          this.downButton = this.defaultUpButton;
+          this.leftButton = this.defaultRightButton;
+          this.rightButton = this.defaultleftButton;
+          setTimeout(() => {
+            this.upButton = this.defaultUpButton;
+            this.downButton = this.defaultDownButton;
+            this.leftButton = this.defaultleftButton;
+            this.rightButton = this.defaultRightButton;
+          }, 3000);
+          break;
+        }
+        case 'ice': {
+          document.removeEventListener('keydown', this.action, false);
+          setTimeout(() => document.addEventListener('keydown', this.action, false),
+            3000);
           break;
         }
         // Default capacity: punch
@@ -151,12 +179,16 @@ class Player extends Component {
 
   // Change the position of player when trap is active
   traps(x, y) {
-    const { tiles, startingPositions } = this.props;
+    const { tiles, items, startingPositions } = this.props;
     if ((parseInt(tiles[y][x], 10) >= 400
       && parseInt(tiles[y][x], 10) <= 499)
-      || parseInt(tiles[y][x], 10) === 9) {
-      this.posX = startingPositions.x;
-      this.posY = startingPositions.y;
+      || parseInt(tiles[y][x], 10) === 9
+      || (parseInt(items[y][x], 10) >= 400
+        && parseInt(items[y][x], 10) <= 499)) {
+      setTimeout(() => {
+        this.posX = startingPositions.x;
+        this.posY = startingPositions.y;
+      }, 200);
     }
   }
 
@@ -164,7 +196,6 @@ class Player extends Component {
     const {
       ongoingGame, tiles, items, getPlayerPos, playerNumber,
     } = this.props;
-    const { posX, posY } = this.state;
     // MOVES
     if (this.canMove && ongoingGame
       && (event.keyCode === this.upButton
@@ -201,7 +232,6 @@ class Player extends Component {
           this.posY -= 1;
         }
       }
-      this.traps(posX, posY);
       // Callback : game gets new position of the player
       getPlayerPos(this.posX, this.posY, playerNumber);
     }
@@ -265,6 +295,15 @@ class Player extends Component {
           const { multiplayerActions, enemy, capacities } = this.props;
           const capacity = capacities[0];
           switch (capacity.slice(0, -1)) {
+            case 'ice': {
+              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+                multiplayerActions(
+                  playerNumber, this.enemy, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+              }
+              break;
+            }
             case 'invisibility': {
               // Callback to Players
               multiplayerActions(
@@ -273,11 +312,31 @@ class Player extends Component {
               );
               break;
             }
+            case 'psychic': {
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              break;
+            }
+            case 'fire': {
+              if (items[this.targetedTileY][this.targetedTileX] === '000') {
+                const { playerAction } = this.props;
+                playerAction(
+                  this.targetedTileY, this.targetedTileX, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+                multiplayerActions(
+                  playerNumber, this.enemy, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+              }
+              break;
+            }
             default: {
               // default ability: punch
               const defaultCapacity = `punch${capacity.slice(-1)}`;
               if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
-                // Callback to Players
                 multiplayerActions(
                   playerNumber, this.enemy, defaultCapacity,
                   this.targetedDirection.x, this.targetedDirection.y,

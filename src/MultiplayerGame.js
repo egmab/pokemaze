@@ -5,7 +5,6 @@ import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
 import './Game.css';
 
-
 class MultiplayerGame extends Component {
   constructor(props) {
     super(props);
@@ -31,13 +30,13 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['invisibility1'],
+      capacities: ['fire3'],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['punch3'],
+      capacities: ['invisibility2'],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
@@ -123,7 +122,7 @@ class MultiplayerGame extends Component {
   }
 
 
-  playerAction(y, x) {
+  playerAction(y, x, ability) {
     const { level } = this.state;
     // Switches lever ON/OFF: even=> item+1, odd=> item-1
     // Example: Lever(id: 700) becomes 701. Lever (id: 701) becomes 700
@@ -157,6 +156,15 @@ class MultiplayerGame extends Component {
             level.items[i][j] = `${switchedDoor}`;
           }
         }
+      }
+    }
+    if (ability) {
+      if (ability.slice(0, -1) === 'fire') {
+        level.items[y][x] = '400';
+        setTimeout(() => {
+          level.items[y][x] = '000';
+          this.setState({ level });
+        }, 6000);
       }
     }
     this.setState({ level });
