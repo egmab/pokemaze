@@ -32,6 +32,7 @@ class Player extends Component {
       this.enemy = 'player1';
     }
     this.state = {
+      // playerFrozen: true,
       playerOpacity: 1,
       posX: props.startingPositions.x,
       posY: props.startingPositions.y,
@@ -102,8 +103,11 @@ class Player extends Component {
         }
         case 'ice': {
           document.removeEventListener('keydown', this.action, false);
-          setTimeout(() => document.addEventListener('keydown', this.action, false),
-            3000);
+          // this.setState({ playerFrozen: true });
+          setTimeout(() => {
+            document.addEventListener('keydown', this.action, false);
+            // this.setState({ playerFrozen: false });
+          }, 3000);
           break;
         }
         // Default capacity: punch
@@ -184,10 +188,14 @@ class Player extends Component {
       || parseInt(tiles[y][x], 10) === 9
       || (parseInt(items[y][x], 10) >= 400
         && parseInt(items[y][x], 10) <= 499)) {
+      document.removeEventListener('keydown', this.action, false);
       setTimeout(() => {
         this.posX = startingPositions.x;
         this.posY = startingPositions.y;
       }, 200);
+      setTimeout(() => {
+        document.addEventListener('keydown', this.action, false);
+      }, 500);
     }
   }
 
@@ -353,7 +361,7 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, playerOpacity,
+      img, posX, posY, pixelsPerTile, playerOpacity, // playerFrozen,
     } = this.state;
     //  Player CSS
     const playerStyle = {
@@ -375,7 +383,25 @@ class Player extends Component {
 
     return (
       <div className="player">
-        <div style={playerStyle} />
+        <div style={playerStyle}>
+          {/*
+            playerFrozen
+              ? (
+                <div
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                    zIndex: 5,
+                    opacity: 0.8,
+                    backgroundImage: 'url(./assets/capacities/icecube.png)',
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
+              )
+              : null
+                */}
+        </div>
       </div>
 
     );

@@ -168,9 +168,9 @@ class MultiplayerGame extends Component {
         this.fireballs[fireballId].running = setInterval(() => {
           this.fireballs[fireballId].y += directionY;
           this.fireballs[fireballId].x += directionX;
-          if (this.fireballs[fireballId].y <= 0
+          if (this.fireballs[fireballId].y < 0
             || this.fireballs[fireballId].y >= level.tiles.length
-            || this.fireballs[fireballId].x <= 0
+            || this.fireballs[fireballId].x < 0
             || this.fireballs[fireballId].x >= level.tiles[this.fireballs[fireballId].y].length
             || level.items[this.fireballs[fireballId].y][this.fireballs[fireballId].x] !== '000') {
             clearInterval(this.fireballs[fireballId].running);
