@@ -13,3 +13,14 @@
   width: 5vw;
   height: 5vw;
 }
+
+.levelStar {
+  display: flex;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 5;
+  height: auto;
+  width: 33.33%;
+  position: absolute;
+  top: 2vw;
+}

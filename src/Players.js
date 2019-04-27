@@ -71,7 +71,18 @@ class Players extends Component {
       player2timers[0] = this.player2timers[0];
       this.setState({ player2timers });
     }
-    if (capacity === 'normal') {
+    if (capacity.slice(0, -1) === 'punch') {
+      this.setState({
+        [enemy]: {
+          gettingTargeted: {
+            byCapacity: capacity,
+            directionX,
+            directionY,
+          },
+        },
+      });
+    }
+    if (capacity.slice(0, -1) === 'invisibility') {
       this.setState({
         [enemy]: {
           gettingTargeted: {
@@ -130,7 +141,7 @@ class Players extends Component {
           multiplayerActions={this.multiplayerActions}
           resetActions={this.resetActions}
           multiplayerCoordinates={this.multiplayerCoordinates}
-          capacities={capacities1}
+          capacities={capacities2}
           timers={player2timers}
           gameMode="multiplayer"
           playerNumber="player2"

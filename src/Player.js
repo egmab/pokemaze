@@ -32,6 +32,7 @@ class Player extends Component {
       this.enemy = 'player1';
     }
     this.state = {
+      playerOpacity: 1,
       posX: props.startingPositions.x,
       posY: props.startingPositions.y,
       img: 'charBottom',
@@ -72,8 +73,13 @@ class Player extends Component {
     } = this.props;
     multiplayerCoordinates(this.posX, this.posY, playerNumber);
     if (player.gettingTargeted) {
-      switch (player.gettingTargeted.byCapacity) {
-        // Default capacity
+      switch (player.gettingTargeted.byCapacity.slice(0, -1)) {
+        case 'invisibility': {
+          this.setState({ playerOpacity: 0 });
+          setTimeout(() => this.setState({ playerOpacity: 1 }), 2000);
+          break;
+        }
+        // Default capacity: punch
         default: {
           document.removeEventListener('keydown', this.action, false);
           let gettingPunched = true;
@@ -256,15 +262,28 @@ class Player extends Component {
           // Multiplayer actions;
           // To do: multiple timers if multiple abilities
         } else if (gameMode === 'multiplayer' && timers[0] === 0) {
-          const { multiplayerActions, enemy } = this.props;
-          const capacity = 'normal';
-          if (capacity === 'normal') {
-            if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+          const { multiplayerActions, enemy, capacities } = this.props;
+          const capacity = capacities[0];
+          switch (capacity.slice(0, -1)) {
+            case 'invisibility': {
               // Callback to Players
               multiplayerActions(
                 playerNumber, this.enemy, capacity,
                 this.targetedDirection.x, this.targetedDirection.y,
               );
+              break;
+            }
+            default: {
+              // default ability: punch
+              const defaultCapacity = `punch${capacity.slice(-1)}`;
+              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+                // Callback to Players
+                multiplayerActions(
+                  playerNumber, this.enemy, defaultCapacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+              }
+              break;
             }
           }
         }
@@ -276,10 +295,11 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile,
+      img, posX, posY, pixelsPerTile, playerOpacity,
     } = this.state;
     //  Player CSS
     const playerStyle = {
+      opacity: playerOpacity,
       position: 'absolute',
       zIndex: 3,
       backgroundImage: `url(./assets/characters/${img}.png`,
