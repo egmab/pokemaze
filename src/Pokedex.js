@@ -77,7 +77,7 @@ class Pokedex extends Component {
         this.types[this.typeArray[j]].level = 1;
       }
       if (this.types[this.typeArray[j]].number === Math.floor(this.types[this.typeArray[j]].max / 2)) {
-        this.this.types[this.typeArray[j]].level = 2;
+        this.types[this.typeArray[j]].level = 2;
       }
       if (this.types[this.typeArray[j]].number === this.types[this.typeArray[j]].max) {
         this.types[this.typeArray[j]].level = 3;
