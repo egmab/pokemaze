@@ -56,6 +56,15 @@ class DuoGame extends Component {
       actualStorage2 = JSON.parse(localStorage.getItem(actualPlayer2));
       pokemonsCaught2 = actualStorage2.pokemons;
     }
+    const pokemonsCaught1Sorted = pokemonsCaught1.filter((obj, pos, arr) => {
+      return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
+    });
+    const pokemonsCaught2Sorted = pokemonsCaught2.filter((obj, pos, arr) => {
+      return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
+    });
+
+    
+   
     const {
       value1, value2, levelsJ1, levelsJ2,
     } = this.state;
@@ -64,15 +73,16 @@ class DuoGame extends Component {
     let capacity1 = 'none';
     let level2;
     let capacity2 = 'none';
-    if (value1 !== 'none') {
-      level1 = levelsJ1[value1].level;
-      capacity1 = `${value1}${level1}`;
+    let newvalue1 = value1.replace(/[0-9]/g, '');
+    let newvalue2 = value2.replace(/[0-9]/g, '');
+    if (newvalue1 !== 'none') {
+      level1 = levelsJ1[newvalue1].level;
+      capacity1 = `${newvalue1}${level1}`;
     }
-    if (value2 !== 'none') {
-      level2 = levelsJ2[value2].level;
-      capacity2 = `${value2}${level2}`;
+    if (newvalue2 !== 'none') {
+      level2 = levelsJ2[newvalue2].level;
+      capacity2 = `${newvalue2}${level2}`;
     }
-
     return (
       <div className="DuoHome">
         <div className="pokedexJ1">
@@ -85,11 +95,11 @@ class DuoGame extends Component {
           <form>
             <p>Pick your team mate:</p>
             <div className="list">
-              <select size={pokemonsCaught1.length} value={value1} onChange={this.handleChange1}>
-                {pokemonsCaught1.length > 0 ? <option value="none" selected>Choose a pokemon</option> : <option value="none" selected>You have 0 pokemon</option>}
+              <select hideSelectedOptions={false} size={pokemonsCaught1Sorted.length + 1} value={value1} onChange={this.handleChange1}>
+                {pokemonsCaught1Sorted.length > 0 ? <option value="none" selected>Choose a pokemon</option> : <option value="none" selected>You have 0 pokemon</option>}
                 {
-                  pokemonsCaught1.map((monster, index) => (
-                    <option value={monster.type}>
+                  pokemonsCaught1Sorted.map((monster, index) => (
+                    <option value={`${monster.type}${index}`}>
                       {monster.name}
                     </option>
                   ))
@@ -125,10 +135,10 @@ class DuoGame extends Component {
           <form>
             <p>Pick your team mate:</p>
             <div className="list">
-              <select size={pokemonsCaught2.length} value={value2} onChange={this.handleChange2}>
-                {pokemonsCaught2.length > 0 ? <option value="none" selected>Choose a pokemon</option> : <option value="none" selected>You have 0 pokemon</option>}
+              <select hideSelectedOptions={false} size={pokemonsCaught2Sorted.length + 1} value={value2} onChange={this.handleChange2}>
+                {pokemonsCaught2Sorted.length > 0 ? <option value="none" selected>Choose a pokemon</option> : <option value="none" selected>You have 0 pokemon</option>}
                 {
-                  pokemonsCaught2.map((monster, index) => (
+                  pokemonsCaught2Sorted.map((monster, index) => (
                     <option value={monster.type}>
                       {monster.name}
                     </option>
