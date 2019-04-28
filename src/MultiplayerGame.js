@@ -11,7 +11,7 @@ class MultiplayerGame extends Component {
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
-    this.fireballs = {};
+    this.projectiles = {};
     const { level, capacity1, capacity2 } = props;
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
@@ -168,34 +168,60 @@ class MultiplayerGame extends Component {
       }
     }
     if (ability) {
-      // Fireballs! :-)
+      // projectiles! :-)
       if (ability.slice(0, -1) === 'fire') {
         level.items[y][x] = '400';
         const fireballId = Math.floor(Math.random() * 99999);
-        this.fireballs[fireballId] = { y, x };
-        this.fireballs[fireballId].running = setInterval(() => {
-          this.fireballs[fireballId].y += directionY;
-          this.fireballs[fireballId].x += directionX;
-          if (this.fireballs[fireballId].y < 0
-            || this.fireballs[fireballId].y >= level.tiles.length
-            || this.fireballs[fireballId].x < 0
-            || this.fireballs[fireballId].x >= level.tiles[this.fireballs[fireballId].y].length
-            || level.items[this.fireballs[fireballId].y][this.fireballs[fireballId].x] !== '000') {
-            clearInterval(this.fireballs[fireballId].running);
-            level.items[this.fireballs[fireballId].y - directionY * 2][this.fireballs[fireballId].x - directionX * 2] = '000';
+        this.projectiles[fireballId] = { y, x };
+        this.projectiles[fireballId].running = setInterval(() => {
+          this.projectiles[fireballId].y += directionY;
+          this.projectiles[fireballId].x += directionX;
+          if (this.projectiles[fireballId].y < 0
+            || this.projectiles[fireballId].y >= level.tiles.length
+            || this.projectiles[fireballId].x < 0
+            || this.projectiles[fireballId].x >= level.tiles[this.projectiles[fireballId].y].length
+            || level.items[this.projectiles[fireballId].y][this.projectiles[fireballId].x] !== '000') {
+            clearInterval(this.projectiles[fireballId].running);
+            level.items[this.projectiles[fireballId].y - directionY * 2][this.projectiles[fireballId].x - directionX * 2] = '000';
             this.setState({ level });
             setTimeout(() => {
-              level.items[this.fireballs[fireballId].y - directionY][this.fireballs[fireballId].x - directionX] = '000';
+              level.items[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
               this.setState({ level });
             }, 3000);
           } else {
             setTimeout(() => {
-              level.items[this.fireballs[fireballId].y - directionY][this.fireballs[fireballId].x - directionX] = '000';
+              level.items[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
             }, 50);
-            level.items[this.fireballs[fireballId].y][this.fireballs[fireballId].x] = '400';
+            level.items[this.projectiles[fireballId].y][this.projectiles[fireballId].x] = '400';
             this.setState({ level });
           }
         }, 200);
+      }
+      // Lightning bolts
+      if (ability.slice(0, -1) === 'electric') {
+        level.items[y][x] = '401';
+        const lightningBoltId = Math.floor(Math.random() * 99999);
+        this.projectiles[lightningBoltId] = { y, x };
+        this.projectiles[lightningBoltId].running = setInterval(() => {
+          this.projectiles[lightningBoltId].y += directionY;
+          this.projectiles[lightningBoltId].x += directionX;
+          if (this.projectiles[lightningBoltId].y < 0
+            || this.projectiles[lightningBoltId].y >= level.tiles.length
+            || this.projectiles[lightningBoltId].x < 0
+            || this.projectiles[lightningBoltId].x
+            >= level.tiles[this.projectiles[lightningBoltId].y].length
+            || level.items[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] !== '000') {
+            clearInterval(this.projectiles[lightningBoltId].running);
+            setTimeout(() => {
+              level.items[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
+              this.setState({ level });
+            }, 4000);
+          } else {
+            level.items[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
+            level.items[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] = '401';
+            this.setState({ level });
+          }
+        }, 1000);
       }
     }
     this.setState({ level });

@@ -36,6 +36,10 @@ class Capacity extends Component {
         this.capacityIcon = 'fire';
         break;
       }
+      case 'electric': {
+        this.capacityIcon = 'electric';
+        break;
+      }
       default: {
         this.capacityIcon = 'fighting';
         break;

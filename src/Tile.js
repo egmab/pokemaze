@@ -22,8 +22,11 @@ function Tile(props) {
     if (parseInt(items[rowIndex][colIndex], 10) >= 2
       && parseInt(items[rowIndex][colIndex], 10) <= 19) {
       itemClassName = 'Objectives';
+      // Effects for fireballs and lightning bolts
     } else if (parseInt(items[rowIndex][colIndex], 10) === 400) {
       itemClassName = 'Fire';
+    } else if (parseInt(items[rowIndex][colIndex], 10) === 401) {
+      itemClassName = 'Lightning';
       // Final doors (items 900+)
     } else if (parseInt(items[rowIndex][colIndex], 10) >= 800
       && parseInt(items[rowIndex][colIndex], 10) <= 899) {

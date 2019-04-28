@@ -33,6 +33,7 @@ class Player extends Component {
       this.enemy = 'player1';
     }
     this.state = {
+      playerStunned: false,
       playerConfused: false,
       playerFrozen: false,
       playerOpacity: 1,
@@ -185,7 +186,8 @@ class Player extends Component {
     return true;
   }
 
-  // Change the position of player when trap is active
+  // Change the position of player when his position = trap position
+  // is checked constantly (projectiles are considered as traps)
   traps(x, y) {
     const { posX, posY } = this.state;
     const { tiles, items, startingPositions } = this.props;
@@ -201,12 +203,14 @@ class Player extends Component {
         && parseInt(items[posY][posX], 10) <= 499)) {
       document.removeEventListener('keydown', this.action, false);
       setTimeout(() => {
+        this.setState({ playerStunned: true });
         this.posX = startingPositions.x;
         this.posY = startingPositions.y;
       }, 200);
       setTimeout(() => {
+        this.setState({ playerStunned: false });
         document.addEventListener('keydown', this.action, false);
-      }, 500);
+      }, 900);
     }
   }
 
@@ -337,6 +341,20 @@ class Player extends Component {
               );
               break;
             }
+            case 'electric': {
+              if (items[this.targetedTileY][this.targetedTileX] === '000') {
+                const { playerAction } = this.props;
+                playerAction(
+                  this.targetedTileY, this.targetedTileX, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+                multiplayerActions(
+                  playerNumber, this.enemy, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+              }
+              break;
+            }
             case 'fire': {
               if (items[this.targetedTileY][this.targetedTileX] === '000') {
                 const { playerAction } = this.props;
@@ -372,7 +390,7 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused,
+      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused, playerStunned,
     } = this.state;
     //  Player CSS
     const playerStyle = {
@@ -398,38 +416,21 @@ class Player extends Component {
           {
             playerFrozen
               ? (
-                <div
-                  style={{
-                    width: '2.5vw',
-                    height: '2.5vw',
-                    marginTop: '0.5vw',
-                    marginLeft: '-0.3vw',
-                    zIndex: 5,
-                    opacity: 0.7,
-                    backgroundImage: 'url(./assets/capacities/icecube.png)',
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                  }}
-                />
+                <div className="frozen" />
               )
               : null
           }
           {
             playerConfused
               ? (
-                <div
-                  className="confusion"
-                  style={{
-                    width: '2vw',
-                    height: '1.8vw',
-                    marginTop: '-1.4vw',
-                    zIndex: 5,
-                    opacity: 0.8,
-                    backgroundImage: 'url(./assets/capacities/confusion.png)',
-                    backgroundSize: 'contain',
-                    backgroundRepeat: 'no-repeat',
-                  }}
-                />
+                <div className="confused" />
+              )
+              : null
+          }
+          {
+            playerStunned
+              ? (
+                <div className="stunned" />
               )
               : null
           }
