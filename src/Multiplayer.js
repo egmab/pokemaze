@@ -22,7 +22,13 @@ class Multiplayer extends Component {
     const selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.multiplayer[this.selection];
     return (
       <div>
-        <MultiplayerGame level={selectedLevel} player1={this.player1} player2={this.player2} capacity1={capacity1} capacity2={capacity2} />
+        <MultiplayerGame
+          level={selectedLevel}
+          player1={this.player1}
+          player2={this.player2}
+          capacity1={capacity1}
+          capacity2={capacity2}
+        />
       </div>
     );
   }

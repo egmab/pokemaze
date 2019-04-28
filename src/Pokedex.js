@@ -64,7 +64,6 @@ class Pokedex extends Component {
       for (let i = 0; i < pokemonsCaught.length; i += 1) {
         pokemonType = pokemonsCaught[i].type;
         for (let j = 0; j < this.typeArray.length; j += 1) {
-
           if (this.typeArray[j] === pokemonType) {
             this.types[pokemonType].number += 1;
           }
@@ -132,7 +131,6 @@ class Pokedex extends Component {
   }
 
   render() {
-
     const { pokemon } = this.state;
     const { player } = this.props;
 
