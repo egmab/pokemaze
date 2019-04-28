@@ -12,7 +12,7 @@ class MultiplayerGame extends Component {
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
     this.fireballs = {};
-    const { level } = props;
+    const { level, capacity1, capacity2 } = props;
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
         if (parseInt(level.items[i][j], 10) >= 900
@@ -31,13 +31,13 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['fire3'],
+      capacities: [capacity1],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['psychic1'],
+      capacities: [capacity2],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
