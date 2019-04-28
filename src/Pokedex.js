@@ -21,21 +21,21 @@ class Pokedex extends Component {
       'psychic', 'dragon', 'normal', 'rock', 'fighting', 'fairy',
       'bug', 'ground', 'poison', 'ghost', 'ice'];
     this.types = {
-      water: { number: 0, max: 28, level: 1 },
-      fire: { number: 0, max: 12, level: 1 },
-      grass: { number: 0, max: 12, level: 1 },
-      electric: { number: 0, max: 9, level: 1 },
-      psychic: { number: 0, max: 8, level: 1 },
-      dragon: { number: 0, max: 3, level: 1 },
-      normal: { number: 0, max: 22, level: 1 },
-      rock: { number: 0, max: 9, level: 1 },
-      fighting: { number: 0, max: 7, level: 1 },
-      fairy: { number: 0, max: 2, level: 1 },
-      bug: { number: 0, max: 12, level: 1 },
-      ground: { number: 0, max: 8, level: 1 },
-      poison: { number: 0, max: 14, level: 1 },
-      ghost: { number: 0, max: 3, level: 1 },
-      ice: { number: 0, max: 2, level: 1 },
+      water: { number: 0, max: 28, level: 0 },
+      fire: { number: 0, max: 12, level: 0 },
+      grass: { number: 0, max: 12, level: 0 },
+      electric: { number: 0, max: 9, level: 0 },
+      psychic: { number: 0, max: 8, level: 0 },
+      dragon: { number: 0, max: 3, level: 0 },
+      normal: { number: 0, max: 22, level: 0 },
+      rock: { number: 0, max: 9, level: 0 },
+      fighting: { number: 0, max: 7, level: 0 },
+      fairy: { number: 0, max: 2, level: 0 },
+      bug: { number: 0, max: 12, level: 0 },
+      ground: { number: 0, max: 8, level: 0 },
+      poison: { number: 0, max: 14, level: 0 },
+      ghost: { number: 0, max: 3, level: 0 },
+      ice: { number: 0, max: 2, level: 0 },
     };
   }
 
@@ -73,6 +73,9 @@ class Pokedex extends Component {
     }
     /* Calcul du niveau */
     for (let j = 0; j < this.typeArray.length; j += 1) {
+      if (this.types[this.typeArray[j]].number > 0) {
+        this.types[this.typeArray[j]].level = 1;
+      }
       if (this.types[this.typeArray[j]].number === Math.floor(this.types[this.typeArray[j]].max / 2)) {
         this.this.types[this.typeArray[j]].level = 2;
       }

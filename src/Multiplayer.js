@@ -10,10 +10,15 @@ class Multiplayer extends Component {
   }
 
   render() {
+    let capacity1 = 'none';
+    let capacity2 = 'none';
     // eslint-disable-next-line react/destructuring-assignment
-    const capacity1 = this.props.location.state.player1;
-    // eslint-disable-next-line react/destructuring-assignment
-    const capacity2 = this.props.location.state.player2;
+    if (this.props.location.state) {
+      // eslint-disable-next-line react/destructuring-assignment
+      capacity1 = this.props.location.state.player1;
+      // eslint-disable-next-line react/destructuring-assignment
+      capacity2 = this.props.location.state.player2;
+    }
     const selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.multiplayer[this.selection];
     return (
       <div>

@@ -9,7 +9,14 @@ class SoloGame extends Component {
     super(props);
     this.state = {
       selectionDone: false,
+      levelsJ1: '',
     };
+  }
+
+  getLevelsJ1 = (level) => {
+    this.setState({
+      levelsJ1: level,
+    });
   }
 
   selectLevel = (event) => {
@@ -94,7 +101,7 @@ class SoloGame extends Component {
 
             </div>
             <div className="pokedexJ1solo">
-              <Pokedex player="player1" />
+              <Pokedex getlevel={this.getLevelsJ1} player="player1" />
             </div>
           </div>
         )
