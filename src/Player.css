@@ -1,0 +1,7 @@
+.confusion {
+  animation: beat 0.3s infinite alternate;
+}
+
+@keyframes beat{
+  to {transform: scale(1.2); }
+}

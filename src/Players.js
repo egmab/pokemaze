@@ -74,7 +74,8 @@ class Players extends Component {
       this.setState({ player2timers });
     }
     if (capacity) {
-      // Traps don't directly affect other player, callback in MultiplayerGame to alter matrices
+      // Traps/projectiles don't directly affect other player
+      // => callback in MultiplayerGame to alter matrices
       if (capacity.slice(0, -1) !== 'fire') {
         this.setState({
           [enemy]: {

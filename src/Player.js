@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Player.css';
 
 class Player extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class Player extends Component {
       this.enemy = 'player1';
     }
     this.state = {
+      playerConfused: false,
       playerFrozen: false,
       playerOpacity: 1,
       posX: props.startingPositions.x,
@@ -85,6 +87,7 @@ class Player extends Component {
         }
         // Psychic: reverse buttons
         case 'psychic': {
+          this.setState({ playerConfused: true });
           this.defaultUpButton = this.upButton;
           this.defaultDownButton = this.downButton;
           this.defaultleftButton = this.leftButton;
@@ -94,6 +97,7 @@ class Player extends Component {
           this.leftButton = this.defaultRightButton;
           this.rightButton = this.defaultleftButton;
           setTimeout(() => {
+            this.setState({ playerConfused: false });
             this.upButton = this.defaultUpButton;
             this.downButton = this.defaultDownButton;
             this.leftButton = this.defaultleftButton;
@@ -368,7 +372,7 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen,
+      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused,
     } = this.state;
     //  Player CSS
     const playerStyle = {
@@ -403,6 +407,25 @@ class Player extends Component {
                     zIndex: 5,
                     opacity: 0.7,
                     backgroundImage: 'url(./assets/capacities/icecube.png)',
+                    backgroundSize: 'contain',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                />
+              )
+              : null
+          }
+          {
+            playerConfused
+              ? (
+                <div
+                  className="confusion"
+                  style={{
+                    width: '2vw',
+                    height: '1.8vw',
+                    marginTop: '-1.4vw',
+                    zIndex: 5,
+                    opacity: 0.8,
+                    backgroundImage: 'url(./assets/capacities/confusion.png)',
                     backgroundSize: 'contain',
                     backgroundRepeat: 'no-repeat',
                   }}

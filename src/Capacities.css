@@ -3,24 +3,45 @@
   top: 10vw;
   left: -7vw;
   width: 5vw;
-  height:5vw;
+  height: 5vw;
 }
 
 .Capacities2 {
   position: absolute;
-  top:10vw;
-  left:80vw;
+  top: 10vw;
+  left: 80vw;
   width: 5vw;
   height: 5vw;
 }
 
-.levelStar {
+.capacityContainer {
+  width: '100%';
+  height: '100%';
+}
+
+.starsContainer {
+  position: fixed;
+  margin-left:-0.4vw;
+  margin-top: 4.5vw;
+  width: 6vw;
+  height: 2vw;
   display: flex;
+}
+
+.star {
+  background-image: url(./assets/capacities/star.png);
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 5;
   height: auto;
-  width: 33.33%;
-  position: absolute;
-  top: 2vw;
+  width: 33%;
+}
+
+.emptyStar {
+  background-image: url(./assets/capacities/emptystar.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 5;
+  height: auto;
+  width: 33%;
 }

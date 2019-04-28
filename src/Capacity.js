@@ -5,12 +5,12 @@ class Capacity extends Component {
     super(props);
     const level = props.name.slice(-1);
     this.levelIcons = [];
-    let counter = 0;
     for (let i = 0; i < 3; i += 1) {
-      if (counter < level) {
+      if (i < level) {
         this.levelIcons.push('star');
+      } else {
+        this.levelIcons.push('emptyStar');
       }
-      counter += 1;
     }
     this.capacityIcon = props.name.slice(0, -1);
     this.maxtimer = props.maxtimer;
@@ -72,20 +72,19 @@ class Capacity extends Component {
           transition: '1000ms linear',
         }}
         />
-        {/*
-        <div style={{ width: '6vw', height: '2vw' }}>
+
+        <div className="starsContainer">
           {
             this.levelIcons.map((star, index) => (
               <div
-                className="levelStar"
+                className={star}
                 key={`starId-${index + 1}`}
                 alt={star}
-                backgroundImage={`./assets/capacities/${star}.png`}
               />
             ))
           }
         </div>
-        */}
+
       </div>
     );
   }
