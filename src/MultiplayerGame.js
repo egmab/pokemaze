@@ -105,8 +105,16 @@ class MultiplayerGame extends Component {
 
   setWonPokemon = () => {
     const { isWinner, pokemon, winner } = this.state;
+    let pokemonType = '';
+    if (pokemon.types) {
+      if (pokemon.types[1]) {
+        pokemonType = pokemon.types[1].type.name;
+      } else {
+        pokemonType = pokemon.types[0].type.name;
+      }
+    }
     if (isWinner) {
-      const newPokemon = pokemon;
+      const newPokemon = { name: pokemon.name, type: pokemonType };
       let winnerName = 'winner';
       if (winner === 'player1') {
         winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));

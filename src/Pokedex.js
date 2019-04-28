@@ -4,8 +4,13 @@ import Pokemon from './Pokemon';
 import './Pokedex.css';
 
 
+let actualPlayer;
+let actualStorage = '';
+let pokemonsCaught = '';
+let pokemonType;
 
-let pokemonContainer = 'pokemon-container1';
+
+const pokemonContainer = 'pokemon-container1';
 class Pokedex extends Component {
   constructor(props) {
     super(props);
@@ -15,11 +20,68 @@ class Pokedex extends Component {
     this.typeArray = ['water', 'fire', 'grass', 'electric',
       'psychic', 'dragon', 'normal', 'rock', 'fighting', 'fairy',
       'bug', 'ground', 'poison', 'ghost', 'ice'];
+    this.types = {
+      water: { number: 0, max: 28, level: 1 },
+      fire: { number: 0, max: 12, level: 1 },
+      grass: { number: 0, max: 12, level: 1 },
+      electric: { number: 0, max: 9, level: 1 },
+      psychic: { number: 0, max: 8, level: 1 },
+      dragon: { number: 0, max: 3, level: 1 },
+      normal: { number: 0, max: 22, level: 1 },
+      rock: { number: 0, max: 9, level: 1 },
+      fighting: { number: 0, max: 7, level: 1 },
+      fairy: { number: 0, max: 2, level: 1 },
+      bug: { number: 0, max: 12, level: 1 },
+      ground: { number: 0, max: 8, level: 1 },
+      poison: { number: 0, max: 14, level: 1 },
+      ghost: { number: 0, max: 3, level: 1 },
+      ice: { number: 0, max: 2, level: 1 },
+    };
   }
 
   componentWillMount() {
     this.getPokemon();
   }
+
+  componentDidMount() {
+    const { player } = this.props;
+
+    actualPlayer = 'Player';
+    if (player === 'player1') {
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'));
+    }
+    if (player === 'player2') {
+      actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer2'));
+    }
+
+    if (localStorage.getItem(actualPlayer)) {
+      actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
+      pokemonsCaught = actualStorage.pokemons;
+    }
+
+    /* Calcul pokémons attrapés par type */
+    if (pokemonsCaught.length > 0) {
+      for (let i = 0; i < pokemonsCaught.length; i += 1) {
+        pokemonType = pokemonsCaught[i].type;
+        for (let j = 0; j < this.typeArray.length; j += 1) {
+
+          if (this.typeArray[j] === pokemonType) {
+            this.types[pokemonType].number += 1;
+          }
+        }
+      }
+    }
+    /* Calcul du niveau */
+    for (let j = 0; j < this.typeArray.length; j += 1) {
+      if (this.types[this.typeArray[j]].number === Math.floor(this.types[this.typeArray[j]].max / 2)) {
+        this.this.types[this.typeArray[j]].level = 2;
+      }
+      if (this.types[this.typeArray[j]].number === this.types[this.typeArray[j]].max) {
+        this.types[this.typeArray[j]].level = 3;
+      }
+    }
+  }
+
 
   getPokemon() {
     fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
@@ -34,6 +96,18 @@ class Pokedex extends Component {
       }
     });
   }
+
+  /* Check the pokemon clicked 
+  isClicked = (type) => {
+    this.setState({
+      chosenType: type,
+    });
+  }
+  onClick={() => isClicked(pokemonType)}
+        role="presentation"
+  */
+
+
 
   changeType = (event) => {
     let pokemonsClicked = '';
@@ -63,67 +137,24 @@ class Pokedex extends Component {
   }
 
   render() {
-    const types = {
-      water: { number: 0, max: 28 },
-      fire: { number: 0, max: 12 },
-      grass: { number: 0, max: 12 },
-      electric: { number: 0, max: 9 },
-      psychic: { number: 0, max: 8 },
-      dragon: { number: 0, max: 3 },
-      normal: { number: 0, max: 22 },
-      rock: { number: 0, max: 9 },
-      fighting: { number: 0, max: 7 },
-      fairy: { number: 0, max: 2 },
-      bug: { number: 0, max: 12 },
-      ground: { number: 0, max: 8 },
-      poison: { number: 0, max: 14 },
-      ghost: { number: 0, max: 3 },
-      ice: { number: 0, max: 2 },
-    }
+
+    const { pokemon } = this.state;
     const { player } = this.props;
 
-    let actualPlayer = 'Player';
+    actualPlayer = 'Player';
     if (player === 'player1') {
       actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'));
     }
     if (player === 'player2') {
       actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer2'));
     }
-    let actualStorage = '';
-    let pokemonsCaught = '';
+
     if (localStorage.getItem(actualPlayer)) {
       actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
       pokemonsCaught = actualStorage.pokemons;
     }
-    const { pokemon } = this.state;
-    let pokemonType;
 
 
-    for (let i = 0; i < pokemonsCaught.length; i += 1) {
-      if (pokemonsCaught[i].types) {
-        if (pokemonsCaught[i].types[1]) {
-          pokemonType = pokemonsCaught[i].types[1].type.name;
-        } else {
-          pokemonType = pokemonsCaught[i].types[0].type.name;
-        }
-      }
-      console.log('type', pokemonType);
-      for (let j = 0; j < this.typeArray.length; j += 1) {
-        console.log(this.typeArray[j]);
-        if (this.typeArray[j] === pokemonType) {
-          types[pokemonType].number += 1;
-        }
-      }
-    }
-
-    if (player === 'player1') {
-      pokemonContainer = 'pokemon-container1';
-    }
-    if (player === 'player2') {
-      pokemonContainer = 'pokemon-container2';
-    }
-
-   
     return (
       <div className="global-container">
         <h2>
@@ -150,8 +181,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.water.number}
+                  {this.types.water.number}
                   /28
+                  {' '}
+                  Level:
+                  {this.types.water.level}
                 </td>
               </tr>
               <tr>
@@ -167,8 +201,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.grass.number}
+                  {this.types.grass.number}
                   /12
+                  {' '}
+                  Level:
+                  {this.types.grass.level}
                 </td>
               </tr>
               <tr>
@@ -184,8 +221,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.electric.number}
+                  {this.types.electric.number}
                   /9
+                  {' '}
+                  Level:
+                  {this.types.electric.level}
                 </td>
               </tr>
               <tr>
@@ -201,8 +241,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.psychic.number}
+                  {this.types.psychic.number}
                   /8
+                  {' '}
+                  Level:
+                  {this.types.psychic.level}
                 </td>
               </tr>
               <tr>
@@ -218,8 +261,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.dragon.number}
+                  {this.types.dragon.number}
                   /3
+                  {' '}
+                  Level:
+                  {this.types.dragon.level}
                 </td>
               </tr>
             </table>
@@ -241,8 +287,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.normal.number}
+                  {this.types.normal.number}
                   /22
+                  {' '}
+                  Level:
+                  {this.types.normal.level}
                 </td>
               </tr>
               <tr>
@@ -258,8 +307,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.fire.number}
+                  {this.types.fire.number}
                   /12
+                  {' '}
+                  Level:
+                  {this.types.fire.level}
                 </td>
               </tr>
               <tr>
@@ -275,8 +327,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.rock.number}
+                  {this.types.rock.number}
                   /9
+                  {' '}
+                  Level:
+                  {this.types.rock.level}
                 </td>
               </tr>
               <tr>
@@ -292,8 +347,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.fighting.number}
+                  {this.types.fighting.number}
                   /7
+                  {' '}
+                  Level:
+                  {this.types.fighting.level}
                 </td>
               </tr>
               <tr>
@@ -309,8 +367,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.fairy.number}
+                  {this.types.fairy.number}
                   /2
+                  {' '}
+                  Level:
+                  {this.types.fairy.level}
                 </td>
               </tr>
             </table>
@@ -332,8 +393,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.poison.number}
+                  {this.types.poison.number}
                   /14
+                  {' '}
+                  Level:
+                  {this.types.poison.level}
                 </td>
               </tr>
               <tr>
@@ -349,8 +413,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.bug.number}
+                  {this.types.bug.number}
                   /12
+                  {' '}
+                  Level:
+                  {this.types.bug.level}
                 </td>
               </tr>
               <tr>
@@ -366,8 +433,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.ground.number}
+                  {this.types.ground.number}
                   /8
+                  {' '}
+                  Level:
+                  {this.types.ground.level}
                 </td>
               </tr>
               <tr>
@@ -383,8 +453,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.ghost.number}
+                  {this.types.ghost.number}
                   /3
+                  {' '}
+                  Level:
+                  {this.types.ghost.level}
                 </td>
               </tr>
               <tr>
@@ -400,8 +473,11 @@ class Pokedex extends Component {
                   />
                 </td>
                 <td>
-                  {types.ice.number}
+                  {this.types.ice.number}
                   /2
+                  {' '}
+                  Level:
+                  {this.types.ice.level}
                 </td>
               </tr>
             </table>
@@ -416,6 +492,7 @@ class Pokedex extends Component {
                 pokemonName={monster.name}
                 pokemonsCaught={pokemonsCaught}
                 player={player}
+                isClicked={this.isClicked}
               />
             ))
           }
