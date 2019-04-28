@@ -12,7 +12,18 @@ class MultiplayerGame extends Component {
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
     this.projectiles = {};
-    const { level, capacity1, capacity2 } = props;
+    const {
+      level, // capacity1, capacity2
+    } = props;
+    // Creates projectiles matrix
+    const projectiles = [];
+    for (let i = 0; i < level.tiles.length; i += 1) {
+      projectiles.push([]);
+      for (let j = 0; j < level.tiles[i].length; j += 1) {
+        projectiles[i].push('000');
+      }
+    }
+    // Scans levels for final door and determines keys to collect
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
         if (parseInt(level.items[i][j], 10) >= 900
@@ -31,19 +42,22 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: [capacity1],
+      capacities: ['fire3'],
+      // capacities: [capacity1],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: [capacity2],
+      capacities: ['electric3'],
+      // capacities: [capacity2],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
       finalDoorOpened1: false,
       finalDoorOpened2: false,
       level,
+      projectiles,
       winner: undefined,
       pokemon: undefined,
       isWinner: false,
@@ -131,95 +145,99 @@ class MultiplayerGame extends Component {
   }
 
 
-  playerAction(y, x, ability, directionX, directionY) {
+  playerAction(y, x, capacity, directionX, directionY) {
     const { level } = this.state;
     // Switches lever ON/OFF: even=> item+1, odd=> item-1
     // Example: Lever(id: 700) becomes 701. Lever (id: 701) becomes 700
     // AND
     // Mutates the corresponding gate(s)
     // Example: Lever 700 becomes 701, changing item(s) 800 to 801, and vice versa
-    if (parseInt(level.items[y][x], 10) % 2 === 0) {
-      const switchedLever = parseInt(level.items[y][x], 10) + 1;
-      level.items[y][x] = `${switchedLever}`;
-      for (let i = 0; i < level.items.length; i += 1) {
-        for (let j = 0; j < level.items[i].length; j += 1) {
-          if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
-            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
-            level.items[i][j] = `${switchedDoor}`;
-          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
-            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
-            level.items[i][j] = `${switchedDoor}`;
+    if (parseInt(level.items[y][x], 10) >= 700
+      && parseInt(level.items[y][x], 10) <= 799) {
+      if (parseInt(level.items[y][x], 10) % 2 === 0) {
+        const switchedLever = parseInt(level.items[y][x], 10) + 1;
+        level.items[y][x] = `${switchedLever}`;
+        for (let i = 0; i < level.items.length; i += 1) {
+          for (let j = 0; j < level.items[i].length; j += 1) {
+            if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
+              const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+              level.items[i][j] = `${switchedDoor}`;
+            } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+              const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+              level.items[i][j] = `${switchedDoor}`;
+            }
           }
         }
-      }
-    } else {
-      const switchedLever = parseInt(level.items[y][x], 10) - 1;
-      level.items[y][x] = `${switchedLever}`;
-      for (let i = 0; i < level.items.length; i += 1) {
-        for (let j = 0; j < level.items[i].length; j += 1) {
-          if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
-            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
-            level.items[i][j] = `${switchedDoor}`;
-          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
-            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
-            level.items[i][j] = `${switchedDoor}`;
+      } else {
+        const switchedLever = parseInt(level.items[y][x], 10) - 1;
+        level.items[y][x] = `${switchedLever}`;
+        for (let i = 0; i < level.items.length; i += 1) {
+          for (let j = 0; j < level.items[i].length; j += 1) {
+            if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
+              const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+              level.items[i][j] = `${switchedDoor}`;
+            } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+              const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+              level.items[i][j] = `${switchedDoor}`;
+            }
           }
         }
       }
     }
-    if (ability) {
+    if (capacity) {
+      const { projectiles } = this.state;
       // projectiles! :-)
-      if (ability.slice(0, -1) === 'fire') {
-        level.items[y][x] = '400';
+      if (capacity.slice(0, -1) === 'fire') {
+        projectiles[y][x] = '001';
         const fireballId = Math.floor(Math.random() * 99999);
         this.projectiles[fireballId] = { y, x };
         this.projectiles[fireballId].running = setInterval(() => {
           this.projectiles[fireballId].y += directionY;
           this.projectiles[fireballId].x += directionX;
           if (this.projectiles[fireballId].y < 0
-            || this.projectiles[fireballId].y >= level.tiles.length
+            || this.projectiles[fireballId].y >= projectiles.length
             || this.projectiles[fireballId].x < 0
-            || this.projectiles[fireballId].x >= level.tiles[this.projectiles[fireballId].y].length
-            || level.items[this.projectiles[fireballId].y][this.projectiles[fireballId].x] !== '000') {
+            || this.projectiles[fireballId].x >= projectiles[this.projectiles[fireballId].y].length
+            || projectiles[this.projectiles[fireballId].y][this.projectiles[fireballId].x] !== '000') {
             clearInterval(this.projectiles[fireballId].running);
-            level.items[this.projectiles[fireballId].y - directionY * 2][this.projectiles[fireballId].x - directionX * 2] = '000';
-            this.setState({ level });
+            projectiles[this.projectiles[fireballId].y - directionY * 2][this.projectiles[fireballId].x - directionX * 2] = '000';
+            this.setState({ projectiles });
             setTimeout(() => {
-              level.items[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
-              this.setState({ level });
+              projectiles[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
+              this.setState({ projectiles });
             }, 3000);
           } else {
             setTimeout(() => {
-              level.items[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
+              projectiles[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
             }, 50);
-            level.items[this.projectiles[fireballId].y][this.projectiles[fireballId].x] = '400';
-            this.setState({ level });
+            projectiles[this.projectiles[fireballId].y][this.projectiles[fireballId].x] = '001';
+            this.setState({ projectiles });
           }
         }, 200);
       }
       // Lightning bolts
-      if (ability.slice(0, -1) === 'electric') {
-        level.items[y][x] = '401';
+      if (capacity.slice(0, -1) === 'electric') {
+        projectiles[y][x] = '002';
         const lightningBoltId = Math.floor(Math.random() * 99999);
         this.projectiles[lightningBoltId] = { y, x };
         this.projectiles[lightningBoltId].running = setInterval(() => {
           this.projectiles[lightningBoltId].y += directionY;
           this.projectiles[lightningBoltId].x += directionX;
           if (this.projectiles[lightningBoltId].y < 0
-            || this.projectiles[lightningBoltId].y >= level.tiles.length
+            || this.projectiles[lightningBoltId].y >= projectiles.length
             || this.projectiles[lightningBoltId].x < 0
             || this.projectiles[lightningBoltId].x
-            >= level.tiles[this.projectiles[lightningBoltId].y].length
-            || level.items[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] !== '000') {
+            >= projectiles[this.projectiles[lightningBoltId].y].length
+            || projectiles[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] !== '000') {
             clearInterval(this.projectiles[lightningBoltId].running);
             setTimeout(() => {
-              level.items[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
-              this.setState({ level });
+              projectiles[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
+              this.setState({ projectiles });
             }, 4000);
           } else {
-            level.items[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
-            level.items[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] = '401';
-            this.setState({ level });
+            projectiles[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
+            projectiles[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] = '002';
+            this.setState({ projectiles });
           }
         }, 1000);
       }
@@ -229,7 +247,8 @@ class MultiplayerGame extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level, winner, finalDoorOpened1, finalDoorOpened2,
+      isWinner, isLoser, pokemon, ongoingGame, level,
+      winner, finalDoorOpened1, finalDoorOpened2, projectiles,
     } = this.state;
     return (
       <div className="GameMultiplayer">
@@ -238,11 +257,12 @@ class MultiplayerGame extends Component {
           : null
         }
         <div className="gameContainer">
-          <Board tiles={level.tiles} items={level.items} />
+          <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Players
             ongoingGame={ongoingGame}
             tiles={level.tiles}
             items={level.items}
+            projectiles={projectiles}
             startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}

@@ -3,31 +3,16 @@ import './Tile.css';
 
 function Tile(props) {
   // Looking for items
-  // if no item on tile:
-  let tile;
-  let itemClassName;
   const {
-    items, rowIndex, colIndex, tileId,
+    items, rowIndex, colIndex, tileId, projectiles,
   } = props;
-  if (items[rowIndex][colIndex] === '000') {
-    tile = (
-      <div
-        className="Tile"
-        style={{ backgroundImage: `url(${`./assets/tiles/${tileId}.png`})` }}
-      />
-    );
-    // if item found on tile, display the item and tile:
-  } else {
+  let itemClassName;
+  if (items[rowIndex][colIndex] !== '000') {
     // Objectives (items between 002 and 019)
     if (parseInt(items[rowIndex][colIndex], 10) >= 2
       && parseInt(items[rowIndex][colIndex], 10) <= 19) {
       itemClassName = 'Objectives';
       // Effects for fireballs and lightning bolts
-    } else if (parseInt(items[rowIndex][colIndex], 10) === 400) {
-      itemClassName = 'Fire';
-    } else if (parseInt(items[rowIndex][colIndex], 10) === 401) {
-      itemClassName = 'Lightning';
-      // Final doors (items 900+)
     } else if (parseInt(items[rowIndex][colIndex], 10) >= 800
       && parseInt(items[rowIndex][colIndex], 10) <= 899) {
       itemClassName = 'Statues';
@@ -37,25 +22,52 @@ function Tile(props) {
     } else {
       itemClassName = 'Item';
     }
-    tile = (
-      <div
-        className="Tile"
-        style={{
-          backgroundImage: `url(${`./assets/tiles/${tileId}.png`})`,
-          backgroundSize: 'contain',
-        }}
-      >
-        <img
-          alt="Item"
-          src={`./assets/items/${items[rowIndex][colIndex]}.png`}
-          className={itemClassName}
-        />
-      </div>
-    );
   }
+  let projectileClassName;
+  if (projectiles[rowIndex][colIndex] === '001') {
+    projectileClassName = 'Fire';
+  } else if (projectiles[rowIndex][colIndex] === '002') {
+    projectileClassName = 'Lightning';
+    // Final doors (items 900+)
+  }
+
   return (
-    <div>
-      {tile}
+    <div
+      className="Tile"
+      style={{
+        backgroundImage: `url(${`./assets/tiles/${tileId}.png`})`,
+        backgroundSize: 'contain',
+      }}
+    >
+      {
+        items[rowIndex][colIndex] !== '000'
+          ? (
+            <img
+              alt="Item"
+              src={`./assets/items/${items[rowIndex][colIndex]}.png`}
+              className={itemClassName}
+            />
+          )
+          : null
+      }
+      {
+        projectiles[rowIndex][colIndex] !== '000'
+          ? (
+            <img
+              alt={projectileClassName}
+              className={projectileClassName}
+              src={`./assets/projectiles/${projectiles[rowIndex][colIndex]}.png`}
+              style={{
+                position: 'absolute',
+                zIndex: 6,
+                backgroundImage: `./assets/projectiles/${projectiles[rowIndex][colIndex]}.png`,
+                backgroundSize: 'contain',
+                backgroundRepeat: 'no-repeat',
+              }}
+            />
+          )
+          : null
+      }
     </div>
   );
 }

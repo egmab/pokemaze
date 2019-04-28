@@ -97,7 +97,7 @@ class Players extends Component {
   render() {
     const {
       ongoingGame, tiles, items, startingPositions, getPlayerPos, playerAction,
-      finalDoorOpened1, finalDoorOpened2, capacities1, capacities2,
+      finalDoorOpened1, finalDoorOpened2, capacities1, capacities2, projectiles,
     } = this.props;
     const {
       player1, player2, player1timers, player2timers,
@@ -108,6 +108,7 @@ class Players extends Component {
           ongoingGame={ongoingGame}
           tiles={tiles}
           items={items}
+          projectiles={projectiles}
           startingPositions={startingPositions.player1}
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}
@@ -127,6 +128,7 @@ class Players extends Component {
           ongoingGame={ongoingGame}
           tiles={tiles}
           items={items}
+          projectiles={projectiles}
           startingPositions={startingPositions.player2}
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}

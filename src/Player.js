@@ -190,17 +190,21 @@ class Player extends Component {
   // is checked constantly (projectiles are considered as traps)
   traps(x, y) {
     const { posX, posY } = this.state;
-    const { tiles, items, startingPositions } = this.props;
+    const {
+      tiles, items, projectiles, startingPositions,
+    } = this.props;
     if ((parseInt(tiles[y][x], 10) >= 400
       && parseInt(tiles[y][x], 10) <= 499)
       || parseInt(tiles[y][x], 10) === 9
       || (parseInt(items[y][x], 10) >= 400
         && parseInt(items[y][x], 10) <= 499)
+      || parseInt(projectiles[y][x], 10) > 0
       || (parseInt(tiles[posY][posX], 10) >= 400
         && parseInt(tiles[posY][posX], 10) <= 499)
       || parseInt(tiles[posY][posX], 10) === 9
       || (parseInt(items[posY][posX], 10) >= 400
-        && parseInt(items[posY][posX], 10) <= 499)) {
+        && parseInt(items[posY][posX], 10) <= 499)
+      || parseInt(projectiles[posY][posX], 10) > 0) {
       document.removeEventListener('keydown', this.action, false);
       setTimeout(() => {
         this.setState({ playerStunned: true });
@@ -342,31 +346,27 @@ class Player extends Component {
               break;
             }
             case 'electric': {
-              if (items[this.targetedTileY][this.targetedTileX] === '000') {
-                const { playerAction } = this.props;
-                playerAction(
-                  this.targetedTileY, this.targetedTileX, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-                multiplayerActions(
-                  playerNumber, this.enemy, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-              }
+              const { playerAction } = this.props;
+              playerAction(
+                this.targetedTileY, this.targetedTileX, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
               break;
             }
             case 'fire': {
-              if (items[this.targetedTileY][this.targetedTileX] === '000') {
-                const { playerAction } = this.props;
-                playerAction(
-                  this.targetedTileY, this.targetedTileX, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-                multiplayerActions(
-                  playerNumber, this.enemy, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-              }
+              const { playerAction } = this.props;
+              playerAction(
+                this.targetedTileY, this.targetedTileX, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
               break;
             }
             default: {
