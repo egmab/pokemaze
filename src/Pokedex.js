@@ -84,7 +84,9 @@ class Pokedex extends Component {
       }
     }
     const { getlevel } = this.props;
-    getlevel(this.types);
+    if (getlevel) {
+      getlevel(this.types);
+    }
   }
 
 

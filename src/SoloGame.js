@@ -9,15 +9,9 @@ class SoloGame extends Component {
     super(props);
     this.state = {
       selectionDone: false,
-      levelsJ1: '',
     };
   }
 
-  getLevelsJ1 = (level) => {
-    this.setState({
-      levelsJ1: level,
-    });
-  }
 
   selectLevel = (event) => {
     this.selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.solo[event.target.value];
