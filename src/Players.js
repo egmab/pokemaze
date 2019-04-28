@@ -64,23 +64,29 @@ class Players extends Component {
   multiplayerActions = (player, enemy, capacity, directionX, directionY) => {
     const { player1timers, player2timers } = this.state;
     if (player === 'player1') {
+      // eslint-disable-next-line prefer-destructuring
       player1timers[0] = this.player1timers[0];
       this.setState({ player1timers });
     }
     if (player === 'player2') {
+      // eslint-disable-next-line prefer-destructuring
       player2timers[0] = this.player2timers[0];
       this.setState({ player2timers });
     }
-    if (capacity === 'normal') {
-      this.setState({
-        [enemy]: {
-          gettingTargeted: {
-            byCapacity: capacity,
-            directionX,
-            directionY,
+    if (capacity) {
+      // Traps/projectiles don't directly affect other player
+      // => callback in MultiplayerGame to alter matrices
+      if (capacity.slice(0, -1) !== 'fire') {
+        this.setState({
+          [enemy]: {
+            gettingTargeted: {
+              byCapacity: capacity,
+              directionX,
+              directionY,
+            },
           },
-        },
-      });
+        });
+      }
     }
   }
 
@@ -130,7 +136,7 @@ class Players extends Component {
           multiplayerActions={this.multiplayerActions}
           resetActions={this.resetActions}
           multiplayerCoordinates={this.multiplayerCoordinates}
-          capacities={capacities1}
+          capacities={capacities2}
           timers={player2timers}
           gameMode="multiplayer"
           playerNumber="player2"
