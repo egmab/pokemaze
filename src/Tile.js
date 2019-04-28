@@ -2,19 +2,18 @@ import React from 'react';
 import './Tile.css';
 
 function Tile(props) {
-  // Looking for items
   const {
     items, rowIndex, colIndex, tileId, projectiles,
   } = props;
+  // Looking for items
   let itemClassName;
   if (items[rowIndex][colIndex] !== '000') {
     // Objectives (items between 002 and 019)
     if (parseInt(items[rowIndex][colIndex], 10) >= 2
       && parseInt(items[rowIndex][colIndex], 10) <= 19) {
       itemClassName = 'Objectives';
-      // Effects for fireballs and lightning bolts
     } else if (parseInt(items[rowIndex][colIndex], 10) >= 800
-      && parseInt(items[rowIndex][colIndex], 10) <= 899) {
+    && parseInt(items[rowIndex][colIndex], 10) <= 899) {
       itemClassName = 'Statues';
       // Final doors (items 900+)
     } else if (parseInt(items[rowIndex][colIndex], 10) >= 900) {
@@ -23,12 +22,12 @@ function Tile(props) {
       itemClassName = 'Item';
     }
   }
+  // Looking for projectiles
   let projectileClassName;
   if (projectiles[rowIndex][colIndex] === '001') {
     projectileClassName = 'Fire';
   } else if (projectiles[rowIndex][colIndex] === '002') {
     projectileClassName = 'Lightning';
-    // Final doors (items 900+)
   }
 
   return (
