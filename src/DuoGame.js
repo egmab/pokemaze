@@ -16,8 +16,6 @@ class DuoGame extends Component {
     this.handleChange2 = this.handleChange2.bind(this);
   }
 
-  // fire, ice, invisibility, psychic, punch
-
   getLevelsJ1 = (level) => {
     this.setState({
       levelsJ1: level,
@@ -34,11 +32,9 @@ class DuoGame extends Component {
     this.setState({ value1: event.target.value });
   }
 
-
   handleChange2(event) {
     this.setState({ value2: event.target.value });
   }
-
 
   render() {
     const actualPlayer1 = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -78,11 +74,31 @@ class DuoGame extends Component {
       [newvalue1, pokemon1] = value1.split(' ');
       level1 = levelsJ1[newvalue1].level;
       capacity1 = `${newvalue1}${level1}`;
+      switch (pokemon1) {
+        case 'nidoran-f':
+          pokemon1 = 'nidoranf';
+          break;
+        case 'nidoran-m':
+          pokemon1 = 'nidoranm';
+          break;
+        default:
+          break;
+      }
     }
     if (value2 !== 'none') {
       [newvalue2, pokemon2] = value2.split(' ');
       level2 = levelsJ2[newvalue2].level;
       capacity2 = `${newvalue2}${level2}`;
+      switch (pokemon2) {
+        case 'nidoran-f':
+          pokemon2 = 'nidoranf';
+          break;
+        case 'nidoran-m':
+          pokemon2 = 'nidoranm';
+          break;
+        default:
+          break;
+      }
     }
     return (
       <div className="DuoHome">
@@ -92,7 +108,29 @@ class DuoGame extends Component {
         <div className="pokedexJ2">
           <Pokedex getlevel={this.getLevelsJ2} player="player2" />
         </div>
-        <div className="formPoke" style={{ marginRight: 100 }}>
+        <div className="mateContainer" style={{ marginRight: 80 }}>
+          <div className="pokemon">
+            {pokemon1 !== 'none'
+              ? (
+                <img
+                  src={`http://pokestadium.com/sprites/xy/${pokemon1}.gif`}
+                  alt={pokemon1}
+                />
+              )
+              : (
+                <img
+                  src="./assets/pokemons/unknow.png"
+                  alt="none"
+                />
+              )
+            }
+          </div>
+          {pokemon1 !== 'none'
+            ? <img alt={newvalue1} className="elem" src={`./assets/pokemons/elements/${newvalue1}.png`} />
+            : undefined
+          }
+        </div>
+        <div className="formPoke" style={{ marginRight: 110 }}>
           <form>
             <p>Pick your team mate:</p>
             <div className="list">
@@ -116,38 +154,39 @@ class DuoGame extends Component {
             </div>
           </form>
         </div>
-        <Link to={{
-          pathname: '/multiplayer',
-          state: {
-            player1: capacity1,
-            mate1: pokemon1,
-            player2: capacity2,
-            mate2: pokemon2,
-          },
-        }}
-        >
-          <button
-            className="homeButton"
-            type="button"
-            size="lg"
-            style={{ marginRight: 100 }}
+        <div className="playOrBack" style={{ marginRight: 110 }}>
+          <Link to={{
+            pathname: '/multiplayer',
+            state: {
+              player1: capacity1,
+              mate1: pokemon1,
+              player2: capacity2,
+              mate2: pokemon2,
+            },
+          }}
           >
-            PLAY
-          </button>
-        </Link>
-        <div>
-          <Link to="/">
             <button
-              className="backButton"
+              className="homeButton"
               type="button"
               size="lg"
-              style={{ marginRight: 100 }}
+              style={{ marginBottom: 18 }}
             >
-              Back to menu
+              PLAY
             </button>
           </Link>
+          <div>
+            <Link to="/">
+              <button
+                className="backButton"
+                type="button"
+                size="lg"
+              >
+                Back to menu
+              </button>
+            </Link>
+          </div>
         </div>
-        <div className="formPoke">
+        <div className="formPoke" style={{ marginRight: 80 }}>
           <form>
             <p>Pick your team mate:</p>
             <div className="list">
@@ -170,6 +209,28 @@ class DuoGame extends Component {
               </select>
             </div>
           </form>
+        </div>
+        <div className="mateContainer">
+          <div className="pokemon">
+            {pokemon2 !== 'none'
+              ? (
+                <img
+                  src={`http://pokestadium.com/sprites/xy/${pokemon2}.gif`}
+                  alt={pokemon2}
+                />
+              )
+              : (
+                <img
+                  src="./assets/pokemons/unknow.png"
+                  alt="none"
+                />
+              )
+            }
+          </div>
+          {pokemon2 !== 'none'
+            ? <img alt={newvalue2} className="elem" src={`./assets/pokemons/elements/${newvalue2}.png`} />
+            : undefined
+          }
         </div>
       </div>
     );

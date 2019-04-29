@@ -4,7 +4,6 @@ import Players from './Players';
 import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
 import './Game.css';
-import Capacity from './Capacity';
 
 /*
 <img
