@@ -19,7 +19,7 @@ class MultiplayerGame extends Component {
     this.keysToCollect = 0;
     this.projectiles = {};
     const {
-      level, capacity1, capacity2, //  pokemon1, pokemon2
+      level, pokemon1, pokemon2, // capacity1, capacity2,
     } = props;
     // Creates projectiles matrix
     const projectiles = [];
@@ -48,15 +48,17 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: [capacity1],
+      capacities: ['fire3'],
       // capacities: [capacity1],
+      pokemon: pokemon1,
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: [capacity2],
+      capacities: ['electric3'],
       // capacities: [capacity2],
+      pokemon: pokemon2,
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
@@ -276,6 +278,8 @@ class MultiplayerGame extends Component {
             finalDoorOpened2={finalDoorOpened2}
             capacities1={this.player1.capacities}
             capacities2={this.player2.capacities}
+            pokemon1={this.player1.pokemon}
+            pokemon2={this.player2.pokemon}
           />
         </div>
         <div className="KeysBarMultiplayer">

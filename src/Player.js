@@ -7,6 +7,11 @@ class Player extends Component {
     if (props.gameMode) {
       this.gameMode = props.gameMode;
     }
+    if (props.pokemon) {
+      if (props.pokemon !== 'none') {
+        this.pokemon = props.pokemon;
+      }
+    }
     this.canMove = true;
     this.action = this.action.bind(this);
     const posX = props.startingPositions.x;
@@ -414,9 +419,54 @@ class Player extends Component {
       top: `${posY * pixelsPerTile}vw`,
       left: `${11 + posX * pixelsPerTile}vw`,
     };
+    // if (this.pokemon) {
+    switch (this.img) {
+      case `${this.charImg}Top`: {
+        this.pokemonStyle = {
+          top: `${posY * pixelsPerTile}vw`,
+          left: `${11 + posX * pixelsPerTile}vw`,
+          marginTop: '6.9vw',
+          marginLeft: '-10.035315vw',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+      case `${this.charImg}Left`: {
+        this.pokemonStyle = {
+          top: `${posY * pixelsPerTile}vw`,
+          left: `${11 + posX * pixelsPerTile}vw`,
+          marginTop: '4.9vw',
+          marginLeft: '-8.035315vw',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+      case `${this.charImg}Right`: {
+        this.pokemonStyle = {
+          top: `${posY * pixelsPerTile}vw`,
+          left: `${11 + posX * pixelsPerTile}vw`,
+          marginTop: '4.9vw',
+          marginLeft: '-12.035315vw',
+          transform: 'scaleX(-1)',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+      default: {
+        this.pokemonStyle = {
+          top: `${posY * pixelsPerTile}vw`,
+          left: `${11 + posX * pixelsPerTile}vw`,
+          marginTop: '2.9vw',
+          marginLeft: '-10.035315vw',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+    }
+    // }
 
     return (
-      <div className="player">
+      <div className="playerContainer">
         <div style={playerStyle}>
           {
             playerFrozen
@@ -440,6 +490,17 @@ class Player extends Component {
               : null
           }
         </div>
+        {
+          this.pokemon
+            ? (
+              <div
+                className="pokemonPetContainer"
+              >
+                <img style={this.pokemonStyle} className="pokemonPet" src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`} alt={this.pokemon} />
+              </div>
+            )
+            : null
+        }
       </div>
 
     );
