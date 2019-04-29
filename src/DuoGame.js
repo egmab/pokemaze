@@ -70,13 +70,17 @@ class DuoGame extends Component {
     let capacity1 = 'none';
     let level2;
     let capacity2 = 'none';
-    const newvalue1 = value1.replace(/[0-9]/g, '');
-    const newvalue2 = value2.replace(/[0-9]/g, '');
-    if (newvalue1 !== 'none') {
+    let newvalue1 = 'none';
+    let newvalue2 = 'none';
+    let pokemon1 = 'none';
+    let pokemon2 = 'none';
+    if (value1 !== 'none') {
+      [newvalue1, pokemon1] = value1.split(' ');
       level1 = levelsJ1[newvalue1].level;
       capacity1 = `${newvalue1}${level1}`;
     }
-    if (newvalue2 !== 'none') {
+    if (value2 !== 'none') {
+      [newvalue2, pokemon2] = value2.split(' ');
       level2 = levelsJ2[newvalue2].level;
       capacity2 = `${newvalue2}${level2}`;
     }
@@ -93,17 +97,16 @@ class DuoGame extends Component {
             <p>Pick your team mate:</p>
             <div className="list">
               <select
-                hideSelectedOptions={false}
                 size={pokemonsCaught1Sorted.length + 1}
                 value={value1}
                 onChange={this.handleChange1}
               >
                 {pokemonsCaught1Sorted.length > 0
-                  ? <option value="none" selected>Choose a pokemon</option>
-                  : <option value="none" selected>You have 0 pokemon</option>}
+                  ? <option key="none" value="none">Choose a pokemon</option>
+                  : <option key="none" value="none">You have 0 pokemon</option>}
                 {
-                  pokemonsCaught1Sorted.map((monster, index) => (
-                    <option value={`${monster.type}${index}`}>
+                  pokemonsCaught1Sorted.map(monster => (
+                    <option key={monster.name} value={`${monster.type} ${monster.name}`}>
                       {monster.name}
                     </option>
                   ))
@@ -113,7 +116,16 @@ class DuoGame extends Component {
             </div>
           </form>
         </div>
-        <Link to={{ pathname: '/multiplayer', state: { player1: capacity1, player2: capacity2 } }}>
+        <Link to={{
+          pathname: '/multiplayer',
+          state: {
+            player1: capacity1,
+            mate1: pokemon1,
+            player2: capacity2,
+            mate2: pokemon2,
+          },
+        }}
+        >
           <button
             className="homeButton"
             type="button"
@@ -140,15 +152,17 @@ class DuoGame extends Component {
             <p>Pick your team mate:</p>
             <div className="list">
               <select
-                hideSelectedOptions={false}
                 size={pokemonsCaught2Sorted.length + 1}
                 value={value2}
                 onChange={this.handleChange2}
               >
-                {pokemonsCaught2Sorted.length > 0 ? <option value="none" selected>Choose a pokemon</option> : <option value="none" selected>You have 0 pokemon</option>}
+                {pokemonsCaught2Sorted.length > 0
+                  ? <option key="none" value="none">Choose a pokemon</option>
+                  : <option key="none" value="none">You have 0 pokemon</option>
+                }
                 {
-                  pokemonsCaught2Sorted.map((monster, index) => (
-                    <option value={`${monster.type}${index}`}>
+                  pokemonsCaught2Sorted.map(monster => (
+                    <option key={monster.name} value={`${monster.type} ${monster.name}`}>
                       {monster.name}
                     </option>
                   ))

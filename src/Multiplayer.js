@@ -12,12 +12,18 @@ class Multiplayer extends Component {
   render() {
     let capacity1 = 'none';
     let capacity2 = 'none';
+    let pokemon1 = 'none';
+    let pokemon2 = 'none';
     // eslint-disable-next-line react/destructuring-assignment
     if (this.props.location.state) {
       // eslint-disable-next-line react/destructuring-assignment
       capacity1 = this.props.location.state.player1;
       // eslint-disable-next-line react/destructuring-assignment
       capacity2 = this.props.location.state.player2;
+      // eslint-disable-next-line react/destructuring-assignment
+      pokemon1 = this.props.location.state.mate1;
+      // eslint-disable-next-line react/destructuring-assignment
+      pokemon2 = this.props.location.state.mate2;
     }
     const selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.multiplayer[this.selection];
     return (
@@ -28,6 +34,8 @@ class Multiplayer extends Component {
           player2={this.player2}
           capacity1={capacity1}
           capacity2={capacity2}
+          pokemon1={pokemon1}
+          pokemon2={pokemon2}
         />
       </div>
     );
