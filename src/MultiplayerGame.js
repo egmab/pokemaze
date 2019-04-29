@@ -5,6 +5,12 @@ import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
 import './Game.css';
 
+/*
+<img
+src={`http://pokestadium.com/sprites/xy/${pokemon1}.gif`}
+alt={pokemon1}
+/> */
+
 class MultiplayerGame extends Component {
   constructor(props) {
     super(props);
@@ -13,7 +19,7 @@ class MultiplayerGame extends Component {
     this.keysToCollect = 0;
     this.projectiles = {};
     const {
-      level, // capacity1, capacity2
+      level, capacity1, capacity2, //  pokemon1, pokemon2
     } = props;
     // Creates projectiles matrix
     const projectiles = [];
@@ -42,14 +48,14 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['fire3'],
+      capacities: [capacity1],
       // capacities: [capacity1],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['electric3'],
+      capacities: [capacity2],
       // capacities: [capacity2],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
