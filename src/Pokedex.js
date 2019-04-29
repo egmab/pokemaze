@@ -10,7 +10,7 @@ let pokemonsCaught = '';
 let pokemonType;
 
 
-const pokemonContainer = 'pokemon-container1';
+let pokemonContainer = 'pokemon-container1';
 class Pokedex extends Component {
   constructor(props) {
     super(props);
@@ -146,7 +146,12 @@ class Pokedex extends Component {
       actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
       pokemonsCaught = actualStorage.pokemons;
     }
-
+    if (player === 'player1') {
+      pokemonContainer = 'pokemon-container1';
+    }
+    if (player === 'player2') {
+      pokemonContainer = 'pokemon-container2';
+    }
 
     return (
       <div className="global-container">

@@ -55,6 +55,7 @@ class DuoGame extends Component {
     const pokemonsCaught1Sorted = pokemonsCaught1.filter((obj, pos, arr) => {
       return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
     });
+
     const pokemonsCaught2Sorted = pokemonsCaught2.filter((obj, pos, arr) => {
       return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
     });
@@ -146,7 +147,7 @@ class DuoGame extends Component {
             ? <img alt={newvalue1} className="elem" src={`./assets/pokemons/elements/${newvalue1}.png`} />
             : undefined
           }
-          <div className="starsContainer" style={{ marginTop: '7.1vw' }}>
+          <div className="starsContainer" style={{ marginTop: '7.1vw', marginRight: '0.1vw' }}>
             {pokemon1 !== 'none'
               ? levelIcons1.map((star, index) => (
                 <div
