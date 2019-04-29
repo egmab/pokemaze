@@ -40,7 +40,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #ededed;
+    background-color: #e8f6fa;
     color: #424242;
     margin: 12px;
     border-radius: 5px;
@@ -101,6 +101,16 @@
     border: 1px solid grey;
 }
 
+.align-bottom span{
+    text-transform: lowercase;
+    margin-left: 0.75vw;
+    font-size: 13px;
+    background-color: #2b55a3;
+    color: white;
+    border-radius: 50vw;
+    padding: 0.5vh 1vh;
+}
+
 .sprites{
     max-width: 150px;
     max-height: 150px;
@@ -130,7 +140,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #ededed;
+    background-color: #ece9e9;
     color: #424242;
     margin: 12px;
     border-radius: 5px;
