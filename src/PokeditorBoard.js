@@ -10,9 +10,9 @@ const PokeditorBoard = (props) => {
     if ((rowIndex === playerOneX && colIndex === playerOneY)
       || (rowIndex === playerTwoX && colIndex === playerTwoY)) {
       if (rowIndex === playerOneX && colIndex === playerOneY) {
-        tile = `url('./assets/characters/charBottom.png'), url(${`./assets/tiles/${tileId}.png`})`;
+        tile = `url('./assets/characters/guyBottom.png'), url(${`./assets/tiles/${tileId}.png`})`;
       } else {
-        tile = `url('./assets/characters/charLeft.png'), url(${`./assets/tiles/${tileId}.png`})`;
+        tile = `url('./assets/characters/femaleBottom.png'), url(${`./assets/tiles/${tileId}.png`})`;
       }
     } else {
       tile = `url(${`./assets/tiles/${tileId}.png`})`;
