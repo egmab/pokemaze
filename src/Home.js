@@ -5,7 +5,7 @@ import './Home.css';
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.charImagesList = ['guy', 'female'];
+    this.charImagesList = ['guy', 'female', 'black', 'elegant', 'greenWoman', 'pinkHairWoman', 'oldMan'];
     this.data = {
       pokemons: [],
       charImg: 'guy',
@@ -170,20 +170,27 @@ class Home extends Component {
                   <div className="changeCharacter">
                     <button
                       className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/previous-arrow.png)',
+                      }}
                       type="button"
                       value="userOne"
                       onClick={() => this.changeCharImgOne(-1)}
                     />
                     <div
                       style={{
-                        backgroundImage: `url(./assets/characters/${userOneImg}Bottom.png`,
+                        backgroundPosition: 'center',
+                        backgroundImage: `url(./assets/characters/${userOneImg}Bottom.png)`,
                         height: '50px',
                         width: '50px',
                         backgroundRepeat: 'no-repeat',
                       }}
                     />
                     <button
-                      changeCharacterImgButton
+                      className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/next-arrow.png)',
+                      }}
                       type="button"
                       value="userOne"
                       onClick={() => this.changeCharImgOne(1)}
@@ -234,23 +241,30 @@ class Home extends Component {
                   <div className="changeCharacter">
                     <button
                       className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/previous-arrow.png)',
+                      }}
                       type="button"
-                      value="userOne"
+                      value="userTwo"
                       onClick={() => this.changeCharImgTwo(-1)}
                     />
                     <div
                       style={{
-                        backgroundImage: `url(./assets/characters/${userTwoImg}Bottom.png`,
+                        backgroundPosition: 'center',
+                        backgroundImage: `url(./assets/characters/${userTwoImg}Bottom.png)`,
                         height: '50px',
                         width: '50px',
                         backgroundRepeat: 'no-repeat',
                       }}
                     />
                     <button
-                      changeCharacterImgButton
+                      className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/next-arrow.png)',
+                      }}
                       type="button"
                       value="userTwo"
-                      onClick={() => this.changeCharImgTwo(1)}
+                      onClick={() => this.changeCharImgTwo(-1)}
                     />
                   </div>
                   <form onSubmit={this.onDisconnectTwo}>
