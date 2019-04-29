@@ -10,6 +10,15 @@
     min-height: 100vh;
     min-width: 100vh;
   }
+  
+  .changeCharacter{
+    display:flex;
+  }
+
+  .changeCharacterImgButton{
+    width: 1em;
+    height: 1em;
+  }
 
   /* .home img{
     padding-top: 18vh;

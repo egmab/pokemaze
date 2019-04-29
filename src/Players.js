@@ -63,14 +63,15 @@ class Players extends Component {
 
   multiplayerActions = (player, enemy, capacity, directionX, directionY) => {
     const { player1timers, player2timers } = this.state;
+    const [first1] = this.player1timers;
+    const [first2] = this.player2timers;
+
     if (player === 'player1') {
-      // eslint-disable-next-line prefer-destructuring
-      player1timers[0] = this.player1timers[0];
+      player1timers[0] = first1;
       this.setState({ player1timers });
     }
     if (player === 'player2') {
-      // eslint-disable-next-line prefer-destructuring
-      player2timers[0] = this.player2timers[0];
+      player2timers[0] = first2;
       this.setState({ player2timers });
     }
     if (capacity) {

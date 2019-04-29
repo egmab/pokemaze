@@ -13,11 +13,12 @@ class Player extends Component {
     const posY = props.startingPositions.y;
     this.posX = posX;
     this.posY = posY;
-    this.img = 'charBottom';
+    // Get player image
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
     // Define buttons for each player
     if (props.playerNumber === 'player1') {
+      this.charName = JSON.parse(localStorage.getItem('connectedPlayer'));
       this.upButton = 90;
       this.downButton = 83;
       this.leftButton = 81;
@@ -25,6 +26,7 @@ class Player extends Component {
       this.actionButton = 16;
       this.enemy = 'player2';
     } else if (props.playerNumber === 'player2') {
+      this.charName = JSON.parse(localStorage.getItem('connectedPlayer2'));
       this.upButton = 38;
       this.downButton = 40;
       this.leftButton = 37;
@@ -32,6 +34,9 @@ class Player extends Component {
       this.actionButton = 32;
       this.enemy = 'player1';
     }
+    const charData = JSON.parse(localStorage.getItem(this.charName));
+    this.charImg = charData.charImg;
+    this.img = `${this.charImg}Bottom`;
     this.state = {
       playerStunned: false,
       playerConfused: false,
@@ -39,7 +44,7 @@ class Player extends Component {
       playerOpacity: 1,
       posX: props.startingPositions.x,
       posY: props.startingPositions.y,
-      img: 'charBottom',
+      img: `${this.charImg}Bottom`,
       pixelsPerTile: 3.1,
     };
   }
@@ -232,28 +237,28 @@ class Player extends Component {
       this.canMove = false;
       // Move right
       if (event.keyCode === this.rightButton) {
-        this.img = 'charRight';
+        this.img = `${this.charImg}Right`;
         if (this.checkTile(1, 0)) {
           this.posX += 1;
         }
       }
       // Move left
       if (event.keyCode === this.leftButton) {
-        this.img = 'charLeft';
+        this.img = `${this.charImg}Left`;
         if (this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
       }
       // Move down
       if (event.keyCode === this.downButton) {
-        this.img = 'charBottom';
+        this.img = `${this.charImg}Bottom`;
         if (this.checkTile(0, 1)) {
           this.posY += 1;
         }
       }
       // Move up
       if (event.keyCode === this.upButton) {
-        this.img = 'charTop';
+        this.img = `${this.charImg}Top`;
         if (this.checkTile(0, -1)) {
           this.posY -= 1;
         }
@@ -265,7 +270,7 @@ class Player extends Component {
     if (event.keyCode === this.actionButton) {
       // Sets coordinates of the targeted tile
       switch (this.img) {
-        case 'charTop': {
+        case `${this.charImg}Top`: {
           this.targetedTileX = this.posX;
           this.targetedTileY = this.posY - 1;
           this.targetedDirection = {
@@ -274,7 +279,7 @@ class Player extends Component {
           };
           break;
         }
-        case 'charLeft': {
+        case `${this.charImg}Left`: {
           this.targetedTileX = this.posX - 1;
           this.targetedTileY = this.posY;
           this.targetedDirection = {
@@ -283,7 +288,7 @@ class Player extends Component {
           };
           break;
         }
-        case 'charRight': {
+        case `${this.charImg}Right`: {
           this.targetedTileX = this.posX + 1;
           this.targetedTileY = this.posY;
           this.targetedDirection = {

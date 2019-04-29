@@ -148,6 +148,7 @@ class Pokeditor extends Component {
       },
       timer,
       typeOfKey: '002',
+      isTuto: true,
     };
     currentData[levelName] = currentLevel;
     localStorage.setItem('PokemazeCustomLevels', JSON.stringify(currentData));
