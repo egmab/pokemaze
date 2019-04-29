@@ -2,7 +2,7 @@ import React from 'react';
 
 const PokeditorMatrix = (props) => {
   const {
-    level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer,
+    level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer, gameMode,
   } = props;
   return (
     <div>
@@ -62,6 +62,10 @@ const PokeditorMatrix = (props) => {
       <p style={{ textDecoration: 'underline' }}>
         Timer :
         {timer}
+      </p>
+      <p style={{ textDecoration: 'underline' }}>
+        Game mode :
+        {gameMode}
       </p>
     </div>
   );
