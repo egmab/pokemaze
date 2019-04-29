@@ -11,7 +11,7 @@ const PokeditorChooseStartingPoint = (props) => {
           <button
             type="button"
             style={{
-              background: 'url("./assets/characters/charBottom.png"), url("./assets/tiles/008.png")',
+              background: 'url("./assets/characters/guyBottom.png"), url("./assets/tiles/008.png")',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
             }}
@@ -23,7 +23,7 @@ const PokeditorChooseStartingPoint = (props) => {
           <button
             type="button"
             style={{
-              backgroundImage: 'url("./assets/characters/charLeft.png"), url("./assets/tiles/008.png")',
+              backgroundImage: 'url("./assets/characters/femaleBottom.png"), url("./assets/tiles/008.png")',
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'center',
             }}

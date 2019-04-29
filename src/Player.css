@@ -1,3 +1,19 @@
+.pokemonPetContainer{
+  width: 3vw;
+  height: 3vw;
+  z-index: 1;
+}
+
+.pokemonPetContainer img{
+  position: absolute;
+  width: auto;
+  height: auto;
+  max-width: 2.2vw;
+  max-height: 2.2vw;
+  transition: 600ms;
+  z-index: 1;
+}
+
 .confused {
   animation: beat 0.3s infinite alternate;
   width: 2vw;

@@ -10,6 +10,23 @@
     min-height: 100vh;
     min-width: 100vh;
   }
+  
+  .changeCharacter{
+    display:flex;
+  }
+
+  .changeCharacterImgButton{
+    background-size: cover;
+    width: 2vw;
+    height: 2vw;
+    border: none;
+    background-color: #11ffee00;
+  }
+
+  .changeCharacterImgButton:focus {
+    background-color: #11ffee00;
+    border: none;
+  }
 
   /* .home img{
     padding-top: 18vh;

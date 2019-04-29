@@ -63,14 +63,15 @@ class Players extends Component {
 
   multiplayerActions = (player, enemy, capacity, directionX, directionY) => {
     const { player1timers, player2timers } = this.state;
+    const [first1] = this.player1timers;
+    const [first2] = this.player2timers;
+
     if (player === 'player1') {
-      // eslint-disable-next-line prefer-destructuring
-      player1timers[0] = this.player1timers[0];
+      player1timers[0] = first1;
       this.setState({ player1timers });
     }
     if (player === 'player2') {
-      // eslint-disable-next-line prefer-destructuring
-      player2timers[0] = this.player2timers[0];
+      player2timers[0] = first2;
       this.setState({ player2timers });
     }
     if (capacity) {
@@ -98,6 +99,7 @@ class Players extends Component {
     const {
       ongoingGame, tiles, items, startingPositions, getPlayerPos, playerAction,
       finalDoorOpened1, finalDoorOpened2, capacities1, capacities2, projectiles,
+      pokemon1, pokemon2,
     } = this.props;
     const {
       player1, player2, player1timers, player2timers,
@@ -115,6 +117,7 @@ class Players extends Component {
           finalDoorOpened={finalDoorOpened1}
           player={player1}
           enemy={player2}
+          pokemon={pokemon1}
           multiplayerActions={this.multiplayerActions}
           resetActions={this.resetActions}
           multiplayerCoordinates={this.multiplayerCoordinates}
@@ -135,6 +138,7 @@ class Players extends Component {
           finalDoorOpened={finalDoorOpened2}
           player={player2}
           enemy={player1}
+          pokemon={pokemon2}
           multiplayerActions={this.multiplayerActions}
           resetActions={this.resetActions}
           multiplayerCoordinates={this.multiplayerCoordinates}
