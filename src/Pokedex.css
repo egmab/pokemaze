@@ -19,6 +19,10 @@
     align-items: flex-start;
 }
 
+.starPoke img{
+    height: 1.5vw;
+}
+
 #pokemon-container2{
     display: flex;
     flex-wrap: wrap;
@@ -52,8 +56,29 @@
     border-radius: 1vw;
     overflow: hidden;
     border:0.3vw solid grey;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: space-between;
 }
-
+.searchPoke{
+    width: 5.5vw;
+    align-items: center;
+    justify-content: center;
+}
+.buttons{
+    width: 5.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.numbers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1vw;
+}
 .searchLeft{
     text-align: left;
 }

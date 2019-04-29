@@ -160,332 +160,36 @@ class Pokedex extends Component {
           &apos;s pokedex
         </h2>
         <div className="pokemonSearchBar">
-          <div className="arrayBox">
-            <table className="typeArray">
-              <tbody>
-                <tr className="arrayFirstRow">
-                  <td>Type</td>
-                  <td>Earned</td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/water.png)',
-                      }}
-                      className="imgelemArray"
-                      value="water"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.water.number}
-                    /28
-                    {' '}
-                    Level:
-                    {this.types.water.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/grass.png)',
-                      }}
-                      className="imgelemArray"
-                      value="grass"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.grass.number}
-                    /12
-                    {' '}
-                    Level:
-                    {this.types.grass.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/electric.png)',
-                      }}
-                      className="imgelemArray"
-                      value="electric"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.electric.number}
-                    /9
-                    {' '}
-                    Level:
-                    {this.types.electric.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/psychic.png)',
-                      }}
-                      className="imgelemArray"
-                      value="psychic"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.psychic.number}
-                    /8
-                    {' '}
-                    Level:
-                    {this.types.psychic.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/dragon.png)',
-                      }}
-                      className="imgelemArray"
-                      value="dragon"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.dragon.number}
-                    /3
-                    {' '}
-                    Level:
-                    {this.types.dragon.level}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="typeArray">
-              <tbody>
-                <tr className="arrayFirstRow">
-                  <td>Type</td>
-                  <td>Earned</td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/normal.png)',
-                      }}
-                      className="imgelemArray"
-                      value="normal"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.normal.number}
-                    /22
-                    {' '}
-                    Level:
-                    {this.types.normal.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/fire.png)',
-                      }}
-                      className="imgelemArray"
-                      value="fire"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.fire.number}
-                    /12
-                    {' '}
-                    Level:
-                    {this.types.fire.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/rock.png)',
-                      }}
-                      className="imgelemArray"
-                      value="rock"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.rock.number}
-                    /9
-                    {' '}
-                    Level:
-                    {this.types.rock.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/fighting.png)',
-                      }}
-                      className="imgelemArray"
-                      value="fighting"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.fighting.number}
-                    /7
-                    {' '}
-                    Level:
-                    {this.types.fighting.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/fairy.png)',
-                      }}
-                      className="imgelemArray"
-                      value="fairy"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.fairy.number}
-                    /2
-                    {' '}
-                    Level:
-                    {this.types.fairy.level}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <table className="typeArray">
-              <tbody>
-                <tr className="arrayFirstRow">
-                  <td>Type</td>
-                  <td>Earned</td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/poison.png)',
-                      }}
-                      className="imgelemArray"
-                      value="poison"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.poison.number}
-                    /14
-                    {' '}
-                    Level:
-                    {this.types.poison.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/bug.png)',
-                      }}
-                      className="imgelemArray"
-                      value="bug"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.bug.number}
-                    /12
-                    {' '}
-                    Level:
-                    {this.types.bug.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/ground.png)',
-                      }}
-                      className="imgelemArray"
-                      value="ground"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.ground.number}
-                    /8
-                    {' '}
-                    Level:
-                    {this.types.ground.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/ghost.png)',
-                      }}
-                      className="imgelemArray"
-                      value="ghost"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.ghost.number}
-                    /3
-                    {' '}
-                    Level:
-                    {this.types.ghost.level}
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button
-                      type="button"
-                      style={{
-                        backgroundImage: 'url(./assets/pokemons/elements/ice.png)',
-                      }}
-                      className="imgelemArray"
-                      value="ice"
-                      onClick={this.changeType}
-                    />
-                  </td>
-                  <td>
-                    {this.types.ice.number}
-                    /2
-                    {' '}
-                    Level:
-                    {this.types.ice.level}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          {this.typeArray.map(type => (
+            <div className="searchPoke">
+              <div className="buttons">
+                <button
+                  type="button"
+                  style={{
+                    backgroundImage: `url(./assets/pokemons/elements/${type}.png)`,
+                  }}
+                  className="imgelemArray"
+                  value={type}
+                  onClick={this.changeType}
+                />
+              </div>
+              <div className="numbers">
+                <span>
+                  {this.types[type].number}
+                  {' '}
+                  /
+                  {this.types[type].max}
+                </span>
+                <span className="starPoke">
+                  <img
+                    src={`./assets/pokemons/level${this.types[type].level}.png`}
+                    alt={this.types[type].level}
+                  />
+                </span>
+              </div>
+            </div>
+          ))
+          }
         </div>
         <div id={pokemonContainer}>
           {
