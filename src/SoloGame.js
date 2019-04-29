@@ -12,6 +12,7 @@ class SoloGame extends Component {
     };
   }
 
+
   selectLevel = (event) => {
     this.selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.solo[event.target.value];
     this.setState({ selectionDone: true });
@@ -94,7 +95,7 @@ class SoloGame extends Component {
 
             </div>
             <div className="pokedexJ1solo">
-              <Pokedex player="player1" />
+              <Pokedex getlevel={this.getLevelsJ1} player="player1" />
             </div>
           </div>
         )

@@ -105,7 +105,7 @@
     font-size: 1.5vw;
   }
 
-  form{
+  .home form{
     display:flex;
     flex-direction:column;
     justify-content: center;

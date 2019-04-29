@@ -15,7 +15,14 @@ class Game extends Component {
     this.getTime = this.getTime.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
-
+    // Creates projectiles matrix
+    const projectiles = [];
+    for (let i = 0; i < level.tiles.length; i += 1) {
+      projectiles.push([]);
+      for (let j = 0; j < level.tiles[i].length; j += 1) {
+        projectiles[i].push('000');
+      }
+    }
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
         if (parseInt(level.items[i][j], 10) >= 900
@@ -37,6 +44,7 @@ class Game extends Component {
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
       level: JSON.parse(JSON.stringify(level)),
+      projectiles,
       pokemon: undefined,
       winner: undefined,
       isWinner: false,
@@ -108,8 +116,16 @@ class Game extends Component {
 
   setWonPokemon = () => {
     const { isWinner, pokemon, winner } = this.state;
+    let pokemonType = '';
+    if (pokemon.types) {
+      if (pokemon.types[1]) {
+        pokemonType = pokemon.types[1].type.name;
+      } else {
+        pokemonType = pokemon.types[0].type.name;
+      }
+    }
     if (isWinner) {
-      const newPokemon = pokemon.name;
+      const newPokemon = { name: pokemon.name, type: pokemonType };
       let winnerName = 'winner';
       if (winner === 'player1') {
         winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -177,7 +193,7 @@ class Game extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner,
+      isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
     } = this.state;
     return (
       <div className="Game">
@@ -187,11 +203,12 @@ class Game extends Component {
           : null
         }
         <div className="gameContainer">
-          <Board tiles={level.tiles} items={level.items} />
+          <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Player
             ongoingGame={ongoingGame}
             tiles={level.tiles}
             items={level.items}
+            projectiles={projectiles}
             startingPositions={level.startingPositions.player1}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}

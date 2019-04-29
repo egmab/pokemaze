@@ -132,8 +132,6 @@ class Home extends Component {
                 <div className="formOne">
                   <h6>
                     Player 1 :
-                    {' '}
-                    {userOne}
                   </h6>
                   <form onSubmit={this.onSubmitOne}>
                     <input
@@ -176,8 +174,6 @@ class Home extends Component {
                 <div className="formTwo">
                   <h6>
                     Player 2 :
-                    {' '}
-                    {userTwo}
                   </h6>
                   <form onSubmit={this.onSubmitTwo}>
                     <input

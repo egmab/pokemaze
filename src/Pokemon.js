@@ -27,7 +27,7 @@ class Pokemon extends Component {
     const { pokemonName, player } = this.props;
     let pokemonClass = 'notHave';
     for (let i = 0; i < this.caught.length; i += 1) {
-      if (this.caught[i] === pokemonName) {
+      if (this.caught[i].name === pokemonName) {
         pokemonClass = 'pokemon-single-container';
         break;
       } else {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Player.css';
 
 class Player extends Component {
   constructor(props) {
@@ -32,6 +33,10 @@ class Player extends Component {
       this.enemy = 'player1';
     }
     this.state = {
+      playerStunned: false,
+      playerConfused: false,
+      playerFrozen: false,
+      playerOpacity: 1,
       posX: props.startingPositions.x,
       posY: props.startingPositions.y,
       img: 'charBottom',
@@ -56,6 +61,7 @@ class Player extends Component {
   }
 
   refreshRender() {
+    this.traps(this.posX, this.posY);
     this.setState({
       posX: this.posX,
       posY: this.posY,
@@ -71,9 +77,46 @@ class Player extends Component {
       multiplayerCoordinates, playerNumber, player, resetActions,
     } = this.props;
     multiplayerCoordinates(this.posX, this.posY, playerNumber);
+    // When a player gets targeted by a capacity:
     if (player.gettingTargeted) {
-      switch (player.gettingTargeted.byCapacity) {
-        // Default capacity
+      switch (player.gettingTargeted.byCapacity.slice(0, -1)) {
+        // Invisibility
+        case 'invisibility': {
+          this.setState({ playerOpacity: 0 });
+          setTimeout(() => this.setState({ playerOpacity: 1 }), 2000);
+          break;
+        }
+        // Psychic: reverse buttons
+        case 'psychic': {
+          this.setState({ playerConfused: true });
+          this.defaultUpButton = this.upButton;
+          this.defaultDownButton = this.downButton;
+          this.defaultleftButton = this.leftButton;
+          this.defaultRightButton = this.rightButton;
+          this.upButton = this.defaultDownButton;
+          this.downButton = this.defaultUpButton;
+          this.leftButton = this.defaultRightButton;
+          this.rightButton = this.defaultleftButton;
+          setTimeout(() => {
+            this.setState({ playerConfused: false });
+            this.upButton = this.defaultUpButton;
+            this.downButton = this.defaultDownButton;
+            this.leftButton = this.defaultleftButton;
+            this.rightButton = this.defaultRightButton;
+          }, 3000);
+          break;
+        }
+        // Ice: needs a rework
+        case 'ice': {
+          document.removeEventListener('keydown', this.action, false);
+          this.setState({ playerFrozen: true });
+          setTimeout(() => {
+            document.addEventListener('keydown', this.action, false);
+            this.setState({ playerFrozen: false });
+          }, 3000);
+          break;
+        }
+        // Default capacity: punch
         default: {
           document.removeEventListener('keydown', this.action, false);
           let gettingPunched = true;
@@ -94,7 +137,7 @@ class Player extends Component {
             }
           }
           setTimeout(() => document.addEventListener('keydown', this.action, false),
-            1000);
+            2000);
           resetActions();
           break;
         }
@@ -143,14 +186,35 @@ class Player extends Component {
     return true;
   }
 
-  // Change the position of player when trap is active
+  // Change the position of player when his position = trap position
+  // is checked constantly (projectiles are considered as traps)
   traps(x, y) {
-    const { tiles, startingPositions } = this.props;
+    const { posX, posY } = this.state;
+    const {
+      tiles, items, projectiles, startingPositions,
+    } = this.props;
     if ((parseInt(tiles[y][x], 10) >= 400
       && parseInt(tiles[y][x], 10) <= 499)
-      || parseInt(tiles[y][x], 10) === 9) {
-      this.posX = startingPositions.x;
-      this.posY = startingPositions.y;
+      || parseInt(tiles[y][x], 10) === 9
+      || (parseInt(items[y][x], 10) >= 400
+        && parseInt(items[y][x], 10) <= 499)
+      || parseInt(projectiles[y][x], 10) > 0
+      || (parseInt(tiles[posY][posX], 10) >= 400
+        && parseInt(tiles[posY][posX], 10) <= 499)
+      || parseInt(tiles[posY][posX], 10) === 9
+      || (parseInt(items[posY][posX], 10) >= 400
+        && parseInt(items[posY][posX], 10) <= 499)
+      || parseInt(projectiles[posY][posX], 10) > 0) {
+      document.removeEventListener('keydown', this.action, false);
+      setTimeout(() => {
+        this.setState({ playerStunned: true });
+        this.posX = startingPositions.x;
+        this.posY = startingPositions.y;
+      }, 200);
+      setTimeout(() => {
+        this.setState({ playerStunned: false });
+        document.addEventListener('keydown', this.action, false);
+      }, 900);
     }
   }
 
@@ -158,7 +222,6 @@ class Player extends Component {
     const {
       ongoingGame, tiles, items, getPlayerPos, playerNumber,
     } = this.props;
-    const { posX, posY } = this.state;
     // MOVES
     if (this.canMove && ongoingGame
       && (event.keyCode === this.upButton
@@ -195,7 +258,6 @@ class Player extends Component {
           this.posY -= 1;
         }
       }
-      this.traps(posX, posY);
       // Callback : game gets new position of the player
       getPlayerPos(this.posX, this.posY, playerNumber);
     }
@@ -246,23 +308,77 @@ class Player extends Component {
         && this.targetedTileY < tiles.length
         && this.targetedTileX < tiles[this.targetedTileY].length
       ) {
-        const { gameMode } = this.props;
+        const { gameMode, timers } = this.props;
         // Activate lever if there is any on tile
         if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
           && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
           const { playerAction } = this.props;
-          // Callback to Game
+          // Callback to Game for solo, MultiplayerGame for multiplayer
           playerAction(this.targetedTileY, this.targetedTileX);
           // Multiplayer actions;
-        } else if (gameMode === 'multiplayer') {
-          const { multiplayerActions } = this.props;
-          const { enemy } = this.props;
-          const capacity = 'normal';
-          if (capacity === 'normal') {
-            if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+          // To do: multiple timers if multiple abilities (timers[0] -> timers[selectedAbility])
+        } else if (gameMode === 'multiplayer' && timers[0] === 0) {
+          const { multiplayerActions, enemy, capacities } = this.props;
+          const capacity = capacities[0];
+          switch (capacity.slice(0, -1)) {
+            case 'ice': {
+              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+                // Callback to Players
+                multiplayerActions(
+                  playerNumber, this.enemy, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+              }
+              break;
+            }
+            case 'invisibility': {
               multiplayerActions(
-                this.enemy, capacity, this.targetedDirection.x, this.targetedDirection.y,
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
               );
+              break;
+            }
+            case 'psychic': {
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              break;
+            }
+            case 'electric': {
+              const { playerAction } = this.props;
+              playerAction(
+                this.targetedTileY, this.targetedTileX, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              break;
+            }
+            case 'fire': {
+              const { playerAction } = this.props;
+              playerAction(
+                this.targetedTileY, this.targetedTileX, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              break;
+            }
+            default: {
+              // default ability: punch
+              const defaultCapacity = `punch${capacity.slice(-1)}`;
+              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+                multiplayerActions(
+                  playerNumber, this.enemy, defaultCapacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+              }
+              break;
             }
           }
         }
@@ -274,10 +390,11 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile,
+      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused, playerStunned,
     } = this.state;
     //  Player CSS
     const playerStyle = {
+      opacity: playerOpacity,
       position: 'absolute',
       zIndex: 3,
       backgroundImage: `url(./assets/characters/${img}.png`,
@@ -295,7 +412,29 @@ class Player extends Component {
 
     return (
       <div className="player">
-        <div style={playerStyle} />
+        <div style={playerStyle}>
+          {
+            playerFrozen
+              ? (
+                <div className="frozen" />
+              )
+              : null
+          }
+          {
+            playerConfused
+              ? (
+                <div className="confused" />
+              )
+              : null
+          }
+          {
+            playerStunned
+              ? (
+                <div className="stunned" />
+              )
+              : null
+          }
+        </div>
       </div>
 
     );

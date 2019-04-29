@@ -5,14 +5,25 @@ import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
 import './Game.css';
 
-
 class MultiplayerGame extends Component {
   constructor(props) {
     super(props);
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
-    const { level } = props;
+    this.projectiles = {};
+    const {
+      level, // capacity1, capacity2
+    } = props;
+    // Creates projectiles matrix
+    const projectiles = [];
+    for (let i = 0; i < level.tiles.length; i += 1) {
+      projectiles.push([]);
+      for (let j = 0; j < level.tiles[i].length; j += 1) {
+        projectiles[i].push('000');
+      }
+    }
+    // Scans levels for final door and determines keys to collect
     for (let i = 0; i < level.items.length; i += 1) {
       for (let j = 0; j < level.items[i].length; j += 1) {
         if (parseInt(level.items[i][j], 10) >= 900
@@ -31,19 +42,22 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['punch1', 'punch2', 'punch3'],
+      capacities: ['fire3'],
+      // capacities: [capacity1],
     };
     this.player2 = {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['punch3'],
+      capacities: ['electric3'],
+      // capacities: [capacity2],
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
       finalDoorOpened1: false,
       finalDoorOpened2: false,
       level,
+      projectiles,
       winner: undefined,
       pokemon: undefined,
       isWinner: false,
@@ -105,8 +119,16 @@ class MultiplayerGame extends Component {
 
   setWonPokemon = () => {
     const { isWinner, pokemon, winner } = this.state;
+    let pokemonType = '';
+    if (pokemon.types) {
+      if (pokemon.types[1]) {
+        pokemonType = pokemon.types[1].type.name;
+      } else {
+        pokemonType = pokemon.types[0].type.name;
+      }
+    }
     if (isWinner) {
-      const newPokemon = pokemon.name;
+      const newPokemon = { name: pokemon.name, type: pokemonType };
       let winnerName = 'winner';
       if (winner === 'player1') {
         winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -123,40 +145,101 @@ class MultiplayerGame extends Component {
   }
 
 
-  playerAction(y, x) {
+  playerAction(y, x, capacity, directionX, directionY) {
     const { level } = this.state;
     // Switches lever ON/OFF: even=> item+1, odd=> item-1
     // Example: Lever(id: 700) becomes 701. Lever (id: 701) becomes 700
     // AND
     // Mutates the corresponding gate(s)
     // Example: Lever 700 becomes 701, changing item(s) 800 to 801, and vice versa
-    if (parseInt(level.items[y][x], 10) % 2 === 0) {
-      const switchedLever = parseInt(level.items[y][x], 10) + 1;
-      level.items[y][x] = `${switchedLever}`;
-      for (let i = 0; i < level.items.length; i += 1) {
-        for (let j = 0; j < level.items[i].length; j += 1) {
-          if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
-            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
-            level.items[i][j] = `${switchedDoor}`;
-          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
-            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
-            level.items[i][j] = `${switchedDoor}`;
+    if (parseInt(level.items[y][x], 10) >= 700
+      && parseInt(level.items[y][x], 10) <= 799) {
+      if (parseInt(level.items[y][x], 10) % 2 === 0) {
+        const switchedLever = parseInt(level.items[y][x], 10) + 1;
+        level.items[y][x] = `${switchedLever}`;
+        for (let i = 0; i < level.items.length; i += 1) {
+          for (let j = 0; j < level.items[i].length; j += 1) {
+            if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
+              const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+              level.items[i][j] = `${switchedDoor}`;
+            } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+              const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+              level.items[i][j] = `${switchedDoor}`;
+            }
+          }
+        }
+      } else {
+        const switchedLever = parseInt(level.items[y][x], 10) - 1;
+        level.items[y][x] = `${switchedLever}`;
+        for (let i = 0; i < level.items.length; i += 1) {
+          for (let j = 0; j < level.items[i].length; j += 1) {
+            if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
+              const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+              level.items[i][j] = `${switchedDoor}`;
+            } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+              const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+              level.items[i][j] = `${switchedDoor}`;
+            }
           }
         }
       }
-    } else {
-      const switchedLever = parseInt(level.items[y][x], 10) - 1;
-      level.items[y][x] = `${switchedLever}`;
-      for (let i = 0; i < level.items.length; i += 1) {
-        for (let j = 0; j < level.items[i].length; j += 1) {
-          if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
-            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
-            level.items[i][j] = `${switchedDoor}`;
-          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
-            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
-            level.items[i][j] = `${switchedDoor}`;
+    }
+    if (capacity) {
+      const { projectiles } = this.state;
+      // projectiles! :-)
+      if (capacity.slice(0, -1) === 'fire') {
+        projectiles[y][x] = '001';
+        const fireballId = Math.floor(Math.random() * 99999);
+        this.projectiles[fireballId] = { y, x };
+        this.projectiles[fireballId].running = setInterval(() => {
+          this.projectiles[fireballId].y += directionY;
+          this.projectiles[fireballId].x += directionX;
+          if (this.projectiles[fireballId].y < 0
+            || this.projectiles[fireballId].y >= projectiles.length
+            || this.projectiles[fireballId].x < 0
+            || this.projectiles[fireballId].x >= projectiles[this.projectiles[fireballId].y].length
+            || projectiles[this.projectiles[fireballId].y][this.projectiles[fireballId].x] !== '000') {
+            clearInterval(this.projectiles[fireballId].running);
+            projectiles[this.projectiles[fireballId].y - directionY * 2][this.projectiles[fireballId].x - directionX * 2] = '000';
+            this.setState({ projectiles });
+            setTimeout(() => {
+              projectiles[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
+              this.setState({ projectiles });
+            }, 3000);
+          } else {
+            setTimeout(() => {
+              projectiles[this.projectiles[fireballId].y - directionY][this.projectiles[fireballId].x - directionX] = '000';
+            }, 50);
+            projectiles[this.projectiles[fireballId].y][this.projectiles[fireballId].x] = '001';
+            this.setState({ projectiles });
           }
-        }
+        }, 200);
+      }
+      // Lightning bolts
+      if (capacity.slice(0, -1) === 'electric') {
+        projectiles[y][x] = '002';
+        const lightningBoltId = Math.floor(Math.random() * 99999);
+        this.projectiles[lightningBoltId] = { y, x };
+        this.projectiles[lightningBoltId].running = setInterval(() => {
+          this.projectiles[lightningBoltId].y += directionY;
+          this.projectiles[lightningBoltId].x += directionX;
+          if (this.projectiles[lightningBoltId].y < 0
+            || this.projectiles[lightningBoltId].y >= projectiles.length
+            || this.projectiles[lightningBoltId].x < 0
+            || this.projectiles[lightningBoltId].x
+            >= projectiles[this.projectiles[lightningBoltId].y].length
+            || projectiles[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] !== '000') {
+            clearInterval(this.projectiles[lightningBoltId].running);
+            setTimeout(() => {
+              projectiles[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
+              this.setState({ projectiles });
+            }, 4000);
+          } else {
+            projectiles[this.projectiles[lightningBoltId].y - directionY][this.projectiles[lightningBoltId].x - directionX] = '000';
+            projectiles[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] = '002';
+            this.setState({ projectiles });
+          }
+        }, 1000);
       }
     }
     this.setState({ level });
@@ -164,7 +247,8 @@ class MultiplayerGame extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level, winner, finalDoorOpened1, finalDoorOpened2,
+      isWinner, isLoser, pokemon, ongoingGame, level,
+      winner, finalDoorOpened1, finalDoorOpened2, projectiles,
     } = this.state;
     return (
       <div className="GameMultiplayer">
@@ -173,11 +257,12 @@ class MultiplayerGame extends Component {
           : null
         }
         <div className="gameContainer">
-          <Board tiles={level.tiles} items={level.items} />
+          <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Players
             ongoingGame={ongoingGame}
             tiles={level.tiles}
             items={level.items}
+            projectiles={projectiles}
             startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
