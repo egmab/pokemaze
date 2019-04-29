@@ -36,6 +36,7 @@ class DuoGame extends Component {
     this.setState({ value2: event.target.value });
   }
 
+
   render() {
     const actualPlayer1 = JSON.parse(localStorage.getItem('connectedPlayer'));
     const actualPlayer2 = JSON.parse(localStorage.getItem('connectedPlayer2'));
@@ -54,6 +55,7 @@ class DuoGame extends Component {
     const pokemonsCaught1Sorted = pokemonsCaught1.filter((obj, pos, arr) => {
       return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
     });
+
     const pokemonsCaught2Sorted = pokemonsCaught2.filter((obj, pos, arr) => {
       return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
     });
@@ -100,6 +102,22 @@ class DuoGame extends Component {
           break;
       }
     }
+    const levelIcons1 = [];
+    for (let i = 0; i < 3; i += 1) {
+      if (i < level1) {
+        levelIcons1.push('star');
+      } else {
+        levelIcons1.push('emptyStar');
+      }
+    }
+    const levelIcons2 = [];
+    for (let i = 0; i < 3; i += 1) {
+      if (i < level2) {
+        levelIcons2.push('star');
+      } else {
+        levelIcons2.push('emptyStar');
+      }
+    }
     return (
       <div className="DuoHome">
         <div className="pokedexJ1">
@@ -108,7 +126,7 @@ class DuoGame extends Component {
         <div className="pokedexJ2">
           <Pokedex getlevel={this.getLevelsJ2} player="player2" />
         </div>
-        <div className="mateContainer" style={{ marginRight: 80 }}>
+        <div className="mateContainer" style={{ marginRight: '6vw' }}>
           <div className="pokemon">
             {pokemon1 !== 'none'
               ? (
@@ -129,8 +147,21 @@ class DuoGame extends Component {
             ? <img alt={newvalue1} className="elem" src={`./assets/pokemons/elements/${newvalue1}.png`} />
             : undefined
           }
+          <div className="starsContainer" style={{ marginTop: '7.1vw', marginRight: '0.1vw' }}>
+            {pokemon1 !== 'none'
+              ? levelIcons1.map((star, index) => (
+                <div
+                  className={star}
+                  key={`starId-${index + 1}`}
+                  alt={star}
+                  style={{ backgroundColor: 'rgba(190, 217, 241)', borderRadius: 100 }}
+                />
+              ))
+              : undefined
+            }
+          </div>
         </div>
-        <div className="formPoke" style={{ marginRight: 110 }}>
+        <div className="formPoke" style={{ marginRight: '6vw' }}>
           <form>
             <p>Pick your team mate:</p>
             <div className="list">
@@ -154,7 +185,7 @@ class DuoGame extends Component {
             </div>
           </form>
         </div>
-        <div className="playOrBack" style={{ marginRight: 110 }}>
+        <div className="playOrBack" style={{ marginRight: '6vw' }}>
           <Link to={{
             pathname: '/multiplayer',
             state: {
@@ -186,7 +217,7 @@ class DuoGame extends Component {
             </Link>
           </div>
         </div>
-        <div className="formPoke" style={{ marginRight: 80 }}>
+        <div className="formPoke" style={{ marginRight: '6vw' }}>
           <form>
             <p>Pick your team mate:</p>
             <div className="list">
@@ -231,6 +262,19 @@ class DuoGame extends Component {
             ? <img alt={newvalue2} className="elem" src={`./assets/pokemons/elements/${newvalue2}.png`} />
             : undefined
           }
+          <div className="starsContainer" style={{ marginTop: '7.1vw', marginLeft: '0.1vw' }}>
+            {pokemon2 !== 'none'
+              ? levelIcons2.map((star, index) => (
+                <div
+                  className={star}
+                  key={`starId-${index + 1}`}
+                  alt={star}
+                  style={{ backgroundColor: 'rgba(190, 217, 241)', borderRadius: 100 }}
+                />
+              ))
+              : undefined
+            }
+          </div>
         </div>
       </div>
     );
