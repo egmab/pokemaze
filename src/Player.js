@@ -59,6 +59,7 @@ class Player extends Component {
     } else if (props.playerNumber === 'player2') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer2'));
       this.gpNumber = 1;
+      this.canMove = true;
       this.keys = {
         up: {
           keyboard: 38,
@@ -122,6 +123,8 @@ class Player extends Component {
   }
 
   refreshRender = () => {
+    // this.handleKeyboard();
+    this.canMove = true;
     this.handleGamepad();
     this.traps(this.posX, this.posY);
     this.setState({
@@ -133,6 +136,34 @@ class Player extends Component {
       this.multiplayerRefresh();
     }
   }
+
+  // triggerKeyboard = (e) => {
+  //   switch (e.keyCode) {
+  //     case this.keys.up.keyboard: {
+  //       this.canMove ? this.keys.up.keyboard.pressed = true : break
+  //       break;
+  //     }
+  //     case this.keys.down.keyboard: {
+  //       break;
+  //     }
+  //     case this.keys.left.keyboard: {
+  //       break;
+  //     }
+  //     case this.keys.right.keyboard: {
+  //       break;
+  //     }
+  //     case this.keys.action.keyboard: {
+  //       break;
+  //     }
+  //     default: {
+  //       break;
+  //     }
+  //   }
+  // }
+
+  // handleKeyboard = () => {
+
+  // }
 
   handleGamepad = () => {
     const gp = navigator.getGamepads();
@@ -147,25 +178,28 @@ class Player extends Component {
           && this.keys.right.padPressed === false)
         || (gp[this.gpNumber].buttons[this.keys.action.pad].pressed
           && this.keys.action.padPressed === false)) {
-        this.action(gp[this.gpNumber].buttons);
+        const { playerStunned, playerFrozen } = this.state;
+        if (!playerFrozen && !playerStunned) {
+          this.action(gp[this.gpNumber].buttons);
+        }
       }
-      if (this.keys.up.padPressed === true
+      if (this.keys.up.padPressed
         && gp[this.gpNumber].buttons[this.keys.up.pad].pressed === false) {
         this.keys.up.padPressed = false;
       }
-      if (this.keys.down.padPressed === true
+      if (this.keys.down.padPressed
         && gp[this.gpNumber].buttons[this.keys.down.pad].pressed === false) {
         this.keys.down.padPressed = false;
       }
-      if (this.keys.left.padPressed === true
+      if (this.keys.left.padPressed
         && gp[this.gpNumber].buttons[this.keys.left.pad].pressed === false) {
         this.keys.left.padPressed = false;
       }
-      if (this.keys.right.padPressed === true
+      if (this.keys.right.padPressed
         && gp[this.gpNumber].buttons[this.keys.right.pad].pressed === false) {
         this.keys.right.padPressed = false;
       }
-      if (this.keys.action.padPressed === true
+      if (this.keys.action.padPressed
         && gp[this.gpNumber].buttons[this.keys.action.pad].pressed === false) {
         this.keys.action.padPressed = false;
       }
@@ -205,7 +239,7 @@ class Player extends Component {
       ongoingGame, tiles, items, getPlayerPos, playerNumber,
     } = this.props;
     // MOVES
-    if (ongoingGame) {
+    if (ongoingGame && this.canMove) {
       // Move right
       if ((event.keyCode === this.keys.right.keyboard && this.keys.right.pressed === false)
         || (event[this.keys.right.pad]
@@ -219,6 +253,8 @@ class Player extends Component {
         if (this.checkTile(1, 0)) {
           this.posX += 1;
         }
+        this.canMove = false;
+        getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
       // Move left
@@ -234,6 +270,8 @@ class Player extends Component {
         if (this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
+        this.canMove = false;
+        getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
       // Move down
@@ -249,6 +287,8 @@ class Player extends Component {
         if (this.checkTile(0, 1)) {
           this.posY += 1;
         }
+        this.canMove = false;
+        getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
       // Move up
@@ -264,10 +304,10 @@ class Player extends Component {
         if (this.checkTile(0, -1)) {
           this.posY -= 1;
         }
+        this.canMove = false;
+        getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
-      // Callback : game gets new position of the player
-      getPlayerPos(this.posX, this.posY, playerNumber);
     }
     // ACTION KEY (spacebar)
     if ((event.keyCode === this.keys.action.keyboard && this.keys.action.pressed === false)
@@ -578,7 +618,8 @@ class Player extends Component {
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}vw`,
       left: `${11 + posX * pixelsPerTile}vw`,
-      transitionDuration: '500ms',
+      transitionDuration: '300ms',
+      transitionTimingFunction: 'linear',
     };
     // if (this.pokemon) {
     switch (this.img) {
