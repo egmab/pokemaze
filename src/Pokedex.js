@@ -128,6 +128,14 @@ class Pokedex extends Component {
     for (let i = 0; i < pokemonsClicked.length; i += 1) {
       pokemonsClicked[i].style.display = 'block';
     }
+
+    if (event.target.value === 'all') {
+      if (eachPokemon) {
+        for (let i = 0; i < eachPokemon.length; i += 1) {
+          eachPokemon[i].style.display = 'block';
+        }
+      }
+    }
   }
 
   render() {
@@ -160,6 +168,28 @@ class Pokedex extends Component {
           &apos;s pokedex
         </h2>
         <div className="pokemonSearchBar">
+          <div className="searchPoke">
+            <div className="buttons">
+              <button
+                type="button"
+                style={{
+                  backgroundImage: 'url(./assets/pokeball.png)',
+                }}
+                className="imgelemArray"
+                value="all"
+                onClick={this.changeType}
+              />
+            </div>
+            <div className="numbers">
+              <span>
+                All
+              </span>
+              <span className="starPoke">
+                {pokemonsCaught.length}
+                /151
+              </span>
+            </div>
+          </div>
           {this.typeArray.map(type => (
             <div className="searchPoke">
               <div className="buttons">
