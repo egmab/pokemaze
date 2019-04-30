@@ -195,8 +195,8 @@ class Pokedex extends Component {
               </span>
             </div>
           </div>
-          {this.typeArray.map(type => (
-            <div className="searchPoke">
+          {this.typeArray.map((type, index) => (
+            <div className="searchPoke" key={`typeId-${index + 1}`}>
               <div className="buttons">
                 <button
                   type="button"

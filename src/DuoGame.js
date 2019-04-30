@@ -134,8 +134,8 @@ class DuoGame extends Component {
                   ? <option key="none" value="none">Choose 1 of your pokemon</option>
                   : <option key="none" value="none">You have 0 pokemon</option>}
                 {
-                  pokemonsCaught1Sorted.map(monster => (
-                    <option key={monster.name} value={`${monster.type} ${monster.name}`}>
+                  pokemonsCaught1Sorted.map((monster, index) => (
+                    <option key={`monsterId-${index + 1}`} value={`${monster.type} ${monster.name}`}>
                       {monster.name}
                     </option>
                   ))

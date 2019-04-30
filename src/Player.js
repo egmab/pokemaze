@@ -17,71 +17,83 @@ class Player extends Component {
     const posY = props.startingPositions.y;
     this.posX = posX;
     this.posY = posY;
-    // Get player image
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
     // Define buttons for each player
     if (props.playerNumber === 'player1') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer'));
+      this.gpNumber = 0;
       this.keys = {
         up: {
           keyboard: 90,
-          pad: null,
+          pad: 12,
           pressed: false,
+          padPressed: false,
         },
         down: {
           keyboard: 83,
-          pad: null,
+          pad: 13,
           pressed: false,
+          padPressed: false,
         },
         left: {
           keyboard: 81,
-          pad: null,
+          pad: 14,
           pressed: false,
+          padPressed: false,
         },
         right: {
           keyboard: 68,
-          pad: null,
+          pad: 15,
           pressed: false,
+          padPressed: false,
         },
         action: {
           keyboard: 16,
-          pad: null,
+          pad: 0,
           pressed: false,
+          padPressed: false,
         },
       };
       this.enemy = 'player2';
     } else if (props.playerNumber === 'player2') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer2'));
+      this.gpNumber = 1;
       this.keys = {
         up: {
           keyboard: 38,
-          pad: null,
+          pad: 12,
           pressed: false,
+          padPressed: false,
         },
         down: {
           keyboard: 40,
-          pad: null,
+          pad: 13,
           pressed: false,
+          padPressed: false,
         },
         left: {
           keyboard: 37,
-          pad: null,
+          pad: 14,
           pressed: false,
+          padPressed: false,
         },
         right: {
           keyboard: 39,
-          pad: null,
+          pad: 15,
           pressed: false,
+          padPressed: false,
         },
         action: {
           keyboard: 32,
-          pad: null,
+          pad: 0,
           pressed: false,
+          padPressed: false,
         },
       };
       this.enemy = 'player1';
     }
+    // Get player image
     const charData = JSON.parse(localStorage.getItem(this.charName));
     this.charImg = charData.charImg;
     this.img = `${this.charImg}Bottom`;
@@ -122,6 +134,44 @@ class Player extends Component {
     }
   }
 
+  handleGamepad = () => {
+    const gp = navigator.getGamepads();
+    if (gp[this.gpNumber] !== null) {
+      if ((gp[this.gpNumber].buttons[this.keys.up.pad].pressed
+        && this.keys.up.padPressed === false)
+        || (gp[this.gpNumber].buttons[this.keys.down.pad].pressed
+          && this.keys.down.padPressed === false)
+        || (gp[this.gpNumber].buttons[this.keys.left.pad].pressed
+          && this.keys.left.padPressed === false)
+        || (gp[this.gpNumber].buttons[this.keys.right.pad].pressed
+          && this.keys.right.padPressed === false)
+        || (gp[this.gpNumber].buttons[this.keys.action.pad].pressed
+          && this.keys.action.padPressed === false)) {
+        this.action(gp[this.gpNumber].buttons);
+      }
+      if (this.keys.up.padPressed === true
+        && gp[this.gpNumber].buttons[this.keys.up.pad].pressed === false) {
+        this.keys.up.padPressed = false;
+      }
+      if (this.keys.down.padPressed === true
+        && gp[this.gpNumber].buttons[this.keys.down.pad].pressed === false) {
+        this.keys.down.padPressed = false;
+      }
+      if (this.keys.left.padPressed === true
+        && gp[this.gpNumber].buttons[this.keys.left.pad].pressed === false) {
+        this.keys.left.padPressed = false;
+      }
+      if (this.keys.right.padPressed === true
+        && gp[this.gpNumber].buttons[this.keys.right.pad].pressed === false) {
+        this.keys.right.padPressed = false;
+      }
+      if (this.keys.action.padPressed === true
+        && gp[this.gpNumber].buttons[this.keys.action.pad].pressed === false) {
+        this.keys.action.padPressed = false;
+      }
+    }
+  }
+
   handleKeyUp = (e) => {
     switch (e.keyCode) {
       case this.keys.down.keyboard: {
@@ -157,43 +207,77 @@ class Player extends Component {
     // MOVES
     if (ongoingGame) {
       // Move right
-      if (event.keyCode === this.keys.right.keyboard && this.keys.right.pressed === false) {
-        this.keys.right.pressed = true;
+      if ((event.keyCode === this.keys.right.keyboard && this.keys.right.pressed === false)
+        || (event[this.keys.right.pad]
+          && event[this.keys.right.pad].pressed === true && this.keys.right.padPressed === false)) {
+        if (event.keyCode === this.keys.right.keyboard) {
+          this.keys.right.pressed = true;
+        } else {
+          this.keys.right.padPressed = true;
+        }
         this.img = `${this.charImg}Right`;
         if (this.checkTile(1, 0)) {
           this.posX += 1;
         }
+        return;
       }
       // Move left
-      if (event.keyCode === this.keys.left.keyboard && this.keys.left.pressed === false) {
-        this.keys.left.pressed = true;
+      if ((event.keyCode === this.keys.left.keyboard && this.keys.left.pressed === false)
+        || (event[this.keys.left.pad]
+          && event[this.keys.left.pad].pressed === true && this.keys.left.padPressed === false)) {
+        if (event.keyCode === this.keys.left.keyboard) {
+          this.keys.left.pressed = true;
+        } else {
+          this.keys.left.padPressed = true;
+        }
         this.img = `${this.charImg}Left`;
         if (this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
+        return;
       }
       // Move down
-      if (event.keyCode === this.keys.down.keyboard && this.keys.down.pressed === false) {
-        this.keys.down.pressed = true;
+      if ((event.keyCode === this.keys.down.keyboard && this.keys.down.pressed === false)
+        || (event[this.keys.down.pad]
+          && event[this.keys.down.pad].pressed === true && this.keys.down.padPressed === false)) {
+        if (event.keyCode === this.keys.down.keyboard) {
+          this.keys.down.pressed = true;
+        } else {
+          this.keys.down.padPressed = true;
+        }
         this.img = `${this.charImg}Bottom`;
         if (this.checkTile(0, 1)) {
           this.posY += 1;
         }
+        return;
       }
       // Move up
-      if (event.keyCode === this.keys.up.keyboard && this.keys.up.pressed === false) {
-        this.keys.up.pressed = true;
+      if ((event.keyCode === this.keys.up.keyboard && this.keys.up.pressed === false)
+        || (event[this.keys.up.pad]
+          && event[this.keys.up.pad].pressed === true && this.keys.up.padPressed === false)) {
+        if (event.keyCode === this.keys.up.keyboard) {
+          this.keys.up.pressed = true;
+        } else {
+          this.keys.up.padPressed = true;
+        }
         this.img = `${this.charImg}Top`;
         if (this.checkTile(0, -1)) {
           this.posY -= 1;
         }
+        return;
       }
       // Callback : game gets new position of the player
       getPlayerPos(this.posX, this.posY, playerNumber);
     }
     // ACTION KEY (spacebar)
-    if (event.keyCode === this.keys.action.keyboard && this.keys.action.pressed === false) {
-      this.keys.action.pressed = true;
+    if ((event.keyCode === this.keys.action.keyboard && this.keys.action.pressed === false)
+      || (event[this.keys.action.pad]
+        && event[this.keys.action.pad].pressed === true && this.keys.action.padPressed === false)) {
+      if (event.keyCode === this.keys.action.keyboard) {
+        this.keys.action.pressed = true;
+      } else {
+        this.keys.action.padPressed = true;
+      }
       // Sets coordinates of the targeted tile
       switch (this.img) {
         case `${this.charImg}Top`: {
