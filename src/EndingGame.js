@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const EndingGame = ({
-  pokemon, isWinner, isLoser, winner, tutoWinner,
+  pokemon, isWinner, isLoser, winner, tutoWinner, timer, levelName,
 }) => {
   let pokemonName = pokemon.name;
   const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
@@ -15,7 +15,22 @@ const EndingGame = ({
   if (isWinner) {
     if (winner === 'player1') {
       winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
+      if (!localStorage.getItem('timers')) {
+        localStorage.setItem('timers', '{}');
+      }
+      const timersdata = JSON.parse(localStorage.getItem('timers'));
+      if (timersdata[levelName]) {
+        const currentTimer = timersdata[levelName][0];
+        if (currentTimer < timer) {
+          timersdata[levelName] = [timer, winnerName];
+          localStorage.setItem('timers', JSON.stringify(timersdata));
+        }
+      } else {
+        timersdata[levelName] = [timer, winnerName];
+        localStorage.setItem('timers', JSON.stringify(timersdata));
+      }
     }
+
     if (winner === 'player2') {
       winnerName = JSON.parse(localStorage.getItem('connectedPlayer2'));
     }
