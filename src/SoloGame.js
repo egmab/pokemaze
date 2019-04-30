@@ -14,6 +14,7 @@ class SoloGame extends Component {
 
 
   selectLevel = (event) => {
+    this.levelName = event.target.value;
     this.selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.solo[event.target.value];
     this.setState({ selectionDone: true });
   }
@@ -29,7 +30,7 @@ class SoloGame extends Component {
     const customLevels = Object.getOwnPropertyNames(JSON.parse(localStorage.getItem('PokemazeCustomLevels')));
     return (
       selectionDone
-        ? <Game level={this.selectedLevel} />
+        ? <Game level={this.selectedLevel} levelName={this.levelName} />
         : (
           <div className="soloHome">
             <div className="levels">

@@ -105,6 +105,7 @@ class Game extends Component {
   }
 
   getTime(count) {
+    this.timer = count;
     if (count === 0) {
       this.setState({
         isLoser: true,
@@ -195,11 +196,12 @@ class Game extends Component {
     const {
       isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
     } = this.state;
+    const { levelName } = this.props;
     return (
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser || tutoWinner
-          ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} timer={this.timer} levelName={levelName} />
           : null
         }
         <div className="gameContainer">

@@ -58,11 +58,13 @@ class Pokedex extends Component {
       actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
       pokemonsCaught = actualStorage.pokemons;
     }
+    const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => arr
+      .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
     /* Calcul pokémons attrapés par type */
-    if (pokemonsCaught.length > 0) {
-      for (let i = 0; i < pokemonsCaught.length; i += 1) {
-        pokemonType = pokemonsCaught[i].type;
+    if (pokemonsCaughtSorted.length > 0) {
+      for (let i = 0; i < pokemonsCaughtSorted.length; i += 1) {
+        pokemonType = pokemonsCaughtSorted[i].type;
         for (let j = 0; j < this.typeArray.length; j += 1) {
           if (this.typeArray[j] === pokemonType) {
             this.types[pokemonType].number += 1;
@@ -75,7 +77,8 @@ class Pokedex extends Component {
       if (this.types[this.typeArray[j]].number > 0) {
         this.types[this.typeArray[j]].level = 1;
       }
-      if (this.types[this.typeArray[j]].number === Math.ceil(this.types[this.typeArray[j]].max / 2)) {
+      if (this.types[this.typeArray[j]].number
+        === Math.ceil(this.types[this.typeArray[j]].max / 2)) {
         this.types[this.typeArray[j]].level = 2;
       }
       if (this.types[this.typeArray[j]].number === this.types[this.typeArray[j]].max) {
@@ -128,6 +131,14 @@ class Pokedex extends Component {
     for (let i = 0; i < pokemonsClicked.length; i += 1) {
       pokemonsClicked[i].style.display = 'block';
     }
+
+    if (event.target.value === 'all') {
+      if (eachPokemon) {
+        for (let i = 0; i < eachPokemon.length; i += 1) {
+          eachPokemon[i].style.display = 'block';
+        }
+      }
+    }
   }
 
   render() {
@@ -152,6 +163,8 @@ class Pokedex extends Component {
     if (player === 'player2') {
       pokemonContainer = 'pokemon-container2';
     }
+    const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => arr
+      .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
     return (
       <div className="global-container">
@@ -160,6 +173,28 @@ class Pokedex extends Component {
           &apos;s pokedex
         </h2>
         <div className="pokemonSearchBar">
+          <div className="searchPoke">
+            <div className="buttons">
+              <button
+                type="button"
+                style={{
+                  backgroundImage: 'url(./assets/pokeball.png)',
+                }}
+                className="imgelemArray"
+                value="all"
+                onClick={this.changeType}
+              />
+            </div>
+            <div className="numbers">
+              <span>
+                All
+              </span>
+              <span className="starPoke">
+                {pokemonsCaughtSorted.length}
+                /151
+              </span>
+            </div>
+          </div>
           {this.typeArray.map(type => (
             <div className="searchPoke">
               <div className="buttons">

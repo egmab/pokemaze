@@ -431,7 +431,7 @@ class Player extends Component {
     const {
       img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused, playerStunned,
     } = this.state;
-    //  Player CSS
+    // Player CSS
     const playerStyle = {
       opacity: playerOpacity,
       position: 'absolute',
@@ -441,41 +441,42 @@ class Player extends Component {
       backgroundRepeat: 'no-repeat',
       height: '2.5vw',
       width: '2.5vw',
+    };
+    //  Player Container CSS
+    const globalStyle = {
+      position: 'absolute',
+      zIndex: 0,
+      height: '2.5vw',
+      width: '2.5vw',
       marginTop: '4.9vw',
       marginLeft: '-10.035315vw',
-      transitionDuration: '500ms',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}vw`,
       left: `${11 + posX * pixelsPerTile}vw`,
+      transitionDuration: '500ms',
     };
     // if (this.pokemon) {
     switch (this.img) {
       case `${this.charImg}Top`: {
         this.pokemonStyle = {
-          top: `${posY * pixelsPerTile}vw`,
-          left: `${11 + posX * pixelsPerTile}vw`,
-          marginTop: '6.9vw',
-          marginLeft: '-10.035315vw',
+          marginTop: '2.5vw',
+          marginLeft: '-1.4vw',
           transitionProperty: 'top, left, margin-top, margin-left',
         };
         break;
       }
       case `${this.charImg}Left`: {
         this.pokemonStyle = {
-          top: `${posY * pixelsPerTile}vw`,
-          left: `${11 + posX * pixelsPerTile}vw`,
-          marginTop: '4.9vw',
-          marginLeft: '-8.035315vw',
+          marginTop: '0.3vw',
+          marginLeft: '0.6vw',
           transitionProperty: 'top, left, margin-top, margin-left',
         };
         break;
       }
       case `${this.charImg}Right`: {
         this.pokemonStyle = {
-          top: `${posY * pixelsPerTile}vw`,
-          left: `${11 + posX * pixelsPerTile}vw`,
-          marginTop: '4.9vw',
-          marginLeft: '-12.035315vw',
+          marginTop: '0.3vw',
+          marginLeft: '-3.3vw',
           transform: 'scaleX(-1)',
           transitionProperty: 'top, left, margin-top, margin-left',
         };
@@ -483,10 +484,8 @@ class Player extends Component {
       }
       default: {
         this.pokemonStyle = {
-          top: `${posY * pixelsPerTile}vw`,
-          left: `${11 + posX * pixelsPerTile}vw`,
-          marginTop: '2.9vw',
-          marginLeft: '-10.035315vw',
+          marginTop: '-2.2vw',
+          marginLeft: '-1.2vw',
           transitionProperty: 'top, left, margin-top, margin-left',
         };
         break;
@@ -495,7 +494,7 @@ class Player extends Component {
     // }
 
     return (
-      <div className="playerContainer">
+      <div className="playerContainer" style={globalStyle}>
         <div style={playerStyle}>
           {
             playerFrozen
