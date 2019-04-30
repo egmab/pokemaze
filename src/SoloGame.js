@@ -9,9 +9,27 @@ class SoloGame extends Component {
     super(props);
     this.state = {
       selectionDone: false,
+      pokemon: [],
     };
   }
 
+  componentWillMount() {
+    this.getPokemon();
+  }
+
+  getPokemon() {
+    fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
+      method: 'GET',
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((json) => {
+          this.setState({
+            pokemon: json.results,
+          });
+        });
+      }
+    });
+  }
 
   selectLevel = (event) => {
     this.levelName = event.target.value;
@@ -25,7 +43,7 @@ class SoloGame extends Component {
   }
 
   render() {
-    const { selectionDone } = this.state;
+    const { selectionDone, pokemon } = this.state;
     const soloLevels = Object.getOwnPropertyNames(JSON.parse(localStorage.getItem('GameData')).default.levels.solo);
     const customLevels = Object.getOwnPropertyNames(JSON.parse(localStorage.getItem('PokemazeCustomLevels')));
     return (
@@ -96,7 +114,7 @@ class SoloGame extends Component {
 
             </div>
             <div className="pokedexJ1solo">
-              <Pokedex getlevel={this.getLevelsJ1} player="player1" />
+              <Pokedex pokemon={pokemon} getlevel={this.getLevelsJ1} player="player1" />
             </div>
           </div>
         )
