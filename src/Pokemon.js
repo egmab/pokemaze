@@ -47,6 +47,13 @@ class Pokemon extends Component {
       pokemonType = undefined;
     }
 
+    let pokemonNumber = 0;
+    for (let i = 0; i < this.caught.length; i += 1) {
+      if (this.caught[i].name === pokemonName) {
+        pokemonNumber += 1;
+      }
+    }
+
 
     switch (this.pokemon) {
       case 'nidoran-f':
@@ -82,6 +89,9 @@ class Pokemon extends Component {
           </div>
           <div className="align-bottom">
             {this.pokemon}
+            <span>
+              {pokemonNumber}
+            </span>
           </div>
         </div>
       </div>

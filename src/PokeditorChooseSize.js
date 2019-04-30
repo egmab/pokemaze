@@ -27,9 +27,9 @@ class PokeditorChooseSize extends Component {
     const { xInput, yInput } = this.state;
     return (
       <div>
-        <p>
+        <p style={{ margin: '0' }}>
           Change level size
-          <span style={{ color: 'red' }}> WARNING: This will DELETE current level</span>
+          <span style={{ color: 'red' }}> WARNING: This will RESET current level</span>
         </p>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="Length">

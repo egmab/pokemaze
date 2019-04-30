@@ -216,8 +216,8 @@ class Player extends Component {
         && parseInt(items[posY][posX], 10) <= 499)
       || parseInt(projectiles[posY][posX], 10) > 0) {
       document.removeEventListener('keydown', this.action, false);
+      this.setState({ playerStunned: true });
       setTimeout(() => {
-        this.setState({ playerStunned: true });
         this.posX = startingPositions.x;
         this.posY = startingPositions.y;
       }, 200);
