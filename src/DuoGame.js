@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Pokedex from './Pokedex';
+import Mate from './Mate';
 import './DuoGame.css';
 
 class DuoGame extends Component {
@@ -36,7 +37,6 @@ class DuoGame extends Component {
     this.setState({ value2: event.target.value });
   }
 
-
   render() {
     const actualPlayer1 = JSON.parse(localStorage.getItem('connectedPlayer'));
     const actualPlayer2 = JSON.parse(localStorage.getItem('connectedPlayer2'));
@@ -60,12 +60,12 @@ class DuoGame extends Component {
       return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
     });
 
-    pokemonsCaught1Sorted = pokemonsCaught1.sort((a, b) => {
+    pokemonsCaught1Sorted = pokemonsCaught1Sorted.sort((a, b) => {
       if (a.name > b.name) {
         return 1;
       } return -1;
     });
-    pokemonsCaught2Sorted = pokemonsCaught2.sort((a, b) => {
+    pokemonsCaught2Sorted = pokemonsCaught2Sorted.sort((a, b) => {
       if (a.name > b.name) {
         return 1;
       } return -1;
@@ -113,22 +113,7 @@ class DuoGame extends Component {
           break;
       }
     }
-    const levelIcons1 = [];
-    for (let i = 0; i < 3; i += 1) {
-      if (i < level1) {
-        levelIcons1.push('star');
-      } else {
-        levelIcons1.push('emptyStar');
-      }
-    }
-    const levelIcons2 = [];
-    for (let i = 0; i < 3; i += 1) {
-      if (i < level2) {
-        levelIcons2.push('star');
-      } else {
-        levelIcons2.push('emptyStar');
-      }
-    }
+    
     return (
       <div className="DuoHome">
         <div className="pokedexJ1">
@@ -137,41 +122,7 @@ class DuoGame extends Component {
         <div className="pokedexJ2">
           <Pokedex getlevel={this.getLevelsJ2} player="player2" />
         </div>
-        <div className="mateContainer" style={{ marginRight: '4vw' }}>
-          <div className="pokemon">
-            {pokemon1 !== 'none'
-              ? (
-                <img
-                  src={`http://pokestadium.com/sprites/xy/${pokemon1}.gif`}
-                  alt={pokemon1}
-                />
-              )
-              : (
-                <img
-                  src="./assets/pokemons/unknow.png"
-                  alt="none"
-                />
-              )
-            }
-          </div>
-          {pokemon1 !== 'none'
-            ? <img alt={newvalue1} className="elem" src={`./assets/pokemons/elements/${newvalue1}.png`} />
-            : undefined
-          }
-          <div className="starsContainer" style={{ marginTop: '7.1vw', marginRight: '0.1vw' }}>
-            {pokemon1 !== 'none'
-              ? levelIcons1.map((star, index) => (
-                <div
-                  className={star}
-                  key={`starId-${index + 1}`}
-                  alt={star}
-                  style={{ backgroundColor: 'rgba(190, 217, 241)', borderRadius: 100 }}
-                />
-              ))
-              : undefined
-            }
-          </div>
-        </div>
+        <Mate pokemon={pokemon1} newvalue={newvalue1} level={level1} />
         <div className="formPoke" style={{ marginRight: '7vw' }}>
           <form>
             <p>Pick your team mate:</p>
@@ -252,41 +203,7 @@ class DuoGame extends Component {
             </div>
           </form>
         </div>
-        <div className="mateContainer">
-          <div className="pokemon">
-            {pokemon2 !== 'none'
-              ? (
-                <img
-                  src={`http://pokestadium.com/sprites/xy/${pokemon2}.gif`}
-                  alt={pokemon2}
-                />
-              )
-              : (
-                <img
-                  src="./assets/pokemons/unknow.png"
-                  alt="none"
-                />
-              )
-            }
-          </div>
-          {pokemon2 !== 'none'
-            ? <img alt={newvalue2} className="elem" src={`./assets/pokemons/elements/${newvalue2}.png`} />
-            : undefined
-          }
-          <div className="starsContainer" style={{ marginTop: '7.1vw', marginLeft: '0.1vw' }}>
-            {pokemon2 !== 'none'
-              ? levelIcons2.map((star, index) => (
-                <div
-                  className={star}
-                  key={`starId-${index + 1}`}
-                  alt={star}
-                  style={{ backgroundColor: 'rgba(190, 217, 241)', borderRadius: 100 }}
-                />
-              ))
-              : undefined
-            }
-          </div>
-        </div>
+        <Mate pokemon={pokemon2} newvalue={newvalue2} level={level2} />
       </div>
     );
   }
