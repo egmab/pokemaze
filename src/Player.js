@@ -22,6 +22,7 @@ class Player extends Component {
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
     // Define buttons for each player
+    this.gamepadPressed = false;
     if (props.playerNumber === 'player1') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer'));
       this.upButton = 90;
@@ -55,14 +56,6 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener("gamepadconnected", (event) => {
-      console.log("A gamepad connected:");
-      console.log(event.gamepad);
-    });
-    window.addEventListener("gamepaddisconnected", (event) => {
-      console.log("A gamepad disconnected:");
-      console.log(event.gamepad);
-    });
     document.addEventListener('keydown', this.action, false);
     // document.addEventListener('keyUp', this.anim, false);
 
@@ -78,7 +71,34 @@ class Player extends Component {
     clearInterval(this.interval);
   }
 
-  refreshRender() {
+  handleGamepads = () => {
+    const { playerNumber } = this.props;
+    if (playerNumber === 'player1') {
+      if (this.gamepads[0] !== null) {
+        if (this.pressedButton !== null && (!this.gamepads[0].buttons[this.pressedButton].pressed)) {
+          this.pressedButton = null;
+        }
+        if (this.gamepads[0].buttons[13].pressed && this.pressedButton !== 13) {
+          this.acceptInput = false;
+          this.pressedButton = 13;
+          this.action(this.downButton);
+        }
+      }
+    }
+    // if (playerNumber === 'player2') {
+    //   if (this.gamepads[1].buttons[13].pressed) {
+    //     this.action(this.downButton);
+    //   }
+    // }
+  }
+
+  refreshRender = () => {
+    this.gamepads = navigator.getGamepads();
+    if (this.gamepads) {
+      if (this.gamepads[0] !== null || this.gamepads[1] !== null) {
+        this.handleGamepads();
+      }
+    }
     this.traps(this.posX, this.posY);
     this.setState({
       posX: this.posX,
@@ -246,6 +266,7 @@ class Player extends Component {
         || event.keyCode === this.downButton
         || event.keyCode === this.leftButton
         || event.keyCode === this.rightButton
+        || event === this.downButton
       )) {
       this.canMove = false;
       // Move right
@@ -263,7 +284,7 @@ class Player extends Component {
         }
       }
       // Move down
-      if (event.keyCode === this.downButton) {
+      if (event.keyCode === this.downButton || event === this.downButton) {
         this.img = `${this.charImg}Bottom`;
         if (this.checkTile(0, 1)) {
           this.posY += 1;
