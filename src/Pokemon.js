@@ -5,11 +5,15 @@ class Pokemon extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      onePokemon: '',
+      onePokemon: [],
     };
     const { pokemonName, pokemonsCaught } = this.props;
     this.pokemon = pokemonName;
     this.caught = pokemonsCaught;
+    this.pokemonClass = undefined;
+    this.pokemonType = undefined;
+    this.pokemonNumber = 0;
+    this.classType = undefined;
   }
 
   componentWillMount() {
@@ -20,40 +24,22 @@ class Pokemon extends Component {
           onePokemon: data,
         });
       });
-  }
-
-
-  render() {
-    const { pokemonName, player } = this.props;
-    let pokemonClass = 'notHave';
+    const { pokemonName } = this.props;
+    this.pokemonClass = 'notHave';
     for (let i = 0; i < this.caught.length; i += 1) {
       if (this.caught[i].name === pokemonName) {
-        pokemonClass = 'pokemon-single-container';
+        this.pokemonClass = 'pokemon-single-container';
         break;
       } else {
-        pokemonClass = 'notHave';
+        this.pokemonClass = 'notHave';
       }
     }
 
-    const { onePokemon } = this.state;
-    let pokemonType = '';
-    if (onePokemon.types) {
-      if (onePokemon.types[1]) {
-        pokemonType = onePokemon.types[1].type.name;
-      } else {
-        pokemonType = onePokemon.types[0].type.name;
-      }
-    } else {
-      pokemonType = undefined;
-    }
-
-    let pokemonNumber = 0;
     for (let i = 0; i < this.caught.length; i += 1) {
       if (this.caught[i].name === pokemonName) {
-        pokemonNumber += 1;
+        this.pokemonNumber += 1;
       }
     }
-
 
     switch (this.pokemon) {
       case 'nidoran-f':
@@ -65,20 +51,35 @@ class Pokemon extends Component {
       default:
         break;
     }
-    let classType = pokemonType;
+  }
+
+
+  render() {
+    const { player } = this.props;
+    const { onePokemon } = this.state;
+    if (onePokemon.types) {
+      if (onePokemon.types[1]) {
+        this.pokemonType = onePokemon.types[1].type.name;
+      } else {
+        this.pokemonType = onePokemon.types[0].type.name;
+      }
+    } else {
+      this.pokemonType = undefined;
+    }
+    this.classType = this.pokemonType;
     if (player === 'player1') {
-      classType = pokemonType;
+      this.classType = this.pokemonType;
     }
     if (player === 'player2') {
-      classType = `${pokemonType}2`;
+      this.classType = `${this.pokemonType}2`;
     }
     return (
-      <div className={classType}>
+      <div className={this.classType}>
         <div
-          className={pokemonClass}
+          className={this.pokemonClass}
         >
           <div>
-            {pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
+            {this.pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${this.pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
           </div>
           <div>
             <img
@@ -90,7 +91,7 @@ class Pokemon extends Component {
           <div className="align-bottom">
             {this.pokemon}
             <span>
-              {pokemonNumber}
+              {this.pokemonNumber}
             </span>
           </div>
         </div>

@@ -14,9 +14,7 @@ let pokemonContainer = 'pokemon-container1';
 class Pokedex extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      pokemon: [],
-    };
+    this.pokeMap = [];
     this.typeArray = ['water', 'fire', 'grass', 'electric',
       'psychic', 'dragon', 'normal', 'rock', 'fighting', 'fairy',
       'bug', 'ground', 'poison', 'ghost', 'ice'];
@@ -39,9 +37,6 @@ class Pokedex extends Component {
     };
   }
 
-  componentWillMount() {
-    this.getPokemon();
-  }
 
   componentDidMount() {
     const { player } = this.props;
@@ -91,20 +86,9 @@ class Pokedex extends Component {
     }
   }
 
+   
 
-  getPokemon() {
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
-      method: 'GET',
-    }).then((response) => {
-      if (response.ok) {
-        response.json().then((json) => {
-          this.setState({
-            pokemon: json.results,
-          });
-        });
-      }
-    });
-  }
+
 
   changeType = (event) => {
     let pokemonsClicked = '';
@@ -141,8 +125,9 @@ class Pokedex extends Component {
     }
   }
 
+ 
+
   render() {
-    const { pokemon } = this.state;
     const { player } = this.props;
 
     actualPlayer = 'Player';
@@ -166,6 +151,18 @@ class Pokedex extends Component {
     const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => {
       return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
     });
+
+    const { pokemon } = this.props;
+    this.pokeMap = pokemon.map((monster, index) => (
+      <Pokemon
+        key={monster.name}
+        id={index + 1}
+        pokemonName={monster.name}
+        pokemonsCaught={pokemonsCaught}
+        player={player}
+        isClicked={this.isClicked}
+      />
+    ));
 
     return (
       <div className="global-container">
@@ -228,18 +225,7 @@ class Pokedex extends Component {
           }
         </div>
         <div id={pokemonContainer}>
-          {
-            pokemon.map((monster, index) => (
-              <Pokemon
-                key={monster.name}
-                id={index + 1}
-                pokemonName={monster.name}
-                pokemonsCaught={pokemonsCaught}
-                player={player}
-                isClicked={this.isClicked}
-              />
-            ))
-          }
+          {this.pokeMap}
         </div>
       </div>
     );
