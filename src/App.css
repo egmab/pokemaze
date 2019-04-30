@@ -1,6 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Lato|Roboto');
 @import url('https://fonts.googleapis.com/css?family=Oswald');
 
+*
+{
+  outline: 0;
+  -webkit-user-select: none; 
+  -khtml-user-select: none; 
+  -moz-user-select: none; 
+  -o-user-select: none; 
+  user-select: none;
+}
+
 html{
   height: 100%;
 }
