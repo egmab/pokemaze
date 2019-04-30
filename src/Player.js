@@ -157,6 +157,7 @@ class Player extends Component {
         // Default capacity: punch
         default: {
           document.removeEventListener('keydown', this.action, false);
+          this.setState({ playerStunned: true });
           let gettingPunched = true;
           while (gettingPunched) {
             const { posX, posY } = this.state;
@@ -174,8 +175,10 @@ class Player extends Component {
               gettingPunched = false;
             }
           }
-          setTimeout(() => document.addEventListener('keydown', this.action, false),
-            2000);
+          setTimeout(() => {
+            document.addEventListener('keydown', this.action, false);
+            this.setState({ playerStunned: false });
+          }, 2000);
           resetActions();
           break;
         }
