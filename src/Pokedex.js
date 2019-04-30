@@ -58,11 +58,14 @@ class Pokedex extends Component {
       actualStorage = JSON.parse(localStorage.getItem(actualPlayer));
       pokemonsCaught = actualStorage.pokemons;
     }
+    const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => {
+      return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
+    });
 
     /* Calcul pokémons attrapés par type */
-    if (pokemonsCaught.length > 0) {
-      for (let i = 0; i < pokemonsCaught.length; i += 1) {
-        pokemonType = pokemonsCaught[i].type;
+    if (pokemonsCaughtSorted.length > 0) {
+      for (let i = 0; i < pokemonsCaughtSorted.length; i += 1) {
+        pokemonType = pokemonsCaughtSorted[i].type;
         for (let j = 0; j < this.typeArray.length; j += 1) {
           if (this.typeArray[j] === pokemonType) {
             this.types[pokemonType].number += 1;
@@ -160,6 +163,9 @@ class Pokedex extends Component {
     if (player === 'player2') {
       pokemonContainer = 'pokemon-container2';
     }
+    const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => {
+      return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
+    });
 
     return (
       <div className="global-container">
@@ -185,7 +191,7 @@ class Pokedex extends Component {
                 All
               </span>
               <span className="starPoke">
-                {pokemonsCaught.length}
+                {pokemonsCaughtSorted.length}
                 /151
               </span>
             </div>
