@@ -7,17 +7,23 @@ class Player extends Component {
     if (props.gameMode) {
       this.gameMode = props.gameMode;
     }
+    if (props.pokemon) {
+      if (props.pokemon !== 'none') {
+        this.pokemon = props.pokemon;
+      }
+    }
     this.canMove = true;
     this.action = this.action.bind(this);
     const posX = props.startingPositions.x;
     const posY = props.startingPositions.y;
     this.posX = posX;
     this.posY = posY;
-    this.img = 'charBottom';
+    // Get player image
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
     // Define buttons for each player
     if (props.playerNumber === 'player1') {
+      this.charName = JSON.parse(localStorage.getItem('connectedPlayer'));
       this.upButton = 90;
       this.downButton = 83;
       this.leftButton = 81;
@@ -25,6 +31,7 @@ class Player extends Component {
       this.actionButton = 16;
       this.enemy = 'player2';
     } else if (props.playerNumber === 'player2') {
+      this.charName = JSON.parse(localStorage.getItem('connectedPlayer2'));
       this.upButton = 38;
       this.downButton = 40;
       this.leftButton = 37;
@@ -32,6 +39,9 @@ class Player extends Component {
       this.actionButton = 32;
       this.enemy = 'player1';
     }
+    const charData = JSON.parse(localStorage.getItem(this.charName));
+    this.charImg = charData.charImg;
+    this.img = `${this.charImg}Bottom`;
     this.state = {
       playerStunned: false,
       playerConfused: false,
@@ -39,7 +49,7 @@ class Player extends Component {
       playerOpacity: 1,
       posX: props.startingPositions.x,
       posY: props.startingPositions.y,
-      img: 'charBottom',
+      img: `${this.charImg}Bottom`,
       pixelsPerTile: 3.1,
     };
   }
@@ -206,8 +216,8 @@ class Player extends Component {
         && parseInt(items[posY][posX], 10) <= 499)
       || parseInt(projectiles[posY][posX], 10) > 0) {
       document.removeEventListener('keydown', this.action, false);
+      this.setState({ playerStunned: true });
       setTimeout(() => {
-        this.setState({ playerStunned: true });
         this.posX = startingPositions.x;
         this.posY = startingPositions.y;
       }, 200);
@@ -232,28 +242,28 @@ class Player extends Component {
       this.canMove = false;
       // Move right
       if (event.keyCode === this.rightButton) {
-        this.img = 'charRight';
+        this.img = `${this.charImg}Right`;
         if (this.checkTile(1, 0)) {
           this.posX += 1;
         }
       }
       // Move left
       if (event.keyCode === this.leftButton) {
-        this.img = 'charLeft';
+        this.img = `${this.charImg}Left`;
         if (this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
       }
       // Move down
       if (event.keyCode === this.downButton) {
-        this.img = 'charBottom';
+        this.img = `${this.charImg}Bottom`;
         if (this.checkTile(0, 1)) {
           this.posY += 1;
         }
       }
       // Move up
       if (event.keyCode === this.upButton) {
-        this.img = 'charTop';
+        this.img = `${this.charImg}Top`;
         if (this.checkTile(0, -1)) {
           this.posY -= 1;
         }
@@ -265,7 +275,7 @@ class Player extends Component {
     if (event.keyCode === this.actionButton) {
       // Sets coordinates of the targeted tile
       switch (this.img) {
-        case 'charTop': {
+        case `${this.charImg}Top`: {
           this.targetedTileX = this.posX;
           this.targetedTileY = this.posY - 1;
           this.targetedDirection = {
@@ -274,7 +284,7 @@ class Player extends Component {
           };
           break;
         }
-        case 'charLeft': {
+        case `${this.charImg}Left`: {
           this.targetedTileX = this.posX - 1;
           this.targetedTileY = this.posY;
           this.targetedDirection = {
@@ -283,7 +293,7 @@ class Player extends Component {
           };
           break;
         }
-        case 'charRight': {
+        case `${this.charImg}Right`: {
           this.targetedTileX = this.posX + 1;
           this.targetedTileY = this.posY;
           this.targetedDirection = {
@@ -392,7 +402,7 @@ class Player extends Component {
     const {
       img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused, playerStunned,
     } = this.state;
-    //  Player CSS
+    // Player CSS
     const playerStyle = {
       opacity: playerOpacity,
       position: 'absolute',
@@ -402,16 +412,60 @@ class Player extends Component {
       backgroundRepeat: 'no-repeat',
       height: '2.5vw',
       width: '2.5vw',
+    };
+    //  Player Container CSS
+    const globalStyle = {
+      position: 'absolute',
+      zIndex: 0,
+      height: '2.5vw',
+      width: '2.5vw',
       marginTop: '4.9vw',
       marginLeft: '-10.035315vw',
-      transitionDuration: '500ms',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}vw`,
       left: `${11 + posX * pixelsPerTile}vw`,
+      transitionDuration: '500ms',
     };
+    // if (this.pokemon) {
+    switch (this.img) {
+      case `${this.charImg}Top`: {
+        this.pokemonStyle = {
+          marginTop: '2.5vw',
+          marginLeft: '-1.4vw',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+      case `${this.charImg}Left`: {
+        this.pokemonStyle = {
+          marginTop: '0.3vw',
+          marginLeft: '0.6vw',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+      case `${this.charImg}Right`: {
+        this.pokemonStyle = {
+          marginTop: '0.3vw',
+          marginLeft: '-3.3vw',
+          transform: 'scaleX(-1)',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+      default: {
+        this.pokemonStyle = {
+          marginTop: '-2.2vw',
+          marginLeft: '-1.2vw',
+          transitionProperty: 'top, left, margin-top, margin-left',
+        };
+        break;
+      }
+    }
+    // }
 
     return (
-      <div className="player">
+      <div className="playerContainer" style={globalStyle}>
         <div style={playerStyle}>
           {
             playerFrozen
@@ -435,6 +489,17 @@ class Player extends Component {
               : null
           }
         </div>
+        {
+          this.pokemon
+            ? (
+              <div
+                className="pokemonPetContainer"
+              >
+                <img style={this.pokemonStyle} className="pokemonPet" src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`} alt={this.pokemon} />
+              </div>
+            )
+            : null
+        }
       </div>
 
     );

@@ -19,6 +19,10 @@
     align-items: flex-start;
 }
 
+.starPoke img{
+    height: 1.5vw;
+}
+
 #pokemon-container2{
     display: flex;
     flex-wrap: wrap;
@@ -36,7 +40,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #ededed;
+    background-color: #e8f6fa;
     color: #424242;
     margin: 12px;
     border-radius: 5px;
@@ -52,8 +56,29 @@
     border-radius: 1vw;
     overflow: hidden;
     border:0.3vw solid grey;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: space-between;
 }
-
+.searchPoke{
+    width: 5.5vw;
+    align-items: center;
+    justify-content: center;
+}
+.buttons{
+    width: 5.5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.numbers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1vw;
+}
 .searchLeft{
     text-align: left;
 }
@@ -74,6 +99,16 @@
     line-height: 27.7px;
     background-color: rgb(190, 217, 241);
     border: 1px solid grey;
+}
+
+.align-bottom span{
+    text-transform: lowercase;
+    margin-left: 0.75vw;
+    font-size: 13px;
+    background-color: #2b55a3;
+    color: white;
+    border-radius: 50vw;
+    padding: 0.5vh 1vh;
 }
 
 .sprites{
@@ -105,7 +140,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    background-color: #ededed;
+    background-color: #ece9e9;
     color: #424242;
     margin: 12px;
     border-radius: 5px;

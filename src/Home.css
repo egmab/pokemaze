@@ -1,129 +1,146 @@
 
-.home{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  flex-direction: row;
-  align-items: center;
-  background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
-  background-size: 100%, cover;
-  min-height: 100vh;
-  min-width: 100vh;
-}
+  .home{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
+    background-size: 100%, cover;
+    min-height: 100vh;
+    min-width: 100vh;
+  }
+  
+  .changeCharacter{
+    display:flex;
+  }
 
-/* .home img{
-  padding-top: 18vh;
-} */
+  .changeCharacterImgButton{
+    background-size: cover;
+    width: 2vw;
+    height: 2vw;
+    border: none;
+    background-color: #11ffee00;
+  }
 
-.home input{
-  padding:10px;
-  border:none;
-  width:100%;
-  border-radius:20px;
-}
+  .changeCharacterImgButton:focus {
+    background-color: #11ffee00;
+    border: none;
+  }
 
-.buttonContainerHome { 
-  display: flex;
-  justify-content: center;
-  padding-bottom: 8vw;
-  margin-left:5vw;
-}
+  /* .home img{
+    padding-top: 18vh;
+  } */
 
-.logoButtons{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+  .home input{
+    padding:10px;
+    border:none;
+    width:100%;
+    border-radius:20px;
+  }
+  
+  .buttonContainerHome { 
+    display: flex;
+    justify-content: center;
+    padding-bottom: 8vw;
+    margin-left:5vw;
+  }
+  
+  .logoButtons{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+ 
+  .homeButton {
+    padding:1vw 3vw;
+    background-color:#89c403;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid #74b807;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:1.7vw;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #528009;
+  }
 
-.homeButton {
-  padding:1vw 3vw;
-  background-color:#89c403;
-  -moz-border-radius:6px;
-  -webkit-border-radius:6px;
-  border-radius:6px;
-  border:1px solid #74b807;
-  display:inline-block;
-  cursor:pointer;
-  color:#ffffff;
-  font-size:1.7vw;
-  font-weight:bold;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #528009;
-}
+  .homeButton:disabled {
+    padding:1vw 3vw;
+    background-color:grey;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-radius:6px;
+    border:1px solid grey;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:1.42em;
+    font-weight:bold;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #528009;
+  }
+  
+  .homeButton a {
+    text-decoration:none;
+    color:#ffffff;
+  }
+  .homeButton:hover:enabled {
+    background-color: #77a809;
+  }
 
-.homeButton:disabled {
-  padding:1vw 3vw;
-  background-color:grey;
-  -moz-border-radius:6px;
-  -webkit-border-radius:6px;
-  border-radius:6px;
-  border:1px solid grey;
-  display:inline-block;
-  cursor:pointer;
-  color:#ffffff;
-  font-size:1.42em;
-  font-weight:bold;
-  text-decoration:none;
-  text-shadow:0px 1px 0px #528009;
-}
+  .homeButton:active {
+    position:relative;
+    top:1px;
+  }
+  .forms{
+    min-width: 17%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    position: fixed;
+    top:0;
+    left:0;
+    min-width: 17%;
+  }
+  .formOne{
+    margin-right: 60vw;
+    display:flex;
+    flex-direction:column;
+    padding-top:1.5vw;
+    padding-bottom:1.5vw;
+    width:20vw;
+    background-color:rgba(0,0,0,0.38);
+    color:white;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5vw;
+  }
 
-.homeButton a {
-  text-decoration:none;
-  color:#ffffff;
-}
-.homeButton:hover:enabled {
-  background-color: #77a809;
-}
+  .home form{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+  }
 
-.homeButton:active {
-  position:relative;
-  top:1px;
-}
-.forms{
-  min-width: 17%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  position: fixed;
-  top:0;
-  left:0;
-  min-width: 17%;
-}
-.formOne{
-  margin-right: 60vw;
-  display:flex;
-  flex-direction:column;
-  padding-top:1.5vw;
-  padding-bottom:1.5vw;
-  width:20vw;
-  background-color:rgba(0,0,0,0.38);
-  color:white;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5vw;
-}
-
-.home form{
-  display:flex;
-  flex-direction:column;
-  justify-content: center;
-  align-items: center;
-}
-
-.formTwo{
-  display:flex;
-  flex-direction:column;
-  padding-top:1.5vw;
-  padding-bottom:1.5vw;
-  width:20vw;
-  background-color:rgba(0,0,0,0.38);
-  color:white;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5vw;
-}
+  .formTwo{
+    display:flex;
+    flex-direction:column;
+    padding-top:1.5vw;
+    padding-bottom:1.5vw;
+    width:20vw;
+    background-color:rgba(0,0,0,0.38);
+    color:white;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5vw;
+  }
 
 
 

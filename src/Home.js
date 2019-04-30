@@ -6,12 +6,16 @@ import Video from './Video';
 class Home extends Component {
   constructor(props) {
     super(props);
+    this.charImagesList = ['guy', 'female', 'black', 'elegant', 'greenWoman', 'pinkHairWoman', 'oldMan'];
     this.data = {
       pokemons: [],
+      charImg: 'guy',
     };
     this.state = {
       userOne: '',
+      userOneImg: 'guy',
       userTwo: '',
+      userTwoImg: 'guy',
       playerOneConnected: false,
       playerTwoConnected: false,
       test: false,
@@ -21,10 +25,24 @@ class Home extends Component {
 
   componentWillMount() {
     if (localStorage.getItem('connectedPlayer')) {
-      this.setState({ userOne: JSON.parse(localStorage.getItem('connectedPlayer')), playerOneConnected: true });
+      const charName = JSON.parse(localStorage.getItem('connectedPlayer'));
+      const charData = JSON.parse(localStorage.getItem(charName));
+      const img = charData.charImg;
+      this.setState({
+        userOne: charName,
+        userOneImg: img,
+        playerOneConnected: true,
+      });
     }
     if (localStorage.getItem('connectedPlayer2')) {
-      this.setState({ userTwo: JSON.parse(localStorage.getItem('connectedPlayer2')), playerTwoConnected: true });
+      const charName = JSON.parse(localStorage.getItem('connectedPlayer2'));
+      const charData = JSON.parse(localStorage.getItem(charName));
+      const img = charData.charImg;
+      this.setState({
+        userTwo: charName,
+        userTwoImg: img,
+        playerTwoConnected: true,
+      });
     }
   }
 
@@ -53,6 +71,40 @@ class Home extends Component {
     }
   }
 
+  changeCharImgOne = (num) => {
+    const { userOneImg } = this.state;
+    const currentIndex = this.charImagesList.indexOf(userOneImg);
+    let nextIndex = currentIndex + num;
+    if (nextIndex < 0) {
+      nextIndex = this.charImagesList.length - 1;
+    }
+    if (nextIndex > this.charImagesList.length - 1) {
+      nextIndex = 0;
+    }
+    const charName = JSON.parse(localStorage.getItem('connectedPlayer'));
+    const charData = JSON.parse(localStorage.getItem(charName));
+    charData.charImg = this.charImagesList[nextIndex];
+    localStorage.setItem(charName, JSON.stringify(charData));
+    this.setState({ userOneImg: this.charImagesList[nextIndex] });
+  }
+
+  changeCharImgTwo = (num) => {
+    const { userTwoImg } = this.state;
+    const currentIndex = this.charImagesList.indexOf(userTwoImg);
+    let nextIndex = currentIndex + num;
+    if (nextIndex < 0) {
+      nextIndex = this.charImagesList.length - 1;
+    }
+    if (nextIndex > this.charImagesList.length - 1) {
+      nextIndex = 0;
+    }
+    // this.charImagesList = ['guy', 'female'];
+    const charName = JSON.parse(localStorage.getItem('connectedPlayer2'));
+    const charData = JSON.parse(localStorage.getItem(charName));
+    charData.charImg = this.charImagesList[nextIndex];
+    localStorage.setItem(charName, JSON.stringify(charData));
+    this.setState({ userTwoImg: this.charImagesList[nextIndex] });
+  }
 
   onSubmitOne = (event) => {
     event.preventDefault();
@@ -115,6 +167,8 @@ class Home extends Component {
       playerOneConnected,
       playerTwoConnected,
       test,
+      userOneImg,
+      userTwoImg,
     } = this.state;
     return (
       <div className="home">
@@ -143,6 +197,35 @@ class Home extends Component {
                     {' '}
                     {userOne}
                   </h6>
+                  <div className="changeCharacter">
+                    <button
+                      className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/previous-arrow.png)',
+                      }}
+                      type="button"
+                      value="userOne"
+                      onClick={() => this.changeCharImgOne(-1)}
+                    />
+                    <div
+                      style={{
+                        backgroundPosition: 'center',
+                        backgroundImage: `url(./assets/characters/${userOneImg}Bottom.png)`,
+                        height: '50px',
+                        width: '50px',
+                        backgroundRepeat: 'no-repeat',
+                      }}
+                    />
+                    <button
+                      className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/next-arrow.png)',
+                      }}
+                      type="button"
+                      value="userOne"
+                      onClick={() => this.changeCharImgOne(1)}
+                    />
+                  </div>
                   <form onSubmit={this.onDisconnectOne}>
                     <input
                       className="disconnectButton"
@@ -185,6 +268,35 @@ class Home extends Component {
                     {' '}
                     {userTwo}
                   </h6>
+                  <div className="changeCharacter">
+                    <button
+                      className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/previous-arrow.png)',
+                      }}
+                      type="button"
+                      value="userTwo"
+                      onClick={() => this.changeCharImgTwo(-1)}
+                    />
+                    <div
+                      style={{
+                        backgroundPosition: 'center',
+                        backgroundImage: `url(./assets/characters/${userTwoImg}Bottom.png)`,
+                        height: '50px',
+                        width: '50px',
+                        backgroundRepeat: 'no-repeat',
+                      }}
+                    />
+                    <button
+                      className="changeCharacterImgButton"
+                      style={{
+                        backgroundImage: 'url(./assets/next-arrow.png)',
+                      }}
+                      type="button"
+                      value="userTwo"
+                      onClick={() => this.changeCharImgTwo(-1)}
+                    />
+                  </div>
                   <form onSubmit={this.onDisconnectTwo}>
                     <input
                       className="disconnectButton"
