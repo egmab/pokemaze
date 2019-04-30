@@ -10,6 +10,17 @@ import Pokeditor from './Pokeditor';
 import * as GameData from './gameData.json';
 
 // <Route path="/game" render={props => <Game level={selectedLevel} {...props} />} />
+window.addEventListener("gamepadconnected", (event) => {
+  console.log("A gamepad connected:");
+  console.log(event.gamepad);
+});
+
+window.addEventListener("gamepaddisconnected", (event) => {
+  console.log("A gamepad disconnected:");
+  console.log(event.gamepad);
+});
+const gamepads = navigator.getGamepads();
+console.log(gamepads);
 
 
 const App = () => {

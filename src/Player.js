@@ -55,6 +55,14 @@ class Player extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener("gamepadconnected", (event) => {
+      console.log("A gamepad connected:");
+      console.log(event.gamepad);
+    });
+    window.addEventListener("gamepaddisconnected", (event) => {
+      console.log("A gamepad disconnected:");
+      console.log(event.gamepad);
+    });
     document.addEventListener('keydown', this.action, false);
     // document.addEventListener('keyUp', this.anim, false);
 
