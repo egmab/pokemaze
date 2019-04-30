@@ -52,13 +52,11 @@ class DuoGame extends Component {
       actualStorage2 = JSON.parse(localStorage.getItem(actualPlayer2));
       pokemonsCaught2 = actualStorage2.pokemons;
     }
-    let pokemonsCaught1Sorted = pokemonsCaught1.filter((obj, pos, arr) => {
-      return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
-    });
+    let pokemonsCaught1Sorted = pokemonsCaught1.filter((obj, pos, arr) => arr
+      .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
-    let pokemonsCaught2Sorted = pokemonsCaught2.filter((obj, pos, arr) => {
-      return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
-    });
+    let pokemonsCaught2Sorted = pokemonsCaught2.filter((obj, pos, arr) => arr
+      .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
     pokemonsCaught1Sorted = pokemonsCaught1Sorted.sort((a, b) => {
       if (a.name > b.name) {
@@ -113,7 +111,7 @@ class DuoGame extends Component {
           break;
       }
     }
-    
+
     return (
       <div className="DuoHome">
         <div className="pokedexJ1">
