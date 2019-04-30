@@ -20,7 +20,7 @@ const PokeditorBoard = (props) => {
     return tile;
   };
   return (
-    <div className="Board">
+    <div className="Board" style={{ margin: '0' }}>
       <table className="pokeditorTable">
         <tbody>
           {

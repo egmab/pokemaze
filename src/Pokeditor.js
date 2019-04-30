@@ -5,7 +5,9 @@ import PokeditorChooseItem from './PokeditorChooseItem';
 import PokeditorChooseStartingPoint from './PokeditorChooseStartingPoint';
 import PokeditorChooseSize from './PokeditorChooseSize';
 import PokeditorChooseTimer from './PokeditorChooseTimer';
+import PokeditorChooseGameMode from './PokeditorChooseGameMode';
 import PokeditorSaveLevel from './PokeditorSaveLevel';
+import PokeditorLoadDeleteLevel from './PokeditorLoadDeleteLevel';
 import PokeditorBoard from './PokeditorBoard';
 import PokeditorMatrix from './PokeditorMatrix';
 import './Pokeditor.css';
@@ -13,6 +15,10 @@ import './Pokeditor.css';
 class Pokeditor extends Component {
   constructor(props) {
     super(props);
+    if (!localStorage.getItem('PokemazeCustomLevels')) {
+      localStorage.setItem('PokemazeCustomLevels', JSON.stringify({}));
+    }
+    const customLevels = Object.keys(JSON.parse(localStorage.getItem('PokemazeCustomLevels')));
     // TO DO : add a way to modify/write a json file
     // TO DO : select/edit existing levels
     // TO DO : add a way to get file list from assets/tiles folder...
@@ -31,29 +37,31 @@ class Pokeditor extends Component {
     this.items = ['000', '001', '002', '700', '701', '702', '703', '704', '705', '800', '801',
       '802', '803', '804', '805', '900'];
     this.state = {
+      gameMode: 'Solo',
+      customLevels,
       level: [
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '502', '503', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '505', '504', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
-        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
+        ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
       ],
       items: [
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
-        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
+        ['000', '000', '000', '000', '000', '000', '000', '000', '000', '000'],
       ],
       selectedTile: null,
       selectedItem: null,
@@ -71,6 +79,63 @@ class Pokeditor extends Component {
 
   selectItem = (event) => {
     this.setState({ selectedItem: event.target.value, selectedTile: null });
+  }
+
+  saveLevel = (levelName) => {
+    const {
+      level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer, // gameMode,
+    } = this.state;
+    const currentData = JSON.parse(localStorage.getItem('PokemazeCustomLevels'));
+    const currentLevel = {
+      tiles: level,
+      items,
+      startingPositions: {
+        player1: {
+          x: playerOneY,
+          y: playerOneX,
+        },
+        player2: {
+          x: playerTwoY,
+          y: playerTwoX,
+        },
+      },
+      timer,
+      typeOfKey: '002',
+      isTuto: true,
+    };
+    // currentData[gameMode][levelName] = currentLevel;
+    currentData[levelName] = currentLevel;
+    localStorage.setItem('PokemazeCustomLevels', JSON.stringify(currentData));
+    // Refresh render for load/delete levels
+    const customLevels = Object.keys(JSON.parse(localStorage.getItem('PokemazeCustomLevels')));
+    this.setState({ customLevels });
+  }
+
+  loadLevel = (levelName) => {
+    if (levelName && levelName !== undefined) {
+      const levelsList = JSON.parse(localStorage.getItem('PokemazeCustomLevels'));
+      this.setState({
+        level: levelsList[levelName].tiles,
+        items: levelsList[levelName].items,
+        playerOneX: levelsList[levelName].startingPositions.player1.y,
+        playerOneY: levelsList[levelName].startingPositions.player1.x,
+        playerTwoX: levelsList[levelName].startingPositions.player2.y,
+        playerTwoY: levelsList[levelName].startingPositions.player2.x,
+        timer: levelsList[levelName].timer,
+      });
+    }
+  }
+
+  deleteLevel = (levelName) => {
+    const levelsList = JSON.parse(localStorage.getItem('PokemazeCustomLevels'));
+    delete levelsList[levelName];
+    localStorage.setItem('PokemazeCustomLevels', JSON.stringify(levelsList));
+    const customLevels = Object.keys(JSON.parse(localStorage.getItem('PokemazeCustomLevels')));
+    this.setState({ customLevels });
+  }
+
+  changeGameMode = (gameMode) => {
+    this.setState({ gameMode });
   }
 
   changeTile = (rowIndex, colIndex) => () => {
@@ -125,38 +190,9 @@ class Pokeditor extends Component {
     });
   }
 
-  saveLevel = (levelName) => {
-    const {
-      level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer,
-    } = this.state;
-    if (!localStorage.getItem('PokemazeCustomLevels')) {
-      localStorage.setItem('PokemazeCustomLevels', JSON.stringify({}));
-    }
-    const currentData = JSON.parse(localStorage.getItem('PokemazeCustomLevels'));
-    const currentLevel = {
-      tiles: level,
-      items,
-      startingPositions: {
-        player1: {
-          x: playerOneY,
-          y: playerOneX,
-        },
-        player2: {
-          x: playerTwoY,
-          y: playerTwoX,
-        },
-      },
-      timer,
-      typeOfKey: '002',
-      isTuto: true,
-    };
-    currentData[levelName] = currentLevel;
-    localStorage.setItem('PokemazeCustomLevels', JSON.stringify(currentData));
-  }
-
   render() {
     const {
-      level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer,
+      level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer, customLevels, gameMode,
     } = this.state;
     return (
       <div className="Pokeditor">
@@ -174,6 +210,12 @@ class Pokeditor extends Component {
           </Link>
         </div>
         <PokeditorChooseSize changeSize={this.changeSize} />
+        <PokeditorChooseGameMode changeGameMode={this.changeGameMode} />
+        <PokeditorLoadDeleteLevel
+          loadLevel={this.loadLevel}
+          deleteLevel={this.deleteLevel}
+          customLevels={customLevels}
+        />
         <PokeditorSaveLevel saveLevel={this.saveLevel} />
         <PokeditorChooseTimer changeTimer={this.changeTimer} />
         <PokeditorChooseTile tiles={this.tiles} selectTile={this.selectTile} />
@@ -196,6 +238,7 @@ class Pokeditor extends Component {
           playerTwoX={playerTwoX}
           playerTwoY={playerTwoY}
           timer={timer}
+          gameMode={gameMode}
         />
       </div>
     );
