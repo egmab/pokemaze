@@ -68,15 +68,22 @@ class Capacity extends Component {
       }}
       >
         <div style={{
-          height: `${progress}%`,
-          filter: 'grayscale(1)',
-          zIndex: '2',
           backgroundImage: `url("./assets/pokemons/elements/${this.capacityIcon}.png")`,
-          backgroundSize: '100%',
-          transition: '1000ms linear',
+          backgroundSize: 'contain',
+          width: '100%',
+          height: '100%',
         }}
-        />
-
+        >
+          <div style={{
+            height: `${progress}%`,
+            filter: 'grayscale(1)',
+            zIndex: '2',
+            backgroundImage: `url("./assets/pokemons/elements/${this.capacityIcon}.png")`,
+            backgroundSize: '100%',
+            transition: '1000ms linear',
+          }}
+          />
+        </div>
         <div className="starsContainer">
           {
             this.levelIcons.map((star, index) => (
@@ -88,7 +95,6 @@ class Capacity extends Component {
             ))
           }
         </div>
-
       </div>
     );
   }
