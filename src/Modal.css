@@ -1,16 +1,16 @@
 .modal-wrapper {
-    background-image: url('./assets/pokemons/fondB.png');
-    border: 0.01vw solid #d0cccc;
-    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
-    transition: all .8s;
-    width: 40vw;
-    position: absolute;
-    z-index: 4;
-    margin: auto;
-    border-radius: 1vw;
+  background-image: url('./assets/pokemons/fondB.png');
+  border: 0.01vw solid #d0cccc;
+  box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
+  transition: all .8s;
+  width: 40vw;
+  position: absolute;
+  z-index: 4;
+  margin: auto;
+  border-radius: 1vw;
 	left: 50vw;
 	top: 3vw;
-    transform: translate(-20vw, 10vw);
+  transform: translate(-20vw, 10vw);
 	font-size: 1vw;
 }
 
@@ -21,24 +21,24 @@
   }
 
 .modal-header {
-    background: #263238;
-    height: 40px;
-    line-height: 40vw;
-    padding: 5px 20px;
-    text-align: right;
+  background: #263238;
+  height: 40px;
+  line-height: 40vw;
+  padding: 5px 20px;
+  text-align: right;
 }
 
 .modal-header h3 {
-    background-image: url('./assets/pokemons/fondB.png');
-    float: left;
-    margin: 0;
-    padding: 0;
+  background-image: url('./assets/pokemons/fondB.png');
+  float: left;
+  margin: 0;
+  padding: 0;
 }
 
 .modal-body {
-    padding: 0.05vw 10vw;
-    text-align: center;
-    border-radius: 30px;
+  padding: 0.05vw 10vw;
+  text-align: center;
+  border-radius: 30px;
 }
 
 .modal-body h5{
@@ -46,36 +46,36 @@
 }
 
 .modal-footer {
-    background: #263238;
-    height: 35px;
-    padding: 15px;
+  background: #263238;
+  height: 35px;
+  padding: 15px;
 }
 
 .close-modal-btn {
-    color: white;
-    cursor: pointer;
-    float: right;
-    font-size: 30px;
-    margin: 0;
+  color: white;
+  cursor: pointer;
+  float: right;
+  font-size: 30px;
+  margin: 0;
 }
 
 .close-modal-btn:hover {
-    color: black;
+  color: black;
 }
 
 .btn-cancel, .btn-continue {
-    background: coral;
-    border: none;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    outline: none;
-    padding: 10px;
+  background: coral;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  outline: none;
+  padding: 10px;
 }
 
 .btn-cancel {
-    background-color: #b71c1c;
-    float: left;
+  background-color: #b71c1c;
+  float: left;
 }
 
 

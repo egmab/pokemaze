@@ -1,183 +1,246 @@
 
-  .home{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
-    background-size: 100%, cover;
-    min-height: 100vh;
-    min-width: 100vh;
-  }
+.home{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
+  background-size: 100%, cover;
+  min-height: 100vh;
+  min-width: 100vh;
+}
 
-  /* .home img{
-    padding-top: 18vh;
-  } */
+/* .home img{
+  padding-top: 18vh;
+} */
 
-  .home input{
-    padding:10px;
-    border:none;
-    width:100%;
-    border-radius:20px;
-  }
-  
-  .buttonContainerHome { 
-    display: flex;
-    justify-content: center;
-    padding-bottom: 8vw;
-    margin-left:5vw;
-  }
-  
-  .logoButtons{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
- 
-  .homeButton {
-    padding:1vw 3vw;
-    background-color:#89c403;
-    -moz-border-radius:6px;
-    -webkit-border-radius:6px;
-    border-radius:6px;
-    border:1px solid #74b807;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-size:1.7vw;
-    font-weight:bold;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #528009;
-  }
+.home input{
+  padding:10px;
+  border:none;
+  width:100%;
+  border-radius:20px;
+}
 
-  .homeButton:disabled {
-    padding:1vw 3vw;
-    background-color:grey;
-    -moz-border-radius:6px;
-    -webkit-border-radius:6px;
-    border-radius:6px;
-    border:1px solid grey;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-size:1.42em;
-    font-weight:bold;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #528009;
-  }
-  
-  .homeButton a {
-    text-decoration:none;
-    color:#ffffff;
-  }
-  .homeButton:hover:enabled {
-    background-color: #77a809;
-  }
+.buttonContainerHome { 
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8vw;
+  margin-left:5vw;
+}
 
-  .homeButton:active {
-    position:relative;
-    top:1px;
-  }
-  .forms{
-    min-width: 17%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    position: fixed;
-    top:0;
-    left:0;
-    min-width: 17%;
-  }
-  .formOne{
-    margin-right: 60vw;
-    display:flex;
-    flex-direction:column;
-    padding-top:1.5vw;
-    padding-bottom:1.5vw;
-    width:20vw;
-    background-color:rgba(0,0,0,0.38);
-    color:white;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5vw;
-  }
+.logoButtons{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  .home form{
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-  }
+.homeButton {
+  padding:1vw 3vw;
+  background-color:#89c403;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid #74b807;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-size:1.7vw;
+  font-weight:bold;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #528009;
+}
 
-  .formTwo{
-    display:flex;
-    flex-direction:column;
-    padding-top:1.5vw;
-    padding-bottom:1.5vw;
-    width:20vw;
-    background-color:rgba(0,0,0,0.38);
-    color:white;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5vw;
-  }
+.homeButton:disabled {
+  padding:1vw 3vw;
+  background-color:grey;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid grey;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-size:1.42em;
+  font-weight:bold;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #528009;
+}
+
+.homeButton a {
+  text-decoration:none;
+  color:#ffffff;
+}
+.homeButton:hover:enabled {
+  background-color: #77a809;
+}
+
+.homeButton:active {
+  position:relative;
+  top:1px;
+}
+.forms{
+  min-width: 17%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: fixed;
+  top:0;
+  left:0;
+  min-width: 17%;
+}
+.formOne{
+  margin-right: 60vw;
+  display:flex;
+  flex-direction:column;
+  padding-top:1.5vw;
+  padding-bottom:1.5vw;
+  width:20vw;
+  background-color:rgba(0,0,0,0.38);
+  color:white;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5vw;
+}
+
+.home form{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formTwo{
+  display:flex;
+  flex-direction:column;
+  padding-top:1.5vw;
+  padding-bottom:1.5vw;
+  width:20vw;
+  background-color:rgba(0,0,0,0.38);
+  color:white;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5vw;
+}
 
 
 
 .logo{
-    align-items: center;
-    padding: 4vw 0 3vw 0;
-  }
+  margin: 0 0 0 -10vw;
+  padding: 4vw 0 3vw 0;
+}
 
-  .connectButton{
-    -moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
-    -webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
-    box-shadow:inset 0px 1px 0px 0px #a4e271;
-    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809));
-    background:-moz-linear-gradient(top, #89c403 5%, #77a809 100%);
-    background:-webkit-linear-gradient(top, #89c403 5%, #77a809 100%);
-    background:-o-linear-gradient(top, #89c403 5%, #77a809 100%);
-    background:-ms-linear-gradient(top, #89c403 5%, #77a809 100%);
-    background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
-    background-color:#89c403;
-    color: white;
-    text-align: center;
-  }
+.connectButton{
+  -moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
+  -webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
+  box-shadow:inset 0px 1px 0px 0px #a4e271;
+  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809));
+  background:-moz-linear-gradient(top, #89c403 5%, #77a809 100%);
+  background:-webkit-linear-gradient(top, #89c403 5%, #77a809 100%);
+  background:-o-linear-gradient(top, #89c403 5%, #77a809 100%);
+  background:-ms-linear-gradient(top, #89c403 5%, #77a809 100%);
+  background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
+  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
+  background-color:#89c403;
+  color: white;
+  text-align: center;
+}
 
-  .disconnectButton{
-    background-color:#df1414;
-    color: white;
-    text-align: center;
-  }
+.disconnectButton{
+  background-color:#df1414;
+  color: white;
+  text-align: center;
+}
 
-  .pokeditor {
-    padding:0.99vw 2vw;
-    -moz-border-radius:6px;
-    -webkit-border-radius:6px;
-    border-radius:6px;
-    border:1px solid #2b55a3;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-size:1.7vw;
-    font-weight:bold;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #2b55a3;
-    color: white;
-    text-align: center;
-    align-items: center;
-    background-color: #2b55a3;
-  }
+.pokeditor {
+  padding:0.99vw 2vw;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:1px solid #2b55a3;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-size:1.7vw;
+  font-weight:bold;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #2b55a3;
+  color: white;
+  text-align: center;
+  align-items: center;
+  background-color: #2b55a3;
+}
 
-  .pokeditor:hover {
-    background-color: #1d3b72;
-  }
+.pokeditor:hover {
+  background-color: #1d3b72;
+}
 
-  .pokeditor img{ 
-    vertical-align: middle;
-    width: 15%;
-  }
+.pokeditor img{ 
+  vertical-align: middle;
+  width: 15%;
+}
+
+.video
+{
+  margin: -0.02vw 0 0 -1.2vw;
+  width: 62.2vw;
+}
+
+#HomeModal
+{
+  margin: -5.5vw 0 0 -20vw;
+  width: 81vw;
+  height: 35vw;
+  background: rgb(0, 0, 0, 0.8);
+  border-radius: 0;
+  border-style: none;
+}
+
+.Intro
+{
+  position: absolute;
+  margin: -5vw 0 0 12vw;
+  width: 6.5vw;
+  height: 7vw;
+}
+
+.Intro2
+{
+  position: absolute;
+  margin: -5.65vw 0 0 12vw;
+  width: 5.1vw;
+  height: 4.1vw;
+  cursor: pointer;
+}
+
+.Intro2:hover
+{
+  opacity: 0.7;
+}
+
+.Intro2:active
+{
+  opacity: 0.4;
+}
+
+.Cross
+{
+  width: 3vw;
+  height: 3vw;
+  position: absolute;
+  left: 77.5vw;
+  top: 0.5vw;
+  cursor: pointer;
+}
+
+.Cross:hover
+{
+  opacity: 0.7;
+}
+
+.Cross:active
+{
+  opacity: 0.4;
+}
