@@ -430,7 +430,6 @@ class Player extends Component {
     switch (this.img) {
       case `${this.charImg}Top`: {
         this.pokemonStyle = {
-          
           marginTop: '2.5vw',
           marginLeft: '-1.4vw',
           transitionProperty: 'top, left, margin-top, margin-left',
@@ -439,7 +438,6 @@ class Player extends Component {
       }
       case `${this.charImg}Left`: {
         this.pokemonStyle = {
-          
           marginTop: '0.3vw',
           marginLeft: '0.6vw',
           transitionProperty: 'top, left, margin-top, margin-left',
@@ -448,7 +446,6 @@ class Player extends Component {
       }
       case `${this.charImg}Right`: {
         this.pokemonStyle = {
-         
           marginTop: '0.3vw',
           marginLeft: '-3.3vw',
           transform: 'scaleX(-1)',
@@ -458,7 +455,6 @@ class Player extends Component {
       }
       default: {
         this.pokemonStyle = {
-         
           marginTop: '-2.2vw',
           marginLeft: '-1.2vw',
           transitionProperty: 'top, left, margin-top, margin-left',
