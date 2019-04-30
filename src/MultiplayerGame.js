@@ -19,7 +19,7 @@ class MultiplayerGame extends Component {
     this.keysToCollect = 0;
     this.projectiles = {};
     const {
-      level, pokemon1, pokemon2, // capacity1, capacity2,
+      level, pokemon1, pokemon2, capacity1, capacity2,
     } = props;
     // Creates projectiles matrix
     const projectiles = [];
@@ -48,7 +48,7 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['fire3'],
+      capacities: [capacity1],
       // capacities: [capacity1],
       pokemon: pokemon1,
     };
@@ -56,7 +56,7 @@ class MultiplayerGame extends Component {
       posX: null,
       posY: null,
       collectedKeys: 0,
-      capacities: ['electric3'],
+      capacities: [capacity2],
       // capacities: [capacity2],
       pokemon: pokemon2,
     };
