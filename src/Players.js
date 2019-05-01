@@ -77,7 +77,12 @@ class Players extends Component {
     if (capacity) {
       // Traps/projectiles don't directly affect other player
       // => callback in MultiplayerGame to alter matrices
-      if (capacity.slice(0, -1) !== 'fire' && capacity.slice(0, -1) !== 'electric') {
+      if (capacity.slice(0, -1) !== 'fire'
+      && capacity.slice(0, -1) !== 'dragon'
+      && capacity.slice(0, -1) !== 'electric'
+      && capacity.slice(0, -1) !== 'ice'
+      && capacity.slice(0, -1) !== 'water'
+      && capacity.slice(0, -1) !== 'fairy') {
         this.setState({
           [enemy]: {
             gettingTargeted: {
