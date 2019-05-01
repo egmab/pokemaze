@@ -12,8 +12,9 @@ class KeyElement extends Component {
     const { isCaught, typeOfKey } = this.props;
     if (isCaught) {
       this.style.opacity = 1;
+    } else {
+      this.style.opacity = 0.32;
     }
-
     return (
       <React.Fragment>
         <div className="keyCircle">
