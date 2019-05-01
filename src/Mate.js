@@ -1,7 +1,6 @@
 import React from 'react';
 
 const Mate = ({ pokemon, newvalue, level }) => {
-
   const levelIcons = [];
   for (let i = 0; i < 3; i += 1) {
     if (i < level) {

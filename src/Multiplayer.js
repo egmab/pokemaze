@@ -14,14 +14,16 @@ class Multiplayer extends Component {
     let capacity2 = 'none';
     let pokemon1 = 'none';
     let pokemon2 = 'none';
+    let levelDuo = '001';
     const { location } = this.props;
     if (location.state) {
       capacity1 = location.state.player1;
       capacity2 = location.state.player2;
       pokemon1 = location.state.mate1;
       pokemon2 = location.state.mate2;
+      levelDuo = location.state.levelduo;
     }
-    const selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.multiplayer[this.selection];
+    const selectedLevel = JSON.parse(localStorage.getItem('GameData')).default.levels.multiplayer[levelDuo];
     return (
       <div>
         <MultiplayerGame

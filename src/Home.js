@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
+import Video from './Video';
 
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.charImagesList = ['guy', 'female', 'black', 'elegant', 'greenWoman', 'pinkHairWoman', 'oldMan'];
+    this.charImagesList = ['guy', 'female', 'black', 'blue', 'guyCape', 'red', 'white', 'pinkHatLady'];
     this.data = {
       pokemons: [],
       charImg: 'guy',
@@ -17,6 +18,7 @@ class Home extends Component {
       userTwoImg: 'guy',
       playerOneConnected: false,
       playerTwoConnected: false,
+      test: false,
     };
     this.onChange = this.onChange.bind(this);
   }
@@ -151,12 +153,40 @@ class Home extends Component {
     this.switchButton();
   }
 
+  videoTrue = () => {
+    const { test } = this.state;
+    this.setState({
+      test: !test,
+    });
+  }
+
   render() {
     const {
-      userOne, userTwo, playerOneConnected, playerTwoConnected, userOneImg, userTwoImg,
+      userOne,
+      userTwo,
+      playerOneConnected,
+      playerTwoConnected,
+      test,
+      userOneImg,
+      userTwoImg,
     } = this.state;
     return (
       <div className="home">
+        <img
+          src="./assets/play1.png"
+          className="Intro"
+          role="presentation"
+          alt="play"
+          onClick={this.videoTrue}
+        />
+        <img
+          src="./assets/play2.png"
+          className="Intro2"
+          role="presentation"
+          alt="play"
+          onClick={this.videoTrue}
+        />
+        {test ? <Video videoTrue={this.videoTrue} /> : null}
         <div className="forms">
           {
             playerOneConnected
@@ -264,7 +294,7 @@ class Home extends Component {
                       }}
                       type="button"
                       value="userTwo"
-                      onClick={() => this.changeCharImgTwo(-1)}
+                      onClick={() => this.changeCharImgTwo(1)}
                     />
                   </div>
                   <form onSubmit={this.onDisconnectTwo}>

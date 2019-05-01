@@ -11,7 +11,6 @@ import * as GameData from './gameData.json';
 
 // <Route path="/game" render={props => <Game level={selectedLevel} {...props} />} />
 
-
 const App = () => {
   // If GameData is not in localstorage, add it
   if (!localStorage.getItem('Gamedata')) {

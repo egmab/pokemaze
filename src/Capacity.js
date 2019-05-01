@@ -12,6 +12,9 @@ class Capacity extends Component {
         this.levelIcons.push('emptyStar');
       }
     }
+    if (this.levelIcons[0] === 'emptyStar') {
+      this.levelIcons = [];
+    }
     this.capacityIcon = props.name.slice(0, -1);
     this.maxtimer = props.maxtimer;
     this.name = props.name;
@@ -40,8 +43,11 @@ class Capacity extends Component {
         this.capacityIcon = 'electric';
         break;
       }
-      default: {
+      case 'fighting': {
         this.capacityIcon = 'fighting';
+        break;
+      }
+      default: {
         break;
       }
     }
