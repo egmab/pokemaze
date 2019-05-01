@@ -210,12 +210,13 @@ class Game extends Component {
           ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} timer={this.timer} levelName={levelName} />
           : null
         }
+        {
+          !start
+            ? <Starter getStarter={this.getStarter} />
+            : null
+        }
         <div className="gameContainer">
-          {
-            !start
-              ? <Starter getStarter={this.getStarter} />
-              : null
-          }
+
           <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Player
             start={start}

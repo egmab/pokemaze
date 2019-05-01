@@ -300,12 +300,12 @@ class MultiplayerGame extends Component {
           ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
           : null
         }
-        <div className="gameContainer">
-          {
+        {
             !start
               ? <Starter getStarter={this.getStarter} />
               : null
           }
+        <div className="gameContainer">
           <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Players
             start={start}

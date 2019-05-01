@@ -6,7 +6,7 @@ class Starter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      seconds: '3',
+      seconds: '4',
     };
   }
 
@@ -28,39 +28,44 @@ class Starter extends Component {
   render() {
     const { seconds } = this.state;
     return (
-      <div className="modal-wrapper" style={{ minHeight: '15vw' }}>
-        <div className="modal-body">
-          <div style={{ width: '100%', textAlign: 'center' }}>
-            <h3>
-              How to play?
-            </h3>
+      <div className="modal-wrapper" style={{ minHeight: '15vw', top: '-3vw' }}>
+        <div className="modalkey-body">
+          <h3>
+            How to play?
+          </h3>
+          <div className="keymodal">
+
             <div className="keyplayer1">
-              <h4>
+              <h5>
                 Player 1
                 <p>
-                  move:
+                  <h6>move:</h6>
                   <img src="./assets/zqsd.png" alt="zqsd" />
-                  attack:
+                </p>
+                <p>
+                  <h6>attack:</h6>
                   <img src="./assets/tab.png" alt="tab" />
                 </p>
-              </h4>
+              </h5>
             </div>
             <div className="keyplayer2">
-              <h4>
+              <h5>
                 Player 2
                 <p>
-                  move:
+                  <h6>move:</h6>
                   <img src="./assets/fleches.png" alt="fleches" />
-                  attack:
+                </p>
+                <p>
+                  <h6>attack:</h6>
                   <img src="./assets/espace.png" alt="espace" />
                 </p>
-              </h4>
+              </h5>
             </div>
-            <h1>
-              {seconds}
-              GO!
-            </h1>
           </div>
+          <h1>
+            {seconds}
+            GO!
+          </h1>
         </div>
       </div>
     );
