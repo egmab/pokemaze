@@ -21,7 +21,7 @@ class Home extends Component {
       test: false,
     };
     this.onChange = this.onChange.bind(this);
-    this.connectStyle = {};
+    this.connectStyle = { marginTop: '-7.5vw' };
   }
 
   componentWillMount() {
@@ -50,7 +50,6 @@ class Home extends Component {
   componentDidMount() {
     this.switchButton();
   }
-
 
   onChange(event) {
     const user = event.target.id;
@@ -375,7 +374,6 @@ class Home extends Component {
                   width: '14vw',
                   marginRight: '5vw',
                 }}
-                onClick={this.disconnect}
               >
                 Play solo
               </button>
@@ -393,7 +391,6 @@ class Home extends Component {
                   width: '15vw',
                   marginRight: '5vw',
                 }}
-                onClick={this.disconnect}
               >
                 Multiplayer
               </button>
@@ -408,7 +405,6 @@ class Home extends Component {
                   width: '16vw',
                   marginRight: '5vw',
                 }}
-                onClick={this.disconnect}
               >
                 <img src="./assets/pokeditor2.png" alt="imgeditor" />
                 {' '}
