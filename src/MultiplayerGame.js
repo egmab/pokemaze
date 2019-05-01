@@ -247,7 +247,7 @@ class MultiplayerGame extends Component {
             projectiles[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] = '002';
             this.setState({ projectiles });
           }
-        }, 1000);
+        }, 500);
       }
       // Iceball
       if (capacity.slice(0, -1) === 'ice' || capacity.slice(0, -1) === 'water') {
@@ -277,7 +277,7 @@ class MultiplayerGame extends Component {
             projectiles[this.projectiles[iceballId].y][this.projectiles[iceballId].x] = '100';
             this.setState({ projectiles });
           }
-        }, 500);
+        }, 200);
       }
     }
     this.setState({ level });
