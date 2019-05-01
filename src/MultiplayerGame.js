@@ -3,6 +3,7 @@ import Board from './Board';
 import Players from './Players';
 import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
+import Starter from './Starter';
 import './Game.css';
 
 /*
@@ -295,6 +296,7 @@ class MultiplayerGame extends Component {
           : null
         }
         <div className="gameContainer">
+          <Starter />
           <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Players
             ongoingGame={ongoingGame}

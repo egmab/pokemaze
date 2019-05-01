@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import './Modal.css';
+import './Starter.css';
 
 class Starter extends Component {
   constructor(props) {
@@ -27,6 +29,31 @@ class Starter extends Component {
       <div className="modal-wrapper" style={{ minHeight: '15vw' }}>
         <div className="modal-body">
           <div style={{ width: '100%', textAlign: 'center' }}>
+            <h3>
+              How to play?
+            </h3>
+            <div className="keyplayer1">
+              <h4>
+                Player 1
+                <p>
+                  move:
+                  <img src="./assets/zqsd.png" alt="zqsd" />
+                  attack:
+                  <img src="./assets/tab.png" alt="tab" />
+                </p>
+              </h4>
+            </div>
+            <div className="keyplayer2">
+              <h4>
+                Player 2
+                <p>
+                  move:
+                  <img src="./assets/fleches.png" alt="fleches" />
+                  attack:
+                  <img src="./assets/espace.png" alt="espace" />
+                </p>
+              </h4>
+            </div>
             <h1>
               {seconds}
               GO!

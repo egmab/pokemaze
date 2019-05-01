@@ -1,0 +1,11 @@
+.keyplayer1{
+  display: flex;
+  position: fixed;
+  left: 0.2vw;
+}
+
+.keyplayer2{
+  display: flex;
+  position: fixed;
+  right: 0.2vw;
+}
