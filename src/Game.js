@@ -10,8 +10,12 @@ class Game extends Component {
   constructor(props) {
     super(props);
     const { location } = props;
-    this.leveltype = location.state.leveltype;
-    this.selectedlevel = location.state.levelsolo;
+    this.leveltype = 'default';
+    this.selectedlevel = 'Level 1';
+    if (location.state) {
+      this.leveltype = location.state.leveltype;
+      this.selectedlevel = location.state.levelsolo;
+    }
     if (this.leveltype === 'default') {
       this.level = JSON.parse(localStorage.getItem('GameData')).default.levels.solo[this.selectedlevel];
     }
@@ -203,7 +207,7 @@ class Game extends Component {
     const {
       isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
     } = this.state;
-    
+
     return (
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
