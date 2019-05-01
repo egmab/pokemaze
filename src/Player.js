@@ -18,6 +18,7 @@ class Player extends Component {
     this.posY = posY;
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
+    this.dir = 'down';
     this.canMove = true;
     this.canAct = true;
     this.moveTime = Date.now();
@@ -92,6 +93,7 @@ class Player extends Component {
     this.charImg = charData.charImg;
     this.img = `${this.charImg}Bottom`;
     this.state = {
+      pokemonAttack: false,
       playerStunned: false,
       playerConfused: false,
       playerFrozen: false,
@@ -286,6 +288,13 @@ class Player extends Component {
       this.canMove = false;
       // Move right
       if (dir === 'right') {
+        this.dir = 'right';
+        this.targetedTileX = this.posX + 1;
+        this.targetedTileY = this.posY;
+        this.targetedDirection = {
+          x: 1,
+          y: 0,
+        };
         this.keys.right.pressed = true;
         this.img = `${this.charImg}RightFeet`;
         setTimeout(() => {
@@ -299,6 +308,13 @@ class Player extends Component {
       }
       // Move left
       if (dir === 'left') {
+        this.dir = 'left';
+        this.targetedTileX = this.posX - 1;
+        this.targetedTileY = this.posY;
+        this.targetedDirection = {
+          x: -1,
+          y: 0,
+        };
         this.keys.left.pressed = true;
         this.img = `${this.charImg}LeftFeet`;
         setTimeout(() => {
@@ -312,6 +328,13 @@ class Player extends Component {
       }
       // Move down
       if (dir === 'down') {
+        this.dir = 'down';
+        this.targetedTileX = this.posX;
+        this.targetedTileY = this.posY + 1;
+        this.targetedDirection = {
+          x: 0,
+          y: 1,
+        };
         this.keys.down.pressed = true;
         this.img = `${this.charImg}BottomFeet`;
         setTimeout(() => {
@@ -325,7 +348,14 @@ class Player extends Component {
       }
       // Move up
       if (dir === 'up') {
+        this.dir = 'up';
         this.keys.up.pressed = true;
+        this.targetedTileX = this.posX;
+        this.targetedTileY = this.posY - 1;
+        this.targetedDirection = {
+          x: 0,
+          y: -1,
+        };
         this.img = `${this.charImg}TopFeet`;
         setTimeout(() => {
           this.img = `${this.charImg}Top`;
@@ -343,13 +373,9 @@ class Player extends Component {
       tiles, items, playerNumber,
     } = this.props;
     if (this.canAct) {
-      this.actionTime = Date.now();
-      this.canAct = false;
-      this.keys.action.padPressed = true;
-      this.keys.action.pressed = true;
-      // Sets coordinates of the targeted tile
-      switch (this.img) {
-        case (`${this.charImg}Top` || `${this.charImg}TopFeet`): {
+      switch (this.dir) {
+        case 'up': {
+          this.keys.up.pressed = true;
           this.targetedTileX = this.posX;
           this.targetedTileY = this.posY - 1;
           this.targetedDirection = {
@@ -358,7 +384,16 @@ class Player extends Component {
           };
           break;
         }
-        case (`${this.charImg}Left` || `${this.charImg}LeftFeet`): {
+        case 'down': {
+          this.targetedTileX = this.posX;
+          this.targetedTileY = this.posY + 1;
+          this.targetedDirection = {
+            x: 0,
+            y: 1,
+          };
+          break;
+        }
+        case 'left': {
           this.targetedTileX = this.posX - 1;
           this.targetedTileY = this.posY;
           this.targetedDirection = {
@@ -367,7 +402,7 @@ class Player extends Component {
           };
           break;
         }
-        case (`${this.charImg}Right` || `${this.charImg}RightFeet`): {
+        case 'right': {
           this.targetedTileX = this.posX + 1;
           this.targetedTileY = this.posY;
           this.targetedDirection = {
@@ -377,15 +412,13 @@ class Player extends Component {
           break;
         }
         default: {
-          this.targetedTileX = this.posX;
-          this.targetedTileY = this.posY + 1;
-          this.targetedDirection = {
-            x: 0,
-            y: 1,
-          };
           break;
         }
       }
+      this.actionTime = Date.now();
+      this.canAct = false;
+      this.keys.action.padPressed = true;
+      this.keys.action.pressed = true;
       // Checks if targeted tile is out of the map
       if (this.targetedTileX >= 0
         && this.targetedTileY >= 0
@@ -403,6 +436,10 @@ class Player extends Component {
           // To do: multiple timers if multiple abilities (timers[0] -> timers[selectedAbility])
         } else if (gameMode === 'multiplayer' && timers[0] === 0) {
           const { multiplayerActions, enemy, capacities } = this.props;
+          // Pokemon animation
+          this.setState({ pokemonAttack: true });
+          setTimeout(() => this.setState({ pokemonAttack: false }), 300);
+          // Capacities
           const capacity = capacities[0];
           if (capacity.slice(0, -1) === 'invisibility'
             || capacity.slice(0, -1) === 'psychic') {
@@ -438,8 +475,6 @@ class Player extends Component {
             }
           }
         }
-        this.targetedTileX = null;
-        this.targetedTileY = null;
       }
     }
   }
@@ -616,7 +651,8 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused, playerStunned,
+      img, posX, posY, pixelsPerTile, playerOpacity,
+      playerFrozen, playerConfused, playerStunned, pokemonAttack,
     } = this.state;
     // Player CSS
     const playerStyle = {
@@ -643,46 +679,59 @@ class Player extends Component {
       transitionDuration: `${this.speed + 400}ms`,
       // transitionTimingFunction: 'linear',
     };
-    // if (this.pokemon) {
-    switch (this.img) {
-      case (`${this.charImg}TopFeet`): {
-        this.pokemonStyle = {
-          marginTop: '2.5vw',
-          marginLeft: '-1.4vw',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      case (`${this.charImg}LeftFeet`): {
-        this.pokemonStyle = {
-          marginTop: '0.3vw',
-          marginLeft: '0.6vw',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      case (`${this.charImg}RightFeet`): {
-        this.pokemonStyle = {
-          marginTop: '0.3vw',
-          marginLeft: '-3.3vw',
-          transform: 'scaleX(-1)',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      case (`${this.charImg}BottomFeet`): {
-        this.pokemonStyle = {
-          marginTop: '-2.2vw',
-          marginLeft: '-1.2vw',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      default: {
-        break;
-      }
+    const pokAttackStyle = {
+      zIndex: 4,
+      transitionDuration: '100ms',
+      transitionTimingFunction: 'linear',
+      maxWidth: '2.8vw',
+      maxHeight: '2.8vw',
+      marginTop: '0',
+      marginLeft: '-2vw',
+      transitionProperty: 'top, left, margin-top, margin-left',
+    };
+    if (this.img === `${this.charImg}TopFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '2.5vw',
+        marginLeft: '-1.4vw',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
+    } else if (this.img === `${this.charImg}LeftFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '0.3vw',
+        marginLeft: '0.6vw',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
+    } else if (this.img === `${this.charImg}RightFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '0.3vw',
+        marginLeft: '-3.3vw',
+        transform: 'scaleX(-1)',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
+    } else if (this.img === `${this.charImg}BottomFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '-2.2vw',
+        marginLeft: '-1.2vw',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
     }
-    // }
+
 
     return (
       <div className="playerContainer" style={globalStyle}>
@@ -715,7 +764,14 @@ class Player extends Component {
               <div
                 className="pokemonPetContainer"
               >
-                <img style={this.pokemonStyle} className="pokemonPet" src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`} alt={this.pokemon} />
+                <img
+                  style={
+                    pokemonAttack ? pokAttackStyle : this.pokemonStyle
+                  }
+                  className="pokemonPet"
+                  src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`}
+                  alt={this.pokemon}
+                />
               </div>
             )
             : null
