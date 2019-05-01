@@ -18,6 +18,7 @@ class Player extends Component {
     this.posY = posY;
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
+    this.dir = 'down';
     this.canMove = true;
     this.canAct = true;
     this.moveTime = Date.now();
@@ -92,6 +93,7 @@ class Player extends Component {
     this.charImg = charData.charImg;
     this.img = `${this.charImg}Bottom`;
     this.state = {
+      pokemonAttack: false,
       playerStunned: false,
       playerConfused: false,
       playerFrozen: false,
@@ -167,16 +169,16 @@ class Player extends Component {
     if (gp[this.gpNumber] !== null) {
       if (gp[this.gpNumber].buttons[this.keys.up.pad].pressed
         || gp[this.gpNumber].axes[1] < -0.8) {
-        this.action('up');
+        this.move('up');
       } else if (gp[this.gpNumber].buttons[this.keys.down.pad].pressed
         || gp[this.gpNumber].axes[1] > 0.8) {
-        this.action('down');
+        this.move('down');
       } else if (gp[this.gpNumber].buttons[this.keys.left.pad].pressed
         || gp[this.gpNumber].axes[0] < -0.8) {
-        this.action('left');
+        this.move('left');
       } else if (gp[this.gpNumber].buttons[this.keys.right.pad].pressed
         || gp[this.gpNumber].axes[0] > 0.8) {
-        this.action('right');
+        this.move('right');
       }
     }
   }
@@ -185,23 +187,23 @@ class Player extends Component {
     const gp = navigator.getGamepads();
     if (gp[this.gpNumber] !== null) {
       if (gp[this.gpNumber].buttons[this.keys.action.pad].pressed) {
-        this.action('action');
+        this.action();
       }
     }
   }
 
   gamepadVibration = () => {
-    const gp = navigator.getGamepads();
-    if (gp[this.gpNumber] !== null) {
-      if (gp[this.gpNumber].vibrationActuator !== null) {
-        gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
-          startDelay: 0,
-          duration: 500,
-          weakMagnitude: 1.0,
-          strongMagnitude: 1.0,
-        });
-      }
-    }
+    // const gp = navigator.getGamepads();
+    // if (gp[this.gpNumber] !== null) {
+    //   if (gp[this.gpNumber].vibrationActuator !== null) {
+    //     gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
+    //       startDelay: 0,
+    //       duration: 500,
+    //       weakMagnitude: 1.0,
+    //       strongMagnitude: 1.0,
+    //     });
+    //   }
+    // }
   }
 
   triggerKeyboard = (e) => {
@@ -225,26 +227,26 @@ class Player extends Component {
   handleKeyboard = () => {
     if (this.keys.up.pressed) {
       this.keys.up.pressed = false;
-      this.action('up');
+      this.move('up');
     }
     if (this.keys.down.pressed) {
       this.keys.down.pressed = false;
-      this.action('down');
+      this.move('down');
     }
     if (this.keys.left.pressed) {
       this.keys.left.pressed = false;
-      this.action('left');
+      this.move('left');
     }
     if (this.keys.right.pressed) {
       this.keys.right.pressed = false;
-      this.action('right');
+      this.move('right');
     }
   }
 
   handleKeyboardAction = () => {
     if (this.keys.action.pressed) {
       this.keys.action.pressed = false;
-      this.action('action');
+      this.action();
     }
   }
 
@@ -276,119 +278,23 @@ class Player extends Component {
     }
   }
 
-  action = (action) => {
+  move = (dir) => {
     const {
-      tiles, items, getPlayerPos, playerNumber,
+      getPlayerPos, playerNumber,
     } = this.props;
-    // ACTION KEY
-    if (this.canAct) {
-      this.actionTime = Date.now();
-      this.canAct = false;
-      if (action === 'action') {
-        this.keys.action.padPressed = true;
-        this.keys.action.pressed = true;
-        // Sets coordinates of the targeted tile
-        switch (this.img) {
-          case (`${this.charImg}Top` || `${this.charImg}TopFeet`): {
-            this.targetedTileX = this.posX;
-            this.targetedTileY = this.posY - 1;
-            this.targetedDirection = {
-              x: 0,
-              y: -1,
-            };
-            break;
-          }
-          case (`${this.charImg}Left` || `${this.charImg}LeftFeet`): {
-            this.targetedTileX = this.posX - 1;
-            this.targetedTileY = this.posY;
-            this.targetedDirection = {
-              x: -1,
-              y: 0,
-            };
-            break;
-          }
-          case (`${this.charImg}Right` || `${this.charImg}RightFeet`): {
-            this.targetedTileX = this.posX + 1;
-            this.targetedTileY = this.posY;
-            this.targetedDirection = {
-              x: 1,
-              y: 0,
-            };
-            break;
-          }
-          default: {
-            this.targetedTileX = this.posX;
-            this.targetedTileY = this.posY + 1;
-            this.targetedDirection = {
-              x: 0,
-              y: 1,
-            };
-            break;
-          }
-        }
-        // Checks if targeted tile is out of the map
-        if (this.targetedTileX >= 0
-          && this.targetedTileY >= 0
-          && this.targetedTileY < tiles.length
-          && this.targetedTileX < tiles[this.targetedTileY].length
-        ) {
-          const { gameMode, timers } = this.props;
-          // Activate lever if there is any on tile
-          if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
-            && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
-            const { playerAction } = this.props;
-            // Callback to Game for solo, MultiplayerGame for multiplayer
-            playerAction(this.targetedTileY, this.targetedTileX);
-            // Multiplayer actions;
-            // To do: multiple timers if multiple abilities (timers[0] -> timers[selectedAbility])
-          } else if (gameMode === 'multiplayer' && timers[0] === 0) {
-            const { multiplayerActions, enemy, capacities } = this.props;
-            const capacity = capacities[0];
-            if (capacity.slice(0, -1) === 'invisibility'
-              || capacity.slice(0, -1) === 'psychic') {
-              multiplayerActions(
-                playerNumber, this.enemy, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-            } else if (capacity.slice(0, -1) === 'electric'
-              || capacity.slice(0, -1) === 'fire'
-              || capacity.slice(0, -1) === 'ice'
-              || capacity.slice(0, -1) === 'water'
-              || capacity.slice(0, -1) === 'dragon'
-              || capacity.slice(0, -1) === 'fairy') {
-              const { playerAction } = this.props;
-              // Callback to MultiplayerGame
-              playerAction(
-                this.targetedTileY, this.targetedTileX, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-              // Callback to Players
-              multiplayerActions(
-                playerNumber, this.enemy, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-            } else {
-              // default ability: punch
-              const defaultCapacity = `punch${capacity.slice(-1)}`;
-              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
-                multiplayerActions(
-                  playerNumber, this.enemy, defaultCapacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-              }
-            }
-          }
-          this.targetedTileX = null;
-          this.targetedTileY = null;
-        }
-      }
-    }
     // MOVES
     if (this.canMove) {
       this.moveTime = Date.now();
       this.canMove = false;
       // Move right
-      if (action === 'right') {
+      if (dir === 'right') {
+        this.dir = 'right';
+        this.targetedTileX = this.posX + 1;
+        this.targetedTileY = this.posY;
+        this.targetedDirection = {
+          x: 1,
+          y: 0,
+        };
         this.keys.right.pressed = true;
         this.img = `${this.charImg}RightFeet`;
         setTimeout(() => {
@@ -401,7 +307,14 @@ class Player extends Component {
         return;
       }
       // Move left
-      if (action === 'left') {
+      if (dir === 'left') {
+        this.dir = 'left';
+        this.targetedTileX = this.posX - 1;
+        this.targetedTileY = this.posY;
+        this.targetedDirection = {
+          x: -1,
+          y: 0,
+        };
         this.keys.left.pressed = true;
         this.img = `${this.charImg}LeftFeet`;
         setTimeout(() => {
@@ -414,7 +327,14 @@ class Player extends Component {
         return;
       }
       // Move down
-      if (action === 'down') {
+      if (dir === 'down') {
+        this.dir = 'down';
+        this.targetedTileX = this.posX;
+        this.targetedTileY = this.posY + 1;
+        this.targetedDirection = {
+          x: 0,
+          y: 1,
+        };
         this.keys.down.pressed = true;
         this.img = `${this.charImg}BottomFeet`;
         setTimeout(() => {
@@ -427,8 +347,15 @@ class Player extends Component {
         return;
       }
       // Move up
-      if (action === 'up') {
+      if (dir === 'up') {
+        this.dir = 'up';
         this.keys.up.pressed = true;
+        this.targetedTileX = this.posX;
+        this.targetedTileY = this.posY - 1;
+        this.targetedDirection = {
+          x: 0,
+          y: -1,
+        };
         this.img = `${this.charImg}TopFeet`;
         setTimeout(() => {
           this.img = `${this.charImg}Top`;
@@ -437,6 +364,117 @@ class Player extends Component {
           this.posY -= 1;
         }
         getPlayerPos(this.posX, this.posY, playerNumber);
+      }
+    }
+  }
+
+  action = () => {
+    const {
+      tiles, items, playerNumber,
+    } = this.props;
+    if (this.canAct) {
+      switch (this.dir) {
+        case 'up': {
+          this.keys.up.pressed = true;
+          this.targetedTileX = this.posX;
+          this.targetedTileY = this.posY - 1;
+          this.targetedDirection = {
+            x: 0,
+            y: -1,
+          };
+          break;
+        }
+        case 'down': {
+          this.targetedTileX = this.posX;
+          this.targetedTileY = this.posY + 1;
+          this.targetedDirection = {
+            x: 0,
+            y: 1,
+          };
+          break;
+        }
+        case 'left': {
+          this.targetedTileX = this.posX - 1;
+          this.targetedTileY = this.posY;
+          this.targetedDirection = {
+            x: -1,
+            y: 0,
+          };
+          break;
+        }
+        case 'right': {
+          this.targetedTileX = this.posX + 1;
+          this.targetedTileY = this.posY;
+          this.targetedDirection = {
+            x: 1,
+            y: 0,
+          };
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+      this.actionTime = Date.now();
+      this.canAct = false;
+      this.keys.action.padPressed = true;
+      this.keys.action.pressed = true;
+      // Checks if targeted tile is out of the map
+      if (this.targetedTileX >= 0
+        && this.targetedTileY >= 0
+        && this.targetedTileY < tiles.length
+        && this.targetedTileX < tiles[this.targetedTileY].length
+      ) {
+        const { gameMode, timers } = this.props;
+        // Activate lever if there is any on tile
+        if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
+          && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
+          const { playerAction } = this.props;
+          // Callback to Game for solo, MultiplayerGame for multiplayer
+          playerAction(this.targetedTileY, this.targetedTileX);
+          // Multiplayer actions;
+          // To do: multiple timers if multiple abilities (timers[0] -> timers[selectedAbility])
+        } else if (gameMode === 'multiplayer' && timers[0] === 0) {
+          const { multiplayerActions, enemy, capacities } = this.props;
+          // Pokemon animation
+          this.setState({ pokemonAttack: true });
+          setTimeout(() => this.setState({ pokemonAttack: false }), 300);
+          // Capacities
+          const capacity = capacities[0];
+          if (capacity.slice(0, -1) === 'invisibility'
+            || capacity.slice(0, -1) === 'psychic') {
+            multiplayerActions(
+              playerNumber, this.enemy, capacity,
+              this.targetedDirection.x, this.targetedDirection.y,
+            );
+          } else if (capacity.slice(0, -1) === 'electric'
+            || capacity.slice(0, -1) === 'fire'
+            || capacity.slice(0, -1) === 'ice'
+            || capacity.slice(0, -1) === 'water'
+            || capacity.slice(0, -1) === 'dragon'
+            || capacity.slice(0, -1) === 'fairy') {
+            const { playerAction } = this.props;
+            // Callback to MultiplayerGame
+            playerAction(
+              this.targetedTileY, this.targetedTileX, capacity,
+              this.targetedDirection.x, this.targetedDirection.y,
+            );
+            // Callback to Players
+            multiplayerActions(
+              playerNumber, this.enemy, capacity,
+              this.targetedDirection.x, this.targetedDirection.y,
+            );
+          } else {
+            // default ability: punch
+            const defaultCapacity = `punch${capacity.slice(-1)}`;
+            if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+              multiplayerActions(
+                playerNumber, this.enemy, defaultCapacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+            }
+          }
+        }
       }
     }
   }
@@ -545,41 +583,41 @@ class Player extends Component {
           break;
         }
         // Psychic: reverse buttons
-        case 'psychic': {
-          this.canMove = false;
-          this.setState({ playerConfused: true });
-          this.defaultUpButton = this.keys.up.keyboard;
-          this.defaultUpPadButton = this.keys.up.pad;
-          this.defaultDownButton = this.keys.down.keyboard;
-          this.defaultDownPadButton = this.keys.down.pad;
-          this.defaultLeftButton = this.keys.left.keyboard;
-          this.defaultLeftPadButton = this.keys.left.pad;
-          this.defaultRightButton = this.keys.right.keyboard;
-          this.defaultRightPadButton = this.keys.right.pad;
-          this.keys.up.keyboard = this.defaultDownButton;
-          this.keys.up.pad = this.defaultDownPadButton;
-          this.keys.down.keyboard = this.defaultUpButton;
-          this.keys.down.pad = this.defaultUpPadButton;
-          this.keys.left.keyboard = this.defaultRightButton;
-          this.keys.left.pad = this.defaultRightPadButton;
-          this.keys.right.keyboard = this.defaultLeftButton;
-          this.keys.right.pad = this.defaultUpLeftPadButton;
-          this.canMove = true;
-          setTimeout(() => {
-            this.canMove = false;
-            this.setState({ playerConfused: false });
-            this.keys.up.keyboard = this.defaultUpButton;
-            this.keys.up.pad = this.defaultUpPadButton;
-            this.keys.down.keyboard = this.defaultDownButton;
-            this.keys.down.pad = this.defaultDownPadButton;
-            this.keys.left.keyboard = this.defaultLeftButton;
-            this.keys.left.pad = this.defaultLeftPadButton;
-            this.keys.right.keyboard = this.defaultRightButton;
-            this.keys.right.pad = this.defaultRightPadButton;
-            this.canMove = true;
-          }, 3000);
-          break;
-        }
+        // case 'psychic': {
+        //   this.canMove = false;
+        //   this.setState({ playerConfused: true });
+        //   this.defaultUpButton = this.keys.up.keyboard;
+        //   this.defaultUpPadButton = this.keys.up.pad;
+        //   this.defaultDownButton = this.keys.down.keyboard;
+        //   this.defaultDownPadButton = this.keys.down.pad;
+        //   this.defaultLeftButton = this.keys.left.keyboard;
+        //   this.defaultLeftPadButton = this.keys.left.pad;
+        //   this.defaultRightButton = this.keys.right.keyboard;
+        //   this.defaultRightPadButton = this.keys.right.pad;
+        //   this.keys.up.keyboard = this.defaultDownButton;
+        //   this.keys.up.pad = this.defaultDownPadButton;
+        //   this.keys.down.keyboard = this.defaultUpButton;
+        //   this.keys.down.pad = this.defaultUpPadButton;
+        //   this.keys.left.keyboard = this.defaultRightButton;
+        //   this.keys.left.pad = this.defaultRightPadButton;
+        //   this.keys.right.keyboard = this.defaultLeftButton;
+        //   this.keys.right.pad = this.defaultUpLeftPadButton;
+        //   this.canMove = true;
+        //   setTimeout(() => {
+        //     this.canMove = false;
+        //     this.setState({ playerConfused: false });
+        //     this.keys.up.keyboard = this.defaultUpButton;
+        //     this.keys.up.pad = this.defaultUpPadButton;
+        //     this.keys.down.keyboard = this.defaultDownButton;
+        //     this.keys.down.pad = this.defaultDownPadButton;
+        //     this.keys.left.keyboard = this.defaultLeftButton;
+        //     this.keys.left.pad = this.defaultLeftPadButton;
+        //     this.keys.right.keyboard = this.defaultRightButton;
+        //     this.keys.right.pad = this.defaultRightPadButton;
+        //     this.canMove = true;
+        //   }, 3000);
+        //   break;
+        // }
         // Default capacity: punch
         default: {
           this.setState({ playerStunned: true });
@@ -613,7 +651,8 @@ class Player extends Component {
 
   render() {
     const {
-      img, posX, posY, pixelsPerTile, playerOpacity, playerFrozen, playerConfused, playerStunned,
+      img, posX, posY, pixelsPerTile, playerOpacity,
+      playerFrozen, playerConfused, playerStunned, pokemonAttack,
     } = this.state;
     // Player CSS
     const playerStyle = {
@@ -640,46 +679,59 @@ class Player extends Component {
       transitionDuration: `${this.speed + 400}ms`,
       // transitionTimingFunction: 'linear',
     };
-    // if (this.pokemon) {
-    switch (this.img) {
-      case (`${this.charImg}TopFeet`): {
-        this.pokemonStyle = {
-          marginTop: '2.5vw',
-          marginLeft: '-1.4vw',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      case (`${this.charImg}LeftFeet`): {
-        this.pokemonStyle = {
-          marginTop: '0.3vw',
-          marginLeft: '0.6vw',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      case (`${this.charImg}RightFeet`): {
-        this.pokemonStyle = {
-          marginTop: '0.3vw',
-          marginLeft: '-3.3vw',
-          transform: 'scaleX(-1)',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      case (`${this.charImg}BottomFeet`): {
-        this.pokemonStyle = {
-          marginTop: '-2.2vw',
-          marginLeft: '-1.2vw',
-          transitionProperty: 'top, left, margin-top, margin-left',
-        };
-        break;
-      }
-      default: {
-        break;
-      }
+    const pokAttackStyle = {
+      zIndex: 4,
+      transitionDuration: '100ms',
+      transitionTimingFunction: 'linear',
+      maxWidth: '2.8vw',
+      maxHeight: '2.8vw',
+      marginTop: '0',
+      marginLeft: '-2vw',
+      transitionProperty: 'top, left, margin-top, margin-left',
+    };
+    if (this.img === `${this.charImg}TopFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '2.5vw',
+        marginLeft: '-1.4vw',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
+    } else if (this.img === `${this.charImg}LeftFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '0.3vw',
+        marginLeft: '0.6vw',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
+    } else if (this.img === `${this.charImg}RightFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '0.3vw',
+        marginLeft: '-3.3vw',
+        transform: 'scaleX(-1)',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
+    } else if (this.img === `${this.charImg}BottomFeet`) {
+      this.pokemonStyle = {
+        maxWidth: '2.2vw',
+        maxHeight: '2.2vw',
+        transition: '600ms',
+        zIndex: 1,
+        marginTop: '-2.2vw',
+        marginLeft: '-1.2vw',
+        transitionProperty: 'top, left, margin-top, margin-left',
+      };
     }
-    // }
+
 
     return (
       <div className="playerContainer" style={globalStyle}>
@@ -712,7 +764,14 @@ class Player extends Component {
               <div
                 className="pokemonPetContainer"
               >
-                <img style={this.pokemonStyle} className="pokemonPet" src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`} alt={this.pokemon} />
+                <img
+                  style={
+                    pokemonAttack ? pokAttackStyle : this.pokemonStyle
+                  }
+                  className="pokemonPet"
+                  src={`http://pokestadium.com/sprites/xy/${this.pokemon}.gif`}
+                  alt={this.pokemon}
+                />
               </div>
             )
             : null
