@@ -125,6 +125,19 @@ class MultiplayerGame extends Component {
     }
   }
 
+  transferKey = (player, enemy) => {
+    if (this[player].collectedKeys > 0 && this[enemy].collectedKeys < this.keysToCollect) {
+      this[player].collectedKeys -= 1;
+      this[enemy].collectedKeys += 1;
+      if (this.player1.collectedKeys < this.keysToCollect) {
+        this.setState({ finalDoorOpened1: false });
+      }
+      if (this.player2.collectedKeys < this.keysToCollect) {
+        this.setState({ finalDoorOpened2: false });
+      }
+    }
+  }
+
   setWonPokemon = () => {
     const { isWinner, pokemon, winner } = this.state;
     let pokemonType = '';
@@ -151,7 +164,6 @@ class MultiplayerGame extends Component {
       }
     }
   }
-
 
   playerAction(y, x, capacity, directionX, directionY) {
     const { level } = this.state;
@@ -301,6 +313,7 @@ class MultiplayerGame extends Component {
             tiles={level.tiles}
             items={level.items}
             projectiles={projectiles}
+            transferKey={this.transferKey}
             startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}

@@ -78,11 +78,11 @@ class Players extends Component {
       // Traps/projectiles don't directly affect other player
       // => callback in MultiplayerGame to alter matrices
       if (capacity.slice(0, -1) !== 'fire'
-      && capacity.slice(0, -1) !== 'dragon'
-      && capacity.slice(0, -1) !== 'electric'
-      && capacity.slice(0, -1) !== 'ice'
-      && capacity.slice(0, -1) !== 'water'
-      && capacity.slice(0, -1) !== 'fairy') {
+        && capacity.slice(0, -1) !== 'dragon'
+        && capacity.slice(0, -1) !== 'electric'
+        && capacity.slice(0, -1) !== 'ice'
+        && capacity.slice(0, -1) !== 'water'
+        && capacity.slice(0, -1) !== 'fairy') {
         this.setState({
           [enemy]: {
             gettingTargeted: {
@@ -104,7 +104,7 @@ class Players extends Component {
     const {
       ongoingGame, tiles, items, startingPositions, getPlayerPos, playerAction,
       finalDoorOpened1, finalDoorOpened2, capacities1, capacities2, projectiles,
-      pokemon1, pokemon2,
+      pokemon1, pokemon2, transferKey,
     } = this.props;
     const {
       player1, player2, player1timers, player2timers,
@@ -119,6 +119,7 @@ class Players extends Component {
           startingPositions={startingPositions.player1}
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}
+          transferKey={transferKey}
           finalDoorOpened={finalDoorOpened1}
           player={player1}
           enemy={player2}
@@ -140,6 +141,7 @@ class Players extends Component {
           startingPositions={startingPositions.player2}
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}
+          transferKey={transferKey}
           finalDoorOpened={finalDoorOpened2}
           player={player2}
           enemy={player1}

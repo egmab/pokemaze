@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import './Player.css';
 
@@ -21,6 +22,7 @@ class Player extends Component {
     this.dir = 'down';
     this.canMove = true;
     this.canAct = true;
+    this.losingKey = false;
     this.moveTime = Date.now();
     this.speed = 170;
     this.actionDelay = 300;
@@ -128,6 +130,9 @@ class Player extends Component {
     if (now - this.moveTime > this.speed) {
       this.resetMove();
     }
+    if (now - this.losingKeyTime > 2000) {
+      this.losingKey = false;
+    }
     if (now - this.actionTime > this.actionDelay) {
       this.resetAction();
     }
@@ -195,14 +200,14 @@ class Player extends Component {
   gamepadVibration = () => {
     // const gp = navigator.getGamepads();
     // if (gp[this.gpNumber] !== null) {
-    //   if (gp[this.gpNumber].vibrationActuator !== null) {
-    //     gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
-    //       startDelay: 0,
-    //       duration: 500,
-    //       weakMagnitude: 1.0,
-    //       strongMagnitude: 1.0,
-    //     });
-    //   }
+    // if (gp[this.gpNumber].vibrationActuator !== null) {
+    // gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
+    // startDelay: 0,
+    // duration: 500,
+    // weakMagnitude: 1.0,
+    // strongMagnitude: 1.0,
+    // });
+    // }
     // }
   }
 
@@ -479,7 +484,7 @@ class Player extends Component {
     }
   }
 
-  //    Checks if tile is an obstacle in the level after a move
+  // Checks if tile is an obstacle in the level after a move
   // => tiles named "500"+ and items named "900"+
   // AND levers (items 700 to 799)
   // AND doors not activated by levers (even numbers between 800 and 899)
@@ -525,7 +530,7 @@ class Player extends Component {
   traps(x, y) {
     const { posX, posY } = this.state;
     const {
-      tiles, items, projectiles, startingPositions,
+      tiles, items, projectiles, startingPositions, transferKey, playerNumber,
     } = this.props;
     if ((parseInt(tiles[y][x], 10) >= 400
       && parseInt(tiles[y][x], 10) <= 499)
@@ -539,6 +544,11 @@ class Player extends Component {
         && parseInt(items[posY][posX], 10) <= 499)) {
       setTimeout(() => {
         this.setState({ playerStunned: true });
+        if (this.losingKey === false) {
+          this.losingKeyTime = Date.now();
+          transferKey(playerNumber, this.enemy);
+          this.losingKey = true;
+        }
         this.gamepadVibration();
         this.posX = startingPositions.x;
         this.posY = startingPositions.y;
@@ -552,6 +562,11 @@ class Player extends Component {
       this.gamepadVibration();
       if (parseInt(projectiles[posY][posX], 10) < 100) {
         this.setState({ playerStunned: true });
+        if (this.losingKey === false) {
+          this.losingKeyTime = Date.now();
+          transferKey(playerNumber, this.enemy);
+          this.losingKey = true;
+        }
         setTimeout(() => {
           this.posX = startingPositions.x;
           this.posY = startingPositions.y;
@@ -561,6 +576,11 @@ class Player extends Component {
         }, 900);
       } else if (parseInt(projectiles[posY][posX], 10) >= 100) {
         this.setState({ playerFrozen: true });
+        if (this.losingKey === false) {
+          this.losingKeyTime = Date.now();
+          transferKey(playerNumber, this.enemy);
+          this.losingKey = true;
+        }
         setTimeout(() => {
           this.setState({ playerFrozen: false });
         }, 3000);
@@ -584,39 +604,39 @@ class Player extends Component {
         }
         // Psychic: reverse buttons
         // case 'psychic': {
-        //   this.canMove = false;
-        //   this.setState({ playerConfused: true });
-        //   this.defaultUpButton = this.keys.up.keyboard;
-        //   this.defaultUpPadButton = this.keys.up.pad;
-        //   this.defaultDownButton = this.keys.down.keyboard;
-        //   this.defaultDownPadButton = this.keys.down.pad;
-        //   this.defaultLeftButton = this.keys.left.keyboard;
-        //   this.defaultLeftPadButton = this.keys.left.pad;
-        //   this.defaultRightButton = this.keys.right.keyboard;
-        //   this.defaultRightPadButton = this.keys.right.pad;
-        //   this.keys.up.keyboard = this.defaultDownButton;
-        //   this.keys.up.pad = this.defaultDownPadButton;
-        //   this.keys.down.keyboard = this.defaultUpButton;
-        //   this.keys.down.pad = this.defaultUpPadButton;
-        //   this.keys.left.keyboard = this.defaultRightButton;
-        //   this.keys.left.pad = this.defaultRightPadButton;
-        //   this.keys.right.keyboard = this.defaultLeftButton;
-        //   this.keys.right.pad = this.defaultUpLeftPadButton;
-        //   this.canMove = true;
-        //   setTimeout(() => {
-        //     this.canMove = false;
-        //     this.setState({ playerConfused: false });
-        //     this.keys.up.keyboard = this.defaultUpButton;
-        //     this.keys.up.pad = this.defaultUpPadButton;
-        //     this.keys.down.keyboard = this.defaultDownButton;
-        //     this.keys.down.pad = this.defaultDownPadButton;
-        //     this.keys.left.keyboard = this.defaultLeftButton;
-        //     this.keys.left.pad = this.defaultLeftPadButton;
-        //     this.keys.right.keyboard = this.defaultRightButton;
-        //     this.keys.right.pad = this.defaultRightPadButton;
-        //     this.canMove = true;
-        //   }, 3000);
-        //   break;
+        // this.canMove = false;
+        // this.setState({ playerConfused: true });
+        // this.defaultUpButton = this.keys.up.keyboard;
+        // this.defaultUpPadButton = this.keys.up.pad;
+        // this.defaultDownButton = this.keys.down.keyboard;
+        // this.defaultDownPadButton = this.keys.down.pad;
+        // this.defaultLeftButton = this.keys.left.keyboard;
+        // this.defaultLeftPadButton = this.keys.left.pad;
+        // this.defaultRightButton = this.keys.right.keyboard;
+        // this.defaultRightPadButton = this.keys.right.pad;
+        // this.keys.up.keyboard = this.defaultDownButton;
+        // this.keys.up.pad = this.defaultDownPadButton;
+        // this.keys.down.keyboard = this.defaultUpButton;
+        // this.keys.down.pad = this.defaultUpPadButton;
+        // this.keys.left.keyboard = this.defaultRightButton;
+        // this.keys.left.pad = this.defaultRightPadButton;
+        // this.keys.right.keyboard = this.defaultLeftButton;
+        // this.keys.right.pad = this.defaultUpLeftPadButton;
+        // this.canMove = true;
+        // setTimeout(() => {
+        // this.canMove = false;
+        // this.setState({ playerConfused: false });
+        // this.keys.up.keyboard = this.defaultUpButton;
+        // this.keys.up.pad = this.defaultUpPadButton;
+        // this.keys.down.keyboard = this.defaultDownButton;
+        // this.keys.down.pad = this.defaultDownPadButton;
+        // this.keys.left.keyboard = this.defaultLeftButton;
+        // this.keys.left.pad = this.defaultLeftPadButton;
+        // this.keys.right.keyboard = this.defaultRightButton;
+        // this.keys.right.pad = this.defaultRightPadButton;
+        // this.canMove = true;
+        // }, 3000);
+        // break;
         // }
         // Default capacity: punch
         default: {
@@ -665,7 +685,7 @@ class Player extends Component {
       height: '2.5vw',
       width: '2.5vw',
     };
-    //  Player Container CSS
+    // Player Container CSS
     const globalStyle = {
       position: 'absolute',
       zIndex: 0,
@@ -731,7 +751,6 @@ class Player extends Component {
         transitionProperty: 'top, left, margin-top, margin-left',
       };
     }
-
 
     return (
       <div className="playerContainer" style={globalStyle}>
