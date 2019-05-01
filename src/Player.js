@@ -19,8 +19,10 @@ class Player extends Component {
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
     this.canMove = true;
+    this.canAct = true;
     this.moveTime = Date.now();
-    this.speed = 200;
+    this.speed = 170;
+    this.actionDelay = 500;
     // Define buttons for each player
     if (props.playerNumber === 'player1') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -30,31 +32,26 @@ class Player extends Component {
           keyboard: 90,
           pad: 12,
           pressed: false,
-          padPressed: false,
         },
         down: {
           keyboard: 83,
           pad: 13,
           pressed: false,
-          padPressed: false,
         },
         left: {
           keyboard: 81,
           pad: 14,
           pressed: false,
-          padPressed: false,
         },
         right: {
           keyboard: 68,
           pad: 15,
           pressed: false,
-          padPressed: false,
         },
         action: {
           keyboard: 16,
           pad: 0,
           pressed: false,
-          padPressed: false,
         },
       };
       this.enemy = 'player2';
@@ -66,31 +63,26 @@ class Player extends Component {
           keyboard: 38,
           pad: 12,
           pressed: false,
-          padPressed: false,
         },
         down: {
           keyboard: 40,
           pad: 13,
           pressed: false,
-          padPressed: false,
         },
         left: {
           keyboard: 37,
           pad: 14,
           pressed: false,
-          padPressed: false,
         },
         right: {
           keyboard: 39,
           pad: 15,
           pressed: false,
-          padPressed: false,
         },
         action: {
           keyboard: 32,
           pad: 0,
           pressed: false,
-          padPressed: false,
         },
       };
       this.enemy = 'player1';
@@ -134,9 +126,16 @@ class Player extends Component {
     if (now - this.moveTime > this.speed) {
       this.resetMove();
     }
+    if (now - this.actionTime > this.actionDelay) {
+      this.resetAction();
+    }
     if (this.canMove) {
       this.handleGamepad();
       this.handleKeyboard();
+    }
+    if (this.canAct) {
+      this.handleGamepadAction();
+      this.handleKeyboardAction();
     }
     this.traps(this.posX, this.posY);
     this.setState({
@@ -156,18 +155,36 @@ class Player extends Component {
     }
   }
 
+  resetAction = () => {
+    const { playerStunned, playerFrozen } = this.state;
+    if (!playerStunned && !playerFrozen) {
+      this.canAct = true;
+    }
+  }
+
   handleGamepad = () => {
     const gp = navigator.getGamepads();
     if (gp[this.gpNumber] !== null) {
-      if (gp[this.gpNumber].buttons[this.keys.up.pad].pressed) {
+      if (gp[this.gpNumber].buttons[this.keys.up.pad].pressed
+        || gp[this.gpNumber].axes[1] < -0.8) {
         this.action('up');
-      } else if (gp[this.gpNumber].buttons[this.keys.down.pad].pressed) {
+      } else if (gp[this.gpNumber].buttons[this.keys.down.pad].pressed
+        || gp[this.gpNumber].axes[1] > 0.8) {
         this.action('down');
-      } else if (gp[this.gpNumber].buttons[this.keys.left.pad].pressed) {
+      } else if (gp[this.gpNumber].buttons[this.keys.left.pad].pressed
+        || gp[this.gpNumber].axes[0] < -0.8) {
         this.action('left');
-      } else if (gp[this.gpNumber].buttons[this.keys.right.pad].pressed) {
+      } else if (gp[this.gpNumber].buttons[this.keys.right.pad].pressed
+        || gp[this.gpNumber].axes[0] > 0.8) {
         this.action('right');
-      } else if (gp[this.gpNumber].buttons[this.keys.action.pad].pressed) {
+      }
+    }
+  }
+
+  handleGamepadAction = () => {
+    const gp = navigator.getGamepads();
+    if (gp[this.gpNumber] !== null) {
+      if (gp[this.gpNumber].buttons[this.keys.action.pad].pressed) {
         this.action('action');
       }
     }
@@ -220,6 +237,9 @@ class Player extends Component {
       this.keys.right.pressed = false;
       this.action('right');
     }
+  }
+
+  handleKeyboardAction = () => {
     if (this.keys.action.pressed) {
       this.keys.action.pressed = false;
       this.action('action');
@@ -258,64 +278,12 @@ class Player extends Component {
     const {
       tiles, items, getPlayerPos, playerNumber,
     } = this.props;
-    // MOVES
-    if (this.canMove) {
-      this.moveTime = Date.now();
-      this.canMove = false;
-      // Move right
-      if (action === 'right') {
-        this.keys.right.pressed = true;
-        this.img = `${this.charImg}RightFeet`;
-        setTimeout(() => {
-          this.img = `${this.charImg}Right`;
-        }, 100);
-        if (this.checkTile(1, 0)) {
-          this.posX += 1;
-        }
-        getPlayerPos(this.posX, this.posY, playerNumber);
-        return;
-      }
-      // Move left
-      if (action === 'left') {
-        this.keys.left.pressed = true;
-        this.img = `${this.charImg}LeftFeet`;
-        setTimeout(() => {
-          this.img = `${this.charImg}Left`;
-        }, 100);
-        if (this.checkTile(-1, 0)) {
-          this.posX -= 1;
-        }
-        getPlayerPos(this.posX, this.posY, playerNumber);
-        return;
-      }
-      // Move down
-      if (action === 'down') {
-        this.keys.down.pressed = true;
-        this.img = `${this.charImg}BottomFeet`;
-        setTimeout(() => {
-          this.img = `${this.charImg}Bottom`;
-        }, 100);
-        if (this.checkTile(0, 1)) {
-          this.posY += 1;
-        }
-        getPlayerPos(this.posX, this.posY, playerNumber);
-        return;
-      }
-      // Move up
-      if (action === 'up') {
-        this.keys.up.pressed = true;
-        this.img = `${this.charImg}TopFeet`;
-        setTimeout(() => {
-          this.img = `${this.charImg}Top`;
-        }, 100);
-        if (this.checkTile(0, -1)) {
-          this.posY -= 1;
-        }
-        getPlayerPos(this.posX, this.posY, playerNumber);
-        return;
-      }
-      // ACTION KEY
+    // ACTION KEY
+    if (this.canAct) {
+      this.actionTime = Date.now();
+      this.canAct = false;
       if (action === 'action') {
+        this.keys.action.padPressed = true;
         this.keys.action.pressed = true;
         // Sets coordinates of the targeted tile
         switch (this.img) {
@@ -441,6 +409,62 @@ class Player extends Component {
         }
       }
     }
+    // MOVES
+    if (this.canMove) {
+      this.moveTime = Date.now();
+      this.canMove = false;
+      // Move right
+      if (action === 'right') {
+        this.keys.right.pressed = true;
+        this.img = `${this.charImg}RightFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Right`;
+        }, this.speed / 2);
+        if (this.checkTile(1, 0)) {
+          this.posX += 1;
+        }
+        getPlayerPos(this.posX, this.posY, playerNumber);
+        return;
+      }
+      // Move left
+      if (action === 'left') {
+        this.keys.left.pressed = true;
+        this.img = `${this.charImg}LeftFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Left`;
+        }, this.speed / 2);
+        if (this.checkTile(-1, 0)) {
+          this.posX -= 1;
+        }
+        getPlayerPos(this.posX, this.posY, playerNumber);
+        return;
+      }
+      // Move down
+      if (action === 'down') {
+        this.keys.down.pressed = true;
+        this.img = `${this.charImg}BottomFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Bottom`;
+        }, this.speed / 2);
+        if (this.checkTile(0, 1)) {
+          this.posY += 1;
+        }
+        getPlayerPos(this.posX, this.posY, playerNumber);
+        return;
+      }
+      // Move up
+      if (action === 'up') {
+        this.keys.up.pressed = true;
+        this.img = `${this.charImg}TopFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Top`;
+        }, this.speed / 2);
+        if (this.checkTile(0, -1)) {
+          this.posY -= 1;
+        }
+        getPlayerPos(this.posX, this.posY, playerNumber);
+      }
+    }
   }
 
   //    Checks if tile is an obstacle in the level after a move
@@ -496,12 +520,22 @@ class Player extends Component {
       || parseInt(tiles[y][x], 10) === 9
       || (parseInt(items[y][x], 10) >= 400
         && parseInt(items[y][x], 10) <= 499)
-      || parseInt(projectiles[y][x], 10) > 0
       || (parseInt(tiles[posY][posX], 10) >= 400
         && parseInt(tiles[posY][posX], 10) <= 499)
       || parseInt(tiles[posY][posX], 10) === 9
       || (parseInt(items[posY][posX], 10) >= 400
-        && parseInt(items[posY][posX], 10) <= 499)
+        && parseInt(items[posY][posX], 10) <= 499)) {
+      setTimeout(() => {
+        this.setState({ playerStunned: true });
+        this.gamepadVibration();
+        this.posX = startingPositions.x;
+        this.posY = startingPositions.y;
+      }, this.speed * 2);
+      setTimeout(() => {
+        this.setState({ playerStunned: false });
+      }, 900);
+    }
+    if (parseInt(projectiles[y][x], 10) > 0
       || parseInt(projectiles[posY][posX], 10) > 0) {
       this.setState({ playerStunned: true });
       this.gamepadVibration();
@@ -626,12 +660,12 @@ class Player extends Component {
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}vw`,
       left: `${11 + posX * pixelsPerTile}vw`,
-      transitionDuration: '300ms',
-      transitionTimingFunction: 'linear',
+      transitionDuration: `${this.speed + 400}ms`,
+      // transitionTimingFunction: 'linear',
     };
     // if (this.pokemon) {
     switch (this.img) {
-      case `${this.charImg}Top`: {
+      case (`${this.charImg}TopFeet`): {
         this.pokemonStyle = {
           marginTop: '2.5vw',
           marginLeft: '-1.4vw',
@@ -639,7 +673,7 @@ class Player extends Component {
         };
         break;
       }
-      case `${this.charImg}Left`: {
+      case (`${this.charImg}LeftFeet`): {
         this.pokemonStyle = {
           marginTop: '0.3vw',
           marginLeft: '0.6vw',
@@ -647,7 +681,7 @@ class Player extends Component {
         };
         break;
       }
-      case `${this.charImg}Right`: {
+      case (`${this.charImg}RightFeet`): {
         this.pokemonStyle = {
           marginTop: '0.3vw',
           marginLeft: '-3.3vw',
@@ -656,12 +690,15 @@ class Player extends Component {
         };
         break;
       }
-      default: {
+      case (`${this.charImg}BottomFeet`): {
         this.pokemonStyle = {
           marginTop: '-2.2vw',
           marginLeft: '-1.2vw',
           transitionProperty: 'top, left, margin-top, margin-left',
         };
+        break;
+      }
+      default: {
         break;
       }
     }
