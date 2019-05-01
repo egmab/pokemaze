@@ -104,7 +104,7 @@ class Players extends Component {
     const {
       ongoingGame, tiles, items, startingPositions, getPlayerPos, playerAction,
       finalDoorOpened1, finalDoorOpened2, capacities1, capacities2, projectiles,
-      pokemon1, pokemon2, start,
+      pokemon1, pokemon2, transferKey, start,
     } = this.props;
     const {
       player1, player2, player1timers, player2timers,
@@ -120,6 +120,7 @@ class Players extends Component {
           startingPositions={startingPositions.player1}
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}
+          transferKey={transferKey}
           finalDoorOpened={finalDoorOpened1}
           player={player1}
           enemy={player2}
@@ -142,6 +143,7 @@ class Players extends Component {
           startingPositions={startingPositions.player2}
           getPlayerPos={getPlayerPos}
           playerAction={playerAction}
+          transferKey={transferKey}
           finalDoorOpened={finalDoorOpened2}
           player={player2}
           enemy={player1}

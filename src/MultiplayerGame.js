@@ -116,6 +116,7 @@ class MultiplayerGame extends Component {
     if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
       if (this[player].collectedKeys < this.keysToCollect) {
         this[player].collectedKeys += 1;
+        this.increment = true;
         level.items[this[player].posY][this[player].posX] = '000';
         this.setState({ level });
         // Open final door when all keys collected
@@ -127,6 +128,24 @@ class MultiplayerGame extends Component {
             this.setState({ finalDoorOpened2: true });
           }
         }
+      }
+    }
+  }
+
+  transferKey = (player, enemy) => {
+    if (this[player].collectedKeys > 0 && this[enemy].collectedKeys < this.keysToCollect) {
+      this[player].collectedKeys -= 1;
+      this.increment = false;
+      this[enemy].collectedKeys += 1;
+      if (this.player1.collectedKeys < this.keysToCollect) {
+        this.setState({ finalDoorOpened1: false });
+      } else {
+        this.setState({ finalDoorOpened1: true });
+      }
+      if (this.player2.collectedKeys < this.keysToCollect) {
+        this.setState({ finalDoorOpened2: false });
+      } else {
+        this.setState({ finalDoorOpened2: true });
       }
     }
   }
@@ -157,7 +176,6 @@ class MultiplayerGame extends Component {
       }
     }
   }
-
 
   playerAction(y, x, capacity, directionX, directionY) {
     const { level } = this.state;
@@ -297,12 +315,12 @@ class MultiplayerGame extends Component {
     return (
       <div className="GameMultiplayer">
         {isWinner || isLoser
-          ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} gameMode="multiplayer" />
           : null
         }
         {
             !start
-              ? <Starter getStarter={this.getStarter} />
+              ? <Starter getStarter={this.getStarter} gameMode="multiplayer" />
               : null
           }
         <div className="gameContainer">
@@ -313,6 +331,7 @@ class MultiplayerGame extends Component {
             tiles={level.tiles}
             items={level.items}
             projectiles={projectiles}
+            transferKey={this.transferKey}
             startingPositions={level.startingPositions}
             getPlayerPos={this.getPlayerPos}
             playerAction={this.playerAction}
@@ -331,6 +350,7 @@ class MultiplayerGame extends Component {
             typeOfKey={this.typeOfKey}
             numberOfKeys={this.keysToCollect}
             playerNumber="player1"
+            increment={this.increment}
           />
           <KeysBar
             collectedKeys={this.player2.collectedKeys}
@@ -338,6 +358,7 @@ class MultiplayerGame extends Component {
             typeOfKey={this.typeOfKey}
             numberOfKeys={this.keysToCollect}
             playerNumber="player2"
+            increment={this.increment}
           />
         </div>
       </div>
