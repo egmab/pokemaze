@@ -200,7 +200,7 @@ class Pokeditor extends Component {
         <div className="menu">
           <Link to="/">
             <button
-              className="homeButton"
+              className="backButton"
               type="button"
               size="lg"
               style={{ marginRight: 100 }}

@@ -211,7 +211,7 @@ class Home extends Component {
                   </h6>
                   <div className="changeCharacter">
                     <button
-                      className="changeCharacterImgButton"
+                      className="changeCharacterImgButton1"
                       style={{
                         backgroundImage: 'url(./assets/previous-arrow.png)',
                       }}
@@ -231,7 +231,7 @@ class Home extends Component {
                       }}
                     />
                     <button
-                      className="changeCharacterImgButton"
+                      className="changeCharacterImgButton2"
                       style={{
                         backgroundImage: 'url(./assets/next-arrow.png)',
                       }}
@@ -292,7 +292,7 @@ class Home extends Component {
                   </h6>
                   <div className="changeCharacter">
                     <button
-                      className="changeCharacterImgButton"
+                      className="changeCharacterImgButton3"
                       style={{
                         backgroundImage: 'url(./assets/previous-arrow.png)',
                       }}
@@ -312,7 +312,7 @@ class Home extends Component {
                       }}
                     />
                     <button
-                      className="changeCharacterImgButton"
+                      className="changeCharacterImgButton4"
                       style={{
                         backgroundImage: 'url(./assets/next-arrow.png)',
                       }}

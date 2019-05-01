@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const EndingGame = ({
-  pokemon, isWinner, isLoser, winner, tutoWinner, timer, levelName,
+  pokemon, isWinner, isLoser, winner, tutoWinner, timer, levelName, gameMode,
 }) => {
   let pokemonName = pokemon.name;
   const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
@@ -73,9 +73,39 @@ const EndingGame = ({
           !
         </h4>
         <p>
-          <Link exact to="/">
+          {gameMode === 'solo'
+            ? (
+              <Link
+                to="/solo-game"
+              >
+                <button
+                  className="homeButton"
+                  type="button"
+                  size="lg"
+                >
+                  Play again
+                </button>
+              </Link>
+            )
+            : (
+              <Link
+                to="/duo-game"
+              >
+                <button
+                  className="homeButton"
+                  type="button"
+                  size="lg"
+                >
+                  Play again
+                </button>
+              </Link>
+            )
+          }
+        </p>
+        <p>
+          <Link to="/">
             <button
-              className="largeBtn"
+              className="backButton"
               type="button"
               size="lg"
             >

@@ -16,16 +16,67 @@
   display:flex;
 }
 
-.changeCharacterImgButton{
-  background-size: cover;
-  margin-top: 1.2vw;
+.changeCharacterImgButton1{
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-style: solid;
+  margin: 1.2vw 0 0 -2vw;
   width: 2vw;
   height: 2vw;
   border: none;
   background-color: #11ffee00;
+  position: absolute;
+  cursor: pointer;
 }
 
-.changeCharacterImgButton:focus {
+.changeCharacterImgButton2{
+  border-style: solid;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 1.2vw 0 0 5vw;
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  background-color: #11ffee00;
+  position: absolute;
+  cursor: pointer;
+}
+
+.changeCharacterImgButton3{
+  border-style: solid;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 1.2vw -1.5vw 0 -2vw;
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  background-color: #11ffee00;
+  position: absolute;
+  cursor: pointer;
+}
+
+.changeCharacterImgButton4{
+  border-style: solid;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 1.2vw 0 0 5vw;
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  background-color: #11ffee00;
+  position: absolute;
+  cursor: pointer;
+}
+
+.changeCharacterImgButton1:hover, .changeCharacterImgButton2:hover, .changeCharacterImgButton3:hover, .changeCharacterImgButton4:hover{
+  opacity: 0.6;
+}
+
+.changeCharacterImgButton1:active, .changeCharacterImgButton2:active, .changeCharacterImgButton3:active, .changeCharacterImgButton4:active{
+  opacity: 0.4;
+}
+
+.changeCharacterImgButton1:focus, .changeCharacterImgButton2:focus {
   background-color: #11ffee00;
   border: none;
 }
@@ -50,12 +101,21 @@
   background-color:#9bd80d;
   color: white;
   text-align: center;
+  font-weight: bold;
   margin-top: 1vw;
   margin-bottom: -0.5vw;
   width: 10vw;
   font-size: 1vw;
   border: none;
   cursor: pointer;
+}
+
+.connectButton:hover{
+  background-color:#8ec50d;
+}
+
+.connectButton:active{
+  background-color: #7aa80d;
 }
 
 .buttonContainerHome { 
@@ -107,11 +167,11 @@
   color:#ffffff;
 }
 .homeButton:hover:enabled {
-  background-color: #77a809;
+  background-color: #78a70a;
 }
 
-.homeButton:active {
-  opacity: 0.7;
+.homeButton:active:enabled {
+  background-color: #638a0a;
 }
 .forms{
   display: flex;
@@ -188,8 +248,18 @@
   background-color:#df1414;
   color: white;
   text-align: center;
+  font-weight: bold;
   font-size: 1vw;
   width: 10vw;
+  cursor: pointer;
+}
+
+.disconnectButton:hover{
+  background-color:#b11616;
+}
+
+.disconnectButton:active{
+  background-color:#8d1313;
 }
 
 .pokeditor {
@@ -211,7 +281,11 @@
 }
 
 .pokeditor:hover {
-  background-color: #1d3b72;
+  background-color: #204383;
+}
+
+.pokeditor:active {
+  background-color: #1a3669;
 }
 
 .pokeditor img{ 
