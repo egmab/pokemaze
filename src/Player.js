@@ -173,6 +173,18 @@ class Player extends Component {
     }
   }
 
+  gamepadVibration = () => {
+    const gp = navigator.getGamepads();
+    if (gp[this.gpNumber] !== null) {
+      gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
+        startDelay: 0,
+        duration: 500,
+        weakMagnitude: 1.0,
+        strongMagnitude: 1.0,
+      });
+    }
+  }
+
   triggerKeyboard = (e) => {
     if (e.keyCode === this.keys.up.keyboard) {
       this.keys.up.pressed = true;
@@ -492,6 +504,7 @@ class Player extends Component {
         && parseInt(items[posY][posX], 10) <= 499)
       || parseInt(projectiles[posY][posX], 10) > 0) {
       this.setState({ playerStunned: true });
+      this.gamepadVibration();
       setTimeout(() => {
         this.posX = startingPositions.x;
         this.posY = startingPositions.y;
@@ -559,6 +572,7 @@ class Player extends Component {
         // Default capacity: punch
         default: {
           this.setState({ playerStunned: true });
+          this.gamepadVibration();
           let gettingPunched = true;
           while (gettingPunched) {
             const { posX, posY } = this.state;
