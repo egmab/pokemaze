@@ -22,7 +22,7 @@ class Player extends Component {
     this.canAct = true;
     this.moveTime = Date.now();
     this.speed = 170;
-    this.actionDelay = 500;
+    this.actionDelay = 300;
     // Define buttons for each player
     if (props.playerNumber === 'player1') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -193,12 +193,14 @@ class Player extends Component {
   gamepadVibration = () => {
     const gp = navigator.getGamepads();
     if (gp[this.gpNumber] !== null) {
-      gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
-        startDelay: 0,
-        duration: 500,
-        weakMagnitude: 1.0,
-        strongMagnitude: 1.0,
-      });
+      if (gp[this.gpNumber].vibrationActuator !== null) {
+        gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
+          startDelay: 0,
+          duration: 500,
+          weakMagnitude: 1.0,
+          strongMagnitude: 1.0,
+        });
+      }
     }
   }
 
@@ -287,7 +289,7 @@ class Player extends Component {
         this.keys.action.pressed = true;
         // Sets coordinates of the targeted tile
         switch (this.img) {
-          case `${this.charImg}Top`: {
+          case (`${this.charImg}Top` || `${this.charImg}TopFeet`): {
             this.targetedTileX = this.posX;
             this.targetedTileY = this.posY - 1;
             this.targetedDirection = {
@@ -296,7 +298,7 @@ class Player extends Component {
             };
             break;
           }
-          case `${this.charImg}Left`: {
+          case (`${this.charImg}Left` || `${this.charImg}LeftFeet`): {
             this.targetedTileX = this.posX - 1;
             this.targetedTileY = this.posY;
             this.targetedDirection = {
@@ -305,7 +307,7 @@ class Player extends Component {
             };
             break;
           }
-          case `${this.charImg}Right`: {
+          case (`${this.charImg}Right` || `${this.charImg}RightFeet`): {
             this.targetedTileX = this.posX + 1;
             this.targetedTileY = this.posY;
             this.targetedDirection = {
@@ -342,65 +344,37 @@ class Player extends Component {
           } else if (gameMode === 'multiplayer' && timers[0] === 0) {
             const { multiplayerActions, enemy, capacities } = this.props;
             const capacity = capacities[0];
-            switch (capacity.slice(0, -1)) {
-              case 'ice': {
-                if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
-                  // Callback to Players
-                  multiplayerActions(
-                    playerNumber, this.enemy, capacity,
-                    this.targetedDirection.x, this.targetedDirection.y,
-                  );
-                }
-                break;
-              }
-              case 'invisibility': {
+            if (capacity.slice(0, -1) === 'invisibility'
+              || capacity.slice(0, -1) === 'psychic') {
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+            } else if (capacity.slice(0, -1) === 'electric'
+              || capacity.slice(0, -1) === 'fire'
+              || capacity.slice(0, -1) === 'ice'
+              || capacity.slice(0, -1) === 'water'
+              || capacity.slice(0, -1) === 'dragon'
+              || capacity.slice(0, -1) === 'fairy') {
+              const { playerAction } = this.props;
+              // Callback to MultiplayerGame
+              playerAction(
+                this.targetedTileY, this.targetedTileX, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+              // Callback to Players
+              multiplayerActions(
+                playerNumber, this.enemy, capacity,
+                this.targetedDirection.x, this.targetedDirection.y,
+              );
+            } else {
+              // default ability: punch
+              const defaultCapacity = `punch${capacity.slice(-1)}`;
+              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
                 multiplayerActions(
-                  playerNumber, this.enemy, capacity,
+                  playerNumber, this.enemy, defaultCapacity,
                   this.targetedDirection.x, this.targetedDirection.y,
                 );
-                break;
-              }
-              case 'psychic': {
-                multiplayerActions(
-                  playerNumber, this.enemy, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-                break;
-              }
-              case 'electric': {
-                const { playerAction } = this.props;
-                playerAction(
-                  this.targetedTileY, this.targetedTileX, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-                multiplayerActions(
-                  playerNumber, this.enemy, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-                break;
-              }
-              case 'fire': {
-                const { playerAction } = this.props;
-                playerAction(
-                  this.targetedTileY, this.targetedTileX, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-                multiplayerActions(
-                  playerNumber, this.enemy, capacity,
-                  this.targetedDirection.x, this.targetedDirection.y,
-                );
-                break;
-              }
-              default: {
-                // default ability: punch
-                const defaultCapacity = `punch${capacity.slice(-1)}`;
-                if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
-                  multiplayerActions(
-                    playerNumber, this.enemy, defaultCapacity,
-                    this.targetedDirection.x, this.targetedDirection.y,
-                  );
-                }
-                break;
               }
             }
           }
@@ -537,15 +511,22 @@ class Player extends Component {
     }
     if (parseInt(projectiles[y][x], 10) > 0
       || parseInt(projectiles[posY][posX], 10) > 0) {
-      this.setState({ playerStunned: true });
       this.gamepadVibration();
-      setTimeout(() => {
-        this.posX = startingPositions.x;
-        this.posY = startingPositions.y;
-      }, 200);
-      setTimeout(() => {
-        this.setState({ playerStunned: false });
-      }, 900);
+      if (parseInt(projectiles[posY][posX], 10) < 100) {
+        this.setState({ playerStunned: true });
+        setTimeout(() => {
+          this.posX = startingPositions.x;
+          this.posY = startingPositions.y;
+        }, 200);
+        setTimeout(() => {
+          this.setState({ playerStunned: false });
+        }, 900);
+      } else if (parseInt(projectiles[posY][posX], 10) >= 100) {
+        this.setState({ playerFrozen: true });
+        setTimeout(() => {
+          this.setState({ playerFrozen: false });
+        }, 3000);
+      }
     }
   }
 
@@ -565,6 +546,7 @@ class Player extends Component {
         }
         // Psychic: reverse buttons
         case 'psychic': {
+          this.canMove = false;
           this.setState({ playerConfused: true });
           this.defaultUpButton = this.keys.up.keyboard;
           this.defaultUpPadButton = this.keys.up.pad;
@@ -582,7 +564,9 @@ class Player extends Component {
           this.keys.left.pad = this.defaultRightPadButton;
           this.keys.right.keyboard = this.defaultLeftButton;
           this.keys.right.pad = this.defaultUpLeftPadButton;
+          this.canMove = true;
           setTimeout(() => {
+            this.canMove = false;
             this.setState({ playerConfused: false });
             this.keys.up.keyboard = this.defaultUpButton;
             this.keys.up.pad = this.defaultUpPadButton;
@@ -592,14 +576,7 @@ class Player extends Component {
             this.keys.left.pad = this.defaultLeftPadButton;
             this.keys.right.keyboard = this.defaultRightButton;
             this.keys.right.pad = this.defaultRightPadButton;
-          }, 3000);
-          break;
-        }
-        // Ice: needs a rework
-        case 'ice': {
-          this.setState({ playerFrozen: true });
-          setTimeout(() => {
-            this.setState({ playerFrozen: false });
+            this.canMove = true;
           }, 3000);
           break;
         }
