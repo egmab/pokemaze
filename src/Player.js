@@ -193,17 +193,17 @@ class Player extends Component {
   }
 
   gamepadVibration = () => {
-    const gp = navigator.getGamepads();
-    if (gp[this.gpNumber] !== null) {
-      if (gp[this.gpNumber].vibrationActuator !== null) {
-        gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
-          startDelay: 0,
-          duration: 500,
-          weakMagnitude: 1.0,
-          strongMagnitude: 1.0,
-        });
-      }
-    }
+    // const gp = navigator.getGamepads();
+    // if (gp[this.gpNumber] !== null) {
+    //   if (gp[this.gpNumber].vibrationActuator !== null) {
+    //     gp[this.gpNumber].vibrationActuator.playEffect('dual-rumble', {
+    //       startDelay: 0,
+    //       duration: 500,
+    //       weakMagnitude: 1.0,
+    //       strongMagnitude: 1.0,
+    //     });
+    //   }
+    // }
   }
 
   triggerKeyboard = (e) => {
@@ -583,41 +583,41 @@ class Player extends Component {
           break;
         }
         // Psychic: reverse buttons
-        case 'psychic': {
-          this.canMove = false;
-          this.setState({ playerConfused: true });
-          this.defaultUpButton = this.keys.up.keyboard;
-          this.defaultUpPadButton = this.keys.up.pad;
-          this.defaultDownButton = this.keys.down.keyboard;
-          this.defaultDownPadButton = this.keys.down.pad;
-          this.defaultLeftButton = this.keys.left.keyboard;
-          this.defaultLeftPadButton = this.keys.left.pad;
-          this.defaultRightButton = this.keys.right.keyboard;
-          this.defaultRightPadButton = this.keys.right.pad;
-          this.keys.up.keyboard = this.defaultDownButton;
-          this.keys.up.pad = this.defaultDownPadButton;
-          this.keys.down.keyboard = this.defaultUpButton;
-          this.keys.down.pad = this.defaultUpPadButton;
-          this.keys.left.keyboard = this.defaultRightButton;
-          this.keys.left.pad = this.defaultRightPadButton;
-          this.keys.right.keyboard = this.defaultLeftButton;
-          this.keys.right.pad = this.defaultUpLeftPadButton;
-          this.canMove = true;
-          setTimeout(() => {
-            this.canMove = false;
-            this.setState({ playerConfused: false });
-            this.keys.up.keyboard = this.defaultUpButton;
-            this.keys.up.pad = this.defaultUpPadButton;
-            this.keys.down.keyboard = this.defaultDownButton;
-            this.keys.down.pad = this.defaultDownPadButton;
-            this.keys.left.keyboard = this.defaultLeftButton;
-            this.keys.left.pad = this.defaultLeftPadButton;
-            this.keys.right.keyboard = this.defaultRightButton;
-            this.keys.right.pad = this.defaultRightPadButton;
-            this.canMove = true;
-          }, 3000);
-          break;
-        }
+        // case 'psychic': {
+        //   this.canMove = false;
+        //   this.setState({ playerConfused: true });
+        //   this.defaultUpButton = this.keys.up.keyboard;
+        //   this.defaultUpPadButton = this.keys.up.pad;
+        //   this.defaultDownButton = this.keys.down.keyboard;
+        //   this.defaultDownPadButton = this.keys.down.pad;
+        //   this.defaultLeftButton = this.keys.left.keyboard;
+        //   this.defaultLeftPadButton = this.keys.left.pad;
+        //   this.defaultRightButton = this.keys.right.keyboard;
+        //   this.defaultRightPadButton = this.keys.right.pad;
+        //   this.keys.up.keyboard = this.defaultDownButton;
+        //   this.keys.up.pad = this.defaultDownPadButton;
+        //   this.keys.down.keyboard = this.defaultUpButton;
+        //   this.keys.down.pad = this.defaultUpPadButton;
+        //   this.keys.left.keyboard = this.defaultRightButton;
+        //   this.keys.left.pad = this.defaultRightPadButton;
+        //   this.keys.right.keyboard = this.defaultLeftButton;
+        //   this.keys.right.pad = this.defaultUpLeftPadButton;
+        //   this.canMove = true;
+        //   setTimeout(() => {
+        //     this.canMove = false;
+        //     this.setState({ playerConfused: false });
+        //     this.keys.up.keyboard = this.defaultUpButton;
+        //     this.keys.up.pad = this.defaultUpPadButton;
+        //     this.keys.down.keyboard = this.defaultDownButton;
+        //     this.keys.down.pad = this.defaultDownPadButton;
+        //     this.keys.left.keyboard = this.defaultLeftButton;
+        //     this.keys.left.pad = this.defaultLeftPadButton;
+        //     this.keys.right.keyboard = this.defaultRightButton;
+        //     this.keys.right.pad = this.defaultRightPadButton;
+        //     this.canMove = true;
+        //   }, 3000);
+        //   break;
+        // }
         // Default capacity: punch
         default: {
           this.setState({ playerStunned: true });
