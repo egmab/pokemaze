@@ -54,7 +54,7 @@
   height: 2vw;
   margin-top: 0.1vw;
   margin-left:-1vw;
-  animation: spin 2s infinite linear;
+  animation: spin 0.5s infinite linear;
 }
 
 .Snowpile {
