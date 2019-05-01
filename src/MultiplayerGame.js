@@ -195,7 +195,7 @@ class MultiplayerGame extends Component {
     if (capacity) {
       const { projectiles } = this.state;
       // projectiles! :-)
-      if (capacity.slice(0, -1) === 'fire') {
+      if (capacity.slice(0, -1) === 'fire' || capacity.slice(0, -1) === 'dragon') {
         projectiles[y][x] = '001';
         const fireballId = Math.floor(Math.random() * 99999);
         this.projectiles[fireballId] = { y, x };
@@ -224,7 +224,7 @@ class MultiplayerGame extends Component {
         }, 200);
       }
       // Lightning bolts
-      if (capacity.slice(0, -1) === 'electric') {
+      if (capacity.slice(0, -1) === 'electric' || capacity.slice(0, -1) === 'fairy') {
         projectiles[y][x] = '002';
         const lightningBoltId = Math.floor(Math.random() * 99999);
         this.projectiles[lightningBoltId] = { y, x };
@@ -247,7 +247,37 @@ class MultiplayerGame extends Component {
             projectiles[this.projectiles[lightningBoltId].y][this.projectiles[lightningBoltId].x] = '002';
             this.setState({ projectiles });
           }
-        }, 1000);
+        }, 500);
+      }
+      // Iceball
+      if (capacity.slice(0, -1) === 'ice' || capacity.slice(0, -1) === 'water') {
+        projectiles[y][x] = '100';
+        const iceballId = Math.floor(Math.random() * 99999);
+        this.projectiles[iceballId] = { y, x };
+        this.projectiles[iceballId].running = setInterval(() => {
+          this.projectiles[iceballId].y += directionY;
+          this.projectiles[iceballId].x += directionX;
+          if (this.projectiles[iceballId].y < 0
+            || this.projectiles[iceballId].y >= projectiles.length
+            || this.projectiles[iceballId].x < 0
+            || this.projectiles[iceballId].x
+            >= projectiles[this.projectiles[iceballId].y].length
+            || projectiles[this.projectiles[iceballId].y][this.projectiles[iceballId].x] !== '000') {
+            clearInterval(this.projectiles[iceballId].running);
+            setTimeout(() => {
+              projectiles[this.projectiles[iceballId].y - directionY][this.projectiles[iceballId].x - directionX] = '101';
+              this.setState({ projectiles });
+            }, 100);
+            setTimeout(() => {
+              projectiles[this.projectiles[iceballId].y - directionY][this.projectiles[iceballId].x - directionX] = '000';
+              this.setState({ projectiles });
+            }, 5000);
+          } else {
+            projectiles[this.projectiles[iceballId].y - directionY][this.projectiles[iceballId].x - directionX] = '000';
+            projectiles[this.projectiles[iceballId].y][this.projectiles[iceballId].x] = '100';
+            this.setState({ projectiles });
+          }
+        }, 200);
       }
     }
     this.setState({ level });

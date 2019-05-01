@@ -6,7 +6,7 @@ import Video from './Video';
 class Home extends Component {
   constructor(props) {
     super(props);
-    this.charImagesList = ['guy', 'female', 'black', 'elegant', 'greenWoman', 'pinkHairWoman', 'oldMan'];
+    this.charImagesList = ['guy', 'female', 'black', 'blue', 'guyCape', 'red', 'white', 'pinkHatLady'];
     this.data = {
       pokemons: [],
       charImg: 'guy',
@@ -298,7 +298,7 @@ class Home extends Component {
                       }}
                       type="button"
                       value="userTwo"
-                      onClick={() => this.changeCharImgTwo(-1)}
+                      onClick={() => this.changeCharImgTwo(1)}
                     />
                   </div>
                   <form onSubmit={this.onDisconnectTwo}>

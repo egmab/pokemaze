@@ -28,6 +28,10 @@ function Tile(props) {
     projectileClassName = 'Fire';
   } else if (projectiles[rowIndex][colIndex] === '002') {
     projectileClassName = 'Lightning';
+  } else if (projectiles[rowIndex][colIndex] === '100') {
+    projectileClassName = 'Snowball';
+  } else if (projectiles[rowIndex][colIndex] === '101') {
+    projectileClassName = 'Snowpile';
   }
 
   return (
