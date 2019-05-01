@@ -4,58 +4,35 @@ class Starter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: {},
-      seconds: 3,
+      seconds: '3',
     };
-    this.timer = 0;
-    this.countDown = this.countDown.bind(this);
   }
-
 
   componentDidMount() {
+    this.timer = setInterval(this.tick, 1000);
+  }
+
+  tick = () => {
     const { seconds } = this.state;
-    const timeLeft = this.secondsToTime(seconds);
-    this.setState({ time: timeLeft });
-  }
-
-  secondsToTime(secs) {
-    const hours = Math.floor(this.secs / (60 * 60));
-
-    const divisorForMinutes = secs % (60 * 60);
-    const minutes = Math.floor(divisorForMinutes / 60);
-
-    const divisorForSeconds = divisorForMinutes % 60;
-    const seconds = Math.ceil(divisorForSeconds);
-
-    let obj = {
-      "h": hours,
-      "m": minutes,
-      "s": seconds
-    };
-
-    return obj;
-  }
-
-  countDown() {
-    const seconds = this.state.seconds - 1;
-    this.setState({
-      time: this.secondsToTime(seconds),
-      seconds: seconds,
-    });
-
-    if (seconds === 0) {
+    if (seconds > 1) {
+      this.setState({ seconds: seconds - 1 });
+    } else {
       clearInterval(this.timer);
     }
   }
 
   render() {
-    const { time } = this.state;
+    const { seconds } = this.state;
     return (
-      <div>
-        m:
-        {time.m}
-        s:
-        {time.s}
+      <div className="modal-wrapper" style={{ minHeight: '15vw' }}>
+        <div className="modal-body">
+          <div style={{ width: '100%', textAlign: 'center' }}>
+            <h1>
+              {seconds}
+              GO!
+            </h1>
+          </div>
+        </div>
       </div>
     );
   }
