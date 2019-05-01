@@ -9,30 +9,37 @@ import './Game.css';
 class Game extends Component {
   constructor(props) {
     super(props);
-    const { level } = props;
-    this.level = level;
+    const { location } = props;
+    this.leveltype = location.state.leveltype;
+    this.selectedlevel = location.state.levelsolo;
+    if (this.leveltype === 'default') {
+      this.level = JSON.parse(localStorage.getItem('GameData')).default.levels.solo[this.selectedlevel];
+    }
+    if (this.leveltype === 'custom') {
+      this.level = JSON.parse(localStorage.getItem('PokemazeCustomLevels'))[this.selectedlevel];
+    }
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
     this.playerAction = this.playerAction.bind(this);
     this.keysToCollect = 0;
     // Creates projectiles matrix
     const projectiles = [];
-    for (let i = 0; i < level.tiles.length; i += 1) {
+    for (let i = 0; i < this.level.tiles.length; i += 1) {
       projectiles.push([]);
-      for (let j = 0; j < level.tiles[i].length; j += 1) {
+      for (let j = 0; j < this.level.tiles[i].length; j += 1) {
         projectiles[i].push('000');
       }
     }
-    for (let i = 0; i < level.items.length; i += 1) {
-      for (let j = 0; j < level.items[i].length; j += 1) {
-        if (parseInt(level.items[i][j], 10) >= 900
-          && parseInt(level.items[i][j], 10) <= 999) {
-          this.finalDoorID = level.items[i][j];
+    for (let i = 0; i < this.level.items.length; i += 1) {
+      for (let j = 0; j < this.level.items[i].length; j += 1) {
+        if (parseInt(this.level.items[i][j], 10) >= 900
+          && parseInt(this.level.items[i][j], 10) <= 999) {
+          this.finalDoorID = this.level.items[i][j];
         }
-        if (parseInt(level.items[i][j], 10) >= 2
-          && parseInt(level.items[i][j], 10) <= 19) {
+        if (parseInt(this.level.items[i][j], 10) >= 2
+          && parseInt(this.level.items[i][j], 10) <= 19) {
           this.keysToCollect += 1;
-          this.typeOfKey = level.items[i][j];
+          this.typeOfKey = this.level.items[i][j];
         }
       }
     }
@@ -43,7 +50,7 @@ class Game extends Component {
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
-      level: JSON.parse(JSON.stringify(level)),
+      level: JSON.parse(JSON.stringify(this.level)),
       projectiles,
       pokemon: undefined,
       winner: undefined,
@@ -196,12 +203,12 @@ class Game extends Component {
     const {
       isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
     } = this.state;
-    const { levelName } = this.props;
+    
     return (
       <div className="Game">
         <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
         {isWinner || isLoser || tutoWinner
-          ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} timer={this.timer} levelName={levelName} />
+          ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} timer={this.timer} levelName={this.selectedlevel} gameMode="solo" />
           : null
         }
         <div className="gameContainer">

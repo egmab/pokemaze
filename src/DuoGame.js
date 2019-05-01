@@ -56,6 +56,12 @@ class DuoGame extends Component {
     });
   }
 
+  closeModal = () => {
+    this.setState({
+      modal: false,
+    });
+  }
+
   render() {
     const actualPlayer1 = JSON.parse(localStorage.getItem('connectedPlayer'));
     const actualPlayer2 = JSON.parse(localStorage.getItem('connectedPlayer2'));
@@ -128,6 +134,7 @@ class DuoGame extends Component {
                 mate1={pokemon1}
                 player2={capacity2}
                 mate2={pokemon2}
+                closeModal={this.closeModal}
               />
             )
             : (undefined)
