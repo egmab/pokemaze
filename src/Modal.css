@@ -13,11 +13,29 @@
   transform: translate(-20vw, 10vw);
 	font-size: 1vw;
 }
+.greycross{
+	width: 3vw;
+  height: 3vw;
+  position: absolute;
+  right: 1vw;
+  top: 0.5vw;
+  cursor: pointer;
+}
+
+.greycross:hover
+{
+  opacity: 0.7;
+}
+
+.greycross:active
+{
+  opacity: 0.4;
+}
 
 .imgPoke {
 	z-index: 3;
 	height: 6vw;
-	width: 5vw;
+	width: auto;
   }
 
 .modal-header {

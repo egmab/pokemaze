@@ -41,7 +41,7 @@
     flex-wrap: wrap;
   }
   .buttonSolo button {
-    width: 32%;
+    width: auto;
     font-size: 1.2em;
     padding: 8px;
   }

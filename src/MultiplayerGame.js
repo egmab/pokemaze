@@ -291,7 +291,7 @@ class MultiplayerGame extends Component {
     return (
       <div className="GameMultiplayer">
         {isWinner || isLoser
-          ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+          ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} gameMode="multiplayer" />
           : null
         }
         <div className="gameContainer">

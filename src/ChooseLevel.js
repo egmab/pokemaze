@@ -7,24 +7,34 @@ const ChooseLevel = ({
   player2,
   mate1,
   mate2,
+  closeModal,
 }) => {
   const duoLevels = Object.getOwnPropertyNames(JSON.parse(localStorage.getItem('GameData')).default.levels.multiplayer);
   return (
     <div className="modal-wrapper" style={{ minHeight: '15vw' }}>
       <div className="modal-body">
-        <h3 style={{ marginTop: '2vw', marginBottom: '1vw' }}>Choose your level</h3>
+        <img
+          className="greycross"
+          src="./assets/deletegrey.png"
+          alt="cross"
+          role="presentation"
+          onClick={closeModal}
+        />
+        <h3 style={{ marginTop: '2.7vw', marginBottom: '1.5vw' }}>Choose your level</h3>
         {
           duoLevels.map((level, index) => (
-            <Link to={{
-              pathname: '/multiplayer',
-              state: {
-                player1,
-                mate1,
-                player2,
-                mate2,
-                levelduo: level,
-              },
-            }}
+            <Link
+              to={{
+                pathname: '/multiplayer',
+                state: {
+                  player1,
+                  mate1,
+                  player2,
+                  mate2,
+                  levelduo: level,
+                },
+              }}
+              key={`link-${index + 1}`}
             >
               <button
                 className="homeButton"
