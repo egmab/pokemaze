@@ -110,6 +110,7 @@ class MultiplayerGame extends Component {
     if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
       if (this[player].collectedKeys < this.keysToCollect) {
         this[player].collectedKeys += 1;
+        this.increment = true;
         level.items[this[player].posY][this[player].posX] = '000';
         this.setState({ level });
         // Open final door when all keys collected
@@ -128,12 +129,17 @@ class MultiplayerGame extends Component {
   transferKey = (player, enemy) => {
     if (this[player].collectedKeys > 0 && this[enemy].collectedKeys < this.keysToCollect) {
       this[player].collectedKeys -= 1;
+      this.increment = false;
       this[enemy].collectedKeys += 1;
       if (this.player1.collectedKeys < this.keysToCollect) {
         this.setState({ finalDoorOpened1: false });
+      } else {
+        this.setState({ finalDoorOpened1: true });
       }
       if (this.player2.collectedKeys < this.keysToCollect) {
         this.setState({ finalDoorOpened2: false });
+      } else {
+        this.setState({ finalDoorOpened2: true });
       }
     }
   }
@@ -332,6 +338,7 @@ class MultiplayerGame extends Component {
             typeOfKey={this.typeOfKey}
             numberOfKeys={this.keysToCollect}
             playerNumber="player1"
+            increment={this.increment}
           />
           <KeysBar
             collectedKeys={this.player2.collectedKeys}
@@ -339,6 +346,7 @@ class MultiplayerGame extends Component {
             typeOfKey={this.typeOfKey}
             numberOfKeys={this.keysToCollect}
             playerNumber="player2"
+            increment={this.increment}
           />
         </div>
       </div>

@@ -544,10 +544,12 @@ class Player extends Component {
         && parseInt(items[posY][posX], 10) <= 499)) {
       setTimeout(() => {
         this.setState({ playerStunned: true });
-        if (this.losingKey === false) {
-          this.losingKeyTime = Date.now();
-          transferKey(playerNumber, this.enemy);
-          this.losingKey = true;
+        if (this.gameMode === 'multiplayer') {
+          if (this.losingKey === false) {
+            this.losingKeyTime = Date.now();
+            transferKey(playerNumber, this.enemy);
+            this.losingKey = true;
+          }
         }
         this.gamepadVibration();
         this.posX = startingPositions.x;
