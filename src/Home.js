@@ -294,7 +294,7 @@ class Home extends Component {
                       }}
                       type="button"
                       value="userTwo"
-                      onClick={() => this.changeCharImgTwo(-1)}
+                      onClick={() => this.changeCharImgTwo(1)}
                     />
                   </div>
                   <form onSubmit={this.onDisconnectTwo}>

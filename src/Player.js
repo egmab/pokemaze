@@ -12,13 +12,15 @@ class Player extends Component {
         this.pokemon = props.pokemon;
       }
     }
-    this.action = this.action.bind(this);
     const posX = props.startingPositions.x;
     const posY = props.startingPositions.y;
     this.posX = posX;
     this.posY = posY;
     this.targetedTileX = this.posX;
     this.targetedTileY = this.posY + 1;
+    this.canMove = true;
+    this.moveTime = Date.now();
+    this.speed = 200;
     // Define buttons for each player
     if (props.playerNumber === 'player1') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -59,7 +61,6 @@ class Player extends Component {
     } else if (props.playerNumber === 'player2') {
       this.charName = JSON.parse(localStorage.getItem('connectedPlayer2'));
       this.gpNumber = 1;
-      this.canMove = true;
       this.keys = {
         up: {
           keyboard: 38,
@@ -111,21 +112,32 @@ class Player extends Component {
   }
 
   componentDidMount() {
-    document.addEventListener('keydown', this.action, false);
+    document.addEventListener('keydown', this.triggerKeyboard, false);
     document.addEventListener('keyup', this.handleKeyUp, false);
-    this.interval = setInterval(() => {
+    this.gameLoop = setInterval(() => {
       this.refreshRender();
     }, 50);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    document.removeEventListener('keydown', this.triggerKeyboard, false);
+    document.removeEventListener('keyup', this.handleKeyUp, false);
+    clearInterval(this.gameLoop);
   }
 
   refreshRender = () => {
-    // this.handleKeyboard();
-    this.canMove = true;
-    this.handleGamepad();
+    const { ongoingGame } = this.props;
+    if (ongoingGame === false) {
+      clearInterval(this.gameLoop);
+    }
+    const now = Date.now();
+    if (now - this.moveTime > this.speed) {
+      this.resetMove();
+    }
+    if (this.canMove) {
+      this.handleGamepad();
+      this.handleKeyboard();
+    }
     this.traps(this.posX, this.posY);
     this.setState({
       posX: this.posX,
@@ -137,72 +149,68 @@ class Player extends Component {
     }
   }
 
-  // triggerKeyboard = (e) => {
-  //   switch (e.keyCode) {
-  //     case this.keys.up.keyboard: {
-  //       this.canMove ? this.keys.up.keyboard.pressed = true : break
-  //       break;
-  //     }
-  //     case this.keys.down.keyboard: {
-  //       break;
-  //     }
-  //     case this.keys.left.keyboard: {
-  //       break;
-  //     }
-  //     case this.keys.right.keyboard: {
-  //       break;
-  //     }
-  //     case this.keys.action.keyboard: {
-  //       break;
-  //     }
-  //     default: {
-  //       break;
-  //     }
-  //   }
-  // }
-
-  // handleKeyboard = () => {
-
-  // }
+  resetMove = () => {
+    const { playerStunned, playerFrozen } = this.state;
+    if (!playerStunned && !playerFrozen) {
+      this.canMove = true;
+    }
+  }
 
   handleGamepad = () => {
     const gp = navigator.getGamepads();
     if (gp[this.gpNumber] !== null) {
-      if ((gp[this.gpNumber].buttons[this.keys.up.pad].pressed
-        && this.keys.up.padPressed === false)
-        || (gp[this.gpNumber].buttons[this.keys.down.pad].pressed
-          && this.keys.down.padPressed === false)
-        || (gp[this.gpNumber].buttons[this.keys.left.pad].pressed
-          && this.keys.left.padPressed === false)
-        || (gp[this.gpNumber].buttons[this.keys.right.pad].pressed
-          && this.keys.right.padPressed === false)
-        || (gp[this.gpNumber].buttons[this.keys.action.pad].pressed
-          && this.keys.action.padPressed === false)) {
-        const { playerStunned, playerFrozen } = this.state;
-        if (!playerFrozen && !playerStunned) {
-          this.action(gp[this.gpNumber].buttons);
-        }
+      if (gp[this.gpNumber].buttons[this.keys.up.pad].pressed) {
+        this.action('up');
+      } else if (gp[this.gpNumber].buttons[this.keys.down.pad].pressed) {
+        this.action('down');
+      } else if (gp[this.gpNumber].buttons[this.keys.left.pad].pressed) {
+        this.action('left');
+      } else if (gp[this.gpNumber].buttons[this.keys.right.pad].pressed) {
+        this.action('right');
+      } else if (gp[this.gpNumber].buttons[this.keys.action.pad].pressed) {
+        this.action('action');
       }
-      if (this.keys.up.padPressed
-        && gp[this.gpNumber].buttons[this.keys.up.pad].pressed === false) {
-        this.keys.up.padPressed = false;
-      }
-      if (this.keys.down.padPressed
-        && gp[this.gpNumber].buttons[this.keys.down.pad].pressed === false) {
-        this.keys.down.padPressed = false;
-      }
-      if (this.keys.left.padPressed
-        && gp[this.gpNumber].buttons[this.keys.left.pad].pressed === false) {
-        this.keys.left.padPressed = false;
-      }
-      if (this.keys.right.padPressed
-        && gp[this.gpNumber].buttons[this.keys.right.pad].pressed === false) {
-        this.keys.right.padPressed = false;
-      }
-      if (this.keys.action.padPressed
-        && gp[this.gpNumber].buttons[this.keys.action.pad].pressed === false) {
-        this.keys.action.padPressed = false;
-      }
+    }
+  }
+
+  triggerKeyboard = (e) => {
+    if (e.keyCode === this.keys.up.keyboard) {
+      this.keys.up.pressed = true;
+    }
+    if (e.keyCode === this.keys.down.keyboard && this.keys.down.pressed === false) {
+      this.keys.down.pressed = true;
+    }
+    if (e.keyCode === this.keys.left.keyboard && this.keys.left.pressed === false) {
+      this.keys.left.pressed = true;
+    }
+    if (e.keyCode === this.keys.right.keyboard && this.keys.right.pressed === false) {
+      this.keys.right.pressed = true;
+    }
+    if (e.keyCode === this.keys.action.keyboard && this.keys.action.pressed === false) {
+      this.keys.action.pressed = true;
+    }
+  }
+
+  handleKeyboard = () => {
+    if (this.keys.up.pressed) {
+      this.keys.up.pressed = false;
+      this.action('up');
+    }
+    if (this.keys.down.pressed) {
+      this.keys.down.pressed = false;
+      this.action('down');
+    }
+    if (this.keys.left.pressed) {
+      this.keys.left.pressed = false;
+      this.action('left');
+    }
+    if (this.keys.right.pressed) {
+      this.keys.right.pressed = false;
+      this.action('right');
+    }
+    if (this.keys.action.pressed) {
+      this.keys.action.pressed = false;
+      this.action('action');
     }
   }
 
@@ -234,211 +242,191 @@ class Player extends Component {
     }
   }
 
-  action(event) {
+  action = (action) => {
     const {
-      ongoingGame, tiles, items, getPlayerPos, playerNumber,
+      tiles, items, getPlayerPos, playerNumber,
     } = this.props;
     // MOVES
-    if (ongoingGame && this.canMove) {
+    if (this.canMove) {
+      this.moveTime = Date.now();
+      this.canMove = false;
       // Move right
-      if ((event.keyCode === this.keys.right.keyboard && this.keys.right.pressed === false)
-        || (event[this.keys.right.pad]
-          && event[this.keys.right.pad].pressed === true && this.keys.right.padPressed === false)) {
-        if (event.keyCode === this.keys.right.keyboard) {
-          this.keys.right.pressed = true;
-        } else {
-          this.keys.right.padPressed = true;
-        }
-        this.img = `${this.charImg}Right`;
+      if (action === 'right') {
+        this.keys.right.pressed = true;
+        this.img = `${this.charImg}RightFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Right`;
+        }, 100);
         if (this.checkTile(1, 0)) {
           this.posX += 1;
         }
-        this.canMove = false;
         getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
       // Move left
-      if ((event.keyCode === this.keys.left.keyboard && this.keys.left.pressed === false)
-        || (event[this.keys.left.pad]
-          && event[this.keys.left.pad].pressed === true && this.keys.left.padPressed === false)) {
-        if (event.keyCode === this.keys.left.keyboard) {
-          this.keys.left.pressed = true;
-        } else {
-          this.keys.left.padPressed = true;
-        }
-        this.img = `${this.charImg}Left`;
+      if (action === 'left') {
+        this.keys.left.pressed = true;
+        this.img = `${this.charImg}LeftFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Left`;
+        }, 100);
         if (this.checkTile(-1, 0)) {
           this.posX -= 1;
         }
-        this.canMove = false;
         getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
       // Move down
-      if ((event.keyCode === this.keys.down.keyboard && this.keys.down.pressed === false)
-        || (event[this.keys.down.pad]
-          && event[this.keys.down.pad].pressed === true && this.keys.down.padPressed === false)) {
-        if (event.keyCode === this.keys.down.keyboard) {
-          this.keys.down.pressed = true;
-        } else {
-          this.keys.down.padPressed = true;
-        }
-        this.img = `${this.charImg}Bottom`;
+      if (action === 'down') {
+        this.keys.down.pressed = true;
+        this.img = `${this.charImg}BottomFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Bottom`;
+        }, 100);
         if (this.checkTile(0, 1)) {
           this.posY += 1;
         }
-        this.canMove = false;
         getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
       // Move up
-      if ((event.keyCode === this.keys.up.keyboard && this.keys.up.pressed === false)
-        || (event[this.keys.up.pad]
-          && event[this.keys.up.pad].pressed === true && this.keys.up.padPressed === false)) {
-        if (event.keyCode === this.keys.up.keyboard) {
-          this.keys.up.pressed = true;
-        } else {
-          this.keys.up.padPressed = true;
-        }
-        this.img = `${this.charImg}Top`;
+      if (action === 'up') {
+        this.keys.up.pressed = true;
+        this.img = `${this.charImg}TopFeet`;
+        setTimeout(() => {
+          this.img = `${this.charImg}Top`;
+        }, 100);
         if (this.checkTile(0, -1)) {
           this.posY -= 1;
         }
-        this.canMove = false;
         getPlayerPos(this.posX, this.posY, playerNumber);
         return;
       }
-    }
-    // ACTION KEY (spacebar)
-    if ((event.keyCode === this.keys.action.keyboard && this.keys.action.pressed === false)
-      || (event[this.keys.action.pad]
-        && event[this.keys.action.pad].pressed === true && this.keys.action.padPressed === false)) {
-      if (event.keyCode === this.keys.action.keyboard) {
+      // ACTION KEY
+      if (action === 'action') {
         this.keys.action.pressed = true;
-      } else {
-        this.keys.action.padPressed = true;
-      }
-      // Sets coordinates of the targeted tile
-      switch (this.img) {
-        case `${this.charImg}Top`: {
-          this.targetedTileX = this.posX;
-          this.targetedTileY = this.posY - 1;
-          this.targetedDirection = {
-            x: 0,
-            y: -1,
-          };
-          break;
+        // Sets coordinates of the targeted tile
+        switch (this.img) {
+          case `${this.charImg}Top`: {
+            this.targetedTileX = this.posX;
+            this.targetedTileY = this.posY - 1;
+            this.targetedDirection = {
+              x: 0,
+              y: -1,
+            };
+            break;
+          }
+          case `${this.charImg}Left`: {
+            this.targetedTileX = this.posX - 1;
+            this.targetedTileY = this.posY;
+            this.targetedDirection = {
+              x: -1,
+              y: 0,
+            };
+            break;
+          }
+          case `${this.charImg}Right`: {
+            this.targetedTileX = this.posX + 1;
+            this.targetedTileY = this.posY;
+            this.targetedDirection = {
+              x: 1,
+              y: 0,
+            };
+            break;
+          }
+          default: {
+            this.targetedTileX = this.posX;
+            this.targetedTileY = this.posY + 1;
+            this.targetedDirection = {
+              x: 0,
+              y: 1,
+            };
+            break;
+          }
         }
-        case `${this.charImg}Left`: {
-          this.targetedTileX = this.posX - 1;
-          this.targetedTileY = this.posY;
-          this.targetedDirection = {
-            x: -1,
-            y: 0,
-          };
-          break;
-        }
-        case `${this.charImg}Right`: {
-          this.targetedTileX = this.posX + 1;
-          this.targetedTileY = this.posY;
-          this.targetedDirection = {
-            x: 1,
-            y: 0,
-          };
-          break;
-        }
-        default: {
-          this.targetedTileX = this.posX;
-          this.targetedTileY = this.posY + 1;
-          this.targetedDirection = {
-            x: 0,
-            y: 1,
-          };
-          break;
-        }
-      }
-      // Checks if targeted tile is out of the map
-      if (this.targetedTileX >= 0
-        && this.targetedTileY >= 0
-        && this.targetedTileY < tiles.length
-        && this.targetedTileX < tiles[this.targetedTileY].length
-      ) {
-        const { gameMode, timers } = this.props;
-        // Activate lever if there is any on tile
-        if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
-          && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
-          const { playerAction } = this.props;
-          // Callback to Game for solo, MultiplayerGame for multiplayer
-          playerAction(this.targetedTileY, this.targetedTileX);
-          // Multiplayer actions;
-          // To do: multiple timers if multiple abilities (timers[0] -> timers[selectedAbility])
-        } else if (gameMode === 'multiplayer' && timers[0] === 0) {
-          const { multiplayerActions, enemy, capacities } = this.props;
-          const capacity = capacities[0];
-          switch (capacity.slice(0, -1)) {
-            case 'ice': {
-              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
-                // Callback to Players
+        // Checks if targeted tile is out of the map
+        if (this.targetedTileX >= 0
+          && this.targetedTileY >= 0
+          && this.targetedTileY < tiles.length
+          && this.targetedTileX < tiles[this.targetedTileY].length
+        ) {
+          const { gameMode, timers } = this.props;
+          // Activate lever if there is any on tile
+          if (parseInt(items[this.targetedTileY][this.targetedTileX], 10) >= 700
+            && parseInt(items[this.targetedTileY][this.targetedTileX], 10) <= 799) {
+            const { playerAction } = this.props;
+            // Callback to Game for solo, MultiplayerGame for multiplayer
+            playerAction(this.targetedTileY, this.targetedTileX);
+            // Multiplayer actions;
+            // To do: multiple timers if multiple abilities (timers[0] -> timers[selectedAbility])
+          } else if (gameMode === 'multiplayer' && timers[0] === 0) {
+            const { multiplayerActions, enemy, capacities } = this.props;
+            const capacity = capacities[0];
+            switch (capacity.slice(0, -1)) {
+              case 'ice': {
+                if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+                  // Callback to Players
+                  multiplayerActions(
+                    playerNumber, this.enemy, capacity,
+                    this.targetedDirection.x, this.targetedDirection.y,
+                  );
+                }
+                break;
+              }
+              case 'invisibility': {
                 multiplayerActions(
                   playerNumber, this.enemy, capacity,
                   this.targetedDirection.x, this.targetedDirection.y,
                 );
+                break;
               }
-              break;
-            }
-            case 'invisibility': {
-              multiplayerActions(
-                playerNumber, this.enemy, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-              break;
-            }
-            case 'psychic': {
-              multiplayerActions(
-                playerNumber, this.enemy, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-              break;
-            }
-            case 'electric': {
-              const { playerAction } = this.props;
-              playerAction(
-                this.targetedTileY, this.targetedTileX, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-              multiplayerActions(
-                playerNumber, this.enemy, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-              break;
-            }
-            case 'fire': {
-              const { playerAction } = this.props;
-              playerAction(
-                this.targetedTileY, this.targetedTileX, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-              multiplayerActions(
-                playerNumber, this.enemy, capacity,
-                this.targetedDirection.x, this.targetedDirection.y,
-              );
-              break;
-            }
-            default: {
-              // default ability: punch
-              const defaultCapacity = `punch${capacity.slice(-1)}`;
-              if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+              case 'psychic': {
                 multiplayerActions(
-                  playerNumber, this.enemy, defaultCapacity,
+                  playerNumber, this.enemy, capacity,
                   this.targetedDirection.x, this.targetedDirection.y,
                 );
+                break;
               }
-              break;
+              case 'electric': {
+                const { playerAction } = this.props;
+                playerAction(
+                  this.targetedTileY, this.targetedTileX, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+                multiplayerActions(
+                  playerNumber, this.enemy, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+                break;
+              }
+              case 'fire': {
+                const { playerAction } = this.props;
+                playerAction(
+                  this.targetedTileY, this.targetedTileX, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+                multiplayerActions(
+                  playerNumber, this.enemy, capacity,
+                  this.targetedDirection.x, this.targetedDirection.y,
+                );
+                break;
+              }
+              default: {
+                // default ability: punch
+                const defaultCapacity = `punch${capacity.slice(-1)}`;
+                if (this.targetedTileX === enemy.x && this.targetedTileY === enemy.y) {
+                  multiplayerActions(
+                    playerNumber, this.enemy, defaultCapacity,
+                    this.targetedDirection.x, this.targetedDirection.y,
+                  );
+                }
+                break;
+              }
             }
           }
+          this.targetedTileX = null;
+          this.targetedTileY = null;
         }
-        this.targetedTileX = null;
-        this.targetedTileY = null;
       }
     }
   }
@@ -503,7 +491,6 @@ class Player extends Component {
       || (parseInt(items[posY][posX], 10) >= 400
         && parseInt(items[posY][posX], 10) <= 499)
       || parseInt(projectiles[posY][posX], 10) > 0) {
-      document.removeEventListener('keydown', this.action, false);
       this.setState({ playerStunned: true });
       setTimeout(() => {
         this.posX = startingPositions.x;
@@ -511,7 +498,6 @@ class Player extends Component {
       }, 200);
       setTimeout(() => {
         this.setState({ playerStunned: false });
-        document.addEventListener('keydown', this.action, false);
       }, 900);
     }
   }
@@ -533,36 +519,45 @@ class Player extends Component {
         // Psychic: reverse buttons
         case 'psychic': {
           this.setState({ playerConfused: true });
-          this.defaultUpButton = this.upButton;
-          this.defaultDownButton = this.downButton;
-          this.defaultleftButton = this.leftButton;
-          this.defaultRightButton = this.rightButton;
-          this.upButton = this.defaultDownButton;
-          this.downButton = this.defaultUpButton;
-          this.leftButton = this.defaultRightButton;
-          this.rightButton = this.defaultleftButton;
+          this.defaultUpButton = this.keys.up.keyboard;
+          this.defaultUpPadButton = this.keys.up.pad;
+          this.defaultDownButton = this.keys.down.keyboard;
+          this.defaultDownPadButton = this.keys.down.pad;
+          this.defaultLeftButton = this.keys.left.keyboard;
+          this.defaultLeftPadButton = this.keys.left.pad;
+          this.defaultRightButton = this.keys.right.keyboard;
+          this.defaultRightPadButton = this.keys.right.pad;
+          this.keys.up.keyboard = this.defaultDownButton;
+          this.keys.up.pad = this.defaultDownPadButton;
+          this.keys.down.keyboard = this.defaultUpButton;
+          this.keys.down.pad = this.defaultUpPadButton;
+          this.keys.left.keyboard = this.defaultRightButton;
+          this.keys.left.pad = this.defaultRightPadButton;
+          this.keys.right.keyboard = this.defaultLeftButton;
+          this.keys.right.pad = this.defaultUpLeftPadButton;
           setTimeout(() => {
             this.setState({ playerConfused: false });
-            this.upButton = this.defaultUpButton;
-            this.downButton = this.defaultDownButton;
-            this.leftButton = this.defaultleftButton;
-            this.rightButton = this.defaultRightButton;
+            this.keys.up.keyboard = this.defaultUpButton;
+            this.keys.up.pad = this.defaultUpPadButton;
+            this.keys.down.keyboard = this.defaultDownButton;
+            this.keys.down.pad = this.defaultDownPadButton;
+            this.keys.left.keyboard = this.defaultLeftButton;
+            this.keys.left.pad = this.defaultLeftPadButton;
+            this.keys.right.keyboard = this.defaultRightButton;
+            this.keys.right.pad = this.defaultRightPadButton;
           }, 3000);
           break;
         }
         // Ice: needs a rework
         case 'ice': {
-          document.removeEventListener('keydown', this.action, false);
           this.setState({ playerFrozen: true });
           setTimeout(() => {
-            document.addEventListener('keydown', this.action, false);
             this.setState({ playerFrozen: false });
           }, 3000);
           break;
         }
         // Default capacity: punch
         default: {
-          document.removeEventListener('keydown', this.action, false);
           this.setState({ playerStunned: true });
           let gettingPunched = true;
           while (gettingPunched) {
@@ -582,7 +577,6 @@ class Player extends Component {
             }
           }
           setTimeout(() => {
-            document.addEventListener('keydown', this.action, false);
             this.setState({ playerStunned: false });
           }, 2000);
           resetActions();
