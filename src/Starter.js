@@ -15,11 +15,13 @@ class Starter extends Component {
   }
 
   tick = () => {
+    const { getStarter } = this.props;
     const { seconds } = this.state;
     if (seconds > 1) {
       this.setState({ seconds: seconds - 1 });
     } else {
       clearInterval(this.timer);
+      getStarter();
     }
   }
 
