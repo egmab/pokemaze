@@ -211,9 +211,11 @@ class Home extends Component {
                       style={{
                         backgroundPosition: 'center',
                         backgroundImage: `url(./assets/characters/${userOneImg}Bottom.png)`,
-                        height: '50px',
-                        width: '50px',
+                        height: '5vw',
+                        width: '5vw',
+                        backgroundSize: '5vw',
                         backgroundRepeat: 'no-repeat',
+                        marginBottom: '1vw',
                       }}
                     />
                     <button
@@ -282,9 +284,11 @@ class Home extends Component {
                       style={{
                         backgroundPosition: 'center',
                         backgroundImage: `url(./assets/characters/${userTwoImg}Bottom.png)`,
-                        height: '50px',
-                        width: '50px',
+                        height: '5vw',
+                        width: '5vw',
+                        backgroundSize: '5vw',
                         backgroundRepeat: 'no-repeat',
+                        marginBottom: '1vw',
                       }}
                     />
                     <button

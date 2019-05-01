@@ -420,7 +420,7 @@ class Player extends Component {
       height: '2.5vw',
       width: '2.5vw',
       marginTop: '4.9vw',
-      marginLeft: '-10.035315vw',
+      marginLeft: '-10.4vw',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}vw`,
       left: `${11 + posX * pixelsPerTile}vw`,
