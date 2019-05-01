@@ -21,6 +21,7 @@ class Home extends Component {
       test: false,
     };
     this.onChange = this.onChange.bind(this);
+    this.connectStyle = {};
   }
 
   componentWillMount() {
@@ -160,6 +161,14 @@ class Home extends Component {
     });
   }
 
+  connect = () => {
+    this.connectStyle = { marginTop: '0vw' };
+  }
+
+  disconnect = () => {
+    this.connectStyle = {};
+  }
+
   render() {
     const {
       userOne,
@@ -191,7 +200,10 @@ class Home extends Component {
           {
             playerOneConnected
               ? (
-                <div className="formOne">
+                <div
+                  className="formOne"
+                  style={this.connectStyle}
+                >
                   <h6>
                     Player 1 :
                     {' '}
@@ -234,12 +246,16 @@ class Home extends Component {
                       size="lg"
                       type="submit"
                       value="Disconnect"
+                      onClick={this.disconnect}
                     />
                   </form>
                 </div>
               )
               : (
-                <div className="formOne">
+                <div
+                  className="formOne"
+                  style={this.connectStyle}
+                >
                   <h6>
                     Player 1 :
                   </h6>
@@ -256,6 +272,7 @@ class Home extends Component {
                       size="lg"
                       type="submit"
                       value="Connect"
+                      onClick={this.connect}
                     />
                   </form>
                 </div>
@@ -264,7 +281,10 @@ class Home extends Component {
           {
             playerTwoConnected
               ? (
-                <div className="formTwo">
+                <div
+                  className="formTwo"
+                  style={this.connectStyle}
+                >
                   <h6>
                     Player 2 :
                     {' '}
@@ -312,7 +332,10 @@ class Home extends Component {
                 </div>
               )
               : (
-                <div className="formTwo">
+                <div
+                  className="formTwo"
+                  style={this.connectStyle}
+                >
                   <h6>
                     Player 2 :
                   </h6>
@@ -337,7 +360,7 @@ class Home extends Component {
         </div>
         <div className="logoButtons">
           <div className="logo">
-            <img src="./assets/logopokemaze.png" alt="logo" />
+            <img className="imgLogo" src="./assets/logopokemaze.png" alt="logo" />
           </div>
           <div className="buttonContainerHome">
             <Link
@@ -348,7 +371,11 @@ class Home extends Component {
                 id="solo"
                 type="button"
                 size="lg"
-                style={{ marginRight: 100 }}
+                style={{
+                  width: '14vw',
+                  marginRight: '5vw',
+                }}
+                onClick={this.disconnect}
               >
                 Play solo
               </button>
@@ -362,7 +389,11 @@ class Home extends Component {
                 id="multi"
                 type="button"
                 size="lg"
-                style={{ marginRight: 100 }}
+                style={{
+                  width: '15vw',
+                  marginRight: '5vw',
+                }}
+                onClick={this.disconnect}
               >
                 Multiplayer
               </button>
@@ -373,7 +404,11 @@ class Home extends Component {
                 className="pokeditor"
                 type="button"
                 size="lg"
-                style={{ marginRight: 100 }}
+                style={{
+                  width: '16vw',
+                  marginRight: '5vw',
+                }}
+                onClick={this.disconnect}
               >
                 <img src="./assets/pokeditor2.png" alt="imgeditor" />
                 {' '}

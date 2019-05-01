@@ -1,189 +1,209 @@
 
-  .home{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    flex-direction: row;
-    align-items: center;
-    background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
-    background-size: 100%, cover;
-    min-height: 100vh;
-    min-width: 100vh;
-  }
-  
-  .changeCharacter{
-    display:flex;
-  }
 
-  .changeCharacterImgButton{
-    background-size: cover;
-    width: 2vw;
-    height: 2vw;
-    border: none;
-    background-color: #11ffee00;
-  }
+.home{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
+  background-size: 100%, cover;
+  min-height: 100vh;
+  min-width: 100vh;
+}
 
-  .changeCharacterImgButton:focus {
-    background-color: #11ffee00;
-    border: none;
-  }
+.changeCharacter{
+  display:flex;
+}
 
-  /* .home img{
-    padding-top: 18vh;
-  } */
+.changeCharacterImgButton{
+  background-size: cover;
+  margin-top: 1.2vw;
+  width: 2vw;
+  height: 2vw;
+  border: none;
+  background-color: #11ffee00;
+}
 
-  .home input{
-    padding:10px;
-    border:none;
-    width:100%;
-    border-radius:20px;
-  }
-  
-  .buttonContainerHome { 
-    display: flex;
-    justify-content: center;
-    padding-bottom: 8vw;
-    margin-left:5vw;
-  }
-  
-  .logoButtons{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
- 
-  .homeButton {
-    padding:1vw 3vw;
-    background-color:#89c403;
-    -moz-border-radius:6px;
-    -webkit-border-radius:6px;
-    border-radius:6px;
-    border:1px solid #74b807;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-size:1.7vw;
-    font-weight:bold;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #528009;
-  }
+.changeCharacterImgButton:focus {
+  background-color: #11ffee00;
+  border: none;
+}
 
-  .homeButton:disabled {
-    padding:1vw 3vw;
-    background-color:grey;
-    -moz-border-radius:6px;
-    -webkit-border-radius:6px;
-    border-radius:6px;
-    border:1px solid grey;
-    display:inline-block;
-    cursor:pointer;
-    color:#ffffff;
-    font-size:1.42em;
-    font-weight:bold;
-    text-decoration:none;
-    text-shadow:0px 1px 0px #528009;
-  }
-  
-  .homeButton a {
-    text-decoration:none;
-    color:#ffffff;
-  }
-  .homeButton:hover:enabled {
-    background-color: #77a809;
-  }
+/* .home img{
+  padding-top: 18vh;
+} */
 
-  .homeButton:active {
-    position:relative;
-    top:1px;
-  }
-  .forms{
-    min-width: 17%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    position: fixed;
-    top:0;
-    left:0;
-    min-width: 17%;
-  }
-  .formOne{
-    margin-right: 70vw;
-    display:flex;
-    flex-direction:column;
-    padding-top:1.5vw;
-    padding-bottom:1.5vw;
-    width:15vw;
-    background-color:rgba(0,0,0,0.38);
-    color:white;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5vw;
-  }
+.home input{
+  padding:0.5vw;
+  border: none;
+  border-radius:10vw;
+}
 
-  .home form{
-    display:flex;
-    flex-direction:column;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .formTwo{
-    display:flex;
-    flex-direction:column;
-    padding-top:1.5vw;
-    padding-bottom:1.5vw;
-    width:15vw;
-    background-color:rgba(0,0,0,0.38);
-    color:white;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5vw;
-  }
-
-
-
-.logo{
-  margin: 0 0 0 0vw;
-  padding: 4vw 0 3vw 0;
+#userTwo, #userOne
+{
+  width: 11vw;
+  height: 1vw;
 }
 
 .connectButton{
-  -moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
-  -webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
-  box-shadow:inset 0px 1px 0px 0px #a4e271;
-  background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #89c403), color-stop(1, #77a809));
-  background:-moz-linear-gradient(top, #89c403 5%, #77a809 100%);
-  background:-webkit-linear-gradient(top, #89c403 5%, #77a809 100%);
-  background:-o-linear-gradient(top, #89c403 5%, #77a809 100%);
-  background:-ms-linear-gradient(top, #89c403 5%, #77a809 100%);
-  background:linear-gradient(to bottom, #89c403 5%, #77a809 100%);
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#89c403', endColorstr='#77a809',GradientType=0);
+  background-color:#9bd80d;
+  color: white;
+  text-align: center;
+  margin-top: 1vw;
+  margin-bottom: -0.5vw;
+  width: 10vw;
+  font-size: 1vw;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonContainerHome { 
+  display: flex;
+  justify-content: center;
+  padding-bottom: 8vw;
+  margin-left:5vw;
+}
+
+.logoButtons{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeButton {
+  padding:1vw 3vw;
   background-color:#89c403;
-  color: white;
-  text-align: center;
-}
-
-.disconnectButton{
-  background-color:#df1414;
-  color: white;
-  text-align: center;
-}
-
-.pokeditor {
-  padding:0.99vw 2vw;
-  -moz-border-radius:6px;
-  -webkit-border-radius:6px;
-  border-radius:6px;
-  border:1px solid #2b55a3;
+  -moz-border-radius:0.5vw;
+  -webkit-border-radius:0.5vw;
+  border-radius:0.5vw;
+  border:0.1vw solid #74b807;
   display:inline-block;
   cursor:pointer;
   color:#ffffff;
   font-size:1.7vw;
   font-weight:bold;
   text-decoration:none;
-  text-shadow:0px 1px 0px #2b55a3;
+}
+
+.homeButton:disabled {
+  padding:1vw 3vw;
+  background-color:grey;
+  -moz-border-radius:0.5vw;
+  -webkit-border-radius:0.5vw;
+  border-radius:0.5vw;
+  border: 0.1vw solid grey;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-size:1.7vw;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.homeButton a {
+  text-decoration:none;
+  color:#ffffff;
+}
+.homeButton:hover:enabled {
+  background-color: #77a809;
+}
+
+.homeButton:active {
+  opacity: 0.7;
+}
+.forms{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  position: fixed;
+  top:0;
+  left:0;
+  min-width: 17%;
+}
+.formOne{
+  margin: -7.5vw 72.5vw 0 0.55vw;
+  display:flex;
+  flex-direction:column;
+  padding-top:1.5vw;
+  padding-bottom:1.5vw;
+  width:13vw;
+  background-color:rgba(0,0,0,0.38);
+  color:white;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3vw;
+  border-style: solid;
+  border-color: rgb(189, 187, 187, 0.2);
+  border-width: 0.1vw;
+  border-bottom-left-radius: 1vw;
+  border-bottom-right-radius: 1vw;
+  transition: margin 0.5s linear;
+}
+
+.home form{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+
+.formTwo{
+  margin-top: -18.5vw;
+  display:flex;
+  flex-direction:column;
+  padding-top:1.5vw;
+  padding-bottom:1.5vw;
+  width:13vw;
+  background-color:rgba(0,0,0,0.38);
+  color:white;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3vw;
+  border-style: solid;
+  border-color: rgb(189, 187, 187, 0.2);
+  border-width: 0.1vw;
+  border-bottom-left-radius: 1vw;
+  border-bottom-right-radius: 1vw;
+  transition: margin 0.5s linear;
+}
+
+.formOne:hover{
+  margin-top: 0;
+}
+
+.logo{
+  padding: 4vw 0 3vw 0;
+  margin: -3vw 0 -2vw -4vw;
+}
+
+.imgLogo
+{
+  width: 30vw;
+}
+
+.disconnectButton{
+  background-color:#df1414;
+  color: white;
+  text-align: center;
+  font-size: 1vw;
+  width: 10vw;
+}
+
+.pokeditor {
+  padding:0.92vw 0 0.92vw 0;
+  -moz-border-radius:0.5vw;
+  -webkit-border-radius:0.5vw;
+  border-radius:0.5vw;
+  border:0.1vw solid #2b55a3;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-size:1.7vw;
+  font-weight:bold;
+  text-decoration:none;
   color: white;
   text-align: center;
   align-items: center;
@@ -196,7 +216,7 @@
 
 .pokeditor img{ 
   vertical-align: middle;
-  width: 15%;
+  width: 2.2vw;
 }
 
 .video
