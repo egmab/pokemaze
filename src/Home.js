@@ -26,6 +26,7 @@ class Home extends Component {
 
   componentWillMount() {
     if (localStorage.getItem('connectedPlayer')) {
+      this.connectStyle = { marginTop: '0vw' };
       const charName = JSON.parse(localStorage.getItem('connectedPlayer'));
       const charData = JSON.parse(localStorage.getItem(charName));
       const img = charData.charImg;
@@ -165,7 +166,7 @@ class Home extends Component {
   }
 
   connect = () => {
-    this.connectStyle = { marginTop: '0vw' };
+    this.connectStyle = { marginTop: '-1vw' };
   }
 
   render() {
