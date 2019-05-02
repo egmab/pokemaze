@@ -201,8 +201,6 @@ class Home extends Component {
               <div
                 className="formOne1"
                 id="formOne"
-                style={{
-                }}
               >
                 <h6>
                   Player 1 :
@@ -255,8 +253,6 @@ class Home extends Component {
               <div
                 className="formOne2"
                 id="formOne"
-                style={{
-                }}
               >
                 <h6>
                   Player 1 :
