@@ -8,8 +8,8 @@
   align-items: center;
   background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
   background-size: 100%, cover;
-  min-height: 100vh;
-  min-width: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .changeCharacter{
@@ -204,25 +204,30 @@
 }
 
 .formOne1{
-  margin: -18vw 0 0 -43vw;
+  top: 0;
+  left: 0.7%;
 }
 
 .formOne2{
-  margin: -25.5vw 0 0 -43vw;
+  top: 0;
+  left: 0.7%;
+  margin-top: -7.5vw;
 }
 
 .formTwo1{
-  margin: -18vw 0 0 43vw;
+  top: 0;
+  left: 86%;
 }
 
 .formTwo2{
-  margin: -30.5vw 0 0 43vw;
-  
+  top: 0;
+  margin-top: -12vw;
+  left: 86%;
 }
 
 .formOne1:hover, .formOne2:hover
 {
-  margin-top: -18vw;
+  margin-top: 0vw;
 }
 
 .logo{
