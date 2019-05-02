@@ -1,0 +1,37 @@
+.keymodal{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}
+.modalkey-body h1{
+    font-size: 4vw;
+    margin-bottom: 1.5vw;
+    margin-top: 0;
+}
+
+.modalkey-body h3{
+    margin-top: 2vw;
+}
+
+.modalkey-body h5{
+    margin: 1vw;
+}
+
+.keyplayer2 {
+    margin-left: 3vw;
+  }
+
+.keyplayer1 p {
+  font-size: 1vw;
+}
+
+.keyplayer2 p {
+    font-size: 1vw;
+}
+
+.modalkey-body{
+    padding: 0.05vw 4vw;
+    text-align: center;
+    border-radius: 30px;
+}

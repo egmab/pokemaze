@@ -122,38 +122,41 @@ class Player extends Component {
   }
 
   refreshRender = () => {
-    const { ongoingGame } = this.props;
+    const { start, ongoingGame } = this.props;
     if (ongoingGame === false) {
       clearInterval(this.gameLoop);
     }
-    const now = Date.now();
-    if (now - this.moveTime > this.speed) {
-      this.resetMove();
-    }
-    if (now - this.losingKeyTime > 2000) {
-      this.losingKey = false;
-    }
-    if (now - this.actionTime > this.actionDelay) {
-      this.resetAction();
-    }
-    if (this.canMove) {
-      this.handleGamepad();
-      this.handleKeyboard();
-    }
-    if (this.canAct) {
-      this.handleGamepadAction();
-      this.handleKeyboardAction();
-    }
-    this.traps(this.posX, this.posY);
-    this.setState({
-      posX: this.posX,
-      posY: this.posY,
-      img: this.img,
-    });
-    if (this.gameMode === 'multiplayer') {
-      this.multiplayerRefresh();
+    if (start) {
+      const now = Date.now();
+      if (now - this.moveTime > this.speed) {
+        this.resetMove();
+      }
+      if (now - this.losingKeyTime > 2000) {
+        this.losingKey = false;
+      }
+      if (now - this.actionTime > this.actionDelay) {
+        this.resetAction();
+      }
+      if (this.canMove) {
+        this.handleGamepad();
+        this.handleKeyboard();
+      }
+      if (this.canAct) {
+        this.handleGamepadAction();
+        this.handleKeyboardAction();
+      }
+      this.traps(this.posX, this.posY);
+      this.setState({
+        posX: this.posX,
+        posY: this.posY,
+        img: this.img,
+      });
+      if (this.gameMode === 'multiplayer') {
+        this.multiplayerRefresh();
+      }
     }
   }
+
 
   resetMove = () => {
     const { playerStunned, playerFrozen } = this.state;
