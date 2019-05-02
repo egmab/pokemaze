@@ -122,38 +122,41 @@ class Player extends Component {
   }
 
   refreshRender = () => {
-    const { ongoingGame } = this.props;
+    const { start, ongoingGame } = this.props;
     if (ongoingGame === false) {
       clearInterval(this.gameLoop);
     }
-    const now = Date.now();
-    if (now - this.moveTime > this.speed) {
-      this.resetMove();
-    }
-    if (now - this.losingKeyTime > 2000) {
-      this.losingKey = false;
-    }
-    if (now - this.actionTime > this.actionDelay) {
-      this.resetAction();
-    }
-    if (this.canMove) {
-      this.handleGamepad();
-      this.handleKeyboard();
-    }
-    if (this.canAct) {
-      this.handleGamepadAction();
-      this.handleKeyboardAction();
-    }
-    this.traps(this.posX, this.posY);
-    this.setState({
-      posX: this.posX,
-      posY: this.posY,
-      img: this.img,
-    });
-    if (this.gameMode === 'multiplayer') {
-      this.multiplayerRefresh();
+    if (start) {
+      const now = Date.now();
+      if (now - this.moveTime > this.speed) {
+        this.resetMove();
+      }
+      if (now - this.losingKeyTime > 2000) {
+        this.losingKey = false;
+      }
+      if (now - this.actionTime > this.actionDelay) {
+        this.resetAction();
+      }
+      if (this.canMove) {
+        this.handleGamepad();
+        this.handleKeyboard();
+      }
+      if (this.canAct) {
+        this.handleGamepadAction();
+        this.handleKeyboardAction();
+      }
+      this.traps(this.posX, this.posY);
+      this.setState({
+        posX: this.posX,
+        posY: this.posY,
+        img: this.img,
+      });
+      if (this.gameMode === 'multiplayer') {
+        this.multiplayerRefresh();
+      }
     }
   }
+
 
   resetMove = () => {
     const { playerStunned, playerFrozen } = this.state;
@@ -694,7 +697,7 @@ class Player extends Component {
       height: '2.5vw',
       width: '2.5vw',
       marginTop: '4.9vw',
-      marginLeft: '-10.035315vw',
+      marginLeft: '-10.4vw',
       // To do: cleaner calculation
       top: `${posY * pixelsPerTile}vw`,
       left: `${11 + posX * pixelsPerTile}vw`,

@@ -3,6 +3,7 @@ import Board from './Board';
 import Player from './Player';
 import EndingGame from './EndingGame';
 import Chrono from './Chrono';
+import Starter from './Starter';
 import KeysBar from './KeysBar';
 import './Game.css';
 
@@ -54,6 +55,7 @@ class Game extends Component {
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
+      start: false,
       level: JSON.parse(JSON.stringify(this.level)),
       projectiles,
       pokemon: undefined,
@@ -77,6 +79,10 @@ class Game extends Component {
           pokemon: data,
         });
       });
+  }
+
+  getStarter = () => {
+    this.setState({ start: true });
   }
 
   getPlayerPos(x, y, player) {
@@ -205,19 +211,29 @@ class Game extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
+      start, isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
     } = this.state;
-
+    
     return (
       <div className="Game">
-        <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
+        { start
+          ? <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
+          : undefined
+        }
         {isWinner || isLoser || tutoWinner
           ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} timer={this.timer} levelName={this.selectedlevel} gameMode="solo" />
           : null
         }
+        {
+          !start
+            ? <Starter getStarter={this.getStarter} gameMode="solo" />
+            : null
+        }
         <div className="gameContainer">
+
           <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Player
+            start={start}
             ongoingGame={ongoingGame}
             tiles={level.tiles}
             items={level.items}

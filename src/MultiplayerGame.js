@@ -3,6 +3,7 @@ import Board from './Board';
 import Players from './Players';
 import EndingGame from './EndingGame';
 import KeysBar from './KeysBar';
+import Starter from './Starter';
 import './Game.css';
 
 /*
@@ -62,6 +63,7 @@ class MultiplayerGame extends Component {
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
+      start: false,
       finalDoorOpened1: false,
       finalDoorOpened2: false,
       level,
@@ -86,6 +88,10 @@ class MultiplayerGame extends Component {
           pokemon: data,
         });
       });
+  }
+
+  getStarter = () => {
+    this.setState({ start: true });
   }
 
   getPlayerPos(x, y, player) {
@@ -303,7 +309,7 @@ class MultiplayerGame extends Component {
 
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame, level,
+      start, isWinner, isLoser, pokemon, ongoingGame, level,
       winner, finalDoorOpened1, finalDoorOpened2, projectiles,
     } = this.state;
     return (
@@ -312,9 +318,15 @@ class MultiplayerGame extends Component {
           ? <EndingGame className="endgame" winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} gameMode="multiplayer" />
           : null
         }
+        {
+            !start
+              ? <Starter getStarter={this.getStarter} gameMode="multiplayer" />
+              : null
+          }
         <div className="gameContainer">
           <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Players
+            start={start}
             ongoingGame={ongoingGame}
             tiles={level.tiles}
             items={level.items}
