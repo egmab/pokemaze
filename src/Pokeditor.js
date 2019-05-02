@@ -5,11 +5,11 @@ import PokeditorChooseItem from './PokeditorChooseItem';
 import PokeditorChooseStartingPoint from './PokeditorChooseStartingPoint';
 import PokeditorChooseSize from './PokeditorChooseSize';
 import PokeditorChooseTimer from './PokeditorChooseTimer';
-import PokeditorChooseGameMode from './PokeditorChooseGameMode';
+// import PokeditorChooseGameMode from './PokeditorChooseGameMode';
 import PokeditorSaveLevel from './PokeditorSaveLevel';
 import PokeditorLoadDeleteLevel from './PokeditorLoadDeleteLevel';
 import PokeditorBoard from './PokeditorBoard';
-import PokeditorMatrix from './PokeditorMatrix';
+// import PokeditorMatrix from './PokeditorMatrix';
 import './Pokeditor.css';
 
 class Pokeditor extends Component {
@@ -37,7 +37,7 @@ class Pokeditor extends Component {
     this.items = ['000', '001', '002', '700', '701', '702', '703', '704', '705', '800', '801',
       '802', '803', '804', '805', '900'];
     this.state = {
-      gameMode: 'Solo',
+      // gameMode: 'Solo',
       customLevels,
       level: [
         ['008', '008', '008', '008', '008', '008', '008', '008', '008', '008'],
@@ -134,9 +134,9 @@ class Pokeditor extends Component {
     this.setState({ customLevels });
   }
 
-  changeGameMode = (gameMode) => {
-    this.setState({ gameMode });
-  }
+  // changeGameMode = (gameMode) => {
+  //   this.setState({ gameMode });
+  // }
 
   changeTile = (rowIndex, colIndex) => () => {
     const { selectedTile, selectedItem } = this.state;
@@ -192,7 +192,8 @@ class Pokeditor extends Component {
 
   render() {
     const {
-      level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, timer, customLevels, gameMode,
+      level, items, playerOneX, playerOneY, playerTwoX, playerTwoY, customLevels,
+      // gameMode, timer,
     } = this.state;
     return (
       <div className="Pokeditor">
@@ -210,7 +211,7 @@ class Pokeditor extends Component {
           </Link>
         </div>
         <PokeditorChooseSize changeSize={this.changeSize} />
-        <PokeditorChooseGameMode changeGameMode={this.changeGameMode} />
+        {/* <PokeditorChooseGameMode changeGameMode={this.changeGameMode} /> */}
         <PokeditorLoadDeleteLevel
           loadLevel={this.loadLevel}
           deleteLevel={this.deleteLevel}
@@ -230,7 +231,7 @@ class Pokeditor extends Component {
           playerTwoX={playerTwoX}
           playerTwoY={playerTwoY}
         />
-        <PokeditorMatrix
+        {/* <PokeditorMatrix
           level={level}
           items={items}
           playerOneX={playerOneX}
@@ -239,7 +240,7 @@ class Pokeditor extends Component {
           playerTwoY={playerTwoY}
           timer={timer}
           gameMode={gameMode}
-        />
+        /> */}
       </div>
     );
   }

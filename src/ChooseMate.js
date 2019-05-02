@@ -11,9 +11,8 @@ class ChooseMate extends Component {
 
   componentWillMount() {
     const { pokemonsCaught } = this.props;
-    this.pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => {
-      return arr.map(mapObj => mapObj.name).indexOf(obj.name) === pos;
-    });
+    this.pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => arr
+      .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
     this.pokemonsCaughtSorted = this.pokemonsCaughtSorted.sort((a, b) => {
       if (a.name > b.name) {
@@ -24,7 +23,10 @@ class ChooseMate extends Component {
 
   handleChange = (event) => {
     const { getMate, value } = this.props;
-    this.setState({ myValue: event.target.value }, () => getMate(this.state.myValue, value ));
+    this.setState({ myValue: event.target.value }, () => {
+      const { myValue } = this.state;
+      getMate(myValue, value);
+    });
   }
 
 
