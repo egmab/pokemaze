@@ -449,8 +449,7 @@ class Player extends Component {
           setTimeout(() => this.setState({ pokemonAttack: false }), 300);
           // Capacities
           const capacity = capacities[0];
-          if (capacity.slice(0, -1) === 'invisibility'
-            || capacity.slice(0, -1) === 'psychic') {
+          if (capacity.slice(0, -1) === 'invisibility') {
             multiplayerActions(
               playerNumber, this.enemy, capacity,
               this.targetedDirection.x, this.targetedDirection.y,
