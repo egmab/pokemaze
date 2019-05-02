@@ -51,7 +51,6 @@ class Home extends Component {
     this.switchButton();
   }
 
-
   onChange(event) {
     const user = event.target.id;
     this.setState({
@@ -161,12 +160,12 @@ class Home extends Component {
     });
   }
 
-  connect = () => {
-    this.connectStyle = { marginTop: '0vw' };
-  }
-
   disconnect = () => {
     this.connectStyle = {};
+  }
+
+  connect = () => {
+    this.connectStyle = { marginTop: '0vw' };
   }
 
   render() {
@@ -196,168 +195,168 @@ class Home extends Component {
           onClick={this.videoTrue}
         />
         {test ? <Video videoTrue={this.videoTrue} /> : null}
-        <div className="forms">
-          {
-            playerOneConnected
-              ? (
-                <div
-                  className="formOne"
-                  style={this.connectStyle}
-                >
-                  <h6>
-                    Player 1 :
-                    {' '}
-                    {userOne}
-                  </h6>
-                  <div className="changeCharacter">
-                    <button
-                      className="changeCharacterImgButton1"
-                      style={{
-                        backgroundImage: 'url(./assets/previous-arrow.png)',
-                      }}
-                      type="button"
-                      value="userOne"
-                      onClick={() => this.changeCharImgOne(-1)}
-                    />
-                    <div
-                      style={{
-                        backgroundPosition: 'center',
-                        backgroundImage: `url(./assets/characters/${userOneImg}Bottom.png)`,
-                        height: '5vw',
-                        width: '5vw',
-                        backgroundSize: '5vw',
-                        backgroundRepeat: 'no-repeat',
-                        marginBottom: '1vw',
-                      }}
-                    />
-                    <button
-                      className="changeCharacterImgButton2"
-                      style={{
-                        backgroundImage: 'url(./assets/next-arrow.png)',
-                      }}
-                      type="button"
-                      value="userOne"
-                      onClick={() => this.changeCharImgOne(1)}
-                    />
-                  </div>
-                  <form onSubmit={this.onDisconnectOne}>
-                    <input
-                      className="disconnectButton"
-                      size="lg"
-                      type="submit"
-                      value="Disconnect"
-                      onClick={this.disconnect}
-                    />
-                  </form>
+        {
+          playerOneConnected
+            ? (
+              <div
+                className="formOne1"
+                id="formOne"
+              >
+                <h6>
+                  Player 1 :
+                  {' '}
+                  {userOne}
+                </h6>
+                <div className="changeCharacter">
+                  <button
+                    className="changeCharacterImgButton1"
+                    style={{
+                      backgroundImage: 'url(./assets/previous-arrow.png)',
+                    }}
+                    type="button"
+                    value="userOne"
+                    onClick={() => this.changeCharImgOne(-1)}
+                  />
+                  <div
+                    style={{
+                      backgroundPosition: 'center',
+                      backgroundImage: `url(./assets/characters/${userOneImg}Bottom.png)`,
+                      height: '5vw',
+                      width: '5vw',
+                      backgroundSize: '5vw',
+                      backgroundRepeat: 'no-repeat',
+                      marginBottom: '1vw',
+                    }}
+                  />
+                  <button
+                    className="changeCharacterImgButton2"
+                    style={{
+                      backgroundImage: 'url(./assets/next-arrow.png)',
+                    }}
+                    type="button"
+                    value="userOne"
+                    onClick={() => this.changeCharImgOne(1)}
+                  />
                 </div>
-              )
-              : (
-                <div
-                  className="formOne"
-                  style={this.connectStyle}
-                >
-                  <h6>
-                    Player 1 :
-                  </h6>
-                  <form onSubmit={this.onSubmitOne}>
-                    <input
-                      onChange={this.onChange}
-                      type="text"
-                      id="userOne"
-                      name="title"
-                      value={userOne}
-                    />
-                    <input
-                      className="connectButton"
-                      size="lg"
-                      type="submit"
-                      value="Connect"
-                      onClick={this.connect}
-                    />
-                  </form>
+                <form onSubmit={this.onDisconnectOne}>
+                  <input
+                    className="disconnectButton"
+                    size="lg"
+                    type="submit"
+                    value="Disconnect"
+                    onClick={this.disconnect}
+                  />
+                </form>
+              </div>
+            )
+            : (
+              <div
+                className="formOne2"
+                id="formOne"
+              >
+                <h6>
+                  Player 1 :
+                </h6>
+                <form onSubmit={this.onSubmitOne}>
+                  <input
+                    onChange={this.onChange}
+                    type="text"
+                    id="userOne"
+                    name="title"
+                    value={userOne}
+                  />
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Connect"
+                    onClick={this.connect}
+                  />
+                </form>
+              </div>
+            )
+        }
+        {
+          playerTwoConnected
+            ? (
+              <div
+                className="formTwo1"
+                id="formOne"
+                style={this.connectStyle}
+              >
+                <h6>
+                  Player 2 :
+                  {' '}
+                  {userTwo}
+                </h6>
+                <div className="changeCharacter">
+                  <button
+                    className="changeCharacterImgButton3"
+                    style={{
+                      backgroundImage: 'url(./assets/previous-arrow.png)',
+                    }}
+                    type="button"
+                    value="userTwo"
+                    onClick={() => this.changeCharImgTwo(-1)}
+                  />
+                  <div
+                    style={{
+                      backgroundPosition: 'center',
+                      backgroundImage: `url(./assets/characters/${userTwoImg}Bottom.png)`,
+                      height: '5vw',
+                      width: '5vw',
+                      backgroundSize: '5vw',
+                      backgroundRepeat: 'no-repeat',
+                      marginBottom: '1vw',
+                    }}
+                  />
+                  <button
+                    className="changeCharacterImgButton4"
+                    style={{
+                      backgroundImage: 'url(./assets/next-arrow.png)',
+                    }}
+                    type="button"
+                    value="userTwo"
+                    onClick={() => this.changeCharImgTwo(1)}
+                  />
                 </div>
-              )
-          }
-          {
-            playerTwoConnected
-              ? (
-                <div
-                  className="formTwo"
-                  style={this.connectStyle}
-                >
-                  <h6>
-                    Player 2 :
-                    {' '}
-                    {userTwo}
-                  </h6>
-                  <div className="changeCharacter">
-                    <button
-                      className="changeCharacterImgButton3"
-                      style={{
-                        backgroundImage: 'url(./assets/previous-arrow.png)',
-                      }}
-                      type="button"
-                      value="userTwo"
-                      onClick={() => this.changeCharImgTwo(-1)}
-                    />
-                    <div
-                      style={{
-                        backgroundPosition: 'center',
-                        backgroundImage: `url(./assets/characters/${userTwoImg}Bottom.png)`,
-                        height: '5vw',
-                        width: '5vw',
-                        backgroundSize: '5vw',
-                        backgroundRepeat: 'no-repeat',
-                        marginBottom: '1vw',
-                      }}
-                    />
-                    <button
-                      className="changeCharacterImgButton4"
-                      style={{
-                        backgroundImage: 'url(./assets/next-arrow.png)',
-                      }}
-                      type="button"
-                      value="userTwo"
-                      onClick={() => this.changeCharImgTwo(1)}
-                    />
-                  </div>
-                  <form onSubmit={this.onDisconnectTwo}>
-                    <input
-                      className="disconnectButton"
-                      size="lg"
-                      type="submit"
-                      value="Disconnect"
-                    />
-                  </form>
-                </div>
-              )
-              : (
-                <div
-                  className="formTwo"
-                  style={this.connectStyle}
-                >
-                  <h6>
-                    Player 2 :
-                  </h6>
-                  <form onSubmit={this.onSubmitTwo}>
-                    <input
-                      onChange={this.onChange}
-                      type="text"
-                      id="userTwo"
-                      name="title"
-                      value={userTwo}
-                    />
-                    <input
-                      className="connectButton"
-                      size="lg"
-                      type="submit"
-                      value="Connect"
-                    />
-                  </form>
-                </div>
-              )
-          }
-        </div>
+                <form onSubmit={this.onDisconnectTwo}>
+                  <input
+                    className="disconnectButton"
+                    size="lg"
+                    type="submit"
+                    value="Disconnect"
+                  />
+                </form>
+              </div>
+            )
+            : (
+              <div
+                className="formTwo2"
+                id="formOne"
+                style={this.connectStyle}
+              >
+                <h6>
+                  Player 2 :
+                </h6>
+                <form onSubmit={this.onSubmitTwo}>
+                  <input
+                    onChange={this.onChange}
+                    type="text"
+                    id="userTwo"
+                    name="title"
+                    value={userTwo}
+                  />
+                  <input
+                    className="connectButton"
+                    size="lg"
+                    type="submit"
+                    value="Connect"
+                  />
+                </form>
+              </div>
+            )
+        }
         <div className="logoButtons">
           <div className="logo">
             <img className="imgLogo" src="./assets/logopokemaze.png" alt="logo" />
@@ -375,7 +374,6 @@ class Home extends Component {
                   width: '14vw',
                   marginRight: '5vw',
                 }}
-                onClick={this.disconnect}
               >
                 Play solo
               </button>
@@ -393,7 +391,6 @@ class Home extends Component {
                   width: '15vw',
                   marginRight: '5vw',
                 }}
-                onClick={this.disconnect}
               >
                 Multiplayer
               </button>
@@ -408,7 +405,6 @@ class Home extends Component {
                   width: '16vw',
                   marginRight: '5vw',
                 }}
-                onClick={this.disconnect}
               >
                 <img src="./assets/pokeditor2.png" alt="imgeditor" />
                 {' '}
