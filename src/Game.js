@@ -213,7 +213,6 @@ class Game extends Component {
     const {
       start, isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
     } = this.state;
-    
     return (
       <div className="Game">
         { start

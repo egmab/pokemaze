@@ -5,7 +5,9 @@ import './KeysBar.css';
 class KeysBar extends Component {
   constructor(props) {
     super(props);
-    const { collectedKeys, numberOfKeys, finalDoorID, playerNumber } = this.props;
+    const {
+      collectedKeys, numberOfKeys, finalDoorID, playerNumber,
+    } = this.props;
     this.tab = new Array(numberOfKeys).fill(false);
     this.style = {
       opacity: 1,
@@ -33,10 +35,12 @@ class KeysBar extends Component {
     }
   }
 
-
-
   componentWillReceiveProps(nextProps) {
     const { collectedKeys, numberOfKeys } = this.props;
+    if (collectedKeys === numberOfKeys) {
+      this.styleDoor.opacity = 1;
+      this.style.display = 'none';
+    }
     if (collectedKeys < nextProps.collectedKeys) {
       for (let i = 0; i < nextProps.collectedKeys; i += 1) {
         this.tab[i] = true;
@@ -47,8 +51,6 @@ class KeysBar extends Component {
       }
     }
   }
-
-
 
   render() {
     const { typeOfKey } = this.props;
