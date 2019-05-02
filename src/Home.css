@@ -173,33 +173,6 @@
 .homeButton:active:enabled {
   background-color: #638a0a;
 }
-.forms{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  position: fixed;
-  top:0;
-  left:0;
-  width: 100%;
-}
-.formOne{
-  display:flex;
-  flex-direction:column;
-  min-width:15vw;
-  padding-top:1.5vw;
-  padding-bottom:1.5vw;
-  background-color:rgba(0,0,0,0.38);
-  color:white;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3vw;
-  border-style: solid;
-  border-color: rgb(189, 187, 187, 0.2);
-  border-width: 0.1vw;
-  border-bottom-left-radius: 1vw;
-  border-bottom-right-radius: 1vw;
-}
 
 .home form{
   display:flex;
@@ -208,7 +181,8 @@
   align-items: center;
 }
 
-.formTwo{
+#formOne
+{
   display:flex;
   flex-direction:column;
   padding-top:1.5vw;
@@ -224,7 +198,30 @@
   border-width: 0.1vw;
   border-bottom-left-radius: 1vw;
   border-bottom-right-radius: 1vw;
+  transition: margin 0.5s linear;
+  position: absolute;
+}
 
+.formOne1{
+  margin: -18vw 0 0 -43vw;
+}
+
+.formOne2{
+  margin: -25.5vw 0 0 -43vw;
+}
+
+.formTwo1{
+  margin: -18vw 0 0 43vw;
+}
+
+.formTwo2{
+  margin: -30.5vw 0 0 43vw;
+  
+}
+
+.formOne1:hover, .formOne2:hover
+{
+  margin-top: -18vw;
 }
 
 
