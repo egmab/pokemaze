@@ -165,7 +165,7 @@ class Home extends Component {
   }
 
   connect = () => {
-    this.connectStyle = { marginTop: '-18vw' };
+    this.connectStyle = { marginTop: '0vw' };
   }
 
   render() {
