@@ -86,10 +86,6 @@ class Pokedex extends Component {
     }
   }
 
-   
-
-
-
   changeType = (event) => {
     let pokemonsClicked = '';
     const { player } = this.props;
@@ -125,7 +121,6 @@ class Pokedex extends Component {
     }
   }
 
- 
 
   render() {
     const { player } = this.props;
