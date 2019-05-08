@@ -174,17 +174,21 @@ class Player extends Component {
 
   handleGamepad = () => {
     const gp = navigator.getGamepads();
-    if (gp[this.gpNumber] !== null) {
-      if (gp[this.gpNumber].buttons[this.keys.up.pad].pressed
+    if (gp[this.gpNumber] !== null && gp[this.gpNumber] !== undefined) {
+      if ((gp[this.gpNumber].buttons[this.keys.up.pad]
+        && gp[this.gpNumber].buttons[this.keys.up.pad].pressed)
         || gp[this.gpNumber].axes[1] < -0.8) {
         this.move('up');
-      } else if (gp[this.gpNumber].buttons[this.keys.down.pad].pressed
+      } else if ((gp[this.gpNumber].buttons[this.keys.down.pad]
+        && gp[this.gpNumber].buttons[this.keys.down.pad].pressed)
         || gp[this.gpNumber].axes[1] > 0.8) {
         this.move('down');
-      } else if (gp[this.gpNumber].buttons[this.keys.left.pad].pressed
+      } else if ((gp[this.gpNumber].buttons[this.keys.left.pad]
+        && gp[this.gpNumber].buttons[this.keys.left.pad].pressed)
         || gp[this.gpNumber].axes[0] < -0.8) {
         this.move('left');
-      } else if (gp[this.gpNumber].buttons[this.keys.right.pad].pressed
+      } else if ((gp[this.gpNumber].buttons[this.keys.right.pad]
+        && gp[this.gpNumber].buttons[this.keys.right.pad].pressed)
         || gp[this.gpNumber].axes[0] > 0.8) {
         this.move('right');
       }
@@ -193,7 +197,7 @@ class Player extends Component {
 
   handleGamepadAction = () => {
     const gp = navigator.getGamepads();
-    if (gp[this.gpNumber] !== null) {
+    if (gp[this.gpNumber] !== null && gp[this.gpNumber] !== undefined) {
       if (gp[this.gpNumber].buttons[this.keys.action.pad].pressed) {
         this.action();
       }

@@ -21,6 +21,11 @@
     
 }
 
+.keyElement{
+    position: absolute;
+    left: 0;
+}
+
 .keyElement2 {
     display: flex;
 }
@@ -41,12 +46,14 @@
     border-radius: 5vw;
     width: 2.55vw;
     height: 2.55vw;
+    position: relative;
 }
 .bigKeyCircle {
     border: solid 0.2vw #3b4c6b;
     border-radius: 50vw;
     width: 4.55vw;
     height: 4.55vw;
+    position: relative;
 }
 .separator{
     background-image: url('./assets/pokemons/separator.png');

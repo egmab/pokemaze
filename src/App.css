@@ -17,7 +17,7 @@ html{
 
 body {
   font-family: 'Lato', sans-serif;
-  font-size: 1.2vw;
+  font-size: 1.6em;
   height: 100%;
 }
 
@@ -31,38 +31,38 @@ body {
 h1
 {
   font-family: 'Oswald', sans-serif;
-  font-size: 3.6vw;
+  font-size: 2.7em;
   text-transform: uppercase;
   text-align: center;
   font-weight: bold;
-  margin-top: 0.3vw;
+  margin-top: 1%;
   color:rgb(2, 2, 144);
 
 }
 h2
 {
   font-family: 'Oswald', sans-serif;
-  font-size: 2.9vw;
+  font-size: 2.4em;
   text-transform: uppercase;
   text-align: center;
-  margin-top: 0.3vw;
-  margin-bottom: 0.4vw;
+  margin-top: 1%;
+  margin-bottom: 1%;
   color:rgb(2, 2, 144);
 }
 h3
 {
   font-family: 'Oswald', sans-serif;
-  font-size: 2.4vw;
+  font-size: 2.3em;
   text-transform: uppercase;
   text-align: center;
-  margin-top: 0.3vw;
-  margin-bottom: 0.4vw;
+  margin-top: 1%;
+  margin-bottom: 1%;
   color: #5a5353;
 }
 h4
 {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.8em;
+  font-size: 2em;
   margin: 10px;
 }
 h5
@@ -74,6 +74,6 @@ h5
 h6
 {
   font-family: 'Roboto', sans-serif;
-  font-size: 1.9vw;
-  margin: 0.6vw;
+  font-size: 1.2em;
+  margin: 1vw;
 }

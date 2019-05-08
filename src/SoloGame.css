@@ -3,11 +3,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
     background-size: 100%, cover;
     min-height: 100vh;
-    min-width: 100vh;
+    min-width: 100%;
   }
   .levels{
     display: flex;
@@ -35,6 +35,8 @@
   .buttonSolo {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center
   }
   .buttonCustom {
     display: flex;
@@ -126,4 +128,42 @@
 									   color-stop(0.44, rgb(122,153,217)),
 									   color-stop(0.72, rgb(73,125,189)),
 									   color-stop(0.86, rgb(28,58,148)));
+}
+
+@media screen and (max-width: 768px) {
+  .levels{
+    width: 100%;
+
+  }
+  .pokedexJ1solo{
+    width: 100%;
+  }
+.SoloLevels{
+  margin-bottom: 1%;
+}
+  h1
+{
+ font-size: 1.6em;
+ margin-bottom: 1%;
+}
+
+h2
+{
+font-size: 1.5em;
+}
+
+h3
+{
+  font-size: 1.4em;
+}
+
+.buttonSolo button {
+  font-size: 1em;
+  padding: 6px;
+}
+.buttonCustom button {
+  font-size: 1em;
+  padding: 6px;
+}
+
 }

@@ -7,7 +7,11 @@
     background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
     background-size: 100%, cover;
     min-height: 100vh;
-    min-width: 100vh;
+  }
+
+  .mateContainer .starsContainer{
+    margin-top: 7.1vw;
+    margin-right: 0.1vw;
   }
     .pokedexJ1{
     width: 50%;
@@ -50,7 +54,7 @@
   .formPoke p{
     color:rgb(2, 2, 144);
     font-weight: bold;
-    font-size: 1.3vw;
+    font-size: 1.3em;
     margin-bottom: 1vw;
     margin-top: 0.1vw;
   }
@@ -103,4 +107,57 @@
 									   color-stop(0.44, rgb(122,153,217)),
 									   color-stop(0.72, rgb(73,125,189)),
 									   color-stop(0.86, rgb(28,58,148)));
+}
+
+
+@media screen and (max-width: 768px) {
+
+  .pokedexJ1, .pokedexJ2{
+    height: 100vw;
+  }
+  .formPoke{
+    order: 1;
+    margin-right: 7vw;
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+    height: 22vw;
+
+  }
+  .formPoke p{
+
+    font-size: 0.6em;
+
+  }
+
+  .formPoke form{
+
+    height:16vw;
+  }
+
+.pokemon{
+  width: 20vw;
+  height: 20vw;
+}
+.pokemon img{
+  max-width: 14vw;
+  max-height: 14vh;
+}
+.formPoke select {
+	height: 16vw;
+}
+  .mateContainer{
+    order:1;
+    margin-top: 5vw;
+  }
+  .mateContainer .starsContainer{
+    display: none;
+  }
+  .playOrBack{
+    order:2
+  }
+  .elem{
+    top: 2vw;
+    right: 2vw;
+    height:6vw;
+  }
 }

@@ -31,7 +31,7 @@ const Mate = ({ pokemon, newvalue, level }) => {
         ? <img alt={newvalue} className="elem" src={`./assets/pokemons/elements/${newvalue}.png`} />
         : undefined
       }
-      <div className="starsContainer" style={{ marginTop: '7.1vw', marginRight: '0.1vw' }}>
+      <div className="starsContainer">
         {pokemon !== 'none'
           ? levelIcons.map((star, index) => (
             <div

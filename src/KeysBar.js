@@ -14,6 +14,8 @@ class KeysBar extends Component {
       display: 'inline',
       width: '40%',
       marginTop: '30%',
+      position: 'absolute',
+      left: '30%',
     };
     this.styleDoor = {
       backgroundImage: `url(${`./assets/items/${finalDoorID}.png`})`,
