@@ -42,7 +42,6 @@ class Pokedex extends Component {
     };
   }
 
-
   componentDidMount() {
     const { player } = this.props;
 
@@ -91,10 +90,6 @@ class Pokedex extends Component {
     }
   }
 
-  searchPoke = (textRecup) => {
-    this.setState({ textRecup });
-  }
-
 
   changeType = (event) => {
     // this.setState({ typeRecup : event.target.value });
@@ -132,6 +127,17 @@ class Pokedex extends Component {
     }
   }
 
+  isClicked = (name, type) => {
+    const { getPoke } = this.props;
+    if (type !== '' && name !== '') {
+      getPoke(`${type} ${name}`);
+    }
+  }
+
+  searchPoke = (textRecup) => {
+    this.setState({ textRecup });
+  }
+
 
   render() {
     const { player } = this.props;
@@ -160,7 +166,7 @@ class Pokedex extends Component {
     const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => arr
       .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
-    const { pokemon } = this.props;
+    const { pokemon, game } = this.props;
     // .filter(poke => poke.type.includes(typeRecup))
     return (
       <div className="global-container">
@@ -236,6 +242,7 @@ class Pokedex extends Component {
                 pokemonName={monster.name}
                 pokemonsCaught={pokemonsCaught}
                 player={player}
+                game={game}
                 isClicked={this.isClicked}
               />
             ))

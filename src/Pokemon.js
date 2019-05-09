@@ -55,7 +55,7 @@ class Pokemon extends Component {
 
 
   render() {
-    const { player } = this.props;
+    const { player, isClicked, game } = this.props;
     const { onePokemon } = this.state;
     if (onePokemon.types) {
       if (onePokemon.types[1]) {
@@ -77,6 +77,8 @@ class Pokemon extends Component {
       <div className={this.classType}>
         <div
           className={this.pokemonClass}
+          role="presentation"
+          onClick={game === 'multi' && this.pokemonClass === 'pokemon-single-container' ? () => isClicked(this.pokemon, this.pokemonType) : undefined}
         >
           <div>
             {this.pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${this.pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}

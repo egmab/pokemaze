@@ -121,7 +121,7 @@ class SoloGame extends Component {
 
         </div>
         <div className="pokedexJ1solo">
-          <Pokedex pokemon={pokemon} getlevel={this.getLevelsJ1} player="player1" />
+          <Pokedex pokemon={pokemon} getlevel={this.getLevelsJ1} player="player1" game="solo" />
         </div>
       </div>
     );
