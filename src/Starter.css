@@ -4,34 +4,52 @@
     display: flex;
     justify-content: center;
 }
+
+.keymodal img{
+    width: 60%;
+}
+
 .modalkey-body h1{
-    font-size: 4vw;
-    margin-bottom: 1.5vw;
+    font-size: 1.6em;
+    margin-bottom: 1%;
     margin-top: 0;
 }
 
 .modalkey-body h3{
-    margin-top: 2vw;
+    margin-top: 1%;
 }
 
 .modalkey-body h5{
-    margin: 1vw;
+    margin: 1%;
 }
 
 .keyplayer2 {
-    margin-left: 3vw;
+    margin-left: 1%;
   }
 
 .keyplayer1 p {
-  font-size: 1vw;
+  font-size: 1.2em;
 }
 
 .keyplayer2 p {
-    font-size: 1vw;
+    font-size: 1.2em;
 }
 
 .modalkey-body{
-    padding: 0.05vw 4vw;
+    padding: 1%;
     text-align: center;
     border-radius: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    .modalkey-body h3{
+        font-size: 1em;
+    }
+    
+    .modalkey-body h5{
+        font-size: 1em;
+    }
+    .modalkey-body h6{
+        font-size: 0.5em;
+    }
 }

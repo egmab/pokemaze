@@ -37,27 +37,27 @@ class Starter extends Component {
           <div className="keymodal">
             <div className="keyplayer1">
               <h5>Player 1</h5>
-              <p>
+              <div>
                 <h6>move:</h6>
                 <img src="./assets/zqsd.png" alt="zqsd" />
-              </p>
-              <p>
+              </div>
+              <div>
                 <h6>action/attack:</h6>
                 <img src="./assets/tab.png" alt="tab" />
-              </p>
+              </div>
             </div>
             {gameMode === 'multiplayer'
               ? (
                 <div className="keyplayer2">
                   <h5>Player 2</h5>
-                  <p>
+                  <div>
                     <h6>move:</h6>
                     <img src="./assets/fleches.png" alt="fleches" />
-                  </p>
-                  <p>
+                  </div>
+                  <div>
                     <h6>action/attack:</h6>
                     <img src="./assets/espace.png" alt="espace" />
-                  </p>
+                  </div>
                 </div>
 
               )

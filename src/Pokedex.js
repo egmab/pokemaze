@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 /* import { Link } from 'react-router-dom'; */
 import Pokemon from './Pokemon';
+import Search from './Search';
 import './Pokedex.css';
 
 
@@ -14,6 +15,10 @@ let pokemonContainer = 'pokemon-container1';
 class Pokedex extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      textRecup: '',
+      // typeRecup: '',
+    };
     this.pokeMap = [];
     this.typeArray = ['water', 'fire', 'grass', 'electric',
       'psychic', 'dragon', 'normal', 'rock', 'fighting', 'fairy',
@@ -86,7 +91,13 @@ class Pokedex extends Component {
     }
   }
 
+  searchPoke = (textRecup) => {
+    this.setState({ textRecup });
+  }
+
+
   changeType = (event) => {
+    // this.setState({ typeRecup : event.target.value });
     let pokemonsClicked = '';
     const { player } = this.props;
     let allPokemons = '';
@@ -124,7 +135,10 @@ class Pokedex extends Component {
 
   render() {
     const { player } = this.props;
-
+    const {
+      textRecup,
+      // typeRecup
+    } = this.state;
     actualPlayer = 'Player';
     if (player === 'player1') {
       actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -147,79 +161,85 @@ class Pokedex extends Component {
       .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
     const { pokemon } = this.props;
-    this.pokeMap = pokemon.map((monster, index) => (
-      <Pokemon
-        key={monster.name}
-        id={index + 1}
-        pokemonName={monster.name}
-        pokemonsCaught={pokemonsCaught}
-        player={player}
-        isClicked={this.isClicked}
-      />
-    ));
-
+    // .filter(poke => poke.type.includes(typeRecup))
     return (
       <div className="global-container">
+
         <h2>
           {actualPlayer}
           &apos;s pokedex
         </h2>
-        <div className="pokemonSearchBar">
-          <div className="searchPoke">
-            <div className="buttons">
-              <button
-                type="button"
-                style={{
-                  backgroundImage: 'url(./assets/pokeball.png)',
-                }}
-                className="imgelemArray"
-                value="all"
-                onClick={this.changeType}
-              />
-            </div>
-            <div className="numbers">
-              <span>
-                All
-              </span>
-              <span className="starPoke">
-                {pokemonsCaughtSorted.length}
-                /151
-              </span>
-            </div>
-          </div>
-          {this.typeArray.map((type, index) => (
-            <div className="searchPoke" key={`typeId-${index + 1}`}>
+        <div className="search-container">
+          <div className="pokemonSearchBar">
+            <div className="searchPoke">
               <div className="buttons">
                 <button
                   type="button"
                   style={{
-                    backgroundImage: `url(./assets/pokemons/elements/${type}.png)`,
+                    backgroundImage: 'url(./assets/pokeball.png)',
                   }}
                   className="imgelemArray"
-                  value={type}
+                  value="all"
                   onClick={this.changeType}
                 />
               </div>
               <div className="numbers">
                 <span>
-                  {this.types[type].number}
-                  {' '}
-                  /
-                  {this.types[type].max}
+                  All
                 </span>
                 <span className="starPoke">
-                  <img
-                    src={`./assets/pokemons/level${this.types[type].level}.png`}
-                    alt={this.types[type].level}
-                  />
+                  {pokemonsCaughtSorted.length}
+                  /151
                 </span>
               </div>
             </div>
-          ))
-          }
+            {this.typeArray.map((type, index) => (
+              <div className="searchPoke" key={`typeId-${index + 1}`}>
+                <div className="buttons">
+                  <button
+                    type="button"
+                    style={{
+                      backgroundImage: `url(./assets/pokemons/elements/${type}.png)`,
+                    }}
+                    className="imgelemArray"
+                    value={type}
+                    onClick={this.changeType}
+                  />
+                </div>
+                <div className="numbers">
+                  <span>
+                    {this.types[type].number}
+                    {' '}
+                    /
+                    {this.types[type].max}
+                  </span>
+                  <span className="starPoke">
+                    <img
+                      src={`./assets/pokemons/level${this.types[type].level}.png`}
+                      alt={this.types[type].level}
+                    />
+                  </span>
+                </div>
+              </div>
+            ))
+            }
+          </div>
+          <Search handleChange={this.searchPoke} />
         </div>
         <div id={pokemonContainer}>
-          {this.pokeMap}
+
+          {
+            pokemon.filter(poke => poke.name.includes(textRecup.toLowerCase())).map((monster, index) => (
+              <Pokemon
+                key={monster.name}
+                id={index + 1}
+                pokemonName={monster.name}
+                pokemonsCaught={pokemonsCaught}
+                player={player}
+                isClicked={this.isClicked}
+              />
+            ))
+          }
         </div>
       </div>
     );
