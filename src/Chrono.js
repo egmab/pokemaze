@@ -29,6 +29,10 @@ class Chrono extends Component {
     this.setState({ count });
   }
 
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   format = (time) => {
     let seconds = time % 60;
     let minutes = Math.floor(time / 60);

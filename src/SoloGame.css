@@ -133,11 +133,13 @@
 @media screen and (max-width: 768px) {
   .levels{
     width: 100%;
+    min-height: auto;
 
   }
   .pokedexJ1solo{
     width: 100%;
   }
+  
 .SoloLevels{
   margin-bottom: 1%;
 }

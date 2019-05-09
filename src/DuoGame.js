@@ -112,7 +112,7 @@ class DuoGame extends Component {
           }
         </div>
         <div className="menuDuo">
-          <Mate pokemon={pokemon1} newvalue={newvalue1} level={level1} />
+          <Mate player="J1" pokemon={pokemon1} newvalue={newvalue1} level={level1} />
           <div className="playOrBack">
             <button
               className="homeButton"
@@ -136,7 +136,7 @@ class DuoGame extends Component {
               </Link>
             </div>
           </div>
-          <Mate pokemon={pokemon2} newvalue={newvalue2} level={level2} />
+          <Mate player="J2" pokemon={pokemon2} newvalue={newvalue2} level={level2} />
         </div>
       </div>
     );

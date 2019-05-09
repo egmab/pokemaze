@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Mate = ({ pokemon, newvalue, level }) => {
+const Mate = ({ pokemon, newvalue, level, player }) => {
   const levelIcons = [];
   for (let i = 0; i < 3; i += 1) {
     if (i < level) {
@@ -12,7 +12,11 @@ const Mate = ({ pokemon, newvalue, level }) => {
   return (
     <div className="mateContainer">
       <h6>Choose your team mate</h6>
-      <p>Select a pokemon in your pokedex</p>
+      <p>
+        {player}
+        {' '}
+        select a pokemon in your pokedex
+      </p>
       <div className="pokeAndElement">
         <div className="pokemon">
           {pokemon !== 'none'

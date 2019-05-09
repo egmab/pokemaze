@@ -14,6 +14,9 @@ class Pokemon extends Component {
     this.pokemonType = undefined;
     this.pokemonNumber = 0;
     this.classType = undefined;
+    this.style = {
+      border: 'none',
+    };
   }
 
   componentWillMount() {
@@ -53,6 +56,11 @@ class Pokemon extends Component {
     }
   }
 
+  selectedStyle = () => {
+    this.style = {
+      border: 'solid 3px red',
+    };
+  }
 
   render() {
     const { player, isClicked, game } = this.props;
@@ -77,8 +85,9 @@ class Pokemon extends Component {
       <div className={this.classType}>
         <div
           className={this.pokemonClass}
+          style={this.style}
           role="presentation"
-          onClick={game === 'multi' && this.pokemonClass === 'pokemon-single-container' ? () => isClicked(this.pokemon, this.pokemonType) : undefined}
+          onClick={game === 'multi' && this.pokemonClass === 'pokemon-single-container' ? () => { isClicked(this.pokemon, this.pokemonType); this.selectedStyle(); } : undefined}
         >
           <div>
             {this.pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${this.pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
