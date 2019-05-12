@@ -4,14 +4,11 @@ import React, { Component } from 'react';
 class Pokemon extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      onePokemon: [],
-    };
     const { pokemonName, pokemonsCaught } = this.props;
     this.pokemon = pokemonName;
     this.caught = pokemonsCaught;
     this.pokemonClass = undefined;
-    this.pokemonType = undefined;
+    this.type = undefined;
     this.pokemonNumber = 0;
     this.classType = undefined;
     this.style = {
@@ -20,13 +17,6 @@ class Pokemon extends Component {
   }
 
   componentWillMount() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${this.pokemon}`)
-      .then(response => response.json())
-      .then((data) => {
-        this.setState({
-          onePokemon: data,
-        });
-      });
     const { pokemonName } = this.props;
     this.pokemonClass = 'notHave';
     for (let i = 0; i < this.caught.length; i += 1) {
@@ -63,23 +53,16 @@ class Pokemon extends Component {
   }
 
   render() {
-    const { player, isClicked, game } = this.props;
-    const { onePokemon } = this.state;
-    if (onePokemon.types) {
-      if (onePokemon.types[1]) {
-        this.pokemonType = onePokemon.types[1].type.name;
-      } else {
-        this.pokemonType = onePokemon.types[0].type.name;
-      }
-    } else {
-      this.pokemonType = undefined;
-    }
-    this.classType = this.pokemonType;
+    const {
+      player, isClicked, game, pokemonType,
+    } = this.props;
+    this.type = pokemonType;
+    this.classType = this.type;
     if (player === 'player1') {
-      this.classType = this.pokemonType;
+      this.classType = this.type;
     }
     if (player === 'player2') {
-      this.classType = `${this.pokemonType}2`;
+      this.classType = `${this.type}2`;
     }
     return (
       <div className={this.classType}>
@@ -87,10 +70,10 @@ class Pokemon extends Component {
           className={this.pokemonClass}
           style={this.style}
           role="presentation"
-          onClick={game === 'multi' && this.pokemonClass === 'pokemon-single-container' ? () => { isClicked(this.pokemon, this.pokemonType); this.selectedStyle(); } : undefined}
+          onClick={game === 'multi' && this.pokemonClass === 'pokemon-single-container' ? () => { isClicked(this.pokemon, this.type); this.selectedStyle(); } : undefined}
         >
           <div>
-            {this.pokemonType !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${this.pokemonType}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
+            {this.type !== undefined ? <img className="imgelem" src={`./assets/pokemons/elements/${this.type}.png`} alt={this.pokemon} /> : <img className="loadingType" src="./assets/loading.png" alt="loading" />}
           </div>
           <div>
             <img

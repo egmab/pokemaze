@@ -13,13 +13,14 @@ class DuoGame extends Component {
       levelsJ2: '',
       value1: 'none',
       value2: 'none',
-      pokemon: [],
       modal: false,
     };
   }
 
   componentWillMount() {
-    this.getPokemon();
+    this.setState({
+      modal: false,
+    });
   }
 
   getLevelsJ1 = (level) => {
@@ -47,21 +48,6 @@ class DuoGame extends Component {
   }
 
 
-  getPokemon() {
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=151', {
-      method: 'GET',
-    }).then((response) => {
-      if (response.ok) {
-        response.json().then((json) => {
-          this.setState({
-            pokemon: json.results,
-            modal: false,
-          });
-        });
-      }
-    });
-  }
-
   closeModal = () => {
     this.setState({
       modal: false,
@@ -70,7 +56,7 @@ class DuoGame extends Component {
 
   render() {
     const {
-      value1, value2, levelsJ1, levelsJ2, pokemon, modal,
+      value1, value2, levelsJ1, levelsJ2, modal,
     } = this.state;
     let level1;
     let capacity1 = 'none';
@@ -94,10 +80,10 @@ class DuoGame extends Component {
     return (
       <div className="DuoHome">
         <div className="pokedexJ1">
-          <Pokedex pokemon={pokemon} getPoke={this.getPokeJ1} getlevel={this.getLevelsJ1} player="player1" game="multi" />
+          <Pokedex getPoke={this.getPokeJ1} getlevel={this.getLevelsJ1} player="player1" game="multi" />
         </div>
         <div className="pokedexJ2">
-          <Pokedex pokemon={pokemon} getPoke={this.getPokeJ2} getlevel={this.getLevelsJ2} player="player2" game="multi" />
+          <Pokedex getPoke={this.getPokeJ2} getlevel={this.getLevelsJ2} player="player2" game="multi" />
           {modal
             ? (
               <ChooseLevel

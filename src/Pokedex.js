@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Pokemon from './Pokemon';
 import Search from './Search';
 import './Pokedex.css';
+import withPokedexContext from './withPokedexContext';
 
 
 let actualPlayer;
@@ -17,7 +18,7 @@ class Pokedex extends Component {
     super(props);
     this.state = {
       textRecup: '',
-      // typeRecup: '',
+      typeRecup: '',
     };
     this.pokeMap = [];
     this.typeArray = ['water', 'fire', 'grass', 'electric',
@@ -44,7 +45,6 @@ class Pokedex extends Component {
 
   componentDidMount() {
     const { player } = this.props;
-
     actualPlayer = 'Player';
     if (player === 'player1') {
       actualPlayer = JSON.parse(localStorage.getItem('connectedPlayer'));
@@ -92,39 +92,7 @@ class Pokedex extends Component {
 
 
   changeType = (event) => {
-    // this.setState({ typeRecup : event.target.value });
-    let pokemonsClicked = '';
-    const { player } = this.props;
-    let allPokemons = '';
-
-    if (player === 'player1') {
-      pokemonsClicked = document.getElementsByClassName(event.target.value);
-      allPokemons = document.getElementById('pokemon-container1');
-    }
-    if (player === 'player2') {
-      const eventTarget = event.target.value;
-      const targetClass = `${eventTarget}2`;
-      pokemonsClicked = document.getElementsByClassName(targetClass);
-      allPokemons = document.getElementById('pokemon-container2');
-    }
-    const eachPokemon = allPokemons.childNodes;
-
-    if (eachPokemon) {
-      for (let i = 0; i < eachPokemon.length; i += 1) {
-        eachPokemon[i].style.display = 'none';
-      }
-    }
-    for (let i = 0; i < pokemonsClicked.length; i += 1) {
-      pokemonsClicked[i].style.display = 'block';
-    }
-
-    if (event.target.value === 'all') {
-      if (eachPokemon) {
-        for (let i = 0; i < eachPokemon.length; i += 1) {
-          eachPokemon[i].style.display = 'block';
-        }
-      }
-    }
+    this.setState({ typeRecup: event.target.value });
   }
 
   isClicked = (name, type) => {
@@ -140,10 +108,9 @@ class Pokedex extends Component {
 
 
   render() {
-    const { player } = this.props;
+    const { player, pokemons } = this.props;
     const {
-      textRecup,
-      // typeRecup
+      textRecup, typeRecup,
     } = this.state;
     actualPlayer = 'Player';
     if (player === 'player1') {
@@ -163,11 +130,11 @@ class Pokedex extends Component {
     if (player === 'player2') {
       pokemonContainer = 'pokemon-container2';
     }
-    const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => arr
-      .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
+    // const pokemonsCaughtSorted = pokemonsCaught.filter((obj, pos, arr) => arr
+    //   .map(mapObj => mapObj.name).indexOf(obj.name) === pos);
 
-    const { pokemon, game } = this.props;
-    // .filter(poke => poke.type.includes(typeRecup))
+    const { game } = this.props;
+
     return (
       <div className="global-container">
 
@@ -185,7 +152,7 @@ class Pokedex extends Component {
                     backgroundImage: 'url(./assets/pokeball.png)',
                   }}
                   className="imgelemArray"
-                  value="all"
+                  value=""
                   onClick={this.changeType}
                 />
               </div>
@@ -194,7 +161,7 @@ class Pokedex extends Component {
                   All
                 </span>
                 <span className="starPoke">
-                  {pokemonsCaughtSorted.length}
+                  {pokemonsCaught.length}
                   /151
                 </span>
               </div>
@@ -235,10 +202,11 @@ class Pokedex extends Component {
         <div id={pokemonContainer}>
 
           {
-            pokemon.filter(poke => poke.name.includes(textRecup.toLowerCase())).map((monster, index) => (
+            pokemons.filter(poke => poke.type.includes(typeRecup)).filter(poke => poke.name.includes(textRecup.toLowerCase())).map((monster, index) => (
               <Pokemon
                 key={monster.name}
                 id={index + 1}
+                pokemonType={monster.type}
                 pokemonName={monster.name}
                 pokemonsCaught={pokemonsCaught}
                 player={player}
@@ -253,4 +221,4 @@ class Pokedex extends Component {
   }
 }
 
-export default Pokedex;
+export default withPokedexContext(Pokedex);
