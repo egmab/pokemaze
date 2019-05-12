@@ -1,0 +1,19 @@
+.Board
+{
+  margin-top: 5vw;
+  margin-right: 4.2vw;
+  border-style: solid;
+  border-radius: 3vw;
+  border-color: grey;
+  overflow: hidden;
+  width: auto;
+  box-shadow: 0.1vw 2vw 5vw 0.01vw;
+}
+
+.row{
+  display: flex;
+}
+
+.col {
+  padding: 0;
+}

@@ -1,0 +1,266 @@
+
+.global-container {
+    background-color: rgba(255, 255, 255, 0.4);
+    background-size: 100%, contain;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100%;
+    overflow: auto;
+}
+
+#pokemon-container1{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.search-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.searchBar {
+    font-size: 0.8em;
+    border-radius: 1vw;
+    text-align: center;
+    margin : 1%;
+}
+.starPoke img{
+    height: 1.2em;
+}
+
+#pokemon-container2{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokemon-single-container {
+    width: 180px;
+    height: 180px;
+    position: relative;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #e8f6fa;
+    color: #424242;
+    margin: 12px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border:1px solid grey;
+    opacity: 1;
+    font: bold;
+  }
+
+  .pokemon-single-container:hover {
+    opacity: 0.8;
+  }
+  .pokemon-single-container:active {
+    border : solid 3px red;
+  }
+
+.pokemonSearchBar {
+    background-color: #ededed;
+    width: 95%; 
+    border-radius: 1vw;
+    overflow: hidden;
+    border:0.3em solid grey;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: space-between;
+}
+.searchPoke{
+    width: 4em;
+    align-items: center;
+    justify-content: center;
+}
+.buttons{
+    width: 4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+}
+.buttons:hover{
+    opacity: 0.7;
+}
+.numbers{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8em;
+}
+.searchLeft{
+    text-align: left;
+}
+
+.searchRight{
+    text-align: right;
+}
+
+.align-bottom{
+    color: black;
+    height: 30px;
+    position:absolute;
+    bottom: 0;
+    font-family: 'Lato', sans-serif;
+    width: 180px;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 27.7px;
+    background-color: rgb(190, 217, 241);
+    border-bottom-right-radius: 5px;;
+    border-bottom-left-radius:  5px; 
+}
+
+.align-bottom span{
+    text-transform: lowercase;
+    margin-left: 0.75vw;
+    font-size: 13px;
+    background-color: #2b55a3;
+    color: white;
+    border-radius: 50%;
+    padding: 2.2% 4.5%;
+}
+
+.sprites{
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.imgelem{
+    height: 50px;
+    right: 5px;
+    position: absolute;
+    top: 5px;
+}
+
+.imgelemArray{
+    height: 3.7em;
+    width: 3.7em;
+    border-radius: 50%;
+    background-size: contain;
+}
+
+.notHave{
+    filter: contrast(100%);
+    width: 180px;
+    height: 180px;
+    position: relative;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background-color: #ece9e9;
+    color: #424242;
+    margin: 12px;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border:1px solid grey;
+    opacity: 0.9;
+    font: bold;
+
+}
+.notHave div img {
+	-webkit-filter: grayscale(100%);
+	filter: grayscale(100%);
+	-webkit-transition: .2s ease-in-out;
+	transition: .2s ease-in-out;
+}
+
+.arrayBox{
+    width: -webkit-fill-available;
+    text-align: center;
+    display: flex;
+}
+.typeArray{
+    border: solid 0.2vw grey;
+    width: -webkit-fill-available;
+}
+
+td{
+    border: solid 0.1vw grey;
+    border-radius: 0.2vw;
+    width: 100%;
+}
+
+.arrayFirstRow{
+    background-color: rgb(85, 138, 183);
+    color: white;
+    text-align: center;
+}
+@keyframes rotation {
+    from {
+            -webkit-transform: rotate(0deg);
+    }
+    to {
+            -webkit-transform: rotate(359deg);
+    }
+}
+.loadingType{
+    height: 50px;
+    right: 5px;
+    position: absolute;
+    top: 5px;
+    animation: rotation 2s infinite linear;
+}
+
+@media screen and (max-width: 768px) {
+    
+    .pokemon-single-container {
+        width: 100px;
+        height: 100px;
+      }
+      .align-bottom{
+        width: 100px;
+        font-size: 11px;
+    }
+    .notHave{
+        width: 100px;
+        height: 100px;
+      }
+      .sprites{
+        max-width: 50px;
+        max-height: 50px;
+    }
+    .pokemonSearchBar {
+        display: none;
+    }
+    
+    .imgelem{
+        height: 30px;
+        right: 5px;
+        position: absolute;
+        top: 5px;
+    }
+    .imgelemArray{
+        height: 2.7em;
+        width: 2.7em;
+    }
+    .searchPoke{
+        width: 2em;
+    }
+    .buttons{
+        width: 2em;
+    }
+    .numbers{
+        font-size: 0.6em;
+    }
+    .searchBar {
+        font-size: 0.4em;
+        margin : 1%;
+    }
+}

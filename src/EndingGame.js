@@ -3,15 +3,45 @@ import './Modal.css';
 import { Link } from 'react-router-dom';
 
 
-const EndingGame = ({ pokemon, isWinner, isLoser }) => {
+const EndingGame = ({
+  pokemon, isWinner, isLoser, winner, tutoWinner, timer, levelName, gameMode,
+}) => {
   let pokemonName = pokemon.name;
   const pokemonNameMaj = pokemonName.charAt(0).toUpperCase() + pokemonName.slice(1);
   // const pokemonSprite = pokemon.sprites ?pokemon.sprites.back_default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/76.png"
+  let winnerName = 'winner';
   let title = '';
   let message = '';
   if (isWinner) {
-    title = 'Congrats !';
+    if (winner === 'player1') {
+      winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
+      if (timer && levelName) {
+        if (!localStorage.getItem('timers')) {
+          localStorage.setItem('timers', '{}');
+        }
+        const timersdata = JSON.parse(localStorage.getItem('timers'));
+        if (timersdata[levelName]) {
+          const currentTimer = timersdata[levelName][0];
+          if (currentTimer < timer) {
+            timersdata[levelName] = [timer, winnerName];
+            localStorage.setItem('timers', JSON.stringify(timersdata));
+          }
+        } else {
+          timersdata[levelName] = [timer, winnerName];
+          localStorage.setItem('timers', JSON.stringify(timersdata));
+        }
+      }
+    }
+
+    if (winner === 'player2') {
+      winnerName = JSON.parse(localStorage.getItem('connectedPlayer2'));
+    }
+    title = `Congrats ${winnerName}!`;
     message = 'You win';
+  }
+  if (tutoWinner) {
+    title = 'Congrats, you got it!';
+    message = 'You would have won';
   }
   if (isLoser) {
     title = 'Too late !';
@@ -33,23 +63,55 @@ const EndingGame = ({ pokemon, isWinner, isLoser }) => {
   return (
     <div className="modal-wrapper">
       <div className="modal-body">
-        <h3>{title}</h3>
+        <h5>{title}</h5>
         <img className="imgPoke" src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
-        <h2>
+        <h4>
           {message}
           {' '}
           {pokemonNameMaj}
           {' '}
           !
-        </h2>
+        </h4>
         <p>
-          <button
-            className="largeBtn"
-            type="button"
-            size="lg"
-          >
-            <Link exact to="/"> Play again </Link>
-          </button>
+          {gameMode === 'solo'
+            ? (
+              <Link
+                to="/solo-game"
+              >
+                <button
+                  className="homeButton"
+                  type="button"
+                  size="lg"
+                >
+                  Play again
+                </button>
+              </Link>
+            )
+            : (
+              <Link
+                to="/duo-game"
+              >
+                <button
+                  className="homeButton"
+                  type="button"
+                  size="lg"
+                >
+                  Play again
+                </button>
+              </Link>
+            )
+          }
+        </p>
+        <p>
+          <Link to="/">
+            <button
+              className="backButton"
+              type="button"
+              size="lg"
+            >
+              Back to menu
+            </button>
+          </Link>
         </p>
       </div>
     </div>

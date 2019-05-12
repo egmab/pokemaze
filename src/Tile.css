@@ -1,0 +1,80 @@
+.Tile {
+  background-size: contain;
+  background-repeat: repeat;
+  height: 3.1235455vw;
+  width: 3.1235455vw;
+  z-index: 2;
+}
+
+.Item {
+  width: 1.9vw;
+  height: 1.9vw;
+}
+
+.Objectives {
+  width: 1.5vw;
+  height: 1.5vw;
+  margin-top: 0.7vw;
+  animation: beat 1s infinite alternate;
+}
+
+.Statues {
+  width:90%;
+  z-index: 5;
+  margin-top: -2.5vh;
+}
+
+.FinalDoor {
+  width:2.8vw;
+  margin-top: -3vw;
+  z-index: 5;
+}
+
+.Fire {
+  z-index: 6;
+  width: 2vw;
+  height: 2vw;
+  margin-top: 0.2vw;
+  margin-left:-1vw;
+  animation: beat 0.1s infinite alternate;
+}
+
+.Lightning {
+  z-index: 6;
+  width: 2vw;
+  height: 2vw;
+  margin-top: 0.1vw;
+  margin-left:-1vw;
+  animation: beat 0.5s infinite alternate;
+}
+
+.Snowball {
+  z-index: 6;
+  width: 2vw;
+  height: 2vw;
+  margin-top: 0.1vw;
+  margin-left:-1vw;
+  animation: spin 0.5s infinite linear;
+}
+
+.Snowpile {
+  z-index: 0;
+  width: 2vw;
+  height: 2vw;
+  margin-top: 0.1vw;
+  margin-left:-1vw;
+}
+
+@keyframes beat{
+  to {transform: scale(1.2); }
+}
+
+
+@keyframes spin {
+  from {
+      transform:rotate(0deg);
+  }
+  to {
+      transform:rotate(360deg);
+  }
+}

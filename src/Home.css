@@ -1,0 +1,406 @@
+
+
+.home{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
+  background-size: 100%, cover;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.changeCharacter{
+  display:flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+}
+
+.changeCharacterImgButton1, .changeCharacterImgButton3 {
+  background-size: contain;
+  background-repeat: no-repeat;
+  border-style: solid;
+  margin: 1%;
+  width: 4em;
+  height: 4em;
+  border: none;
+  background-color: #11ffee00;
+  position: absolute;
+  left: 1%;
+  cursor: pointer;
+}
+
+.changeCharacterImgButton2, .changeCharacterImgButton4{
+  border-style: solid;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 1%;
+  width: 4em;
+  height: 4em;
+  border: none;
+  background-color: #11ffee00;
+  position: absolute;
+  right: 1%;
+  cursor: pointer;
+}
+
+.changeCharacterImgButton1:hover, .changeCharacterImgButton2:hover, .changeCharacterImgButton3:hover, .changeCharacterImgButton4:hover{
+  opacity: 0.6;
+}
+
+.changeCharacterImgButton1:active, .changeCharacterImgButton2:active, .changeCharacterImgButton3:active, .changeCharacterImgButton4:active{
+  opacity: 0.4;
+}
+
+.changeCharacterImgButton1:focus, .changeCharacterImgButton2:focus {
+  background-color: #11ffee00;
+  border: none;
+}
+
+/* .home img{
+  padding-top: 18vh;
+} */
+
+.home input{
+  padding:5% 3%;
+  border: none;
+  border-radius: 15px;
+}
+
+#userTwo, #userOne
+{
+  width: 70%;
+}
+
+.connectButton{
+  padding: 5% 5%;
+  background-color:#9bd80d;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 7%;
+  margin-bottom: 7%;
+  width: auto;
+  font-size: 0.7em;
+  border: none;
+  cursor: pointer;
+}
+
+.connectButton:hover{
+  background-color:#8ec50d;
+}
+
+.connectButton:active{
+  background-color: #7aa80d;
+}
+
+.disconnectButton{
+  padding:5% 5%;
+  background-color:#df1414;
+  color: white;
+  text-align: center;
+  margin-top: 3%;
+  margin-bottom: 7%;
+  width: auto;
+  font-size:0.7em;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.disconnectButton:hover{
+  background-color:#b11616;
+}
+
+.disconnectButton:active{
+  background-color:#8d1313;
+}
+
+
+.buttonContainerHome { 
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 10%;
+  width: 60%;
+}
+
+.logoButtons{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 8%;
+}
+
+.pokeditor {
+  padding: 7% 10%;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border:0.1vw solid #2b55a3;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-size:1.3em;
+  font-weight:bold;
+  text-decoration:none;
+  color: white;
+  text-align: center;
+  align-items: center;
+  min-width: 8em;
+  background-color: #2b55a3;
+}
+
+.pokeditor:hover {
+  background-color: #204383;
+}
+
+.pokeditor:active {
+  background-color: #1a3669;
+}
+
+.pokeditor img{ 
+  vertical-align: middle;
+  width: 15%;
+}
+
+
+.homeButton {
+  padding: 7% 16%;
+  background-color:#89c403;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border: 1px solid #74b807;
+  display:inline-block;
+  cursor:pointer;
+  font-size: 1.3em;
+  color:#ffffff;
+  font-weight:bold;
+  text-decoration:none;
+  white-space: nowrap;
+  height: 100%;
+}
+
+
+.homeButton:disabled {
+  background-color:grey;
+  -moz-border-radius:6px;
+  -webkit-border-radius:6px;
+  border-radius:6px;
+  border: 1px solid grey;
+  display:inline-block;
+  cursor:pointer;
+  color:#ffffff;
+  font-weight:bold;
+  text-decoration:none;
+}
+
+.homeButton a {
+  text-decoration:none;
+  color:#ffffff;
+}
+.homeButton:hover:enabled {
+  background-color: #78a70a;
+}
+
+.homeButton:active:enabled {
+  background-color: #638a0a;
+}
+
+.form {
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  text-align: center;
+  min-width:18%;
+  background-color:rgba(0,0,0,0.38);
+  color:white;
+  justify-content: center;
+  font-size: 1.3em;
+  border-style: solid;
+  border-color: rgb(189, 187, 187, 0.2);
+  border-width: 1px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  height: auto;
+}
+.forms{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+
+
+.logo{
+  padding: 4vw 0 3vw 0;
+  margin: -3vw 0 -2vw -4vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.imgLogo
+{
+  width: 20em;
+}
+
+.intro
+{
+  position: relative;
+  
+}
+
+.char {
+  height: 3em;
+  width: 3em;
+  background-size: 3em;
+  background-repeat: no-repeat;
+  margin-bottom: 0.1em;
+}
+
+.video1
+{
+  position: absolute;
+  top:0;
+  width: 2.8em;
+  height: 3.2em;
+}
+
+.video2
+{
+  position: absolute;
+  top: 0.3em;
+  left: 0.3em;
+  width: 2.2em;
+  height: 1.9em;
+  cursor: pointer;
+}
+
+.Intro2:hover
+{
+  opacity: 0.7;
+}
+
+.Intro2:active
+{
+  opacity: 0.4;
+}
+
+
+
+.video
+{
+  margin: -0.02vw 0 0 -1.2vw;
+  width: 62.2vw;
+}
+
+#HomeModal
+{
+  margin: -5.5vw 0 0 -20vw;
+  width: 81vw;
+  height: 35vw;
+  background: rgb(0, 0, 0, 0.8);
+  border-radius: 0;
+  border-style: none;
+}
+
+
+
+.Cross
+{
+  width: 3vw;
+  height: 3vw;
+  position: absolute;
+  left: 77.5vw;
+  top: 0.5vw;
+  cursor: pointer;
+}
+
+.Cross:hover
+{
+  opacity: 0.7;
+}
+
+.Cross:active
+{
+  opacity: 0.4;
+}
+
+@media screen and (max-width: 768px) {
+  .buttonContainerHome { 
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+
+  }
+  .homeButton {
+    font-size: 1em;
+    white-space: wrap;
+  }
+  .pokeditor{
+    font-size: 1em;
+    white-space: wrap;
+  }
+  .imgLogo{
+    width: 10em;
+  }
+
+.video1
+{
+  position: absolute;
+  top:0;
+  width: 1.8em;
+  height: 2.2em;
+}
+
+.video2
+{
+  position: absolute;
+  top: 0.25em;
+  left: 0.2em;
+  width: 1.4em;
+  height: 1.26em;
+  cursor: pointer;
+}
+  h6{
+    font-size: 0.7em;
+  }
+
+  .changeCharacterImgButton1, .changeCharacterImgButton3 {
+    width: 2em;
+    height: 2em;
+
+  }
+  .form {
+    width: 50%;
+  }
+  
+  .changeCharacterImgButton2, .changeCharacterImgButton4{
+    width: 2em;
+    height: 2em;
+  }
+  .connectButton {
+    font-size: 0.5em;
+  }
+  
+  .disconnectButton{
+    font-size:0.5em;
+  }
+  .char {
+    height: 1.6em;
+    width: 1.6em;
+    background-size: 1.6em;
+    margin-bottom: 0.1em;
+  }
+  .logoButtons{
+    margin-top: 10%;
+  }
+  
+}

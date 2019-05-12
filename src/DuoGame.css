@@ -1,0 +1,178 @@
+ 
+  .DuoHome{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    background: fixed, url('./assets/pokemons/fond.png') no-repeat fixed center center;
+    background-size: 100%, cover;
+    min-height: 100vh;
+  }
+
+  .menuDuo{
+    display: flex;
+    width: 90%;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .mateContainer h6 {
+    color: #5a5353;
+    margin-bottom:1%;
+    margin-top: 1%;
+    font-size: 1em;
+  }
+  .mateContainer p {
+    font-size: 0.78em;
+    margin: 1%;
+  }
+  
+  .starsContainerPok {
+    position: absolute;
+    bottom: 9px;
+    width: 6vw;
+    height: 2vw;
+    display: flex;
+  }
+    .pokedexJ1{
+    width: 50%;
+    height: 34vw;
+    overflow-x: hidden;
+  }
+  .mateContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 16px;
+    padding-bottom: 1.5%;
+    position: relative;
+    margin: 0.5%;
+    text-align: center;
+
+  }
+  .pokeAndElement{
+    position: relative;
+  }
+  .elem{
+    position: absolute;
+    top: 0.6vw;
+    right: 0.6vw;
+    height: 1.7vw;
+  }
+  .pokemon{
+    background-color: rgba(255, 255, 255);
+    width: 6vw;
+    height: 6vw;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pokemon img{
+    width: auto;
+    height: auto;
+    max-width: 8vw;
+    max-height: 8vh;
+  }
+ 
+.playOrBack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.formPoke select {
+	width: 100%; 
+	height: 5vw;
+	border: 0; 
+	margin: 0;
+	padding: .75em;
+	border-radius: 0;
+}
+
+  .pokedexJ2{
+    width: 50%;
+    height: 34vw;
+    overflow-x: hidden;
+  }
+
+::-webkit-scrollbar-track
+{
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: rgb(213, 219, 243);
+	border-radius: 10px;
+}
+
+::-webkit-scrollbar
+{
+	width: 26px;
+	background-color: rgb(162, 176, 238);
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(linear,
+									   left bottom,
+									   left top,
+									   color-stop(0.44, rgb(122,153,217)),
+									   color-stop(0.72, rgb(73,125,189)),
+									   color-stop(0.86, rgb(28,58,148)));
+}
+
+
+@media screen and (max-width: 768px) {
+
+  .pokedexJ1, .pokedexJ2{
+    height: 100vw;
+  }
+  .formPoke{
+    order: 1;
+    margin-right: 7vw;
+    margin-bottom: 2vw;
+    margin-top: 2vw;
+    height: 22vw;
+
+  }
+  .formPoke p{
+
+    font-size: 0.6em;
+
+  }
+
+  .formPoke form{
+
+    height:16vw;
+  }
+
+.pokemon{
+  width: 20vw;
+  height: 20vw;
+}
+.pokemon img{
+  max-width: 14vw;
+  max-height: 14vh;
+}
+.formPoke select {
+	height: 16vw;
+}
+  .mateContainer{
+    order:1;
+    margin-top: 5vw;
+  }
+  .mateContainer .starsContainer{
+    display: none;
+  }
+  .playOrBack{
+    order:2
+  }
+  .elem{
+    top: 2vw;
+    right: 2vw;
+    height:6vw;
+  }
+  .menuDuo{
+    flex-direction: column;
+ 
+  }
+}

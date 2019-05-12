@@ -3,51 +3,72 @@ import Board from './Board';
 import Player from './Player';
 import EndingGame from './EndingGame';
 import Chrono from './Chrono';
-
+import Starter from './Starter';
+import KeysBar from './KeysBar';
+import './Game.css';
 
 class Game extends Component {
   constructor(props) {
     super(props);
+    const { location } = props;
+    this.leveltype = 'default';
+    this.selectedlevel = 'Level 1';
+    if (location.state) {
+      this.leveltype = location.state.leveltype;
+      this.selectedlevel = location.state.levelsolo;
+    }
+    if (this.leveltype === 'default') {
+      this.level = JSON.parse(localStorage.getItem('GameData')).default.levels.solo[this.selectedlevel];
+    }
+    if (this.leveltype === 'custom') {
+      this.level = JSON.parse(localStorage.getItem('PokemazeCustomLevels'))[this.selectedlevel];
+    }
     this.getPlayerPos = this.getPlayerPos.bind(this);
     this.getTime = this.getTime.bind(this);
-    const { level } = props;
-    this.level = level;
-    this.player = {
+    this.playerAction = this.playerAction.bind(this);
+    this.keysToCollect = 0;
+    // Creates projectiles matrix
+    const projectiles = [];
+    for (let i = 0; i < this.level.tiles.length; i += 1) {
+      projectiles.push([]);
+      for (let j = 0; j < this.level.tiles[i].length; j += 1) {
+        projectiles[i].push('000');
+      }
+    }
+    for (let i = 0; i < this.level.items.length; i += 1) {
+      for (let j = 0; j < this.level.items[i].length; j += 1) {
+        if (parseInt(this.level.items[i][j], 10) >= 900
+          && parseInt(this.level.items[i][j], 10) <= 999) {
+          this.finalDoorID = this.level.items[i][j];
+        }
+        if (parseInt(this.level.items[i][j], 10) >= 2
+          && parseInt(this.level.items[i][j], 10) <= 19) {
+          this.keysToCollect += 1;
+          this.typeOfKey = this.level.items[i][j];
+        }
+      }
+    }
+    this.player1 = {
       posX: null,
       posY: null,
+      collectedKeys: 0,
     };
     this.randomPokemon = Math.ceil(Math.random() * Math.floor(151));
     this.state = {
+      start: false,
+      level: JSON.parse(JSON.stringify(this.level)),
+      projectiles,
       pokemon: undefined,
+      winner: undefined,
       isWinner: false,
       isLoser: false,
       ongoingGame: true,
+      tutoWinner: false,
     };
   }
 
   componentWillMount() {
     this.getPokemon();
-  }
-
-  getPlayerPos(x, y) {
-    this.player.posX = x;
-    this.player.posY = y;
-
-    if (this.level.items[this.player.posY][this.player.posX] === '001') {
-      this.setState({
-        isWinner: true,
-        ongoingGame: false,
-      });
-    }
-  }
-
-  getTime(count) {
-    if (count === 0) {
-      this.setState({
-        isLoser: true,
-        ongoingGame: false,
-      });
-    }
   }
 
   getPokemon() {
@@ -60,25 +81,175 @@ class Game extends Component {
       });
   }
 
+  getStarter = () => {
+    this.setState({ start: true });
+  }
+
+  getPlayerPos(x, y, player) {
+    this[player].posX = x;
+    this[player].posY = y;
+    const { level } = this.state;
+
+    // verify if player has caught the pokeball
+    if (!level.isTuto && level.items[this[player].posY][this[player].posX] === '001') {
+      this.setState({
+        winner: player,
+        isWinner: true,
+        ongoingGame: false,
+      });
+      this.setWonPokemon();
+    }
+    if (level.isTuto && level.items[this[player].posY][this[player].posX] === '001') {
+      this.setState({
+        tutoWinner: true,
+      });
+    }
+    // change the trap
+    if (level.tiles[this[player].posY][this[player].posX] === '009') {
+      level.tiles[this[player].posY][this[player].posX] = '405';
+      this.setState({ level });
+    }
+    // verify if player has caught KeysToCollect
+    if (level.items[this[player].posY][this[player].posX] === level.typeOfKey) {
+      this[player].collectedKeys += 1;
+      level.items[this[player].posY][this[player].posX] = '000';
+      this.setState({ level });
+      // Open final door when all keys collected
+      if (this[player].collectedKeys === this.keysToCollect) {
+        this.openFinalDoor();
+      }
+    }
+  }
+
+  getTime(count) {
+    this.timer = count;
+    if (count === 0) {
+      this.setState({
+        isLoser: true,
+        ongoingGame: false,
+      });
+    }
+  }
+
+
+  setWonPokemon = () => {
+    const { isWinner, pokemon, winner } = this.state;
+    let pokemonType = '';
+    if (pokemon.types) {
+      if (pokemon.types[1]) {
+        pokemonType = pokemon.types[1].type.name;
+      } else {
+        pokemonType = pokemon.types[0].type.name;
+      }
+    }
+    if (isWinner) {
+      const newPokemon = { name: pokemon.name, type: pokemonType };
+      let winnerName = 'winner';
+      if (winner === 'player1') {
+        winnerName = JSON.parse(localStorage.getItem('connectedPlayer'));
+      }
+      if (localStorage.getItem(winnerName)) {
+        const actualPlayer = JSON.parse(localStorage.getItem(winnerName));
+        actualPlayer.pokemons.push(newPokemon);
+        localStorage.setItem(winnerName, JSON.stringify(actualPlayer));
+      }
+    }
+  }
+
+  playerAction(y, x) {
+    const { level } = this.state;
+    // Switches lever ON/OFF: even=> item+1, odd=> item-1
+    // Example: Lever(id: 700) becomes 701. Lever (id: 701) becomes 700
+    // AND
+    // Mutates the corresponding gate(s)
+    // Example: Lever 700 becomes 701, changing item(s) 800 to 801, and vice versa
+    if (parseInt(level.items[y][x], 10) % 2 === 0) {
+      const switchedLever = parseInt(level.items[y][x], 10) + 1;
+      level.items[y][x] = `${switchedLever}`;
+      for (let i = 0; i < level.items.length; i += 1) {
+        for (let j = 0; j < level.items[i].length; j += 1) {
+          if (parseInt(level.items[i][j], 10) === switchedLever + 99) {
+            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+            level.items[i][j] = `${switchedDoor}`;
+          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+            level.items[i][j] = `${switchedDoor}`;
+          }
+        }
+      }
+    } else {
+      const switchedLever = parseInt(level.items[y][x], 10) - 1;
+      level.items[y][x] = `${switchedLever}`;
+      for (let i = 0; i < level.items.length; i += 1) {
+        for (let j = 0; j < level.items[i].length; j += 1) {
+          if (parseInt(level.items[i][j], 10) === switchedLever + 101) {
+            const switchedDoor = parseInt(level.items[i][j], 10) - 1;
+            level.items[i][j] = `${switchedDoor}`;
+          } else if (parseInt(level.items[i][j], 10) === switchedLever + 100) {
+            const switchedDoor = parseInt(level.items[i][j], 10) + 1;
+            level.items[i][j] = `${switchedDoor}`;
+          }
+        }
+      }
+    }
+    this.setState({ level });
+  }
+
+  openFinalDoor() {
+    const { level } = this.state;
+    for (let i = 0; i < level.items.length; i += 1) {
+      for (let j = 0; j < level.items[i].length; j += 1) {
+        if (parseInt(level.items[i][j], 10) >= 900) {
+          level.items[i][j] = '000';
+          this.setState({ level });
+        }
+      }
+    }
+    this.finalDoorOpened = true;
+  }
+
+
   render() {
     const {
-      isWinner, isLoser, pokemon, ongoingGame,
+      start, isWinner, isLoser, pokemon, ongoingGame, level, winner, tutoWinner, projectiles,
     } = this.state;
     return (
       <div className="Game">
-        <Chrono count={this.level.timer} getTime={this.getTime} isWinner={isWinner} />
-        {isWinner || isLoser
-          ? <EndingGame className="endgame" isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} />
+        { start
+          ? <Chrono count={level.timer} getTime={this.getTime} isWinner={isWinner} />
+          : undefined
+        }
+        {isWinner || isLoser || tutoWinner
+          ? <EndingGame className="endgame" tutoWinner={tutoWinner} winner={winner} isWinner={isWinner} isLoser={isLoser} pokemon={pokemon} timer={this.timer} levelName={this.selectedlevel} gameMode="solo" />
           : null
-          }
+        }
+        {
+          !start
+            ? <Starter getStarter={this.getStarter} gameMode="solo" />
+            : null
+        }
         <div className="gameContainer">
-          <Board tiles={this.level.tiles} items={this.level.items} />
+
+          <Board tiles={level.tiles} items={level.items} projectiles={projectiles} />
           <Player
+            start={start}
             ongoingGame={ongoingGame}
-            tiles={this.level.tiles}
-            startingPositions={this.level.startingPositions}
+            tiles={level.tiles}
+            items={level.items}
+            projectiles={projectiles}
+            startingPositions={level.startingPositions.player1}
             getPlayerPos={this.getPlayerPos}
+            playerAction={this.playerAction}
             className="player"
+            playerNumber="player1"
+          />
+        </div>
+        <div className="keyBar">
+          <KeysBar
+            collectedKeys={this.player1.collectedKeys}
+            finalDoorID={this.finalDoorID}
+            typeOfKey={this.typeOfKey}
+            numberOfKeys={this.keysToCollect}
           />
         </div>
       </div>
