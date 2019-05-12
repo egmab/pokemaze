@@ -2,7 +2,7 @@
   "name": "pokemaze",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://wildcodeschool.github.io/lyon-0219-react-pokemaze",
+  "homepage": "https://egmab.github.io/pokemaze",
   "dependencies": {
     "gh-pages": "^2.0.1",
     "node-sass": "^4.11.0",
