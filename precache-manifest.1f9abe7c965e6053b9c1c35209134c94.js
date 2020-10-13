@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "d8e5431b30c46a24a218",
+    "revision": "c70e73147ba74d725588",
     "url": "/pokemaze/static/css/main.cf047301.chunk.css"
   },
   {
-    "revision": "d8e5431b30c46a24a218",
-    "url": "/pokemaze/static/js/main.89fd80ff.chunk.js"
+    "revision": "c70e73147ba74d725588",
+    "url": "/pokemaze/static/js/main.9a54a76f.chunk.js"
   },
   {
     "revision": "610d3204289270f97f8d",
@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/pokemaze/static/media/star.cf80db92.png"
   },
   {
-    "revision": "3742b40c5f51db75329eb81b8232b2fe",
+    "revision": "238372e81fab74cd38653f3e3af581a9",
     "url": "/pokemaze/index.html"
   }
 ];
