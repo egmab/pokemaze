@@ -42,10 +42,10 @@ class Pokemon extends Component {
         this.pokemon = 'nidoran_m';
         break;
       case 'deoxys-normal':
-        pokemonName = 'deoxys';
+        this.pokemon = 'deoxys';
         break;
       case 'mr-mime':
-        pokemonName = 'mr.mime';
+        this.pokemon = 'mr.mime';
         break;
       default:
         break;
