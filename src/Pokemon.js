@@ -36,10 +36,10 @@ class Pokemon extends Component {
 
     switch (this.pokemon) {
       case 'nidoran-f':
-        this.pokemon = 'nidoranf';
+        this.pokemon = 'nidoran_f';
         break;
       case 'nidoran-m':
-        this.pokemon = 'nidoranm';
+        this.pokemon = 'nidoran_m';
         break;
       default:
         break;
@@ -78,7 +78,7 @@ class Pokemon extends Component {
           <div>
             <img
               className="sprites"
-              src={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${this.pokemon}.gif`}
+              src={`https://projectpokemon.org/images/normal-sprite/${this.pokemon}.gif`}
               alt={this.pokemon}
             />
           </div>
