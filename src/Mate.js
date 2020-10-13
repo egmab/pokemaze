@@ -1,6 +1,8 @@
 import React from 'react';
 
-const Mate = ({ pokemon, newvalue, level, player }) => {
+const Mate = ({
+ pokemon, newvalue, level, player 
+}) => {
   const levelIcons = [];
   for (let i = 0; i < 3; i += 1) {
     if (i < level) {
@@ -22,7 +24,7 @@ const Mate = ({ pokemon, newvalue, level, player }) => {
           {pokemon !== 'none'
             ? (
               <img
-                src={`http://pokestadium.com/sprites/xy/${pokemon}.gif`}
+                src={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemon}.gif`}
                 alt={pokemon}
               />
             )
