@@ -1,19 +1,19 @@
 self.__precacheManifest = [
   {
-    "revision": "4c5727ed45efa793e776",
+    "revision": "d8e5431b30c46a24a218",
     "url": "/pokemaze/static/css/main.cf047301.chunk.css"
   },
   {
-    "revision": "4c5727ed45efa793e776",
-    "url": "/pokemaze/static/js/main.2f9bc675.chunk.js"
+    "revision": "d8e5431b30c46a24a218",
+    "url": "/pokemaze/static/js/main.89fd80ff.chunk.js"
   },
   {
     "revision": "610d3204289270f97f8d",
     "url": "/pokemaze/static/js/runtime~main.eb1e53e9.js"
   },
   {
-    "revision": "3d2be86a2290b26b96e5",
-    "url": "/pokemaze/static/js/2.5046fa77.chunk.js"
+    "revision": "ef1e2f359426558297bf",
+    "url": "/pokemaze/static/js/2.c7afeea4.chunk.js"
   },
   {
     "revision": "78a721ac85f804de5de5d960bd3d976c",
@@ -24,12 +24,12 @@ self.__precacheManifest = [
     "url": "/pokemaze/static/media/fond.6b8eaea9.png"
   },
   {
-    "revision": "a3e81d4178f17227eb1375788089d517",
-    "url": "/pokemaze/static/media/stun.a3e81d41.png"
-  },
-  {
     "revision": "3a885c881b5f28d72f0b05a235a5a473",
     "url": "/pokemaze/static/media/confusion.3a885c88.png"
+  },
+  {
+    "revision": "a3e81d4178f17227eb1375788089d517",
+    "url": "/pokemaze/static/media/stun.a3e81d41.png"
   },
   {
     "revision": "fb6fa4d6bf0404212e08e419dbaf2446",
@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/pokemaze/static/media/star.cf80db92.png"
   },
   {
-    "revision": "96d145389fb7d5d55c1177dfd3d8daea",
+    "revision": "3742b40c5f51db75329eb81b8232b2fe",
     "url": "/pokemaze/index.html"
   }
 ];
