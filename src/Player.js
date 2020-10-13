@@ -796,7 +796,7 @@ class Player extends Component {
                     pokemonAttack ? pokAttackStyle : this.pokemonStyle
                   }
                   className="pokemonPet"
-                  src={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${this.pokemon}.gif`}
+                  src={`https://projectpokemon.org/images/normal-sprite/${this.pokemon}.gif`}
                   alt={this.pokemon}
                 />
               </div>

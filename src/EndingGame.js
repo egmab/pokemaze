@@ -49,10 +49,10 @@ const EndingGame = ({
   }
   switch (pokemonName) {
     case 'nidoran-f':
-      pokemonName = 'nidoranf';
+      pokemonName = 'nidoran_f';
       break;
     case 'nidoran-m':
-      pokemonName = 'nidoranm';
+      pokemonName = 'nidoran_m';
       break;
     case 'deoxys-normal':
       pokemonName = 'deoxys';
@@ -64,7 +64,7 @@ const EndingGame = ({
     <div className="modal-wrapper">
       <div className="modal-body">
         <h5>{title}</h5>
-        <img className="imgPoke" src={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemonName}.gif`} alt={pokemonName} />
+        <img className="imgPoke" src={`https://projectpokemon.org/images/normal-sprite/${pokemonName}.gif`} alt={pokemonName} />
         <h4>
           {message}
           {' '}
