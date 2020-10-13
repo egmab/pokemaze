@@ -57,6 +57,9 @@ const EndingGame = ({
     case 'deoxys-normal':
       pokemonName = 'deoxys';
       break;
+    case 'mr-mime':
+      pokemonName = 'mr.mime';
+      break;
     default:
       break;
   }
