@@ -8,7 +8,7 @@ import './Game.css';
 
 /*
 <img
-src={`http://pokestadium.com/sprites/xy/${pokemon1}.gif`}
+src={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemon1}.gif`}
 alt={pokemon1}
 /> */
 

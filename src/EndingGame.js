@@ -64,7 +64,7 @@ const EndingGame = ({
     <div className="modal-wrapper">
       <div className="modal-body">
         <h5>{title}</h5>
-        <img className="imgPoke" src={`http://pokestadium.com/sprites/xy/${pokemonName}.gif`} alt={pokemonName} />
+        <img className="imgPoke" src={`https://www.pkparaiso.com/imagenes/xy/sprites/animados/${pokemonName}.gif`} alt={pokemonName} />
         <h4>
           {message}
           {' '}
